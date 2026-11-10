@@ -1,0 +1,1031 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 1754">
+<title>Folio — Commandes</title>
+<rect width="1040" height="1754" fill="#fdfcf9"/>
+<rect x="520" width="520" height="1754" fill="#1d1f1e"/>
+<g font-family="Inter, system-ui, sans-serif" fill="#2b312a">
+<text x="32" y="54" font-size="26" font-weight="500">Folio / Commandes</text>
+<text x="32" y="84" font-size="12" fill="#697265">43 formes · une même écriture</text>
+<path d="M32 108h456" stroke="#e2e5db"/>
+<rect x="32" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 7 21M17 3l-2 18M4 9h17M3 15h17"/></g>
+</g>
+<g color="#697265" transform="translate(78 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 7 21M17 3l-2 18M4 9h17M3 15h17"/></g>
+</g>
+<text x="86" y="250" text-anchor="middle" font-size="10.5">Nombre</text>
+<rect x="148" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+  </g>
+</g>
+<text x="202" y="250" text-anchor="middle" font-size="10.5">Rechercher</text>
+<rect x="264" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5v14M5 12h14"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5v14M5 12h14"/>
+  </g>
+</g>
+<text x="318" y="250" text-anchor="middle" font-size="10.5">Ajouter</text>
+<rect x="380" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m6 6 12 12M18 6 6 18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m6 6 12 12M18 6 6 18"/>
+  </g>
+</g>
+<text x="434" y="250" text-anchor="middle" font-size="10.5">Fermer</text>
+<rect x="32" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m15 5-7 7 7 7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m15 5-7 7 7 7"/>
+  </g>
+</g>
+<text x="86" y="394" text-anchor="middle" font-size="10.5">Précédent</text>
+<rect x="148" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m9 5 7 7-7 7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m9 5 7 7-7 7"/>
+  </g>
+</g>
+<text x="202" y="394" text-anchor="middle" font-size="10.5">Suivant</text>
+<rect x="264" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 9 7 7 7-7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 9 7 7 7-7"/>
+  </g>
+</g>
+<text x="318" y="394" text-anchor="middle" font-size="10.5">Déplier</text>
+<rect x="380" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20V4m-7 7 7-7 7 7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20V4m-7 7 7-7 7 7"/>
+  </g>
+</g>
+<text x="434" y="394" text-anchor="middle" font-size="10.5">Monter</text>
+<rect x="32" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 4v16m-7-7 7 7 7-7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 4v16m-7-7 7 7 7-7"/>
+  </g>
+</g>
+<text x="86" y="538" text-anchor="middle" font-size="10.5">Descendre</text>
+<rect x="148" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 18 6M6 6h12v12"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 18 6M6 6h12v12"/>
+  </g>
+</g>
+<text x="202" y="538" text-anchor="middle" font-size="10.5">Ouvrir le lien</text>
+<rect x="264" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v6h6M4 11a8 8 0 0 1 15 2c1 4-2 7-6 7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v6h6M4 11a8 8 0 0 1 15 2c1 4-2 7-6 7"/>
+  </g>
+</g>
+<text x="318" y="538" text-anchor="middle" font-size="10.5">Annuler</text>
+<rect x="380" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 5v6h-6M20 11a8 8 0 0 0-15 2c-1 4 2 7 6 7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 5v6h-6M20 11a8 8 0 0 0-15 2c-1 4 2 7 6 7"/>
+  </g>
+</g>
+<text x="434" y="538" text-anchor="middle" font-size="10.5">Rétablir</text>
+<rect x="32" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <g fill="currentColor" stroke="none"><circle cx="8" cy="5" r="1.4"/><circle cx="16" cy="5" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="16" cy="12" r="1.4"/><circle cx="8" cy="19" r="1.4"/><circle cx="16" cy="19" r="1.4"/></g>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <g fill="currentColor" stroke="none"><circle cx="8" cy="5" r="1.4"/><circle cx="16" cy="5" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="16" cy="12" r="1.4"/><circle cx="8" cy="19" r="1.4"/><circle cx="16" cy="19" r="1.4"/></g>
+  </g>
+</g>
+<text x="86" y="682" text-anchor="middle" font-size="10.5">Déplacer le bloc</text>
+<rect x="148" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/>
+  </g>
+</g>
+<text x="202" y="682" text-anchor="middle" font-size="10.5">Dupliquer</text>
+<rect x="264" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 6h18M9 6V3h6v3M5 6l1 14h12l1-14M10 10v6M14 10v6"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 6h18M9 6V3h6v3M5 6l1 14h12l1-14M10 10v6M14 10v6"/>
+  </g>
+</g>
+<text x="318" y="682" text-anchor="middle" font-size="10.5">Supprimer</text>
+<rect x="380" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3H3v6M15 3h6v6M3 15v6h6M21 15v6h-6"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3H3v6M15 3h6v6M3 15v6h6M21 15v6h-6"/>
+  </g>
+</g>
+<text x="434" y="682" text-anchor="middle" font-size="10.5">Pleine largeur</text>
+<rect x="32" y="714" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="m3 17 5-5 4 4 4-7 5 8"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="m3 17 5-5 4 4 4-7 5 8"/>
+  </g>
+</g>
+<text x="86" y="826" text-anchor="middle" font-size="10.5">Couverture</text>
+<rect x="148" y="714" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v12m-5-5 5 5 5-5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v12m-5-5 5 5 5-5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/>
+  </g>
+</g>
+<text x="202" y="826" text-anchor="middle" font-size="10.5">Exporter</text>
+<rect x="264" y="714" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>
+  </g>
+</g>
+<text x="318" y="826" text-anchor="middle" font-size="10.5">Mode clair</text>
+<rect x="380" y="714" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.5 14.5A9 9 0 0 1 9.5 3.5 9 9 0 1 0 20.5 14.5Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.5 14.5A9 9 0 0 1 9.5 3.5 9 9 0 1 0 20.5 14.5Z"/>
+  </g>
+</g>
+<text x="434" y="826" text-anchor="middle" font-size="10.5">Mode sombre</text>
+<rect x="32" y="858" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/>
+  </g>
+</g>
+<text x="86" y="970" text-anchor="middle" font-size="10.5">Favori</text>
+<rect x="148" y="858" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" fill="currentColor"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" fill="currentColor"/>
+  </g>
+</g>
+<text x="202" y="970" text-anchor="middle" font-size="10.5">Favori actif</text>
+<rect x="264" y="858" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11M15 9v11"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11M15 9v11"/>
+  </g>
+</g>
+<text x="318" y="970" text-anchor="middle" font-size="10.5">Tableau</text>
+<rect x="380" y="858" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M6 8v4M12 8v7M18 8v2"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M6 8v4M12 8v7M18 8v2"/>
+  </g>
+</g>
+<text x="434" y="970" text-anchor="middle" font-size="10.5">Kanban</text>
+<rect x="32" y="1002" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5h18M6 12h12M9 19h6"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5h18M6 12h12M9 19h6"/>
+  </g>
+</g>
+<text x="86" y="1114" text-anchor="middle" font-size="10.5">Filtrer</text>
+<rect x="148" y="1002" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 4v16m-4-4 4 4 4-4M15 5h6M15 10h4M15 15h2"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 4v16m-4-4 4 4 4-4M15 5h6M15 10h4M15 15h2"/>
+  </g>
+</g>
+<text x="202" y="1114" text-anchor="middle" font-size="10.5">Trier</text>
+<rect x="264" y="1002" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/>
+  </g>
+</g>
+<text x="318" y="1114" text-anchor="middle" font-size="10.5">Colonnes</text>
+<rect x="380" y="1002" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 21V3m0 1c5-3 9 3 14 0v10c-5 3-9-3-14 0"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 21V3m0 1c5-3 9 3 14 0v10c-5 3-9-3-14 0"/>
+  </g>
+</g>
+<text x="434" y="1114" text-anchor="middle" font-size="10.5">Priorité</text>
+<rect x="32" y="1146" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+  </g>
+</g>
+<text x="86" y="1258" text-anchor="middle" font-size="10.5">Échéance</text>
+<rect x="148" y="1146" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 10 18H2Z"/><path d="M12 9v5"/><circle cx="12" cy="17.5" r=".8" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 10 18H2Z"/><path d="M12 9v5"/><circle cx="12" cy="17.5" r=".8" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<text x="202" y="1258" text-anchor="middle" font-size="10.5">Attention</text>
+<rect x="264" y="1146" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 12 5 5L20 7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 12 5 5L20 7"/>
+  </g>
+</g>
+<text x="318" y="1258" text-anchor="middle" font-size="10.5">Validé</text>
+<rect x="380" y="1146" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<text x="434" y="1258" text-anchor="middle" font-size="10.5">Statut</text>
+<rect x="32" y="1290" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5h16M4 10h11M4 15h16M4 20h8"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5h16M4 10h11M4 15h16M4 20h8"/>
+  </g>
+</g>
+<text x="86" y="1402" text-anchor="middle" font-size="10.5">Texte</text>
+<rect x="148" y="1290" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v14M12 5v14M4 12h8M17 8l3-2v13M17 19h5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v14M12 5v14M4 12h8M17 8l3-2v13M17 19h5"/>
+  </g>
+</g>
+<text x="202" y="1402" text-anchor="middle" font-size="10.5">Titre 1</text>
+<rect x="264" y="1290" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 9c0-4 6-4 6 0 0 3-6 5-6 10h6"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 9c0-4 6-4 6 0 0 3-6 5-6 10h6"/>
+  </g>
+</g>
+<text x="318" y="1402" text-anchor="middle" font-size="10.5">Titre 2</text>
+<rect x="380" y="1290" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 7c2-2 6-1 6 2 0 2-2 3-4 3 2 0 4 1 4 3 0 4-5 5-7 2"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 7c2-2 6-1 6 2 0 2-2 3-4 3 2 0 4 1 4 3 0 4-5 5-7 2"/>
+  </g>
+</g>
+<text x="434" y="1402" text-anchor="middle" font-size="10.5">Titre 3</text>
+<rect x="32" y="1434" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 6h12M9 12h12M9 18h12"/><g fill="currentColor" stroke="none"><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></g>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 6h12M9 12h12M9 18h12"/><g fill="currentColor" stroke="none"><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></g>
+  </g>
+</g>
+<text x="86" y="1546" text-anchor="middle" font-size="10.5">Liste à puces</text>
+<rect x="148" y="1434" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 6h11M10 12h11M10 18h11M3 4l2-1v6M3 9h4M3 15c0-3 4-3 4 0 0 2-4 3-4 6h4"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 6h11M10 12h11M10 18h11M3 4l2-1v6M3 9h4M3 15c0-3 4-3 4 0 0 2-4 3-4 6h4"/>
+  </g>
+</g>
+<text x="202" y="1546" text-anchor="middle" font-size="10.5">Liste numérotée</text>
+<rect x="264" y="1434" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7h6v6H3Zm0 6v1c0 3 2 5 5 5M15 7h6v6h-6Zm0 6v1c0 3 2 5 5 5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7h6v6H3Zm0 6v1c0 3 2 5 5 5M15 7h6v6h-6Zm0 6v1c0 3 2 5 5 5"/>
+  </g>
+</g>
+<text x="318" y="1546" text-anchor="middle" font-size="10.5">Citation</text>
+<rect x="380" y="1434" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m7 6-5 6 5 6m10-12 5 6-5 6M14 3l-4 18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m7 6-5 6 5 6m10-12 5 6-5 6M14 3l-4 18"/>
+  </g>
+</g>
+<text x="434" y="1546" text-anchor="middle" font-size="10.5">Code</text>
+<rect x="32" y="1578" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 1600) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12h18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 1652) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12h18"/>
+  </g>
+</g>
+<text x="86" y="1690" text-anchor="middle" font-size="10.5">Séparateur</text>
+<rect x="148" y="1578" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 1600) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="6" width="14" height="15" rx="2"/><path d="M8 6V3h12a1 1 0 0 1 1 1v13h-3M8 10h6M8 14h4"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 1652) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="6" width="14" height="15" rx="2"/><path d="M8 6V3h12a1 1 0 0 1 1 1v13h-3M8 10h6M8 14h4"/>
+  </g>
+</g>
+<text x="202" y="1690" text-anchor="middle" font-size="10.5">Modèles</text>
+<rect x="264" y="1578" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 1600) scale(1.666667)">
+  <g fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></g>
+</g>
+<g color="#697265" transform="translate(310 1652) scale(.666667)">
+  <g fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></g>
+</g>
+<text x="318" y="1690" text-anchor="middle" font-size="10.5">Autres actions</text>
+</g>
+<g font-family="Inter, system-ui, sans-serif" fill="#e8eae4">
+<text x="552" y="54" font-size="26" font-weight="500">Folio / Commandes</text>
+<text x="552" y="84" font-size="12" fill="#a3aaa0">43 formes · une même écriture</text>
+<path d="M552 108h456" stroke="#353a35"/>
+<rect x="552" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 7 21M17 3l-2 18M4 9h17M3 15h17"/></g>
+</g>
+<g color="#a3aaa0" transform="translate(598 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 7 21M17 3l-2 18M4 9h17M3 15h17"/></g>
+</g>
+<text x="606" y="250" text-anchor="middle" font-size="10.5">Nombre</text>
+<rect x="668" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+  </g>
+</g>
+<text x="722" y="250" text-anchor="middle" font-size="10.5">Rechercher</text>
+<rect x="784" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5v14M5 12h14"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5v14M5 12h14"/>
+  </g>
+</g>
+<text x="838" y="250" text-anchor="middle" font-size="10.5">Ajouter</text>
+<rect x="900" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m6 6 12 12M18 6 6 18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m6 6 12 12M18 6 6 18"/>
+  </g>
+</g>
+<text x="954" y="250" text-anchor="middle" font-size="10.5">Fermer</text>
+<rect x="552" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m15 5-7 7 7 7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m15 5-7 7 7 7"/>
+  </g>
+</g>
+<text x="606" y="394" text-anchor="middle" font-size="10.5">Précédent</text>
+<rect x="668" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m9 5 7 7-7 7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m9 5 7 7-7 7"/>
+  </g>
+</g>
+<text x="722" y="394" text-anchor="middle" font-size="10.5">Suivant</text>
+<rect x="784" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 9 7 7 7-7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 9 7 7 7-7"/>
+  </g>
+</g>
+<text x="838" y="394" text-anchor="middle" font-size="10.5">Déplier</text>
+<rect x="900" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20V4m-7 7 7-7 7 7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20V4m-7 7 7-7 7 7"/>
+  </g>
+</g>
+<text x="954" y="394" text-anchor="middle" font-size="10.5">Monter</text>
+<rect x="552" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 4v16m-7-7 7 7 7-7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 4v16m-7-7 7 7 7-7"/>
+  </g>
+</g>
+<text x="606" y="538" text-anchor="middle" font-size="10.5">Descendre</text>
+<rect x="668" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 18 6M6 6h12v12"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 18 6M6 6h12v12"/>
+  </g>
+</g>
+<text x="722" y="538" text-anchor="middle" font-size="10.5">Ouvrir le lien</text>
+<rect x="784" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v6h6M4 11a8 8 0 0 1 15 2c1 4-2 7-6 7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v6h6M4 11a8 8 0 0 1 15 2c1 4-2 7-6 7"/>
+  </g>
+</g>
+<text x="838" y="538" text-anchor="middle" font-size="10.5">Annuler</text>
+<rect x="900" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 5v6h-6M20 11a8 8 0 0 0-15 2c-1 4 2 7 6 7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 5v6h-6M20 11a8 8 0 0 0-15 2c-1 4 2 7 6 7"/>
+  </g>
+</g>
+<text x="954" y="538" text-anchor="middle" font-size="10.5">Rétablir</text>
+<rect x="552" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <g fill="currentColor" stroke="none"><circle cx="8" cy="5" r="1.4"/><circle cx="16" cy="5" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="16" cy="12" r="1.4"/><circle cx="8" cy="19" r="1.4"/><circle cx="16" cy="19" r="1.4"/></g>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <g fill="currentColor" stroke="none"><circle cx="8" cy="5" r="1.4"/><circle cx="16" cy="5" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="16" cy="12" r="1.4"/><circle cx="8" cy="19" r="1.4"/><circle cx="16" cy="19" r="1.4"/></g>
+  </g>
+</g>
+<text x="606" y="682" text-anchor="middle" font-size="10.5">Déplacer le bloc</text>
+<rect x="668" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/>
+  </g>
+</g>
+<text x="722" y="682" text-anchor="middle" font-size="10.5">Dupliquer</text>
+<rect x="784" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 6h18M9 6V3h6v3M5 6l1 14h12l1-14M10 10v6M14 10v6"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 6h18M9 6V3h6v3M5 6l1 14h12l1-14M10 10v6M14 10v6"/>
+  </g>
+</g>
+<text x="838" y="682" text-anchor="middle" font-size="10.5">Supprimer</text>
+<rect x="900" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3H3v6M15 3h6v6M3 15v6h6M21 15v6h-6"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3H3v6M15 3h6v6M3 15v6h6M21 15v6h-6"/>
+  </g>
+</g>
+<text x="954" y="682" text-anchor="middle" font-size="10.5">Pleine largeur</text>
+<rect x="552" y="714" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="m3 17 5-5 4 4 4-7 5 8"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="m3 17 5-5 4 4 4-7 5 8"/>
+  </g>
+</g>
+<text x="606" y="826" text-anchor="middle" font-size="10.5">Couverture</text>
+<rect x="668" y="714" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v12m-5-5 5 5 5-5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v12m-5-5 5 5 5-5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/>
+  </g>
+</g>
+<text x="722" y="826" text-anchor="middle" font-size="10.5">Exporter</text>
+<rect x="784" y="714" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>
+  </g>
+</g>
+<text x="838" y="826" text-anchor="middle" font-size="10.5">Mode clair</text>
+<rect x="900" y="714" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 736) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.5 14.5A9 9 0 0 1 9.5 3.5 9 9 0 1 0 20.5 14.5Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 788) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.5 14.5A9 9 0 0 1 9.5 3.5 9 9 0 1 0 20.5 14.5Z"/>
+  </g>
+</g>
+<text x="954" y="826" text-anchor="middle" font-size="10.5">Mode sombre</text>
+<rect x="552" y="858" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/>
+  </g>
+</g>
+<text x="606" y="970" text-anchor="middle" font-size="10.5">Favori</text>
+<rect x="668" y="858" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" fill="currentColor"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" fill="currentColor"/>
+  </g>
+</g>
+<text x="722" y="970" text-anchor="middle" font-size="10.5">Favori actif</text>
+<rect x="784" y="858" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11M15 9v11"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11M15 9v11"/>
+  </g>
+</g>
+<text x="838" y="970" text-anchor="middle" font-size="10.5">Tableau</text>
+<rect x="900" y="858" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 880) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M6 8v4M12 8v7M18 8v2"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 932) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M6 8v4M12 8v7M18 8v2"/>
+  </g>
+</g>
+<text x="954" y="970" text-anchor="middle" font-size="10.5">Kanban</text>
+<rect x="552" y="1002" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5h18M6 12h12M9 19h6"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5h18M6 12h12M9 19h6"/>
+  </g>
+</g>
+<text x="606" y="1114" text-anchor="middle" font-size="10.5">Filtrer</text>
+<rect x="668" y="1002" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 4v16m-4-4 4 4 4-4M15 5h6M15 10h4M15 15h2"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 4v16m-4-4 4 4 4-4M15 5h6M15 10h4M15 15h2"/>
+  </g>
+</g>
+<text x="722" y="1114" text-anchor="middle" font-size="10.5">Trier</text>
+<rect x="784" y="1002" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/>
+  </g>
+</g>
+<text x="838" y="1114" text-anchor="middle" font-size="10.5">Colonnes</text>
+<rect x="900" y="1002" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 1024) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 21V3m0 1c5-3 9 3 14 0v10c-5 3-9-3-14 0"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 1076) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 21V3m0 1c5-3 9 3 14 0v10c-5 3-9-3-14 0"/>
+  </g>
+</g>
+<text x="954" y="1114" text-anchor="middle" font-size="10.5">Priorité</text>
+<rect x="552" y="1146" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+  </g>
+</g>
+<text x="606" y="1258" text-anchor="middle" font-size="10.5">Échéance</text>
+<rect x="668" y="1146" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 10 18H2Z"/><path d="M12 9v5"/><circle cx="12" cy="17.5" r=".8" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m12 3 10 18H2Z"/><path d="M12 9v5"/><circle cx="12" cy="17.5" r=".8" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<text x="722" y="1258" text-anchor="middle" font-size="10.5">Attention</text>
+<rect x="784" y="1146" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 12 5 5L20 7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 12 5 5L20 7"/>
+  </g>
+</g>
+<text x="838" y="1258" text-anchor="middle" font-size="10.5">Validé</text>
+<rect x="900" y="1146" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 1168) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 1220) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/>
+  </g>
+</g>
+<text x="954" y="1258" text-anchor="middle" font-size="10.5">Statut</text>
+<rect x="552" y="1290" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5h16M4 10h11M4 15h16M4 20h8"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5h16M4 10h11M4 15h16M4 20h8"/>
+  </g>
+</g>
+<text x="606" y="1402" text-anchor="middle" font-size="10.5">Texte</text>
+<rect x="668" y="1290" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v14M12 5v14M4 12h8M17 8l3-2v13M17 19h5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5v14M12 5v14M4 12h8M17 8l3-2v13M17 19h5"/>
+  </g>
+</g>
+<text x="722" y="1402" text-anchor="middle" font-size="10.5">Titre 1</text>
+<rect x="784" y="1290" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 9c0-4 6-4 6 0 0 3-6 5-6 10h6"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 9c0-4 6-4 6 0 0 3-6 5-6 10h6"/>
+  </g>
+</g>
+<text x="838" y="1402" text-anchor="middle" font-size="10.5">Titre 2</text>
+<rect x="900" y="1290" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 1312) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 7c2-2 6-1 6 2 0 2-2 3-4 3 2 0 4 1 4 3 0 4-5 5-7 2"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 1364) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5v14M11 5v14M3 12h8M16 7c2-2 6-1 6 2 0 2-2 3-4 3 2 0 4 1 4 3 0 4-5 5-7 2"/>
+  </g>
+</g>
+<text x="954" y="1402" text-anchor="middle" font-size="10.5">Titre 3</text>
+<rect x="552" y="1434" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 6h12M9 12h12M9 18h12"/><g fill="currentColor" stroke="none"><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></g>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 6h12M9 12h12M9 18h12"/><g fill="currentColor" stroke="none"><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></g>
+  </g>
+</g>
+<text x="606" y="1546" text-anchor="middle" font-size="10.5">Liste à puces</text>
+<rect x="668" y="1434" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 6h11M10 12h11M10 18h11M3 4l2-1v6M3 9h4M3 15c0-3 4-3 4 0 0 2-4 3-4 6h4"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 6h11M10 12h11M10 18h11M3 4l2-1v6M3 9h4M3 15c0-3 4-3 4 0 0 2-4 3-4 6h4"/>
+  </g>
+</g>
+<text x="722" y="1546" text-anchor="middle" font-size="10.5">Liste numérotée</text>
+<rect x="784" y="1434" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7h6v6H3Zm0 6v1c0 3 2 5 5 5M15 7h6v6h-6Zm0 6v1c0 3 2 5 5 5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7h6v6H3Zm0 6v1c0 3 2 5 5 5M15 7h6v6h-6Zm0 6v1c0 3 2 5 5 5"/>
+  </g>
+</g>
+<text x="838" y="1546" text-anchor="middle" font-size="10.5">Citation</text>
+<rect x="900" y="1434" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 1456) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m7 6-5 6 5 6m10-12 5 6-5 6M14 3l-4 18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 1508) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m7 6-5 6 5 6m10-12 5 6-5 6M14 3l-4 18"/>
+  </g>
+</g>
+<text x="954" y="1546" text-anchor="middle" font-size="10.5">Code</text>
+<rect x="552" y="1578" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 1600) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12h18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 1652) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12h18"/>
+  </g>
+</g>
+<text x="606" y="1690" text-anchor="middle" font-size="10.5">Séparateur</text>
+<rect x="668" y="1578" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 1600) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="6" width="14" height="15" rx="2"/><path d="M8 6V3h12a1 1 0 0 1 1 1v13h-3M8 10h6M8 14h4"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 1652) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="6" width="14" height="15" rx="2"/><path d="M8 6V3h12a1 1 0 0 1 1 1v13h-3M8 10h6M8 14h4"/>
+  </g>
+</g>
+<text x="722" y="1690" text-anchor="middle" font-size="10.5">Modèles</text>
+<rect x="784" y="1578" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 1600) scale(1.666667)">
+  <g fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></g>
+</g>
+<g color="#a3aaa0" transform="translate(830 1652) scale(.666667)">
+  <g fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></g>
+</g>
+<text x="838" y="1690" text-anchor="middle" font-size="10.5">Autres actions</text>
+</g>
+</svg>

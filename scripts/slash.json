@@ -1,0 +1,7 @@
+{
+  "events": [
+    { "t": 0.1, "type": "tap", "key": "new-page" },
+    { "t": 0.4, "type": "key", "name": "Enter" },
+    { "t": 0.6, "type": "type", "text": "/" }
+  ]
+}

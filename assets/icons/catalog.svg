@@ -1,0 +1,391 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 760">
+<title>Folio — Signes</title>
+<rect width="1040" height="760" fill="#fdfcf9"/>
+<rect x="520" width="520" height="760" fill="#1d1f1e"/>
+<g font-family="Inter, system-ui, sans-serif" fill="#2b312a">
+<text x="32" y="54" font-size="26" font-weight="500">Folio / Signes</text>
+<text x="32" y="84" font-size="12" fill="#697265">16 formes · une même écriture</text>
+<path d="M32 108h456" stroke="#e2e5db"/>
+<rect x="32" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 160) scale(1.666667)">
+  <path fill="currentColor" d="M6 20 C5.448 20 5 19.552 5 19 L5 6.4 C5 5.075 6.075 4 7.4 4 L19 4 L15.6 7.4 L9 7.4 L9 10.6 L16.8 10.6 L13.4 14 L9 14 L9 18 C9 19.105 8.105 20 7 20 Z"/>
+</g>
+<g color="#697265" transform="translate(78 212) scale(.666667)">
+  <path fill="currentColor" d="M6 20 C5.448 20 5 19.552 5 19 L5 6.4 C5 5.075 6.075 4 7.4 4 L19 4 L15.6 7.4 L9 7.4 L9 10.6 L16.8 10.6 L13.4 14 L9 14 L9 18 C9 19.105 8.105 20 7 20 Z"/>
+</g>
+<text x="86" y="250" text-anchor="middle" font-size="10.5">Folio</text>
+<rect x="148" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<text x="202" y="250" text-anchor="middle" font-size="10.5">Page</text>
+<rect x="264" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<text x="318" y="250" text-anchor="middle" font-size="10.5">Idées en germe</text>
+<rect x="380" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 17c0-2-4-4-4-8a7 7 0 0 1 14 0c0 4-4 6-4 8M9 17h6M9.5 20h5M11 22h2"/><path d="M12 13v4m-2-6 2 2 2-2"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 17c0-2-4-4-4-8a7 7 0 0 1 14 0c0 4-4 6-4 8M9 17h6M9.5 20h5M11 22h2"/><path d="M12 13v4m-2-6 2 2 2-2"/>
+  </g>
+</g>
+<text x="434" y="250" text-anchor="middle" font-size="10.5">Idée</text>
+<rect x="32" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18M11 8h5M11 12h5M11 16h3"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18M11 8h5M11 12h5M11 16h3"/>
+  </g>
+</g>
+<text x="86" y="394" text-anchor="middle" font-size="10.5">Carnet</text>
+<rect x="148" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<text x="202" y="394" text-anchor="middle" font-size="10.5">Projet</text>
+<rect x="264" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/>
+  </g>
+</g>
+<text x="318" y="394" text-anchor="middle" font-size="10.5">Tâches</text>
+<rect x="380" y="282" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 6c-3-2-6-2-10-1v14c4-1 7-1 10 1 3-2 6-2 10-1V5c-4-1-7-1-10 1Zm0 0v14"/><path d="M5 9h3M5 13h3M16 9h3M16 13h3"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 6c-3-2-6-2-10-1v14c4-1 7-1 10 1 3-2 6-2 10-1V5c-4-1-7-1-10 1Zm0 0v14"/><path d="M5 9h3M5 13h3M16 9h3M16 13h3"/>
+  </g>
+</g>
+<text x="434" y="394" text-anchor="middle" font-size="10.5">Bibliothèque</text>
+<rect x="32" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
+  </g>
+</g>
+<text x="86" y="538" text-anchor="middle" font-size="10.5">Objectif</text>
+<rect x="148" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="5.5" rx="8" ry="3.5"/><path d="M4 5.5v13c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5v-13M4 12c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="5.5" rx="8" ry="3.5"/><path d="M4 5.5v13c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5v-13M4 12c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5"/>
+  </g>
+</g>
+<text x="202" y="538" text-anchor="middle" font-size="10.5">Base de données</text>
+<rect x="264" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/>
+  </g>
+</g>
+<text x="318" y="538" text-anchor="middle" font-size="10.5">Dashboard</text>
+<rect x="380" y="426" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2M15 14h2M7 17h2"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2M15 14h2M7 17h2"/>
+  </g>
+</g>
+<text x="434" y="538" text-anchor="middle" font-size="10.5">Calendrier</text>
+<rect x="32" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm0 2h18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm0 2h18"/>
+  </g>
+</g>
+<text x="86" y="682" text-anchor="middle" font-size="10.5">Dossier</text>
+<rect x="148" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16l-6-4Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16l-6-4Z"/>
+  </g>
+</g>
+<text x="202" y="682" text-anchor="middle" font-size="10.5">Repère</text>
+<rect x="264" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m10 14 4-4M8 16l-2 2a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0" transform="translate(2 0)"/><path d="m14 8 2-2a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(-2 0)"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m10 14 4-4M8 16l-2 2a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0" transform="translate(2 0)"/><path d="m14 8 2-2a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(-2 0)"/>
+  </g>
+</g>
+<text x="318" y="682" text-anchor="middle" font-size="10.5">Lien</text>
+<rect x="380" y="570" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M9 12h6"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M9 12h6"/>
+  </g>
+</g>
+<text x="434" y="682" text-anchor="middle" font-size="10.5">Archive</text>
+</g>
+<g font-family="Inter, system-ui, sans-serif" fill="#e8eae4">
+<text x="552" y="54" font-size="26" font-weight="500">Folio / Signes</text>
+<text x="552" y="84" font-size="12" fill="#a3aaa0">16 formes · une même écriture</text>
+<path d="M552 108h456" stroke="#353a35"/>
+<rect x="552" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 160) scale(1.666667)">
+  <path fill="currentColor" d="M6 20 C5.448 20 5 19.552 5 19 L5 6.4 C5 5.075 6.075 4 7.4 4 L19 4 L15.6 7.4 L9 7.4 L9 10.6 L16.8 10.6 L13.4 14 L9 14 L9 18 C9 19.105 8.105 20 7 20 Z"/>
+</g>
+<g color="#a3aaa0" transform="translate(598 212) scale(.666667)">
+  <path fill="currentColor" d="M6 20 C5.448 20 5 19.552 5 19 L5 6.4 C5 5.075 6.075 4 7.4 4 L19 4 L15.6 7.4 L9 7.4 L9 10.6 L16.8 10.6 L13.4 14 L9 14 L9 18 C9 19.105 8.105 20 7 20 Z"/>
+</g>
+<text x="606" y="250" text-anchor="middle" font-size="10.5">Folio</text>
+<rect x="668" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<text x="722" y="250" text-anchor="middle" font-size="10.5">Page</text>
+<rect x="784" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<text x="838" y="250" text-anchor="middle" font-size="10.5">Idées en germe</text>
+<rect x="900" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 160) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 17c0-2-4-4-4-8a7 7 0 0 1 14 0c0 4-4 6-4 8M9 17h6M9.5 20h5M11 22h2"/><path d="M12 13v4m-2-6 2 2 2-2"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 212) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 17c0-2-4-4-4-8a7 7 0 0 1 14 0c0 4-4 6-4 8M9 17h6M9.5 20h5M11 22h2"/><path d="M12 13v4m-2-6 2 2 2-2"/>
+  </g>
+</g>
+<text x="954" y="250" text-anchor="middle" font-size="10.5">Idée</text>
+<rect x="552" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18M11 8h5M11 12h5M11 16h3"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18M11 8h5M11 12h5M11 16h3"/>
+  </g>
+</g>
+<text x="606" y="394" text-anchor="middle" font-size="10.5">Carnet</text>
+<rect x="668" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<text x="722" y="394" text-anchor="middle" font-size="10.5">Projet</text>
+<rect x="784" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/>
+  </g>
+</g>
+<text x="838" y="394" text-anchor="middle" font-size="10.5">Tâches</text>
+<rect x="900" y="282" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 304) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 6c-3-2-6-2-10-1v14c4-1 7-1 10 1 3-2 6-2 10-1V5c-4-1-7-1-10 1Zm0 0v14"/><path d="M5 9h3M5 13h3M16 9h3M16 13h3"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 356) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 6c-3-2-6-2-10-1v14c4-1 7-1 10 1 3-2 6-2 10-1V5c-4-1-7-1-10 1Zm0 0v14"/><path d="M5 9h3M5 13h3M16 9h3M16 13h3"/>
+  </g>
+</g>
+<text x="954" y="394" text-anchor="middle" font-size="10.5">Bibliothèque</text>
+<rect x="552" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
+  </g>
+</g>
+<text x="606" y="538" text-anchor="middle" font-size="10.5">Objectif</text>
+<rect x="668" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="5.5" rx="8" ry="3.5"/><path d="M4 5.5v13c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5v-13M4 12c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="5.5" rx="8" ry="3.5"/><path d="M4 5.5v13c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5v-13M4 12c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5"/>
+  </g>
+</g>
+<text x="722" y="538" text-anchor="middle" font-size="10.5">Base de données</text>
+<rect x="784" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/>
+  </g>
+</g>
+<text x="838" y="538" text-anchor="middle" font-size="10.5">Dashboard</text>
+<rect x="900" y="426" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 448) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2M15 14h2M7 17h2"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 500) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2M15 14h2M7 17h2"/>
+  </g>
+</g>
+<text x="954" y="538" text-anchor="middle" font-size="10.5">Calendrier</text>
+<rect x="552" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm0 2h18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm0 2h18"/>
+  </g>
+</g>
+<text x="606" y="682" text-anchor="middle" font-size="10.5">Dossier</text>
+<rect x="668" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16l-6-4Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16l-6-4Z"/>
+  </g>
+</g>
+<text x="722" y="682" text-anchor="middle" font-size="10.5">Repère</text>
+<rect x="784" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m10 14 4-4M8 16l-2 2a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0" transform="translate(2 0)"/><path d="m14 8 2-2a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(-2 0)"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m10 14 4-4M8 16l-2 2a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0" transform="translate(2 0)"/><path d="m14 8 2-2a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(-2 0)"/>
+  </g>
+</g>
+<text x="838" y="682" text-anchor="middle" font-size="10.5">Lien</text>
+<rect x="900" y="570" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 592) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M9 12h6"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 644) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M9 12h6"/>
+  </g>
+</g>
+<text x="954" y="682" text-anchor="middle" font-size="10.5">Archive</text>
+</g>
+</svg>

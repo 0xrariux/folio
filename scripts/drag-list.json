@@ -1,0 +1,7 @@
+{
+  "events": [
+    { "t": 0.2, "type": "down", "key": "handle-demo-drag-2" },
+    { "t": 0.4, "type": "move", "key": "drop-after-demo-drag-4" },
+    { "t": 1.0, "type": "up", "key": "drop-after-demo-drag-4" }
+  ]
+}

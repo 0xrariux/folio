@@ -1,0 +1,9 @@
+{
+  "events": [
+    {
+      "t": 0.2,
+      "type": "tap",
+      "key": "toggle-demo-list-7"
+    }
+  ]
+}

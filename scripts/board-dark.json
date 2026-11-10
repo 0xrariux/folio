@@ -1,0 +1,9 @@
+{
+  "events": [
+    {
+      "t": 0.1,
+      "type": "tap",
+      "key": "page-demo-tracker"
+    }
+  ]
+}
