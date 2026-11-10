@@ -259,7 +259,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
         } else if s.demo && page.id == "demo-control-catalog" {
             super::icons::controls_catalog(p, width)
         } else if page.dashboard.is_some() {
-            super::dashboard::global(s, p, if page.wide { width } else { width.min(770.0) })
+            super::dashboard::global(s, p)
         } else if page.collection.is_some() {
             collections::view(s, p, if page.wide { width } else { width.min(770.0) })
         } else {

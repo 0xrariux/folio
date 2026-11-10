@@ -430,34 +430,41 @@ fn data_grid(
     p: Palette,
 ) -> El {
     let columns: Vec<_> = settings.columns.iter().filter(|c| c.visible).collect();
-    let mut header = row()
-        .h(30.0)
-        .px(8.0)
-        .gap(8.0)
-        .center_y()
-        .fill(p.sidebar)
-        .child(label("Nom", 10.0, p.faint).w(200.0))
-        .child(label("Statut", 10.0, p.faint).w(100.0))
-        .child(label("Échéance", 10.0, p.faint).w(105.0));
+    let mut header = super::table::header_row(format!("embed-header-{}", block.id), 36.0, p)
+        .child(
+            super::table::column_heading("Nom", p)
+                .px(6.0)
+                .w(200.0)
+                .min_w(200.0)
+                .grow(1.0),
+        )
+        .child(super::table::column_heading("Statut", p).px(6.0).w(100.0))
+        .child(super::table::column_heading("Échéance", p).px(6.0).w(105.0));
     for c in &columns {
         header = header.child(
-            label(&c.name, 10.0, p.faint)
-                .w(settings.width(&c.id, 140.0))
-                .truncate(),
+            super::table::column_heading(&c.name, p)
+                .px(6.0)
+                .w(settings.width(&c.id, 140.0)),
         );
     }
-    let min_width = 437.0
+    let min_width = 441.0
         + columns
             .iter()
             .map(|c| settings.width(&c.id, 140.0) + 8.0)
             .sum::<f32>();
     let mut rows = col()
-        .w(min_width)
-        .child(header)
-        .child(el().w_full().h(1.0).fill(p.line));
+        .key(format!("embed-content-{}", block.id))
+        .w_full()
+        .min_w(min_width)
+        .child(header);
     for (index, page) in records.iter().take(100).enumerate() {
         if index > 0 {
-            rows = rows.child(el().w_full().h(1.0).fill(p.line));
+            rows = rows.child(
+                el().key(format!("embed-separator-{}-{}", block.id, page.id))
+                    .w_full()
+                    .h(1.0)
+                    .fill(p.line),
+            );
         }
         let id = page.id.clone();
         let status_id = id.clone();
@@ -466,19 +473,30 @@ fn data_grid(
         let anchor = format!("embed-due-{}-{id}", block.id);
         let due_key = anchor.clone();
         let mut line = row()
-            .h(35.0)
-            .px(8.0)
+            .key(format!("embed-row-{}-{id}", block.id))
+            .role("row")
+            .w_full()
+            .h(40.0)
+            .px(10.0)
             .gap(8.0)
             .center_y()
             .child(
-                action(
+                super::button(
                     format!("embed-record-{}-{id}", block.id),
                     page.display_title(),
                     p,
                     move |s, _| s.select(&id),
                 )
                 .w(200.0)
-                .justify_start(),
+                .min_w(200.0)
+                .grow(1.0)
+                .px(6.0)
+                .justify_start()
+                .child(
+                    label(page.display_title(), 12.0, p.muted)
+                        .min_w(0.0)
+                        .truncate(),
+                ),
             )
             .child(
                 action(
@@ -497,6 +515,7 @@ fn data_grid(
                     },
                 )
                 .w(100.0)
+                .px(6.0)
                 .justify_start(),
             )
             .child(
@@ -507,17 +526,23 @@ fn data_grid(
                     move |s, _| s.open_date(&due_id, None, &anchor),
                 )
                 .w(105.0)
+                .px(6.0)
                 .justify_start(),
             );
         for c in &columns {
+            let cell = super::custom_fields::cell_with_key(
+                s,
+                page,
+                c,
+                p,
+                format!("embed-cell-{}-{}-{}", block.id, page.id, c.id),
+            );
             line = line.child(el().w(settings.width(&c.id, 140.0)).child(
-                super::custom_fields::cell_with_key(
-                    s,
-                    page,
-                    c,
-                    p,
-                    format!("embed-cell-{}-{}-{}", block.id, page.id, c.id),
-                ),
+                if c.kind == ColumnKind::Checkbox {
+                    cell.ml(6.0)
+                } else {
+                    cell
+                },
             ));
         }
         rows = rows.child(line);
@@ -525,15 +550,22 @@ fn data_grid(
     if records.is_empty() {
         rows = rows.child(label("Aucune fiche pour cette vue.", 12.0, p.faint).padding(12.0));
     }
-    col()
-        .w_full()
-        .h((records.len().min(100) as f32 * 36.0 + 32.0).clamp(65.0, 320.0))
-        .min_h(0.0)
-        .border(1.0, p.line)
-        .border_layout()
-        .radius(5.0)
-        .clip_rounded(5.0)
-        .child(col().w_full().h_full().min_h(0.0).scroll_xy().child(rows))
+    let count = records.len().min(100);
+    let height = 36.0
+        + if count == 0 {
+            54.0
+        } else {
+            count as f32 * 40.0 + count.saturating_sub(1) as f32
+        };
+    super::table::frame(
+        format!("embed-frame-{}", block.id),
+        format!("embed-table-{}", block.id),
+        "Fiches de la vue intégrée",
+        rows,
+        height,
+        320.0,
+        p,
+    )
 }
 fn mini_calendar(s: &State, block: &NoteBlock, records: &[&Page], p: Palette) -> El {
     use chrono::Datelike;

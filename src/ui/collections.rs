@@ -449,10 +449,10 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
     }
     body = body.child(super::selection::records(s, p));
     body.child(match settings.view {
-        View::Table => super::table::view(s, p, width),
+        View::Table => super::table::view(s, p),
         View::Board => board(s, p, width),
         View::Calendar => super::calendar::view(s, p),
-        View::Dashboard => super::dashboard::view(s, p, width),
+        View::Dashboard => super::dashboard::view(s, p),
     })
 }
 

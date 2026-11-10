@@ -2,6 +2,9 @@
 
 ## 0.10.0
 
+- Tableaux intégrés étirés sur toute la largeur disponible, y compris après
+  redimensionnement ; cadre et en-tête communs aux tableaux et dashboards,
+  avec bordure unique et séparateurs uniquement entre les fiches.
 - Nouveau logo Folio créé dans Blender : F plein aux terminaisons de feuilles
   pliées, badge mieux proportionné, source `.blend`, rendus PNG et exports SVG.
   Le monogramme vectoriel est intégré à la barre latérale et au catalogue.

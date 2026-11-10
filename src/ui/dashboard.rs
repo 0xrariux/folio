@@ -222,31 +222,44 @@ fn deadlines(s: &State, items: &[&Page], p: Palette) -> El {
     }
     box_ui
 }
-fn details(s: &State, items: &[&Page], p: Palette, width: f32) -> El {
-    let mut rows = col().w(width.max(700.0)).child(
-        row()
-            .h(32.0)
-            .px(10.0)
-            .gap(8.0)
-            .center_y()
-            .fill(p.sidebar)
-            .child(label("Fiche", 10.0, p.faint).grow(1.0).min_w(170.0))
-            .child(label("Base", 10.0, p.faint).w(150.0))
-            .child(label("Statut", 10.0, p.faint).w(112.0))
-            .child(label("Échéance", 10.0, p.faint).w(100.0)),
-    );
-    for page in items {
+fn details(s: &State, items: &[&Page], p: Palette) -> El {
+    let mut rows = col()
+        .key("dashboard-details-content")
+        .w_full()
+        .min_w(700.0)
+        .child(
+            super::table::header_row("dashboard-details-header", 36.0, p)
+                .child(
+                    super::table::column_heading("Fiche", p)
+                        .grow(1.0)
+                        .min_w(170.0),
+                )
+                .child(super::table::column_heading("Base", p).w(150.0))
+                .child(super::table::column_heading("Statut", p).w(112.0))
+                .child(super::table::column_heading("Échéance", p).w(100.0)),
+        );
+    for (index, page) in items.iter().enumerate() {
+        if index > 0 {
+            rows = rows.child(
+                el().key(format!("dashboard-separator-{}", page.id))
+                    .w_full()
+                    .h(1.0)
+                    .fill(p.line),
+            );
+        }
         let base = page
             .parent_id
             .as_ref()
             .and_then(|id| s.pages.iter().find(|p| p.id == *id));
         rows = rows.child(
             row()
-                .h(41.0)
+                .key(format!("dashboard-row-{}", page.id))
+                .role("row")
+                .w_full()
+                .h(42.0)
                 .px(10.0)
                 .gap(8.0)
                 .center_y()
-                .border_sides([0.0, 0.0, 1.0, 0.0], p.line)
                 .child(title_button(page, p).min_w(170.0))
                 .child(
                     label(base.map_or("—", |p| p.display_title()), 11.0, p.faint)
@@ -263,21 +276,25 @@ fn details(s: &State, items: &[&Page], p: Palette, width: f32) -> El {
         rows = rows
             .child(label("Aucune fiche ne correspond aux filtres.", 12.0, p.faint).padding(16.0));
     }
+    let height = 36.0
+        + if items.is_empty() {
+            54.0
+        } else {
+            items.len() as f32 * 42.0 + items.len().saturating_sub(1) as f32
+        };
     col()
         .gap(8.0)
         .w_full()
         .child(label("Les fiches derrière les chiffres", 13.0, p.ink))
-        .child(
-            col()
-                .key("dashboard-details")
-                .w_full()
-                .h((items.len() as f32 * 41.0 + 34.0).clamp(86.0, 240.0))
-                .min_h(0.0)
-                .radius(6.0)
-                .border(1.0, p.line)
-                .scroll_xy()
-                .child(rows),
-        )
+        .child(super::table::frame(
+            "dashboard-details-frame",
+            "dashboard-details",
+            "Fiches derrière les chiffres",
+            rows,
+            height,
+            252.0,
+            p,
+        ))
 }
 fn sources(s: &State, items: &[&Page], p: Palette) -> El {
     let mut list = col()
@@ -333,7 +350,7 @@ fn sources(s: &State, items: &[&Page], p: Palette) -> El {
     list
 }
 
-pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
+pub(super) fn view(s: &State, p: Palette) -> El {
     let items = s.tracking_items();
     let summary = Summary::from_pages(&items, &s.today);
     let filter = s.tracking_filter();
@@ -480,10 +497,10 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
         view = view.child(sources(s, &items, p));
     }
     view.child(deadlines(s, &items, p))
-        .child(details(s, &items, p, width))
+        .child(details(s, &items, p))
 }
 
-pub(super) fn global(s: &State, p: Palette, width: f32) -> El {
+pub(super) fn global(s: &State, p: Palette) -> El {
     let mut body = col().w_full().gap(12.0);
     body = body.child(
         row()
@@ -516,5 +533,5 @@ pub(super) fn global(s: &State, p: Palette, width: f32) -> El {
             )),
     );
     body.child(row().w_full().child(super::collections::search(s, p)))
-        .child(view(s, p, width))
+        .child(view(s, p))
 }

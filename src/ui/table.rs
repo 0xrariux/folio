@@ -7,6 +7,65 @@ use crate::state::State;
 use folio::{collection::BuiltinColumn, fields::Column};
 use rune::{El, TextStyle, col, el, row};
 
+pub(super) fn column_heading(title: &str, p: Palette) -> El {
+    label(title, 11.0, p.muted)
+        .font(TextStyle::new(11.0, 500.0))
+        .role("columnheader")
+        .min_w(0.0)
+        .truncate()
+}
+
+pub(super) fn header_row(key: impl Into<String>, height: f32, p: Palette) -> El {
+    row()
+        .key(key)
+        .role("row")
+        .w_full()
+        .sticky_top(0.0)
+        .h(height)
+        .px(10.0)
+        .gap(8.0)
+        .center_y()
+        .fill(p.sidebar)
+        .border_sides([0.0, 0.0, 1.0, 0.0], p.line)
+        .border_layout()
+}
+
+/// Keep the outer stroke outside the scrolling content, with exact content
+/// height and separators only between rows, so the final row has one border.
+pub(super) fn frame(
+    key: impl Into<String>,
+    scroll_key: impl Into<String>,
+    title: &str,
+    content: El,
+    content_height: f32,
+    max_height: f32,
+    p: Palette,
+) -> El {
+    col()
+        .key(key)
+        .w_full()
+        .h((content_height + 2.0).min(max_height))
+        .min_h(0.0)
+        .radius(6.0)
+        .clip_rounded(6.0)
+        .fill(p.bg)
+        .border(1.0, p.line)
+        .border_layout()
+        .child(
+            col()
+                .key(scroll_key)
+                .role("table")
+                .label(title)
+                .w_full()
+                .h_full()
+                .min_h(0.0)
+                .scroll_xy()
+                // Rune stretches this wrapper to the viewport; the table inside
+                // can keep its pixel minimum without overriding that width floor.
+                .child(col().w_full().child(content)),
+        )
+}
+
 enum Field<'a> {
     Builtin(BuiltinColumn),
     Custom(&'a Column),
@@ -37,14 +96,7 @@ fn header(id: &str, title: &str, width: f32, default: f32, p: Palette) -> El {
         .w(width)
         .gap(3.0)
         .center_y()
-        .child(
-            label(title, 11.0, p.muted)
-                .font(TextStyle::new(11.0, 500.0))
-                .role("columnheader")
-                .grow(1.0)
-                .min_w(0.0)
-                .truncate(),
-        )
+        .child(column_heading(title, p).grow(1.0))
         .child(
             el().key(format!("resize-column-{id}"))
                 .w(6.0)
@@ -56,7 +108,7 @@ fn header(id: &str, title: &str, width: f32, default: f32, p: Palette) -> El {
                 .on_drag(move |s: &mut State, drag, _| s.resize_column(&key, default, drag)),
         )
 }
-pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
+pub(super) fn view(s: &State, p: Palette) -> El {
     let items = s.collection_items();
     let settings = s.current().and_then(|p| p.collection.as_ref()).unwrap();
     let mut fields: Vec<_> = BuiltinColumn::ALL
@@ -91,17 +143,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
             .iter()
             .all(|p| s.workspace.selected_records.contains(&p.id));
     let ids: Vec<_> = items.iter().map(|p| p.id.clone()).collect();
-    let mut head = row()
-        .key("collection-table-header")
-        .role("row")
-        .sticky_top(0.0)
-        .h(40.0)
-        .px(10.0)
-        .gap(8.0)
-        .center_y()
-        .fill(p.sidebar)
-        .border_sides([0.0, 0.0, 1.0, 0.0], p.line)
-        .border_layout()
+    let mut head = header_row("collection-table-header", 40.0, p)
         .child(
             super::button(
                 "select-all-records",
@@ -138,7 +180,8 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
     }
     let mut rows = col()
         .key("collection-table-content")
-        .w((width - 2.0).max(min_width))
+        .w_full()
+        .min_w(min_width)
         .child(head);
     for (index, page) in items.iter().enumerate() {
         if index > 0 {
@@ -226,24 +269,13 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
         } else {
             items.len() as f32 * 44.0 + items.len().saturating_sub(1) as f32
         };
-    col()
-        .key("collection-table-frame")
-        .w_full()
-        .h((height + 2.0).min(380.0))
-        .min_h(0.0)
-        .radius(6.0)
-        .clip_rounded(6.0)
-        .border(1.0, p.line)
-        .border_layout()
-        .child(
-            col()
-                .key("collection-table")
-                .role("table")
-                .label("Fiches de la base")
-                .w_full()
-                .h_full()
-                .min_h(0.0)
-                .scroll_xy()
-                .child(rows),
-        )
+    frame(
+        "collection-table-frame",
+        "collection-table",
+        "Fiches de la base",
+        rows,
+        height,
+        380.0,
+        p,
+    )
 }
