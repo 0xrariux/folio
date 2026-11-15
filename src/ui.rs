@@ -113,6 +113,9 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
         _ => state.pending.values().find_map(|p| p.error.as_deref()),
     };
     let mut main = col()
+        .key("main")
+        .role("main")
+        .label("Contenu du carnet")
         .grow(1.0)
         .min_w(0.0)
         .min_h(0.0)

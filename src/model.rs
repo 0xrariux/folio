@@ -57,9 +57,8 @@ impl Page {
     }
 
     pub fn matches(&self, query: &str) -> bool {
-        let query = query.trim().to_lowercase();
-        self.title.to_lowercase().contains(&query)
-            || self.plain_text.to_lowercase().contains(&query)
+        let fold = rune_kit::search::Fold::for_language("fr");
+        fold.contains(&self.title, query) || fold.contains(&self.plain_text, query)
     }
 
     pub fn replace_html(&mut self, html: &str) {

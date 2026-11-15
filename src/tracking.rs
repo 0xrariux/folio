@@ -4,6 +4,7 @@ use folio::{
     dashboard::{DashboardConfig, Deadline, Scope, TrackingFilter},
     model::{Page, now},
 };
+use rune_kit::search::Fold;
 
 impl State {
     pub fn open_dashboard(&mut self) {
@@ -57,7 +58,7 @@ impl State {
         }
         let sources = self.tracking_sources();
         let filter = self.tracking_filter();
-        let query = self.collection_search.text.trim().to_lowercase();
+        let query = self.collection_search.text.trim();
         let mut items: Vec<_> = self
             .pages
             .iter()
@@ -67,15 +68,15 @@ impl State {
                         .as_ref()
                         .is_some_and(|id| sources.iter().any(|s| s.id == *id))
                     && filter.matches(p, &self.today)
-                    && (p.matches(&query)
+                    && (p.matches(query)
                         || p.properties
                             .tags
                             .iter()
-                            .any(|tag| tag.to_lowercase().contains(&query))
+                            .any(|tag| Fold::for_language("fr").contains(tag, query))
                         || p.properties
                             .custom
                             .values()
-                            .any(|v| v.display().to_lowercase().contains(&query)))
+                            .any(|v| Fold::for_language("fr").contains(&v.display(), query)))
             })
             .collect();
         items.sort_by(|a, b| {

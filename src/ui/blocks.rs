@@ -382,8 +382,24 @@ fn block(
     if after {
         after_zone = after_zone.child(marker());
     }
-    row()
-        .key(format!("block-{}", b.data.id))
+    let level = match kind {
+        Kind::Heading1 | Kind::ToggleHeading1 => Some(2),
+        Kind::Heading2 | Kind::ToggleHeading2 => Some(3),
+        Kind::Heading3 | Kind::ToggleHeading3 => Some(4),
+        _ => None,
+    };
+    let mut block = row().key(format!("block-{}", b.data.id));
+    if let Some(level) = level {
+        block = block
+            .role("heading")
+            .level(level)
+            .label(if b.edit.text.trim().is_empty() {
+                kind.name().to_string()
+            } else {
+                b.edit.text.clone()
+            });
+    }
+    block
         .w_full()
         .gap(3.0)
         .py(4.0)

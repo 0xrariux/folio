@@ -242,6 +242,8 @@ pub(super) fn view(s: &State, p: Palette) -> El {
     }
     col()
         .key("sidebar")
+        .role("navigation")
+        .label("Navigation du carnet")
         .w(s.workspace.preferences.sidebar_width as f32)
         .h_full()
         .fill(p.sidebar)

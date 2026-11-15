@@ -5,7 +5,8 @@ use super::{
 };
 use crate::state::State;
 use folio::{collection::BuiltinColumn, fields::Column};
-use rune::{El, TextStyle, col, el, row};
+use rune::{El, GrowthSpec, TextStyle, col, el, row};
+use std::{collections::HashMap, rc::Rc};
 
 pub(super) fn column_heading(title: &str, p: Palette) -> El {
     label(title, 11.0, p.muted)
@@ -66,11 +67,11 @@ pub(super) fn frame(
         )
 }
 
-enum Field<'a> {
+enum Field {
     Builtin(BuiltinColumn),
-    Custom(&'a Column),
+    Custom(Column),
 }
-impl Field<'_> {
+impl Field {
     fn id(&self) -> String {
         match self {
             Self::Builtin(c) => format!("{c:?}"),
@@ -120,6 +121,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                 .columns
                 .iter()
                 .filter(|c| c.visible)
+                .cloned()
                 .map(Field::Custom),
         )
         .collect();
@@ -183,82 +185,51 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         .w_full()
         .min_w(min_width)
         .child(head);
-    for (index, page) in items.iter().enumerate() {
-        if index > 0 {
-            rows = rows.child(
-                el().key(format!("table-separator-{}", page.id))
-                    .w_full()
-                    .h(1.0)
-                    .fill(p.line),
-            );
-        }
-        let id = page.id.clone();
-        let selected = s.workspace.selected_records.contains(&id);
-        let mut cells = row()
-            .key(format!("table-row-{id}"))
-            .role("row")
-            .h(44.0)
-            .px(10.0)
-            .gap(8.0)
-            .center_y()
-            .fill(if selected { p.tint } else { p.bg })
-            .child(
-                super::button(
-                    format!("select-record-{id}"),
-                    "Sélectionner cette fiche",
-                    p,
-                    move |s, _| {
-                        if !s.workspace.selected_records.insert(id.clone()) {
-                            s.workspace.selected_records.remove(&id);
-                        }
-                    },
-                )
-                .size(20.0, 25.0)
-                .px(0.0)
-                .role("checkbox")
-                .checked(selected)
-                .child(icons::checkbox_mark(selected, p)),
-            )
-            .child(
-                el().w(name_width)
-                    .child(title_button(page, p).w_full().min_w(0.0)),
-            );
-        for field in &fields {
-            let cell = match field {
-                Field::Builtin(BuiltinColumn::Status) => status_button(page, p),
-                Field::Builtin(BuiltinColumn::Priority) => priority_button(page, p),
-                Field::Builtin(BuiltinColumn::Due) => {
-                    let id = page.id.clone();
-                    let anchor = format!("due-{id}");
-                    let key = anchor.clone();
-                    action(
-                        key,
-                        page.properties.due.as_deref().unwrap_or("—"),
-                        p,
-                        move |s, tx| {
-                            s.open_date(&id, None, &anchor);
-                            tx.focus("date-value", false);
-                        },
+    if !items.is_empty() {
+        // Resolve positions once per view. Deferred row builders must not filter and
+        // sort the entire base again for every mounted row.
+        let positions: HashMap<_, _> = s
+            .pages
+            .iter()
+            .enumerate()
+            .map(|(index, page)| (page.id.as_str(), index))
+            .collect();
+        let records: Rc<Vec<_>> = Rc::new(
+            items
+                .iter()
+                .map(|page| {
+                    (
+                        positions[page.id.as_str()],
+                        format!("table-row-{}", page.id),
                     )
-                    .px(3.0)
-                }
-                Field::Builtin(BuiltinColumn::Tags) => details_button(
-                    page,
-                    if page.properties.tags.is_empty() {
-                        "—"
-                    } else {
-                        "Étiquettes…"
+                })
+                .collect(),
+        );
+        let keys = records.clone();
+        rows = rows.child(
+            col()
+                .key("collection-table-rows")
+                .w_full()
+                .growth(GrowthSpec::default())
+                .virtual_rows(
+                    items.len(),
+                    45.0,
+                    move |_: &State, index| keys[index].1.clone().into(),
+                    move |s: &State, index| {
+                        let page = &s.pages[records[index].0];
+                        let mut content = col().w_full();
+                        if index > 0 {
+                            content = content.child(
+                                el().key(format!("table-separator-{}", page.id))
+                                    .w_full()
+                                    .h(1.0)
+                                    .fill(p.line),
+                            );
+                        }
+                        content.child(record_row(s, page, &fields, name_width, p))
                     },
-                    p,
                 ),
-                Field::Custom(c) => super::custom_fields::cell(s, page, c, p),
-            };
-            cells = cells.child(
-                el().w(settings.width(&field.id(), field.width()))
-                    .child(cell),
-            );
-        }
-        rows = rows.child(cells);
+        );
     }
     if items.is_empty() {
         rows = rows.child(label("Aucune fiche pour ce filtre.", 12.0, p.faint).padding(18.0));
@@ -278,4 +249,81 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         380.0,
         p,
     )
+}
+
+fn record_row(
+    s: &State,
+    page: &folio::model::Page,
+    fields: &[Field],
+    name_width: f32,
+    p: Palette,
+) -> El {
+    let settings = s.current().and_then(|p| p.collection.as_ref()).unwrap();
+    let id = page.id.clone();
+    let selected = s.workspace.selected_records.contains(&id);
+    let mut cells = row()
+        .key(format!("table-cells-{id}"))
+        .role("row")
+        .h(44.0)
+        .px(10.0)
+        .gap(8.0)
+        .center_y()
+        .fill(if selected { p.tint } else { p.bg })
+        .child(
+            super::button(
+                format!("select-record-{id}"),
+                "Sélectionner cette fiche",
+                p,
+                move |s, _| {
+                    if !s.workspace.selected_records.insert(id.clone()) {
+                        s.workspace.selected_records.remove(&id);
+                    }
+                },
+            )
+            .size(20.0, 25.0)
+            .px(0.0)
+            .role("checkbox")
+            .checked(selected)
+            .child(icons::checkbox_mark(selected, p)),
+        )
+        .child(
+            el().w(name_width)
+                .child(title_button(page, p).w_full().min_w(0.0)),
+        );
+    for field in fields {
+        let cell = match field {
+            Field::Builtin(BuiltinColumn::Status) => status_button(page, p),
+            Field::Builtin(BuiltinColumn::Priority) => priority_button(page, p),
+            Field::Builtin(BuiltinColumn::Due) => {
+                let id = page.id.clone();
+                let anchor = format!("due-{id}");
+                let key = anchor.clone();
+                action(
+                    key,
+                    page.properties.due.as_deref().unwrap_or("—"),
+                    p,
+                    move |s, tx| {
+                        s.open_date(&id, None, &anchor);
+                        tx.focus("date-value", false);
+                    },
+                )
+                .px(3.0)
+            }
+            Field::Builtin(BuiltinColumn::Tags) => details_button(
+                page,
+                if page.properties.tags.is_empty() {
+                    "—"
+                } else {
+                    "Étiquettes…"
+                },
+                p,
+            ),
+            Field::Custom(c) => super::custom_fields::cell(s, page, c, p),
+        };
+        cells = cells.child(
+            el().w(settings.width(&field.id(), field.width()))
+                .child(cell),
+        );
+    }
+    cells
 }

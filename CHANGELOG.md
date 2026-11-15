@@ -1,5 +1,22 @@
 # Changelog
 
+## À venir
+
+- Rune actualisé de `70eff811` à `7a92d24d` (627 commits) : patches Cargo
+  des dépendances embarquées, verrouillage et guides alignés ; arrêt ordonné
+  conservant les écritures en attente et la sauvegarde du carnet à la fermeture.
+  Feature `tooling` pour les captures release.
+  [Impacts et suites appliquées](docs/RUNE_UPDATE.md).
+
+- Lignes des bases en tableau construites avec `virtual_rows` : clés stables,
+  focus hors écran et sélection de toutes les fiches filtrées conservés.
+- Recherche Unicode dans les pages, commandes, liens et propriétés : une requête
+  sans accent trouve les formes accentuées, avec surbrillance dans la palette.
+- Repères accessibles de navigation/contenu, titres nommés et annonces des fins
+  de sauvegarde/export et des erreurs asynchrones ; navigation F6/Maj+F6 testée.
+- Mesures des grandes vues et scénarios de capture pour le redimensionnement
+  des tableaux et la recherche Unicode.
+
 ## 0.10.0
 
 - Tableaux intégrés étirés sur toute la largeur disponible, y compris après

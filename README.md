@@ -19,7 +19,7 @@ Prérequis : Rust installé avec `rustup`.
 
 ```sh
 git clone https://github.com/anomalyco/rune.git
-git -C rune checkout 70eff81165e9854834a75f17753edb6c96ab2ab7
+git -C rune checkout 7a92d24d63d9be8480e3e475489d2a4d0ed48c8d
 git clone https://github.com/0xrariux/folio.git
 cd folio
 cargo run --locked
@@ -27,6 +27,11 @@ cargo run --locked
 
 Garder les dossiers `rune` et `folio` côte à côte. La version de Rust est fixée
 par `rust-toolchain.toml`.
+
+Les patches Cargo utilisent aussi le dossier `rune/vendor` de cette révision.
+Pour les captures et scripts avec un binaire release, ajouter `--features tooling` :
+`FOLIO_DEMO=1 cargo run --release --locked --features tooling -- --snap /tmp/folio.png`.
+Voir le [bilan de mise à jour Rune](docs/RUNE_UPDATE.md).
 
 ## Démonstration
 

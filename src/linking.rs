@@ -7,6 +7,7 @@ use folio::{
     model::{Page, now},
 };
 use rune::{TextEdit, Tx};
+use rune_kit::search::Fold;
 
 #[derive(Clone)]
 pub struct LinkForm {
@@ -35,13 +36,13 @@ impl State {
         let Panel::Link(form) = &self.panel else {
             return Vec::new();
         };
-        let query = form.query.text.to_lowercase();
+        let query = form.query.text.trim();
         self.pages
             .iter()
             .filter(|p| {
                 !p.archived
                     && Some(&p.id) != self.selected.as_ref()
-                    && p.title.to_lowercase().contains(&query)
+                    && Fold::for_language("fr").contains(&p.title, query)
             })
             .collect()
     }

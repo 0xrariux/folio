@@ -4,6 +4,7 @@ use folio::{
     model::{Page, now},
 };
 use rune::{TextEdit, Tx};
+use rune_kit::search::Fold;
 
 #[derive(Clone, Copy)]
 pub enum PropertyField {
@@ -56,7 +57,7 @@ impl State {
         let Some(settings) = &parent.collection else {
             return Vec::new();
         };
-        let query = self.collection_search.text.trim().to_lowercase();
+        let query = self.collection_search.text.trim();
         let mut items: Vec<_> = self
             .pages
             .iter()
@@ -64,15 +65,15 @@ impl State {
                 p.parent_id.as_deref() == Some(&parent.id)
                     && !p.archived
                     && settings.filter().matches(p, &self.today)
-                    && (p.matches(&query)
+                    && (p.matches(query)
                         || p.properties
                             .tags
                             .iter()
-                            .any(|tag| tag.to_lowercase().contains(&query))
+                            .any(|tag| Fold::for_language("fr").contains(tag, query))
                         || p.properties
                             .custom
                             .values()
-                            .any(|v| v.display().to_lowercase().contains(&query)))
+                            .any(|v| Fold::for_language("fr").contains(&v.display(), query)))
             })
             .collect();
         items.sort_by(|a, b| {

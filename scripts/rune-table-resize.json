@@ -1,0 +1,31 @@
+{
+  "events": [
+    {
+      "t": 0.1,
+      "type": "tap",
+      "key": "theme"
+    },
+    {
+      "t": 0.3,
+      "type": "resize",
+      "dw": -180,
+      "dh": -100,
+      "dur": 0.2
+    },
+    {
+      "t": 0.6,
+      "type": "resize",
+      "dw": 180,
+      "dh": 100,
+      "dur": 0.2
+    },
+    {
+      "t": 1.0,
+      "type": "drag",
+      "key": "resize-column-name",
+      "dx": 80,
+      "dy": 0,
+      "dur": 0.3
+    }
+  ]
+}

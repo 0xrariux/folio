@@ -180,17 +180,25 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 )),
         )
         .child(
-            text_input(&s.title, TextStyle::new(36.0, 650.0))
-                .key("page-title")
-                .label("Titre de la page")
+            col()
+                .key("page-heading")
+                .role("heading")
+                .level(1)
+                .label(page.display_title())
                 .w_full()
-                .single_line()
-                .color(p.ink)
-                .caret(p.accent, p.tint)
-                .placeholder("Sans titre", p.faint)
-                .on_edit(|s: &mut State| &mut s.title)
-                .on_input_change(|s: &mut State, _| s.edit())
-                .on_submit(|s: &mut State, tx| s.focus_active(tx)),
+                .child(
+                    text_input(&s.title, TextStyle::new(36.0, 650.0))
+                        .key("page-title")
+                        .label("Titre de la page")
+                        .w_full()
+                        .single_line()
+                        .color(p.ink)
+                        .caret(p.accent, p.tint)
+                        .placeholder("Sans titre", p.faint)
+                        .on_edit(|s: &mut State| &mut s.title)
+                        .on_input_change(|s: &mut State, _| s.edit())
+                        .on_submit(|s: &mut State, tx| s.focus_active(tx)),
+                ),
         )
         .child(
             row()

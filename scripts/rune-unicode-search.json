@@ -1,0 +1,15 @@
+{
+  "events": [
+    {
+      "t": 0.1,
+      "type": "key",
+      "name": "k",
+      "cmd": true
+    },
+    {
+      "t": 0.25,
+      "type": "type",
+      "text": "inserer"
+    }
+  ]
+}

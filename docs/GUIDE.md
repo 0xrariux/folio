@@ -14,7 +14,7 @@ repos/
 
 ```sh
 git clone https://github.com/anomalyco/rune.git
-git -C rune checkout 70eff81165e9854834a75f17753edb6c96ab2ab7
+git -C rune checkout 7a92d24d63d9be8480e3e475489d2a4d0ed48c8d
 git clone https://github.com/0xrariux/folio.git
 cd folio
 cargo run --locked
@@ -22,7 +22,7 @@ cargo run --locked
 
 Rust `1.99.1` est sélectionné par `rust-toolchain.toml`. La première compilation
 peut prendre quelques minutes. Rune utilise le dépôt voisin, avec comme révision
-de référence `70eff81165e9854834a75f17753edb6c96ab2ab7` de `dev`. Conserver cette
+de référence `7a92d24d63d9be8480e3e475489d2a4d0ed48c8d` de `dev`. Conserver cette
 révision pour reproduire le socle ; ses API évoluent encore. Les dépendances
 publiées, dont `turso 0.8.3`, sont verrouillées dans `Cargo.lock`.
 
@@ -128,6 +128,16 @@ permet de récupérer l’original. L’export Markdown copie les médias dans u
 `folio-assets` à côté du document.
 
 ⌘K recherche globalement des pages et des commandes, avec navigation au clavier.
+La recherche utilise les règles Unicode dans les pages, les commandes, les liens
+et les propriétés des fiches : `reunion` retrouve « Réunion », tandis que
+`réunion` conserve l’accent comme critère. Les résultats de la palette surlignent
+les correspondances dans le titre original.
+
+F6 passe entre la navigation du carnet et le contenu ; Maj+F6 revient en arrière
+en restaurant le dernier contrôle utilisé. Les titres de page et de blocs sont
+nommés et hiérarchisés pour les lecteurs d’écran. Les fins de sauvegarde/export
+et les erreurs asynchrones sont annoncées. VoiceOver reste à qualifier en usage réel.
+
 `@` pendant la saisie insère une mention de page ; le menu d’un bloc copie un lien
 vers ce bloc. Les liens retour incluent les mentions. `/sommaire` ajoute une table
 des matières qui suit les titres ; activer un lien ouvre les tiroirs nécessaires.
@@ -245,6 +255,12 @@ complète du carnet, accessible depuis « Votre carnet ». La restauration impor
 un fichier `.folio` ; l’import de Markdown, CSV ou d’un export Notion reste absent.
 
 ## Tableaux et colonnes personnalisées
+
+Les lignes de la vue Tableau des bases sont virtualisées : seules celles proches
+de la zone affichée construisent leurs cellules. Le focus clavier et la sélection
+sont conservés hors écran. La case de l’en-tête sélectionne toutes les fiches du
+filtre courant, y compris celles hors écran. Les documents éditables, les vues
+intégrées et les tableaux des dashboards ne sont pas encore virtualisés.
 
 Le bouton « Colonnes » d’une base permet d’ajouter jusqu’à 12 colonnes. Les types
 proposés sont Texte, Nombre, Date, Case à cocher, Relation, Agrégation et Formule. Le nom peut être renommé ; le
@@ -565,6 +581,8 @@ FOLIO_DEMO=1 cargo run --locked -- --script scripts/table.json --snap artifacts/
 FOLIO_DEMO=1 cargo run --locked -- --script scripts/link-picker.json --snap artifacts/folio-v3-links.png --at 1.6
 FOLIO_DEMO=1 cargo run --locked -- --scene dashboard --snap artifacts/folio-v4-dashboard.png --size 1200x1120 --at 0.6
 FOLIO_DEMO=1 cargo run --locked -- --scene table-custom --snap artifacts/folio-v4-table.png --at 0.6
+FOLIO_DEMO=1 cargo run --locked -- --scene table-custom --script scripts/rune-table-resize.json --snap artifacts/folio-rune-table-light-resize.png --at 1.6
+FOLIO_DEMO=1 cargo run --locked -- --script scripts/rune-unicode-search.json --snap artifacts/folio-rune-unicode.png --at 0.8
 FOLIO_DEMO=1 cargo run --locked -- --scene saved-views --script scripts/views.json --snap artifacts/folio-v5-views.png --at 0.8
 FOLIO_DEMO=1 cargo run --locked -- --scene late-view --snap artifacts/folio-v5-late.png --size 1200x1120 --at 0.6
 FOLIO_DEMO=1 cargo run --locked -- --scene drag-list
@@ -585,7 +603,8 @@ les permissions, la disposition libre des widgets, les colonnes de blocs,
 les vues galerie/timeline et l’import d’exports Notion restent à construire.
 Les formules couvrent les calculs numériques simples, pas le langage complet de Notion.
 
-L’ensemble du carnet est chargé en mémoire et la recherche est textuelle simple.
+L’ensemble du carnet est chargé en mémoire et la recherche Unicode parcourt
+les textes sans index.
 Pour de gros carnets, il faudra paginer les pages, virtualiser la navigation et
 indexer la recherche dans Turso. Aucune mesure comparative de performances
 avec Notion n’a été réalisée.

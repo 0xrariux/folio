@@ -5,6 +5,9 @@ edition = "2024"
 license = "MIT"
 description = "A small native workspace for your notes, built with Rune and Turso."
 
+[features]
+tooling = ["rune/tooling"]
+
 [dependencies]
 anyhow = "1"
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
@@ -17,6 +20,15 @@ turso = "=0.8.3"
 uuid = { version = "1", features = ["v4"] }
 tempfile = "3"
 base64 = "0.22"
+
+# Cargo only applies patches declared by the application workspace.
+# Keep these sources aligned with the sibling Rune checkout.
+[patch.crates-io]
+accesskit_macos = { path = "../rune/vendor/accesskit_macos" }
+accesskit_windows = { path = "../rune/vendor/accesskit_windows" }
+parley_engine = { path = "../rune/vendor/parley_engine" }
+wgpu-hal = { path = "../rune/vendor/wgpu-hal" }
+winit = { path = "../rune/vendor/winit" }
 
 [profile.dev]
 debug = 1

@@ -47,7 +47,7 @@ fn poll(state: &mut State, _: f64, tx: &mut Tx) -> bool {
         .as_ref()
         .map(|worker| worker.events.try_iter().collect())
         .unwrap_or_default();
-    let mut changed = state.poll_export() || !events.is_empty();
+    let mut changed = poll_updates(state, events, tx);
     if !state.demo {
         let today = folio::dashboard::local_today();
         if today != state.today {
@@ -56,11 +56,57 @@ fn poll(state: &mut State, _: f64, tx: &mut Tx) -> bool {
         }
         tx.wake_after(std::time::Duration::from_secs(60));
     }
-    for event in events {
-        state.accept(event);
-    }
     if changed {
         tx.instant();
+    }
+    changed
+}
+
+fn poll_updates(state: &mut State, events: Vec<worker::Event>, tx: &mut Tx) -> bool {
+    let had_pending = !state.pending.is_empty();
+    let previous_message = state.export_message.clone();
+    let mut errors = Vec::new();
+    let mut saved = false;
+    let changed = state.poll_export() || !events.is_empty();
+    for event in events {
+        use worker::Event;
+        use workspace_worker::Response;
+        match &event {
+            Event::LoadFailed(message)
+            | Event::Workspace(Err(message))
+            | Event::Workspace(Ok(Response::Failure { message, .. })) => {
+                errors.push(message.clone());
+            }
+            Event::SaveFailed {
+                id,
+                revision,
+                message,
+            } if state
+                .pending
+                .get(id)
+                .is_some_and(|p| p.revision == *revision) =>
+            {
+                errors.push(format!("Échec de l’enregistrement : {message}"));
+            }
+            Event::Saved { .. } => saved = true,
+            _ => {}
+        }
+        state.accept(event);
+    }
+    // Tx keeps one announcement per poll: combine errors and give them priority.
+    if !errors.is_empty() {
+        tx.announce(errors.join(". "), rune::LiveRegion::Assertive);
+    } else if state.export_message != previous_message {
+        if let Some(message) = &state.export_message {
+            let how = if message.starts_with("Échec de l’export") {
+                rune::LiveRegion::Assertive
+            } else {
+                rune::LiveRegion::Polite
+            };
+            tx.announce(message, how);
+        }
+    } else if saved && had_pending && state.pending.is_empty() {
+        tx.announce("Tout est enregistré", rune::LiveRegion::Polite);
     }
     changed
 }
@@ -93,6 +139,8 @@ fn on_key(state: &mut State, event: &KeyEvent, tx: &mut Tx) -> bool {
 }
 
 fn main() {
+    // Drain queued storage writes through Worker::drop before exiting.
+    rune::orderly_exit();
     rune::run(AppSpec {
         min_size: Some((920.0, 620.0)),
         setup: Some(setup),
@@ -173,3 +221,6 @@ mod tests;
 mod workspace_flow_tests;
 #[cfg(test)]
 mod workspace_tests;
+
+#[cfg(test)]
+mod rune_update_tests;

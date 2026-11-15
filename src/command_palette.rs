@@ -5,6 +5,7 @@ use folio::{
     workspace::EmbeddedView,
 };
 use rune::{Mark, MarkRange, TextEdit, Tx};
+use rune_kit::search::Fold;
 #[derive(Clone)]
 pub enum Mode {
     Commands,
@@ -92,7 +93,7 @@ impl State {
         let Panel::Palette(form) = &self.panel else {
             return Vec::new();
         };
-        let q = form.query.text.trim().to_lowercase();
+        let q = form.query.text.trim();
         let mut items = Vec::new();
         match &form.mode {
             Mode::Commands => {
@@ -108,7 +109,7 @@ impl State {
                     ("embed", "Insérer une base dans la page"),
                     ("block-link", "Insérer un lien vers un bloc"),
                 ] {
-                    if title.to_lowercase().contains(&q) {
+                    if Fold::for_language("fr").contains(title, q) {
                         items.push(Item {
                             key: key.into(),
                             title: title.into(),
@@ -120,7 +121,7 @@ impl State {
                 for p in self
                     .pages
                     .iter()
-                    .filter(|p| !p.archived && p.matches(&q))
+                    .filter(|p| !p.archived && p.matches(q))
                     .take(40)
                 {
                     items.push(Item {
@@ -135,7 +136,7 @@ impl State {
                 for p in self
                     .pages
                     .iter()
-                    .filter(|p| !p.archived && p.title.to_lowercase().contains(&q))
+                    .filter(|p| !p.archived && Fold::for_language("fr").contains(&p.title, q))
                     .take(50)
                 {
                     items.push(Item {
@@ -153,8 +154,8 @@ impl State {
                         .iter()
                         .filter(|b| {
                             !b.plain_text().is_empty()
-                                && (b.plain_text().to_lowercase().contains(&q)
-                                    || p.title.to_lowercase().contains(&q))
+                                && (Fold::for_language("fr").contains(&b.plain_text(), q)
+                                    || Fold::for_language("fr").contains(&p.title, q))
                         })
                         .take(20)
                     {
@@ -175,7 +176,9 @@ impl State {
             }
             Mode::Embed { base: None, .. } => {
                 for p in self.pages.iter().filter(|p| {
-                    !p.archived && p.collection.is_some() && p.title.to_lowercase().contains(&q)
+                    !p.archived
+                        && p.collection.is_some()
+                        && Fold::for_language("fr").contains(&p.title, q)
                 }) {
                     items.push(Item {
                         key: p.id.clone(),
@@ -203,7 +206,7 @@ impl State {
                     for v in settings
                         .views
                         .iter()
-                        .filter(|v| v.name.to_lowercase().contains(&q))
+                        .filter(|v| Fold::for_language("fr").contains(&v.name, q))
                     {
                         items.push(Item {
                             key: v.id.clone(),
@@ -229,7 +232,7 @@ impl State {
                     for p in self.pages.iter().filter(|p| {
                         !p.archived
                             && p.parent_id == field.config.target_base
-                            && p.title.to_lowercase().contains(&q)
+                            && Fold::for_language("fr").contains(&p.title, q)
                     }) {
                         let selected = selected_ids.contains(&p.id.as_str());
                         items.push(Item {

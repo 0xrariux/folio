@@ -30,7 +30,12 @@ pub(super) fn dialog(title: &str, p: Palette, body: El) -> El {
                 .child(
                     row()
                         .center_y()
-                        .child(label(title, 17.0, p.ink))
+                        .child(
+                            label(title, 17.0, p.ink)
+                                .role("heading")
+                                .level(2)
+                                .label(title),
+                        )
                         .child(el().grow(1.0))
                         .child(icons::control(
                             "close-workspace",
@@ -152,7 +157,16 @@ pub(super) fn palette(s: &State, form: &Form, p: Palette) -> El {
                         .grow(1.0)
                         .min_w(0.0)
                         .gap(3.0)
-                        .child(label(item.title, 12.0, p.ink).truncate())
+                        .child(
+                            label(&item.title, 12.0, p.ink).truncate().text_highlights(
+                                rune_kit::search::Fold::for_language("fr")
+                                    .find(&item.title, form.query.text.trim())
+                                    .into_iter()
+                                    .map(|range| {
+                                        rune::TextHighlight::new(range, p.accent.alpha(0.22))
+                                    }),
+                            ),
+                        )
                         .child(label(item.detail, 10.0, p.faint).truncate()),
                 ),
         );
