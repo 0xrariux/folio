@@ -1,9 +1,12 @@
 use std::ops::Range;
 
+pub const CURRENT_VERSION: u32 = 7;
+
 use rune::{Block, MarkRange, TextEdit};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum Kind {
     #[default]
     Text,
@@ -54,26 +57,26 @@ impl Kind {
 
     pub fn name(self) -> &'static str {
         match self {
-            Self::Text => "Texte",
-            Self::Heading1 => "Titre 1",
-            Self::Heading2 => "Titre 2",
-            Self::Heading3 => "Titre 3",
-            Self::Bullet => "Liste à puces",
-            Self::Numbered => "Liste numérotée",
-            Self::Todo => "Tâche à cocher",
-            Self::Toggle => "Liste à tiroirs",
-            Self::ToggleHeading1 => "Titre 1 repliable",
-            Self::ToggleHeading2 => "Titre 2 repliable",
-            Self::ToggleHeading3 => "Titre 3 repliable",
-            Self::Quote => "Citation",
-            Self::Callout => "Encadré",
+            Self::Text => "Text",
+            Self::Heading1 => "Heading 1",
+            Self::Heading2 => "Heading 2",
+            Self::Heading3 => "Heading 3",
+            Self::Bullet => "Bulleted list",
+            Self::Numbered => "Numbered list",
+            Self::Todo => "To-do list",
+            Self::Toggle => "Toggle list",
+            Self::ToggleHeading1 => "Toggle heading 1",
+            Self::ToggleHeading2 => "Toggle heading 2",
+            Self::ToggleHeading3 => "Toggle heading 3",
+            Self::Quote => "Quote",
+            Self::Callout => "Callout",
             Self::Code => "Code",
-            Self::Divider => "Séparateur",
-            Self::PageLink => "Lien vers une page",
-            Self::DatabaseView => "Vue de base intégrée",
+            Self::Divider => "Divider",
+            Self::PageLink => "Link to page",
+            Self::DatabaseView => "Embedded database view",
             Self::Image => "Image",
-            Self::Attachment => "Pièce jointe",
-            Self::TableOfContents => "Sommaire",
+            Self::Attachment => "Attachment",
+            Self::TableOfContents => "Table of contents",
         }
     }
 
@@ -103,26 +106,26 @@ impl Kind {
 
     pub fn description(self) -> &'static str {
         match self {
-            Self::Text => "Une idée, tout simplement",
-            Self::Heading1 => "Un grand titre de section",
-            Self::Heading2 => "Un titre intermédiaire",
-            Self::Heading3 => "Un petit titre",
-            Self::Bullet => "Une liste sans ordre particulier",
-            Self::Numbered => "Une liste étape par étape",
-            Self::Todo => "Une tâche à terminer",
-            Self::Toggle => "Un tiroir pour masquer ou montrer son contenu",
-            Self::ToggleHeading1 => "Un grand titre avec un contenu repliable",
-            Self::ToggleHeading2 => "Un titre intermédiaire avec un contenu repliable",
-            Self::ToggleHeading3 => "Un petit titre avec un contenu repliable",
-            Self::Quote => "Une citation à mettre en valeur",
-            Self::Callout => "Une information qui mérite l’attention",
-            Self::Code => "Du code en police monospace",
-            Self::Divider => "Une séparation visuelle",
-            Self::PageLink => "Relier deux notes de votre carnet",
-            Self::DatabaseView => "Afficher une base existante dans cette page",
-            Self::Image => "Une image locale dans vos notes",
-            Self::Attachment => "Joindre un document au carnet",
-            Self::TableOfContents => "Naviguer parmi les titres de la page",
+            Self::Text => "Just an idea",
+            Self::Heading1 => "A large section heading",
+            Self::Heading2 => "A medium heading",
+            Self::Heading3 => "A small heading",
+            Self::Bullet => "An unordered list",
+            Self::Numbered => "A step-by-step list",
+            Self::Todo => "A task to complete",
+            Self::Toggle => "A section you can expand or collapse",
+            Self::ToggleHeading1 => "A large heading with collapsible content",
+            Self::ToggleHeading2 => "A medium heading with collapsible content",
+            Self::ToggleHeading3 => "A small heading with collapsible content",
+            Self::Quote => "Highlight a quote",
+            Self::Callout => "Information worth highlighting",
+            Self::Code => "Code in a monospace font",
+            Self::Divider => "A visual separator",
+            Self::PageLink => "Link two notes in your notebook",
+            Self::DatabaseView => "Display an existing database in this page",
+            Self::Image => "A local image in your notes",
+            Self::Attachment => "Attach a document to your notebook",
+            Self::TableOfContents => "Navigate the headings on this page",
         }
     }
 
@@ -170,6 +173,7 @@ impl Kind {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct NoteBlock {
     pub id: String,
     pub kind: Kind,
@@ -239,9 +243,9 @@ impl NoteBlock {
                 escape(self.target_id.as_deref().unwrap_or("")),
                 escape(&self.plain_text())
             ),
-            Kind::DatabaseView => format!("<p>Base : {}</p>", escape(&self.plain_text())),
+            Kind::DatabaseView => format!("<p>Database: {}</p>", escape(&self.plain_text())),
             Kind::Image | Kind::Attachment => self.asset.as_ref().map_or_else(
-                || "<p>Pièce jointe</p>".into(),
+                || "<p>Attachment</p>".into(),
                 |a| {
                     let path = format!("folio-assets/{}", crate::workspace::asset_export_name(a));
                     if self.kind == Kind::Image {
@@ -337,10 +341,13 @@ pub fn join_rich(left: &TextEdit, right: &TextEdit, separator: &str) -> TextEdit
 }
 
 #[derive(Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct PageContent {
     pub version: u32,
     pub blocks: Vec<NoteBlock>,
     pub emoji: String,
+    #[serde(default, skip_serializing_if = "crate::icons::IconColor::is_default")]
+    pub icon_color: crate::icons::IconColor,
     pub cover: u8,
     pub wide: bool,
     #[serde(default)]
@@ -351,20 +358,24 @@ pub struct PageContent {
     pub dashboard: Option<crate::dashboard::DashboardConfig>,
     #[serde(default)]
     pub order: i64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub protected: Option<crate::security::Sealed>,
 }
 
 impl PageContent {
     pub fn legacy(html: &str) -> Self {
         Self {
-            version: 6,
+            version: CURRENT_VERSION,
             blocks: import_legacy(html),
             emoji: "📄".into(),
+            icon_color: Default::default(),
             cover: 0,
             wide: false,
             collection: None,
             properties: crate::collection::Properties::default(),
             dashboard: None,
             order: 0,
+            protected: None,
         }
     }
 }

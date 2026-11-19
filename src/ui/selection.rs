@@ -21,29 +21,29 @@ pub(super) fn blocks(s: &State, p: Palette) -> El {
                 .gap(4.0)
                 .center_y()
                 .child(label(
-                    format!("{} blocs", s.selected_indices().len()),
+                    format!("{} blocks", s.selected_indices().len()),
                     11.0,
                     p.ink,
                 ))
-                .child(action("selection-copy", "Copier", p, |s, tx| {
+                .child(action("selection-copy", "Copy", p, |s, tx| {
                     let text = s.copy_selected();
                     tx.copy_rich(
                         rune::ClipboardContent::new(text)
                             .with_html(folio::outline::html(&s.selection.clipboard)),
                     );
                 }))
-                .child(action("selection-paste", "Coller", p, |s, tx| {
+                .child(action("selection-paste", "Paste", p, |s, tx| {
                     s.paste_selected(tx)
                 }))
-                .child(action("selection-duplicate", "Dupliquer", p, |s, tx| {
+                .child(action("selection-duplicate", "Duplicate", p, |s, tx| {
                     s.duplicate_selected(tx)
                 }))
-                .child(action("selection-delete", "Supprimer", p, |s, tx| {
+                .child(action("selection-delete", "Delete", p, |s, tx| {
                     s.delete_selected(tx)
                 }))
                 .child(icons::control(
                     "selection-clear",
-                    "Désélectionner",
+                    "Deselect",
                     &folio::icons::controls::CLOSE,
                     p,
                     |s, _| s.selection.clear(),
@@ -69,14 +69,14 @@ pub(super) fn blocks(s: &State, p: Palette) -> El {
         .child(el().grow(1.0))
         .child(icons::control(
             "selection-up",
-            "Monter la sélection",
+            "Move selection up",
             &folio::icons::controls::ARROW_UP,
             p,
             |s, _| s.move_selected(false),
         ))
         .child(icons::control(
             "selection-down",
-            "Descendre la sélection",
+            "Move selection down",
             &folio::icons::controls::ARROW_DOWN,
             p,
             |s, _| s.move_selected(true),
@@ -89,7 +89,7 @@ pub(super) fn records(s: &State, p: Palette) -> El {
         return el();
     }
     let mut status = row().gap(4.0).center_y().child(label(
-        format!("{} fiches", s.workspace.selected_records.len()),
+        format!("{} records", s.workspace.selected_records.len()),
         11.0,
         p.ink,
     ));
@@ -109,7 +109,7 @@ pub(super) fn records(s: &State, p: Palette) -> El {
     }
     status = status.child(icons::control(
         "records-clear",
-        "Désélectionner",
+        "Deselect",
         &folio::icons::controls::CLOSE,
         p,
         |s, _| s.workspace.selected_records.clear(),
@@ -117,7 +117,7 @@ pub(super) fn records(s: &State, p: Palette) -> El {
     let mut priorities = row()
         .gap(4.0)
         .center_y()
-        .child(label("Priorité", 11.0, p.muted));
+        .child(label("Priority", 11.0, p.muted));
     for value in Priority::ALL {
         priorities = priorities.child(action(
             format!("bulk-priority-{value:?}"),
@@ -132,7 +132,7 @@ pub(super) fn records(s: &State, p: Palette) -> El {
             },
         ));
     }
-    priorities = priorities.child(action("bulk-due", "Échéance…", p, |s, _| {
+    priorities = priorities.child(action("bulk-due", "Due date…", p, |s, _| {
         if let Some(id) = s.workspace.selected_records.first().cloned() {
             s.open_date(&id, None, "bulk-due");
             if let crate::state::Panel::Date(f) = &mut s.panel {

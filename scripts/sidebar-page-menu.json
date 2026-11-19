@@ -1,0 +1,9 @@
+{
+  "events": [
+    {
+      "t": 0.15,
+      "type": "tap",
+      "key": "page-actions-demo-home"
+    }
+  ]
+}

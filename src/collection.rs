@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum Status {
     #[default]
     Todo,
@@ -11,9 +12,9 @@ impl Status {
     pub const ALL: [Self; 3] = [Self::Todo, Self::InProgress, Self::Done];
     pub fn name(self) -> &'static str {
         match self {
-            Self::Todo => "À faire",
-            Self::InProgress => "En cours",
-            Self::Done => "Terminé",
+            Self::Todo => "To do",
+            Self::InProgress => "In progress",
+            Self::Done => "Done",
         }
     }
     pub fn next(self, forward: bool) -> Self {
@@ -28,6 +29,7 @@ impl Status {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum Priority {
     Low,
     #[default]
@@ -38,14 +40,15 @@ impl Priority {
     pub const ALL: [Self; 3] = [Self::Low, Self::Medium, Self::High];
     pub fn name(self) -> &'static str {
         match self {
-            Self::Low => "Basse",
-            Self::Medium => "Moyenne",
-            Self::High => "Haute",
+            Self::Low => "Low",
+            Self::Medium => "Medium",
+            Self::High => "High",
         }
     }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Properties {
     #[serde(default)]
     pub status: Status,
@@ -60,6 +63,7 @@ pub struct Properties {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum View {
     #[default]
     Table,
@@ -69,6 +73,7 @@ pub enum View {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum Sort {
     #[default]
     Title,
@@ -80,15 +85,16 @@ impl Sort {
     pub const ALL: [Self; 4] = [Self::Title, Self::Updated, Self::Due, Self::Priority];
     pub fn name(self) -> &'static str {
         match self {
-            Self::Title => "Nom A → Z",
-            Self::Updated => "Modifiés récemment",
-            Self::Due => "Échéance croissante",
-            Self::Priority => "Priorité haute en premier",
+            Self::Title => "Name A → Z",
+            Self::Updated => "Recently updated",
+            Self::Due => "Due date, earliest first",
+            Self::Priority => "Priority, highest first",
         }
     }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Collection {
     #[serde(default)]
     pub view: View,
@@ -113,6 +119,7 @@ pub struct Collection {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct SavedView {
     pub id: String,
     pub name: String,
@@ -123,6 +130,7 @@ pub struct SavedView {
     pub layout: Option<TableLayout>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum BuiltinColumn {
     Status,
     Priority,
@@ -133,10 +141,10 @@ impl BuiltinColumn {
     pub const ALL: [Self; 4] = [Self::Status, Self::Priority, Self::Due, Self::Tags];
     pub fn name(self) -> &'static str {
         match self {
-            Self::Status => "Statut",
-            Self::Priority => "Priorité",
-            Self::Due => "Échéance",
-            Self::Tags => "Étiquettes",
+            Self::Status => "Status",
+            Self::Priority => "Priority",
+            Self::Due => "Due date",
+            Self::Tags => "Tags",
         }
     }
     pub fn width(self) -> f32 {
@@ -191,13 +199,13 @@ impl Collection {
     pub fn save_view(&mut self, name: &str, rename: bool) -> Result<(), String> {
         let name = name.trim();
         if name.is_empty() || name.chars().count() > 40 {
-            return Err("Le nom doit contenir de 1 à 40 caractères.".into());
+            return Err("The name must contain 1 to 40 characters.".into());
         }
         if self.views.iter().any(|v| {
             v.name.to_lowercase() == name.to_lowercase()
                 && !(rename && Some(&v.id) == self.active_view.as_ref())
         }) {
-            return Err("Une vue porte déjà ce nom.".into());
+            return Err("A view with this name already exists.".into());
         }
         if rename {
             let id = self.active_view.as_ref();
@@ -205,19 +213,19 @@ impl Collection {
                 .views
                 .iter_mut()
                 .find(|v| Some(&v.id) == id)
-                .ok_or("Choisissez d’abord une vue enregistrée.")?;
+                .ok_or("Choose a saved view first.")?;
             view.name = name.into();
             return Ok(());
         }
         if self.views.len() >= 20 {
-            return Err("Cette base contient déjà 20 vues.".into());
+            return Err("This database already has 20 views.".into());
         }
         self.sync_view();
         if self.views.is_empty() {
-            self.push_view(if name.to_lowercase() == "vue principale" {
-                "Vue initiale"
+            self.push_view(if name.to_lowercase() == "main view" {
+                "Initial view"
             } else {
-                "Vue principale"
+                "Main view"
             });
         }
         self.push_view(name);
@@ -259,6 +267,7 @@ impl Collection {
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct TableLayout {
     pub order: Vec<String>,
     pub widths: std::collections::BTreeMap<String, u16>,
@@ -336,7 +345,7 @@ pub fn parse_tags(value: &str) -> Result<Vec<String>, String> {
         .filter(|tag| !tag.is_empty())
     {
         if tag.chars().count() > 40 {
-            return Err("Chaque étiquette doit faire au plus 40 caractères.".into());
+            return Err("Each tag must be at most 40 characters long.".into());
         }
         if !tags
             .iter()
@@ -346,7 +355,7 @@ pub fn parse_tags(value: &str) -> Result<Vec<String>, String> {
         }
     }
     if tags.len() > 12 {
-        return Err("Utilisez au plus 12 étiquettes par fiche.".into());
+        return Err("Use no more than 12 tags per record.".into());
     }
     Ok(tags)
 }

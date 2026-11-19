@@ -16,15 +16,15 @@ pub(super) fn filter(s: &State, p: Palette) -> El {
         .gap(2.0)
         .child(super::panels::icon_item(
             "filter-all",
-            "Effacer tous les filtres",
+            "Clear all filters",
             &folio::icons::controls::CLOSE,
             p,
             |s, _| s.clear_tracking(),
         ))
-        .child(label("STATUT", 9.0, p.faint).padding(7.0))
+        .child(label("STATUS", 9.0, p.faint).padding(7.0))
         .child(super::icons::option(
             "filter-status-all",
-            "Tous les statuts",
+            "All statuses",
             filter.status.is_none(),
             p,
             |s, _| s.tracking_status(None),
@@ -39,10 +39,10 @@ pub(super) fn filter(s: &State, p: Palette) -> El {
         ));
     }
     entries = entries
-        .child(label("PRIORITÉ", 9.0, p.faint).padding(7.0))
+        .child(label("PRIORITY", 9.0, p.faint).padding(7.0))
         .child(super::icons::option(
             "filter-priority-all",
-            "Toutes les priorités",
+            "All priorities",
             filter.priority.is_none(),
             p,
             |s, _| s.tracking_priority(None),
@@ -56,7 +56,7 @@ pub(super) fn filter(s: &State, p: Palette) -> El {
             move |s, _| s.tracking_priority(Some(priority)),
         ));
     }
-    entries = entries.child(label("ÉCHÉANCE", 9.0, p.faint).padding(7.0));
+    entries = entries.child(label("DUE DATE", 9.0, p.faint).padding(7.0));
     for deadline in Deadline::ALL {
         entries = entries.child(super::icons::option(
             format!("filter-deadline-{deadline:?}"),
@@ -79,7 +79,7 @@ pub(super) fn filter(s: &State, p: Palette) -> El {
 
 pub(super) fn sort(p: Palette) -> El {
     let mut menu = surface("sort-menu", "collection-sort", 240.0, p)
-        .child(label("ORDRE DES FICHES", 9.0, p.faint).padding(9.0));
+        .child(label("RECORD ORDER", 9.0, p.faint).padding(9.0));
     for sort in Sort::ALL {
         menu = menu.child(item(
             format!("sort-{sort:?}"),
@@ -126,9 +126,9 @@ pub(super) fn properties(form: &PropertyForm, p: Palette) -> El {
         )
         .key(if due { "property-due" } else { "property-tags" })
         .label(if due {
-            "Échéance"
+            "Due date"
         } else {
-            "Étiquettes séparées par des virgules"
+            "Comma-separated tags"
         })
         .single_line()
         .w_full()
@@ -140,9 +140,9 @@ pub(super) fn properties(form: &PropertyForm, p: Palette) -> El {
         .caret(p.accent, p.tint)
         .placeholder(
             if due {
-                "AAAA-MM-JJ, ou vide"
+                "YYYY-MM-DD, or leave blank"
             } else {
-                "Projet, personnel…"
+                "Project, personal…"
             },
             p.faint,
         )
@@ -166,16 +166,12 @@ pub(super) fn properties(form: &PropertyForm, p: Palette) -> El {
     let mut form_ui = surface("properties-form", &form.anchor, 340.0, p)
         .padding(14.0)
         .gap(10.0)
-        .child(label("PROPRIÉTÉS DE LA FICHE", 10.0, p.faint))
-        .child(label("Échéance", 12.0, p.ink))
+        .child(label("RECORD PROPERTIES", 10.0, p.faint))
+        .child(label("Due date", 12.0, p.ink))
         .child(input(true))
-        .child(label("Étiquettes", 12.0, p.ink))
+        .child(label("Tags", 12.0, p.ink))
         .child(input(false))
-        .child(label(
-            "Séparez les étiquettes par des virgules.",
-            10.0,
-            p.faint,
-        ));
+        .child(label("Separate tags with commas.", 10.0, p.faint));
     if let Some(error) = &form.error {
         form_ui = form_ui.child(label(error, 11.0, p.ink).w_full().wrap());
     }
@@ -183,15 +179,10 @@ pub(super) fn properties(form: &PropertyForm, p: Palette) -> El {
         row()
             .gap(7.0)
             .child(el().grow(1.0))
-            .child(action("cancel-properties", "Annuler", p, |s, _| {
+            .child(action("cancel-properties", "Cancel", p, |s, _| {
                 s.panel = Panel::Closed
             }))
-            .child(
-                action("save-properties", "Enregistrer", p, |s, _| {
-                    s.save_properties()
-                })
-                .fill(p.tint),
-            ),
+            .child(action("save-properties", "Save", p, |s, _| s.save_properties()).fill(p.tint)),
     )
 }
 pub(super) fn links(s: &State, p: Palette) -> El {
@@ -215,7 +206,7 @@ pub(super) fn links(s: &State, p: Palette) -> El {
                 .radius(5.0)
                 .hover(p.tint)
                 .on_press_tx(move |s: &mut State, tx| s.link_page(&id, tx))
-                .child(super::icons::page(&page.emoji, 16.0, p.muted))
+                .child(super::icons::page_icon(page, 16.0, p.muted, p))
                 .child(
                     label(page.display_title(), 12.0, p.ink)
                         .grow(1.0)
@@ -225,16 +216,16 @@ pub(super) fn links(s: &State, p: Palette) -> El {
         );
     }
     if options.is_empty() {
-        rows = rows.child(label("Aucune page correspondante.", 12.0, p.faint).padding(10.0));
+        rows = rows.child(label("No matching pages.", 12.0, p.faint).padding(10.0));
     }
     surface("link-picker", crate::editor::input_key(&form.id), 330.0, p)
         .padding(10.0)
         .gap(8.0)
-        .child(label("LIER UNE PAGE DU CARNET", 10.0, p.faint))
+        .child(label("LINK A NOTEBOOK PAGE", 10.0, p.faint))
         .child(
             text_input(&form.query, TextStyle::new(13.0, 400.0))
                 .key("link-search")
-                .label("Rechercher une page à lier")
+                .label("Search for a page to link")
                 .single_line()
                 .h(32.0)
                 .px(8.0)
@@ -242,7 +233,7 @@ pub(super) fn links(s: &State, p: Palette) -> El {
                 .border(1.0, p.line)
                 .color(p.ink)
                 .caret(p.accent, p.tint)
-                .placeholder("Rechercher une page…", p.faint)
+                .placeholder("Search pages…", p.faint)
                 .on_edit(|s: &mut State| s.link_query())
                 .on_input_key(|s: &mut State, event, tx| match event.key {
                     Key::Escape => {

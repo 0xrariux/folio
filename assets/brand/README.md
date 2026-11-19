@@ -1,27 +1,25 @@
-# Identité Folio — feuilles pliées
+# Folio identity — folded leaves
 
-Un F plein avec deux terminaisons diagonales rappelant des feuilles pliées.
-La tranche gauche et le pied sont arrondis ; les ouvertures restent larges pour
-que le signe soit lisible dans la barre latérale. La couleur sauge et le graphite
-reprennent la palette de Folio.
+A solid F with two diagonal ends suggesting folded leaves. Rounded left and
+bottom edges and wide openings keep the mark readable in the sidebar. Sage
+and graphite follow the Folio palette.
 
-- [`folio-logo.blend`](folio-logo.blend) : scène Blender éditable, badge et signe
-  séparés, matériaux, caméra orthographique et éclairage. Créée avec Blender 5.2.3.
-- [`folio-logo.svg`](folio-logo.svg) : badge vectoriel complet en sauge/graphite.
-- [`folio-logo.png`](folio-logo.png) : rendu Blender frontal 1 024 px avec transparence extérieure.
-- [`folio-logo-studio.png`](folio-logo-studio.png) : présentation en léger relief sur fond graphite.
-- [`../icons/folio.svg`](../icons/folio.svg) : monogramme monochrome embarqué par Rune.
+- [`folio-logo.blend`](folio-logo.blend): editable Blender scene with separate
+  badge and mark, materials, orthographic camera and lighting; created in Blender 5.2.3.
+- [`folio-logo.svg`](folio-logo.svg): complete sage/graphite vector badge.
+- [`folio-logo.png`](folio-logo.png): front Blender render, 1024 px, transparent outside.
+- [`folio-logo-studio.png`](folio-logo-studio.png): shallow relief on a graphite background.
+- [`../icons/folio.svg`](../icons/folio.svg): monochrome mark embedded by Rune.
 
-Les contours du modèle Blender et des SVG viennent de la même définition dans
-[`scripts/build-brand.py`](../../scripts/build-brand.py). Aucun modèle, texture
-ou fichier de police externe n’est nécessaire. Le modèle comprend une très légère
-épaisseur et des chanfreins ; l’interface emploie la silhouette vectorielle avec
-la couleur du thème pour préserver sa lisibilité à toutes les résolutions.
+Blender and SVG outlines share the definition in
+[`scripts/build-brand.py`](../../scripts/build-brand.py). No external model,
+texture or font is required. The model has a slight thickness and bevels;
+the interface uses the vector silhouette with the theme color for readability.
 
-Le badge natif mesure 32 px avec un rayon de 9 px et un signe de 28 px. Ces
-proportions sont reprises par le badge SVG et la scène Blender.
+The native badge is 32 px, with a 9 px radius and a 28 px mark. The SVG badge
+and Blender scene use the same proportions.
 
-Pour régénérer les fichiers depuis la racine du projet :
+Regenerate from the project root:
 
 ```sh
 /Applications/Blender.app/Contents/MacOS/Blender \
@@ -29,8 +27,6 @@ Pour régénérer les fichiers depuis la racine du projet :
 python3 scripts/build-icon-sheet.py
 ```
 
-Sous Windows ou Linux, remplacer le chemin de l’exécutable par `blender`.
-La régénération remplace les exports et la scène ; conserver les modifications
-manuelles éventuelles de la scène avant de relancer le script.
-
-Les fichiers sont fournis sous la licence MIT du projet.
+Use your Blender executable location on other systems. Regeneration replaces
+exports and the scene; preserve any manual scene edits before running it.
+Files use the project's MIT license.

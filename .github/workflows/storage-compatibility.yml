@@ -1,0 +1,47 @@
+name: Storage compatibility
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  storage-compatibility:
+    runs-on: macos-15
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: folio
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: folio
+          persist-credentials: false
+      - name: Read the reviewed Rune pin
+        id: pin
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          sha = json.loads(Path('folio-update.json').read_text())['rune_revision']
+          assert re.fullmatch('[0-9a-f]{40}', sha)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out: out.write('rune=' + sha + '\n')
+          PY
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: anomalyco/rune
+          ref: ${{ steps.pin.outputs.rune }}
+          path: rune
+          persist-credentials: false
+      - name: Validate historical files, encryption, restoration and crash recovery
+        run: cargo test --locked --test data_safety --test modules 2>&1 | tee "$RUNNER_TEMP/folio-storage-debug.log"
+      - name: Validate the production storage build and package the app
+        run: python3 scripts/build-app.py --development --verify-storage 2>&1 | tee "$RUNNER_TEMP/folio-storage-release.log"
+      - name: Retain compatibility evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: storage-compatibility-evidence
+          path: ${{ runner.temp }}/folio-storage-*.log
+          retention-days: 90

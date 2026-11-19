@@ -7,20 +7,23 @@ mod dashboard;
 mod embeds;
 mod field_config;
 mod icons;
+mod library;
 mod page;
 mod panels;
 mod saved_views;
 mod selection;
+mod settings;
 mod sidebar;
 mod table;
 mod workspace;
 
-use crate::state::{Phase, State};
+use crate::state::{Panel, Phase, State};
 use folio::icons::controls as g;
 use rune::{Color, Cx, El, TextStyle, col, el, row, text};
 
 #[derive(Clone, Copy)]
 pub(super) struct Palette {
+    pub dark: bool,
     pub bg: Color,
     pub sidebar: Color,
     pub ink: Color,
@@ -41,6 +44,7 @@ fn rgb(r: u8, g: u8, b: u8) -> Color {
 fn palette(dark: bool) -> Palette {
     if dark {
         Palette {
+            dark,
             bg: rgb(29, 31, 30),
             sidebar: rgb(24, 26, 25),
             ink: rgb(232, 234, 228),
@@ -52,6 +56,7 @@ fn palette(dark: bool) -> Palette {
         }
     } else {
         Palette {
+            dark,
             bg: rgb(253, 252, 249),
             sidebar: rgb(244, 244, 238),
             ink: rgb(43, 49, 42),
@@ -95,18 +100,19 @@ pub(super) fn action(
 }
 pub fn view(state: &State, cx: &mut Cx<State>) -> El {
     let p = palette(state.dark);
+    if state.settings.locked && !matches!(state.panel, crate::state::Panel::Settings) {
+        return settings::locked(state, p);
+    }
     let page_width = cx
         .layout_size("document-scroll")
         .map_or(882.0, |size| (size[0] - 70.0).max(0.0));
     let status = match &state.phase {
-        Phase::Loading => "Ouverture du carnet…",
-        Phase::Failed(_) => "Impossible d’ouvrir le carnet",
-        Phase::Ready if state.demo => "Démonstration · modifications temporaires",
-        Phase::Ready if state.pending.values().any(|p| p.error.is_some()) => {
-            "Échec de l’enregistrement · réessayer"
-        }
-        Phase::Ready if !state.pending.is_empty() => "Enregistrement…",
-        Phase::Ready => "Tout est enregistré",
+        Phase::Loading => "Opening notebook…",
+        Phase::Failed(_) => "Cannot open notebook",
+        Phase::Ready if state.demo => "Demo · temporary changes",
+        Phase::Ready if state.pending.values().any(|p| p.error.is_some()) => "Save failed · retry",
+        Phase::Ready if !state.pending.is_empty() => "Saving…",
+        Phase::Ready => "All changes saved",
     };
     let error = match &state.phase {
         Phase::Failed(message) => Some(message.as_str()),
@@ -115,14 +121,23 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
     let mut main = col()
         .key("main")
         .role("main")
-        .label("Contenu du carnet")
+        .label("Notebook content")
         .grow(1.0)
         .min_w(0.0)
         .min_h(0.0)
-        .child(page::view(state, p, page_width));
+        .child(if matches!(state.panel, crate::state::Panel::Settings) {
+            settings::view(state, p)
+        } else if matches!(
+            state.panel,
+            Panel::Library | Panel::ModuleReview | Panel::ModuleConfirm
+        ) {
+            library::view(state, p)
+        } else {
+            page::view(state, p, page_width)
+        });
     if let Some(error) = error {
         main = main.child(
-            label(format!("Erreur : {error}"), 12.0, p.ink)
+            label(format!("Error: {error}"), 12.0, p.ink)
                 .w_full()
                 .padding(12.0)
                 .fill(p.tint),
@@ -140,7 +155,7 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
         if !state.export_busy {
             notice = notice.child(icons::control(
                 "dismiss-export",
-                "Fermer la notification",
+                "Close notification",
                 &g::CLOSE,
                 p,
                 |s, _| s.export_message = None,
@@ -178,9 +193,9 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
                     .current()
                     .is_some_and(|p| p.collection.is_some() || p.dashboard.is_some())
                 {
-                    "Fiches et suivi"
+                    "Records and tracking"
                 } else {
-                    "/  Insérer un bloc"
+                    "/  Insert a block"
                 },
                 10.0,
                 p.faint,
@@ -188,9 +203,9 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
             .child(icons::action(
                 "theme",
                 if state.dark {
-                    "Mode clair"
+                    "Light mode"
                 } else {
-                    "Mode sombre"
+                    "Dark mode"
                 },
                 if state.dark { &g::SUN } else { &g::MOON },
                 p,
@@ -285,7 +300,7 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
                     .truncate(),
                 )
                 .child(if count > 1 {
-                    label(format!("{count} blocs"), 10.0, p.faint)
+                    label(format!("{count} blocks"), 10.0, p.faint)
                 } else {
                     el()
                 }),
@@ -294,13 +309,23 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
     if let Some(drag) = &state.workspace.entity_drag
         && drag.active
     {
-        let title = state
-            .pages
-            .iter()
-            .find(|p| p.id == drag.id)
-            .map_or("Déplacer", |p| p.display_title());
+        let title = if drag.kind == crate::entity_drag::Kind::Shortcut {
+            drag.id
+                .strip_prefix("shortcut:")
+                .and_then(folio::workspace::SidebarShortcut::from_key)
+                .map_or("Move", |shortcut| shortcut.name())
+        } else {
+            state
+                .pages
+                .iter()
+                .find(|p| p.id == drag.id)
+                .map_or("Move", |p| p.display_title())
+        };
         root = root.child(
             label(title, 12.0, p.ink)
+                .key("entity-drag-preview")
+                .cursor(rune::Cursor::Grabbing)
+                .a11y_hidden()
                 .max_w(250.0)
                 .truncate()
                 .padding(12.0)

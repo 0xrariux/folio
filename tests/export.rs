@@ -55,7 +55,7 @@ fn csv_quotes_multiline_cells_and_keeps_hidden_columns_and_full_numbers() {
     let mut number = Column::new("Budget", ColumnKind::Number);
     number.visible = false;
     let comment = Column::new("Retour", ColumnKind::Text);
-    let check = Column::new("Validé", ColumnKind::Checkbox);
+    let check = Column::new("Approved", ColumnKind::Checkbox);
     base.collection = Some(Collection {
         columns: vec![number.clone(), comment.clone(), check.clone()],
         ..Default::default()
@@ -73,11 +73,11 @@ fn csv_quotes_multiline_cells_and_keeps_hidden_columns_and_full_numbers() {
         .custom
         .insert(check.id, CellValue::Checkbox(true));
     let export = csv("Mon suivi", &[&base], &[&page]);
-    assert!(export.contents.starts_with("\"ID\",\"Base\",\"Nom\""));
+    assert!(export.contents.starts_with("\"ID\",\"Database\",\"Name\""));
     assert!(
         export
             .contents
-            .contains("\"Budget\",\"Retour\",\"Validé\"\r\n")
+            .contains("\"Budget\",\"Retour\",\"Approved\"\r\n")
     );
     assert!(
         export

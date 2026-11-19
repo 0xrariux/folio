@@ -104,7 +104,7 @@ fn header(id: &str, title: &str, width: f32, default: f32, p: Palette) -> El {
                 .h(24.0)
                 .radius(2.0)
                 .hover(p.line)
-                .help("Glisser pour ajuster la largeur")
+                .help("Drag to adjust width")
                 .child(el().w(1.0).h_full().fill(p.line))
                 .on_drag(move |s: &mut State, drag, _| s.resize_column(&key, default, drag)),
         )
@@ -149,7 +149,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         .child(
             super::button(
                 "select-all-records",
-                "Sélectionner toutes les fiches visibles",
+                "Select all visible records",
                 p,
                 move |s, _| {
                     if selected {
@@ -169,7 +169,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         )
         .child(
             el().w(name_width)
-                .child(header("name", "Aa  Nom", name_width, 190.0, p)),
+                .child(header("name", "Aa  Name", name_width, 190.0, p)),
         );
     for field in &fields {
         head = head.child(header(
@@ -232,7 +232,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         );
     }
     if items.is_empty() {
-        rows = rows.child(label("Aucune fiche pour ce filtre.", 12.0, p.faint).padding(18.0));
+        rows = rows.child(label("No records match this filter.", 12.0, p.faint).padding(18.0));
     }
     let height = 40.0
         + if items.is_empty() {
@@ -243,7 +243,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
     frame(
         "collection-table-frame",
         "collection-table",
-        "Fiches de la base",
+        "Database records",
         rows,
         height,
         380.0,
@@ -272,7 +272,7 @@ fn record_row(
         .child(
             super::button(
                 format!("select-record-{id}"),
-                "Sélectionner cette fiche",
+                "Select this record",
                 p,
                 move |s, _| {
                     if !s.workspace.selected_records.insert(id.clone()) {
@@ -314,7 +314,7 @@ fn record_row(
                 if page.properties.tags.is_empty() {
                     "—"
                 } else {
-                    "Étiquettes…"
+                    "Tags…"
                 },
                 p,
             ),

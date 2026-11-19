@@ -37,6 +37,10 @@ fn complete_notebook_roundtrip_keeps_files_history_preferences_order_and_views()
             dark: false,
             sidebar_width: 312,
             last_page: Some(page.id.clone()),
+            sidebar_shortcuts: vec![
+                workspace::SidebarShortcut::Favorites,
+                workspace::SidebarShortcut::Overview,
+            ],
         };
         store.save_preferences(&prefs).await.unwrap();
         let snapshot = store
@@ -191,4 +195,28 @@ fn independent_views_keep_visibility_width_and_column_order_after_reopening() {
             vec![page]
         );
     });
+}
+
+#[test]
+fn legacy_empty_and_duplicate_shortcuts_are_supported_but_future_entries_are_refused() {
+    use workspace::SidebarShortcut;
+    let mut json = serde_json::json!({"dark": true, "sidebar_width": 248, "last_page": null});
+    let legacy: Preferences = serde_json::from_value(json.clone()).unwrap();
+    assert_eq!(legacy.sidebar_shortcuts, SidebarShortcut::defaults());
+    json["sidebar_shortcuts"] = serde_json::json!([]);
+    assert!(
+        serde_json::from_value::<Preferences>(json.clone())
+            .unwrap()
+            .sidebar_shortcuts
+            .is_empty()
+    );
+    json["sidebar_shortcuts"] =
+        serde_json::json!(["favorites", "future_shortcut", "favorites", "overview"]);
+    assert!(serde_json::from_value::<Preferences>(json.clone()).is_err());
+    json["sidebar_shortcuts"] = serde_json::json!(["favorites", "favorites", "overview"]);
+    let filtered: Preferences = serde_json::from_value(json).unwrap();
+    assert_eq!(
+        filtered.sidebar_shortcuts,
+        [SidebarShortcut::Favorites, SidebarShortcut::Overview]
+    );
 }

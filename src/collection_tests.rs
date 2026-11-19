@@ -210,9 +210,9 @@ fn slash_page_links_navigate_and_create_automatic_backlinks() {
         matches!(rt.state.panel, Panel::Link(_)),
         rt.state.slash_options()
     );
-    type_text(&mut rt, "boîte");
+    type_text(&mut rt, "ideas");
     assert!(
-        matches!(&rt.state.panel,Panel::Link(form) if form.typed && form.query.text == "boîte")
+        matches!(&rt.state.panel,Panel::Link(form) if form.typed && form.query.text == "ideas")
     );
     reveal(&mut rt, "link-target-demo-ideas");
     tap(&mut rt, "link-target-demo-ideas");
@@ -255,7 +255,7 @@ fn new_collection_and_tracker_template_start_without_records() {
     tap(&mut rt, "sidebar-more");
     tap(&mut rt, "templates");
     tap(&mut rt, "template-3");
-    assert_eq!(rt.state.current().unwrap().title, "Suivi de projet");
+    assert_eq!(rt.state.current().unwrap().title, "Project tracker");
     assert!(rt.state.collection_items().is_empty());
     tap(&mut rt, "add-InProgress");
     assert_eq!(

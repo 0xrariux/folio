@@ -103,6 +103,9 @@ impl State {
     }
 
     pub fn commit_blocks(&mut self, record: bool) {
+        if self.settings.locked || self.current().is_some_and(|p| p.protected.is_some()) {
+            return;
+        }
         let Some(id) = self.selected.clone() else {
             return;
         };

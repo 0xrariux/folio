@@ -96,10 +96,10 @@ pub fn markdown(page: &Page, pages: &[Page]) -> ExportDocument {
         .and_then(|p| p.collection.as_ref())
     {
         for (name, value) in [
-            ("Statut", page.properties.status.name().to_string()),
-            ("Priorité", page.properties.priority.name().to_string()),
-            ("Échéance", page.properties.due.clone().unwrap_or_default()),
-            ("Étiquettes", page.properties.tags.join(", ")),
+            ("Status", page.properties.status.name().to_string()),
+            ("Priority", page.properties.priority.name().to_string()),
+            ("Due date", page.properties.due.clone().unwrap_or_default()),
+            ("Tags", page.properties.tags.join(", ")),
         ] {
             contents.push_str(&format!("- **{name}** : {}\n", md_escape(&value)));
         }
@@ -116,7 +116,7 @@ pub fn markdown(page: &Page, pages: &[Page]) -> ExportDocument {
             ) {
                 crate::calculations::value(page, column, pages)
                     .map(|n| n.to_string())
-                    .unwrap_or_else(|e| format!("Erreur : {e}"))
+                    .unwrap_or_else(|e| format!("Error: {e}"))
             } else {
                 match page.properties.custom.get(&column.id) {
                     Some(CellValue::Text(v) | CellValue::Number(v) | CellValue::Date(v)) => {
@@ -158,7 +158,7 @@ pub fn markdown(page: &Page, pages: &[Page]) -> ExportDocument {
         let text = match block.kind {
             Kind::Text => rich,
             Kind::DatabaseView => format!(
-                "[Base intégrée](folio://page/{})",
+                "[Embedded database](folio://page/{})",
                 block.embedded.as_ref().map_or("", |e| e.base_id.as_str())
             ),
             Kind::Image | Kind::Attachment => block.asset.as_ref().map_or_else(String::new, |a| {
@@ -169,7 +169,7 @@ pub fn markdown(page: &Page, pages: &[Page]) -> ExportDocument {
                     crate::workspace::asset_export_name(a)
                 )
             }),
-            Kind::TableOfContents => "<!-- Sommaire -->".into(),
+            Kind::TableOfContents => "<!-- Table of contents -->".into(),
             Kind::Heading1 => format!("# {rich}"),
             Kind::Heading2 => format!("## {rich}"),
             Kind::Heading3 => format!("### {rich}"),
@@ -266,14 +266,7 @@ pub fn csv_with_context(
         })
         .collect();
     let mut header: Vec<String> = [
-        "ID",
-        "Base",
-        "Nom",
-        "Statut",
-        "Priorité",
-        "Échéance",
-        "Étiquettes",
-        "Notes",
+        "ID", "Database", "Name", "Status", "Priority", "Due date", "Tags", "Notes",
     ]
     .into_iter()
     .map(str::to_string)
@@ -321,7 +314,7 @@ pub fn csv_with_context(
             ) {
                 return crate::calculations::value(page, column, context)
                     .map(|n| n.to_string())
-                    .unwrap_or_else(|e| format!("Erreur : {e}"));
+                    .unwrap_or_else(|e| format!("Error: {e}"));
             }
             match page.properties.custom.get(&column.id) {
                 Some(CellValue::Text(v) | CellValue::Number(v) | CellValue::Date(v)) => v.clone(),
@@ -346,15 +339,13 @@ pub fn write_atomic(path: &Path, contents: &str) -> Result<()> {
         .parent()
         .filter(|p| !p.as_os_str().is_empty())
         .unwrap_or(Path::new("."));
-    let mut file = tempfile::NamedTempFile::new_in(parent)
-        .context("Création du fichier temporaire d’export")?;
+    let mut file =
+        tempfile::NamedTempFile::new_in(parent).context("Creating the temporary export file")?;
     file.write_all(contents.as_bytes())
-        .context("Écriture de l’export")?;
-    file.as_file()
-        .sync_all()
-        .context("Synchronisation de l’export")?;
+        .context("Writing the export")?;
+    file.as_file().sync_all().context("Syncing the export")?;
     file.persist(path)
         .map_err(|e| e.error)
-        .context("Enregistrement de l’export")?;
+        .context("Saving the export")?;
     Ok(())
 }

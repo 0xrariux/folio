@@ -15,7 +15,7 @@ fn data() -> (Vec<Page>, String, String, String) {
         columns: vec![hours],
         ..Default::default()
     });
-    let mut relation = Column::new("Tâches", ColumnKind::Relation);
+    let mut relation = Column::new("Tasks", ColumnKind::Relation);
     relation.config.target_base = Some(tasks.id.clone());
     let relation_id = relation.id.clone();
     let mut progress = Column::new("Progression", ColumnKind::Rollup);
@@ -91,7 +91,7 @@ fn relations_rollups_formulas_and_csv_recompute_from_current_records() {
         calculations::value(&pages[2], column(&formula), &pages).unwrap(),
         12.0
     );
-    let csv = folio::export::csv_with_context("Projet", &[&pages[0]], &[&pages[2]], &pages);
+    let csv = folio::export::csv_with_context("Project", &[&pages[0]], &[&pages[2]], &pages);
     assert!(csv.contents.contains("\"6\",\"12\""));
     pages[4].properties.status = Status::Done;
     let column = pages[0]
@@ -135,7 +135,7 @@ fn formulas_reject_cycles_invalid_syntax_and_non_finite_results() {
     assert!(
         calculations::value(&pages[2], column, &pages)
             .unwrap_err()
-            .contains("circulaire")
+            .contains("Circular")
     );
     for bad in ["1/0", "NaN", "1+", "((1)", "1e309", "std::process(1)"] {
         assert!(calculations::evaluate(bad).is_err(), "{bad}");

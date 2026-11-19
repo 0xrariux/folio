@@ -14,12 +14,26 @@ pub(super) fn config(s: &State, form: &ColumnForm, p: Palette) -> El {
                 .pages
                 .iter()
                 .find(|p| Some(&p.id) == form.config.target_base.as_ref())
-                .map_or("Base manquante", |p| p.display_title());
-            return body.child(label(format!("Base liée : {name}"),11.0,p.muted)).child(label(if form.config.reverse_of.is_some(){"Relation inverse : les liens sont calculés depuis la propriété d’origine."}else{"La base liée est conservée après création."},10.0,p.faint).w_full().wrap());
+                .map_or("Missing database", |p| p.display_title());
+            return body
+                .child(label(format!("Linked database: {name}"), 11.0, p.muted))
+                .child(
+                    label(
+                        if form.config.reverse_of.is_some() {
+                            "Reverse relation: links are calculated from the original property."
+                        } else {
+                            "The linked database cannot be changed after creation."
+                        },
+                        10.0,
+                        p.faint,
+                    )
+                    .w_full()
+                    .wrap(),
+                );
         }
         body = body.child(icons::toggle(
             "relation-auto-inverse",
-            "Créer aussi la relation inverse",
+            "Also create the reverse relation",
             form.config.auto_inverse,
             p,
             |s, _| {
@@ -47,7 +61,7 @@ pub(super) fn config(s: &State, form: &ColumnForm, p: Palette) -> El {
                 },
             ));
         }
-        body = body.child(label("BASE À RELIER", 10.0, p.faint)).child(
+        body = body.child(label("DATABASE TO LINK", 10.0, p.faint)).child(
             col()
                 .h(90.0)
                 .scroll(ScrollSpec {
@@ -89,7 +103,7 @@ pub(super) fn config(s: &State, form: &ColumnForm, p: Palette) -> El {
             );
         }
         body = body
-            .child(label("RELATION À AGRÉGER", 10.0, p.faint))
+            .child(label("RELATION TO AGGREGATE", 10.0, p.faint))
             .child(relations);
         for pair in Aggregate::ALL.chunks(2) {
             let mut options = row().gap(4.0);
@@ -160,10 +174,10 @@ pub(super) fn config(s: &State, form: &ColumnForm, p: Palette) -> El {
         }
     }
     if form.kind == ColumnKind::Formula {
-        body = body.child(label("FORMULE NUMÉRIQUE", 10.0, p.faint))
-            .child(text_input(&form.expression, TextStyle::new(12.0, 400.0)).key("column-expression").label("Formule").single_line().w_full().h(34.0).px(7.0).border(1.0, p.line).radius(4.0).color(p.ink).caret(p.accent, p.tint)
-                .placeholder("prop(\"Charge\") * 2", p.faint).on_edit(|s: &mut State| { let Panel::Columns(f) = &mut s.panel else { unreachable!() }; &mut f.expression }))
-            .child(label("+ − × /, parenthèses et prop(\"Nom\"). status_done vaut 1 si terminé, sinon 0.", 10.0, p.faint).w_full().wrap());
+        body = body.child(label("NUMERIC FORMULA", 10.0, p.faint))
+            .child(text_input(&form.expression, TextStyle::new(12.0, 400.0)).key("column-expression").label("Formula").single_line().w_full().h(34.0).px(7.0).border(1.0, p.line).radius(4.0).color(p.ink).caret(p.accent, p.tint)
+                .placeholder("prop(\"Effort\") * 2", p.faint).on_edit(|s: &mut State| { let Panel::Columns(f) = &mut s.panel else { unreachable!() }; &mut f.expression }))
+            .child(label("+ − × /, parentheses, and prop(\"Name\"). status_done is 1 when completed, otherwise 0.", 10.0, p.faint).w_full().wrap());
     }
     body
 }

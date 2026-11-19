@@ -26,10 +26,10 @@ impl State {
         }
         let mut page = Page::new(None);
         page.id = "demo-control-catalog".into();
-        page.title = "Les signes de l’interface".into();
+        page.title = "Interface icons".into();
         page.emoji = "📝".into();
         page.wide = true;
-        page.replace_html("<p>Des repères communs pour naviguer, organiser et écrire.</p>");
+        page.replace_html("<p>Shared icons for navigation, organization, and writing.</p>");
         self.pages.push(page);
         self.select("demo-control-catalog");
     }
@@ -40,10 +40,10 @@ impl State {
         }
         let mut page = Page::new(None);
         page.id = "demo-icon-catalog".into();
-        page.title = "La collection Folio".into();
+        page.title = "Page icons".into();
         page.emoji = "🌿".into();
         page.wide = true;
-        page.replace_html("<p>Seize signes pour les idées, les notes et les projets.</p>");
+        page.replace_html("<p>Sixteen icons for ideas, notes, and projects.</p>");
         self.pages.push(page);
         self.select("demo-icon-catalog");
     }
@@ -55,22 +55,22 @@ impl State {
         use folio::document::{Kind, NoteBlock};
         let mut page = Page::new(None);
         page.id = "demo-drag-list".into();
-        page.title = "Chaque chose à sa place".into();
+        page.title = "Organize your tasks".into();
         page.emoji = "✅".into();
         page.blocks = vec![
             NoteBlock::text(
                 Kind::Callout,
-                "Attrapez la poignée ⠿ à gauche d’un bloc, déplacez-le, puis relâchez sur le repère vert. Échap annule le geste.",
+                "Drag the handle to the left of a block and drop it on the green marker. Press Escape to cancel.",
             ),
-            NoteBlock::text(Kind::Heading2, "Préparer la prochaine version"),
-            NoteBlock::text(Kind::Numbered, "Rassembler les idées et les retours"),
-            NoteBlock::text(Kind::Numbered, "Choisir les prochaines priorités"),
-            NoteBlock::text(Kind::Numbered, "Partager une première version"),
-            NoteBlock::text(Kind::Todo, "Poser les fondations de Folio"),
-            NoteBlock::text(Kind::Todo, "Réorganiser cette liste à la souris"),
+            NoteBlock::text(Kind::Heading2, "Prepare the next release"),
+            NoteBlock::text(Kind::Numbered, "Gather ideas and feedback"),
+            NoteBlock::text(Kind::Numbered, "Choose the next priorities"),
+            NoteBlock::text(Kind::Numbered, "Share a first version"),
+            NoteBlock::text(Kind::Todo, "Set up the project"),
+            NoteBlock::text(Kind::Todo, "Reorder this list by dragging"),
             NoteBlock::text(
                 Kind::Bullet,
-                "Le contenu, les styles et les cases cochées suivent le bloc.",
+                "Content, formatting, and checked tasks move with the block.",
             ),
         ];
         page.blocks[5].checked = true;
@@ -104,7 +104,7 @@ impl State {
             SavedView {
                 layout: None,
                 id: "demo-view-all".into(),
-                name: "Tous les projets".into(),
+                name: "All projects".into(),
                 view: View::Table,
                 sort: Sort::Title,
                 filter: TrackingFilter::default(),
@@ -112,7 +112,7 @@ impl State {
             SavedView {
                 layout: None,
                 id: "demo-view-active".into(),
-                name: "En cours".into(),
+                name: "In progress".into(),
                 view: View::Board,
                 sort: Sort::Due,
                 filter: TrackingFilter {
@@ -123,7 +123,7 @@ impl State {
             SavedView {
                 layout: None,
                 id: "demo-view-late".into(),
-                name: "À débloquer".into(),
+                name: "Needs attention".into(),
                 view: View::Dashboard,
                 sort: Sort::Due,
                 filter: TrackingFilter {
@@ -136,11 +136,11 @@ impl State {
     }
 
     pub fn extend_demo_tracking(&mut self) {
-        let mut hours = Column::new("Charge (h)", ColumnKind::Number);
+        let mut hours = Column::new("Effort (h)", ColumnKind::Number);
         hours.id = "demo-hours".into();
-        let mut approved = Column::new("Livrable validé", ColumnKind::Checkbox);
+        let mut approved = Column::new("Approved", ColumnKind::Checkbox);
         approved.id = "demo-approved".into();
-        let mut owner = Column::new("Référent", ColumnKind::Text);
+        let mut owner = Column::new("Owner", ColumnKind::Text);
         owner.id = "demo-owner".into();
         if let Some(base) = self.pages.iter_mut().find(|p| p.id == "demo-tracker")
             && let Some(collection) = &mut base.collection
@@ -149,10 +149,10 @@ impl State {
         }
         let mut late = Page::new(Some("demo-tracker".into()));
         late.id = "demo-record-5".into();
-        late.title = "Valider le cadrage".into();
+        late.title = "Review the project scope".into();
         late.properties.priority = Priority::High;
         late.properties.due = Some("2026-11-08".into());
-        late.properties.tags = vec!["Produit".into()];
+        late.properties.tags = vec!["Product".into()];
         late.blocks[0].id = "demo-record-5-0".into();
         self.pages.push(late);
         for (i, hours) in [8, 16, 5, 20, 3, 4].into_iter().enumerate() {
@@ -170,14 +170,14 @@ impl State {
                 );
                 page.properties
                     .custom
-                    .insert("demo-owner".into(), CellValue::Text("Moi".into()));
+                    .insert("demo-owner".into(), CellValue::Text("Sample user".into()));
             }
         }
-        let mut points = Column::new("Points estimés", ColumnKind::Number);
+        let mut points = Column::new("Estimated points", ColumnKind::Number);
         points.id = "demo-points".into();
         let mut launch = Page::new(None);
         launch.id = "demo-launch".into();
-        launch.title = "Lancement de Folio".into();
+        launch.title = "Sample launch".into();
         launch.emoji = "🚀".into();
         launch.wide = true;
         launch.collection = Some(Collection {
@@ -189,14 +189,9 @@ impl State {
         self.pages.push(launch);
         self.collapsed.insert("demo-launch".into());
         for (i, (title, status, due, points)) in [
-            ("Préparer la présentation", Status::Todo, "2026-11-10", 3),
-            ("Tester les parcours", Status::InProgress, "2026-11-13", 5),
-            (
-                "Partager la première version",
-                Status::Done,
-                "2026-11-15",
-                8,
-            ),
+            ("Prepare the presentation", Status::Todo, "2026-11-10", 3),
+            ("Test the workflows", Status::InProgress, "2026-11-13", 5),
+            ("Share the first version", Status::Done, "2026-11-15", 8),
         ]
         .into_iter()
         .enumerate()
@@ -214,7 +209,7 @@ impl State {
         }
         let mut dashboard = Page::new(None);
         dashboard.id = "demo-dashboard".into();
-        dashboard.title = "Le cap, en un regard".into();
+        dashboard.title = "Project overview".into();
         dashboard.emoji = "📊".into();
         dashboard.wide = true;
         dashboard.dashboard = Some(DashboardConfig::default());

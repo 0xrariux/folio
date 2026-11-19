@@ -21,7 +21,7 @@ impl State {
             return;
         }
         let mut page = Page::new(None);
-        page.title = "Vue d’ensemble".into();
+        page.title = "Overview".into();
         page.emoji = "📊".into();
         page.wide = true;
         page.dashboard = Some(DashboardConfig::default());

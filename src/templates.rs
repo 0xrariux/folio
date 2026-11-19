@@ -23,23 +23,23 @@ impl Template {
 
     pub fn name(self) -> &'static str {
         match self {
-            Self::Meeting => "Note de réunion",
-            Self::Project => "Nouveau projet",
-            Self::Tasks => "Ma liste de tâches",
-            Self::Tracker => "Suivi de projet",
-            Self::Dashboard => "Dashboard de suivi",
-            Self::Outline => "Carnet à tiroirs",
+            Self::Meeting => "Meeting notes",
+            Self::Project => "New project",
+            Self::Tasks => "Task list",
+            Self::Tracker => "Project tracker",
+            Self::Dashboard => "Project dashboard",
+            Self::Outline => "Outline notebook",
         }
     }
 
     pub fn description(self) -> &'static str {
         match self {
-            Self::Meeting => "Un ordre du jour et des décisions claires",
-            Self::Project => "Du contexte aux prochaines étapes",
-            Self::Tasks => "De petites cases pour de grandes avancées",
-            Self::Tracker => "Une base de fiches, en tableau ou en Kanban",
-            Self::Dashboard => "Les indicateurs de toutes vos bases, au même endroit",
-            Self::Outline => "Des idées, des étapes et des tâches que l’on peut replier",
+            Self::Meeting => "An agenda, decisions, and action items",
+            Self::Project => "From context to next steps",
+            Self::Tasks => "Keep track of what needs to happen next",
+            Self::Tracker => "A collection of records in a table or Kanban board",
+            Self::Dashboard => "Metrics from all your collections in one place",
+            Self::Outline => "Organize ideas, steps, and tasks in collapsible sections",
         }
     }
 
@@ -53,27 +53,24 @@ impl Template {
                 let mut blocks = vec![
                     block(
                         Kind::Callout,
-                        "Dépliez les chevrons pour explorer. Entrée dans un titre repliable ajoute son contenu ; Tab et Maj+Tab organisent les sous-éléments.",
+                        "Expand the arrows to explore. Press Enter in a collapsible heading to add content; use Tab and Shift+Tab to organize nested items.",
                     ),
-                    block(Kind::ToggleHeading2, "Un projet, étape par étape"),
+                    block(Kind::ToggleHeading2, "A project, step by step"),
+                    block(Kind::Text, "A place for context and key ideas."),
+                    block(Kind::Numbered, "Prepare the groundwork"),
+                    block(Kind::Bullet, "Gather ideas and resources"),
+                    block(Kind::Bullet, "Define what matters"),
+                    block(Kind::Numbered, "Build and share"),
+                    block(Kind::Toggle, "Launch checklist"),
+                    block(Kind::Todo, "Lay the foundations"),
+                    block(Kind::Todo, "Refine the first version"),
+                    block(Kind::Todo, "Gather initial feedback"),
+                    block(Kind::ToggleHeading2, "Ideas for later"),
+                    block(Kind::Quote, "A small idea can grow into a great project."),
+                    block(Kind::Bullet, "An idea to explore tomorrow"),
                     block(
                         Kind::Text,
-                        "Un espace pour le contexte et les idées importantes.",
-                    ),
-                    block(Kind::Numbered, "Préparer le terrain"),
-                    block(Kind::Bullet, "Rassembler les idées et les ressources"),
-                    block(Kind::Bullet, "Définir ce qui compte vraiment"),
-                    block(Kind::Numbered, "Construire et partager"),
-                    block(Kind::Toggle, "La liste de lancement"),
-                    block(Kind::Todo, "Poser les fondations"),
-                    block(Kind::Todo, "Peaufiner la première version"),
-                    block(Kind::Todo, "Recueillir les premiers retours"),
-                    block(Kind::ToggleHeading2, "Les idées pour plus tard"),
-                    block(Kind::Quote, "Une petite idée peut devenir un grand projet."),
-                    block(Kind::Bullet, "Une piste à explorer demain"),
-                    block(
-                        Kind::Text,
-                        "Les notes continuent ici, en dehors des tiroirs.",
+                        "Continue your notes here, outside the collapsible sections.",
                     ),
                 ];
                 for (b, level) in blocks
@@ -107,50 +104,44 @@ impl Template {
                 vec![
                     block(
                         Kind::Callout,
-                        "Objectif : qu’aimerions-nous avoir décidé à la fin de cette réunion ?",
+                        "Goal: what should we have decided by the end of this meeting?",
                     ),
-                    block(Kind::Heading2, "Ordre du jour"),
-                    block(Kind::Bullet, "Les sujets à aborder"),
-                    block(Kind::Heading2, "Notes & décisions"),
-                    block(
-                        Kind::Text,
-                        "Les idées importantes, au fil de la discussion.",
-                    ),
-                    block(Kind::Heading2, "Prochaines actions"),
-                    block(Kind::Todo, "Une action, une personne, une échéance"),
+                    block(Kind::Heading2, "Agenda"),
+                    block(Kind::Bullet, "Topics to discuss"),
+                    block(Kind::Heading2, "Notes & decisions"),
+                    block(Kind::Text, "Capture key ideas as the discussion unfolds."),
+                    block(Kind::Heading2, "Action items"),
+                    block(Kind::Todo, "One action, one owner, one deadline"),
                 ]
             }
             Self::Project => {
                 page.emoji = "🚀".into();
                 page.cover = 1;
                 vec![
-                    block(
-                        Kind::Callout,
-                        "Une ambition claire, des petits pas concrets.",
-                    ),
-                    block(Kind::Heading2, "Pourquoi ce projet ?"),
+                    block(Kind::Callout, "A clear goal and practical next steps."),
+                    block(Kind::Heading2, "Why this project?"),
                     block(
                         Kind::Text,
-                        "Le problème à résoudre et les personnes que nous voulons aider.",
+                        "The problem to solve and the people this project will help.",
                     ),
-                    block(Kind::Heading2, "Les prochaines étapes"),
-                    block(Kind::Todo, "Définir le périmètre"),
-                    block(Kind::Todo, "Construire une première version"),
-                    block(Kind::Todo, "Recueillir les premiers retours"),
+                    block(Kind::Heading2, "Next steps"),
+                    block(Kind::Todo, "Define the scope"),
+                    block(Kind::Todo, "Build a first version"),
+                    block(Kind::Todo, "Gather initial feedback"),
                     block(Kind::Divider, ""),
-                    block(Kind::Heading3, "Ressources & idées"),
-                    block(Kind::Text, "Les liens et les notes utiles au projet."),
+                    block(Kind::Heading3, "Resources & ideas"),
+                    block(Kind::Text, "Useful links and notes for this project."),
                 ]
             }
             Self::Tasks => {
                 page.emoji = "✅".into();
                 page.cover = 3;
                 vec![
-                    block(Kind::Heading2, "Aujourd’hui"),
-                    block(Kind::Todo, "La chose la plus importante"),
-                    block(Kind::Todo, "Un petit pas qui fait avancer"),
-                    block(Kind::Heading2, "Plus tard"),
-                    block(Kind::Todo, "Une idée pour demain"),
+                    block(Kind::Heading2, "Today"),
+                    block(Kind::Todo, "The most important task"),
+                    block(Kind::Todo, "One small step forward"),
+                    block(Kind::Heading2, "Later"),
+                    block(Kind::Todo, "An idea for tomorrow"),
                 ]
             }
         };

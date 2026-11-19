@@ -126,11 +126,11 @@ fn unicode_search_is_consistent_for_pages_commands_links_and_record_properties()
     s.collection_search = TextEdit::new("preparer");
     assert_eq!(s.collection_items()[0].id, "record-00001");
     s.open_palette(Mode::Commands);
-    s.palette_edit().text = "inserer".into();
+    s.palette_edit().text = "INSERT".into();
     assert!(
         s.palette_items()
             .iter()
-            .any(|item| item.title == "Insérer une base dans la page")
+            .any(|item| item.title == "Insert a database in the page")
     );
     s.open_palette(Mode::Mention {
         block: "unused".into(),
@@ -223,7 +223,7 @@ fn saving_announces_completion_and_current_errors() {
     assert!(
         !rt.accessibility_json()
             .to_string()
-            .contains("Tout est enregistré")
+            .contains("All changes saved")
     );
     rt.update(|s, tx| {
         crate::poll_updates(
@@ -238,7 +238,7 @@ fn saving_announces_completion_and_current_errors() {
     assert!(
         rt.accessibility_json()
             .to_string()
-            .contains("Tout est enregistré")
+            .contains("All changes saved")
     );
     rt.state.pending.insert(
         "large-base".into(),
@@ -261,7 +261,7 @@ fn saving_announces_completion_and_current_errors() {
     assert!(
         rt.accessibility_json()
             .to_string()
-            .contains("Échec de l’enregistrement : Disque plein")
+            .contains("Save failed: Disque plein")
     );
 }
 

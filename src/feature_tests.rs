@@ -118,7 +118,7 @@ fn templates_customization_and_page_duplication_work_through_menus() {
     tap(&mut rt, "templates");
     tap(&mut rt, "template-1");
     assert_eq!(rt.state.pages.len(), before + 1);
-    assert_eq!(rt.state.current().unwrap().title, "Nouveau projet");
+    assert_eq!(rt.state.current().unwrap().title, "New project");
     assert!(rt.state.blocks.iter().any(|b| b.data.kind == Kind::Todo));
     let original = rt.state.current().unwrap().clone();
     tap(&mut rt, "page-icon");
@@ -128,7 +128,7 @@ fn templates_customization_and_page_duplication_work_through_menus() {
     assert_ne!(rt.state.current().unwrap().cover, original.cover);
     tap(&mut rt, "page-menu");
     tap(&mut rt, "duplicate-page");
-    assert!(rt.state.current().unwrap().title.ends_with("(copie)"));
+    assert!(rt.state.current().unwrap().title.ends_with("(copy)"));
     assert_ne!(rt.state.selected.as_deref(), Some(original.id.as_str()));
     assert!(
         rt.state
@@ -161,7 +161,7 @@ fn moving_pages_prevents_cycles_and_history_tracks_navigation() {
     assert_eq!(state.selected.as_deref(), Some(child.as_str()));
     state.collapsed.insert(parent.clone());
     assert!(!state.sidebar_pages().iter().any(|(p, _)| p.id == child));
-    state.search.text = "prochain".into();
+    state.search.text = "next".into();
     assert!(state.sidebar_pages().iter().any(|(p, _)| p.id == child));
 }
 
@@ -207,4 +207,87 @@ fn code_enter_stays_in_the_same_block_and_removing_the_last_block_leaves_an_edit
     assert_eq!(rt.state.blocks.len(), 1);
     assert_eq!(rt.state.blocks[0].data.kind, Kind::Text);
     assert!(rt.state.blocks[0].edit.text.is_empty());
+}
+
+#[test]
+fn page_icon_colors_and_new_symbols_work_at_the_minimum_window_size() {
+    use folio::icons::{CHOICES, IconColor};
+    let mut s = State::demo();
+    s.create(false);
+    let mut rt = Runtime::new(s, crate::ui::view, (920., 620.), Env::new(false, 1.));
+    rt.frame(0.);
+    tap(&mut rt, "page-icon");
+    for color in IconColor::ALL {
+        assert!(rt.find(&format!("icon-color-{}", color.key())).is_some());
+    }
+    tap(&mut rt, "icon-color-blue");
+    assert_eq!(rt.state.current().unwrap().icon_color, IconColor::Blue);
+    assert_eq!(rt.state.current().unwrap().emoji, "📄");
+    assert!(matches!(rt.state.panel, Panel::Icons));
+    let last = format!("icon-{}", CHOICES.len() - 1);
+    rt.update(|_, tx| tx.scroll_into_view(&last));
+    for _ in 0..40 {
+        rt.frame(1. / 60.);
+    }
+    tap(&mut rt, &last);
+    assert_eq!(
+        rt.state.current().unwrap().emoji,
+        CHOICES.last().unwrap().value
+    );
+    assert_eq!(rt.state.current().unwrap().icon_color, IconColor::Blue);
+    assert!(matches!(rt.state.panel, Panel::Closed));
+    tap(&mut rt, "page-icon");
+    tap(&mut rt, "icon-color-default");
+    assert_eq!(rt.state.current().unwrap().icon_color, IconColor::Default);
+    assert_eq!(
+        rt.state.current().unwrap().emoji,
+        CHOICES.last().unwrap().value
+    );
+    rt.update(|s, _| s.panel = Panel::Closed);
+    rt.frame(0.);
+    rt.update(|s, _| {
+        s.set_icon_color(IconColor::Rose);
+        s.duplicate_page();
+    });
+    assert_eq!(rt.state.current().unwrap().icon_color, IconColor::Rose);
+}
+
+#[test]
+fn sidebar_page_hover_covers_the_rounded_row_at_both_edges() {
+    for dark in [true, false] {
+        let mut s = State::demo();
+        s.dark = dark;
+        let mut rt = Runtime::new(s, crate::ui::view, (920., 620.), Env::new(dark, 1.));
+        rt.frame(0.);
+        for id in ["demo-home", "demo-ideas"] {
+            let key = format!("page-row-{id}");
+            rt.update(|_, tx| tx.scroll_into_view(&key));
+            for _ in 0..35 {
+                rt.frame(1. / 60.);
+            }
+            let row = rt
+                .elements()
+                .into_iter()
+                .find(|e| e.key.as_deref() == Some(&key))
+                .unwrap();
+            let [x, y, w, h] = row.rect;
+            for px in [x + 1., x + w / 2., x + w - 1.] {
+                rt.pointer_move(px, y + h / 2.);
+                for _ in 0..12 {
+                    rt.frame(1. / 60.);
+                }
+                let row = rt
+                    .elements()
+                    .into_iter()
+                    .find(|e| e.key.as_deref() == Some(&key))
+                    .unwrap();
+                assert!(
+                    row.hover > 0.99,
+                    "{id}, x={px}, dark={dark}, hover={}",
+                    row.hover
+                );
+                assert_eq!(row.radius, 6.);
+            }
+        }
+    }
 }

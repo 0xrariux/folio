@@ -4,6 +4,7 @@ use crate::document::{Kind, NoteBlock, PageContent, import_legacy};
 
 /// HTML is Rune's portable rich-text representation; plain text is the search index.
 #[derive(Clone, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Page {
     pub id: String,
     pub parent_id: Option<String>,
@@ -15,6 +16,8 @@ pub struct Page {
     pub updated_at: i64,
     pub blocks: Vec<NoteBlock>,
     pub emoji: String,
+    #[serde(default, skip_serializing_if = "crate::icons::IconColor::is_default")]
+    pub icon_color: crate::icons::IconColor,
     pub cover: u8,
     pub wide: bool,
     pub collection: Option<crate::collection::Collection>,
@@ -22,6 +25,8 @@ pub struct Page {
     pub dashboard: Option<crate::dashboard::DashboardConfig>,
     #[serde(default)]
     pub order: i64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub protected: Option<crate::security::Sealed>,
 }
 
 impl Page {
@@ -29,7 +34,7 @@ impl Page {
         let mut page = Self {
             id: uuid::Uuid::new_v4().to_string(),
             parent_id,
-            title: "Sans titre".into(),
+            title: "Untitled".into(),
             body_html: String::new(),
             plain_text: String::new(),
             favorite: false,
@@ -37,12 +42,14 @@ impl Page {
             updated_at: now(),
             blocks: vec![NoteBlock::new(Kind::Text)],
             emoji: "📄".into(),
+            icon_color: Default::default(),
             cover: 0,
             wide: false,
             collection: None,
             properties: crate::collection::Properties::default(),
             dashboard: None,
             order: 0,
+            protected: None,
         };
         page.sync_document();
         page
@@ -50,7 +57,7 @@ impl Page {
 
     pub fn display_title(&self) -> &str {
         if self.title.trim().is_empty() {
-            "Sans titre"
+            "Untitled"
         } else {
             &self.title
         }
@@ -78,15 +85,17 @@ impl Page {
 
     pub fn content(&self) -> PageContent {
         PageContent {
-            version: 6,
+            version: crate::document::CURRENT_VERSION,
             blocks: self.blocks.clone(),
             emoji: self.emoji.clone(),
+            icon_color: self.icon_color,
             cover: self.cover,
             wide: self.wide,
             collection: self.collection.clone(),
             properties: self.properties.clone(),
             dashboard: self.dashboard.clone(),
             order: self.order,
+            protected: self.protected.clone(),
         }
     }
 }
@@ -100,17 +109,17 @@ pub fn now() -> i64 {
 
 pub fn welcome() -> Page {
     let mut page = Page::new(None);
-    page.title = "Un peu d’espace pour vos idées".into();
+    page.title = "Room for your ideas".into();
     page.body_html = concat!(
-        "<p>Bienvenue dans <b>Folio</b>, votre carnet personnel.</p>",
-        "<p>Une idée, une note de réunion, les premières lignes d’un projet : tout commence ici.</p>",
+        "<p>Welcome to <b>Folio</b>, your local notebook.</p>",
+        "<p>An idea, meeting notes, the first lines of a project: it all starts here.</p>",
         "<p></p>",
-        "<p><b>À vous de jouer</b></p>",
-        "<ul><li>Créez une page ou une sous-page depuis la barre latérale.</li>",
-        "<li>Écrivez, sélectionnez du texte et essayez la barre de mise en forme.</li>",
-        "<li>Retrouvez vos notes avec la recherche, ou ajoutez-les aux favoris.</li></ul>",
-        "<blockquote>Vos idées restent sur cet ordinateur. Chaque modification est enregistrée automatiquement.</blockquote>",
-        "<p></p><p>Faites de la place à la prochaine idée.</p>"
+        "<p><b>Get started</b></p>",
+        "<ul><li>Create a page or subpage from the sidebar.</li>",
+        "<li>Write, select some text, and try the formatting toolbar.</li>",
+        "<li>Find your notes with search, or add them to your favorites.</li></ul>",
+        "<blockquote>Your notes stay on this computer. Changes are saved automatically.</blockquote>",
+        "<p></p><p>Make room for your next idea.</p>"
     ).into();
     let html = page.body_html.clone();
     page.replace_html(&html);

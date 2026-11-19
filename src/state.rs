@@ -19,6 +19,12 @@ pub enum Filter {
 pub enum Panel {
     #[default]
     Closed,
+    Settings,
+    Library,
+    ModuleReview,
+    ModuleConfirm,
+    Security,
+    ConfirmDelete(String),
     Slash {
         id: String,
         selected: usize,
@@ -26,6 +32,7 @@ pub enum Panel {
     },
     Block(String),
     Page,
+    SidebarPage(String),
     Move,
     Templates,
     Icons,
@@ -43,6 +50,7 @@ pub enum Panel {
     DashboardSources,
     Views(Box<crate::saved_views::ViewForm>),
     SidebarMore,
+    SidebarNavigation,
     Workspace,
     History,
     RestorePreview,
@@ -55,6 +63,8 @@ pub struct Pending {
     pub error: Option<String>,
 }
 pub struct State {
+    pub library: crate::module_library::Library,
+    pub settings: crate::settings::Settings,
     pub workspace: crate::notebook::WorkspaceState,
     pub selection: crate::selection::Selection,
     pub pages: Vec<Page>,
@@ -87,6 +97,8 @@ pub struct State {
 impl State {
     pub fn new() -> Self {
         Self {
+            library: Default::default(),
+            settings: crate::settings::Settings::default(),
             workspace: crate::notebook::WorkspaceState::default(),
             selection: crate::selection::Selection::default(),
             pages: Vec::new(),
@@ -124,51 +136,49 @@ impl State {
         };
         let mut state = Self::new();
         state.demo = true;
+        state.library.loaded = true;
         state.today = "2026-11-10".into();
         state.phase = Phase::Ready;
         let mut home = Page::new(None);
         home.id = "demo-home".into();
-        home.title = "Un espace pour vos idées".into();
+        home.title = "Room for your ideas".into();
         home.emoji = "🌿".into();
         home.cover = 1;
         home.favorite = true;
         home.blocks = vec![
             NoteBlock::text(
                 Kind::Callout,
-                "Bienvenue chez vous. Un carnet pour penser, créer et faire avancer ce qui compte.",
+                "Welcome to Folio. A notebook to think, create, and move your projects forward.",
             ),
-            NoteBlock::text(Kind::Heading2, "Faire de la place à la prochaine idée"),
+            NoteBlock::text(Kind::Heading2, "Make room for your next idea"),
             NoteBlock::text(
                 Kind::Text,
-                "Une note de réunion, les premières lignes d’un projet, une pensée à garder. Chaque bloc a sa place, et peut en changer.",
+                "Meeting notes, the start of a project, or a thought to keep. Move blocks to organize your ideas.",
             ),
-            NoteBlock::text(Kind::Todo, "Essayer les commandes / pour ajouter un bloc"),
-            NoteBlock::text(Kind::Todo, "Créer une page à partir d’un modèle"),
-            NoteBlock::text(Kind::Todo, "Faire un petit pas vers mon prochain projet"),
+            NoteBlock::text(Kind::Todo, "Try slash commands to add a block"),
+            NoteBlock::text(Kind::Todo, "Create a page from a template"),
+            NoteBlock::text(Kind::Todo, "Take the next step on a project"),
             NoteBlock::text(Kind::Divider, ""),
-            NoteBlock::text(
-                Kind::Quote,
-                "Les grandes choses commencent souvent par une petite note.",
-            ),
+            NoteBlock::text(Kind::Quote, "Great projects often start with a small note."),
         ];
         home.blocks[3].checked = true;
         home.sync_document();
         let mut ideas = Page::new(None);
         ideas.id = "demo-ideas".into();
-        ideas.title = "La boîte à idées".into();
+        ideas.title = "Ideas".into();
         ideas.emoji = "💡".into();
-        ideas.replace_html("<p>Des pistes à explorer, sans pression.</p>");
+        ideas.replace_html("<p>A place to collect ideas worth exploring.</p>");
         let mut child = Template::Project.create();
         child.id = "demo-project".into();
         child.parent_id = Some(ideas.id.clone());
-        child.title = "Le prochain projet".into();
+        child.title = "Next project".into();
         let mut meeting = Template::Meeting.create();
         meeting.id = "demo-meeting".into();
         meeting.favorite = true;
         state.pages = vec![home, ideas, child, meeting];
         let mut tracker = Template::Tracker.create();
         tracker.id = "demo-tracker".into();
-        tracker.title = "Les projets en mouvement".into();
+        tracker.title = "Project tracker".into();
         tracker.favorite = true;
         let mut link = NoteBlock::text(Kind::PageLink, &tracker.title);
         link.target_id = Some(tracker.id.clone());
@@ -178,39 +188,39 @@ impl State {
         use folio::collection::{Priority, Status};
         for (i, (title, status, priority, due, tags)) in [
             (
-                "Imaginer le prochain projet",
+                "Plan a new project",
                 Status::Todo,
                 Priority::Medium,
                 "2026-11-20",
-                "Idées",
+                "Ideas",
             ),
             (
-                "Dessiner les premiers écrans",
+                "Sketch the first screens",
                 Status::InProgress,
                 Priority::High,
                 "2026-11-14",
-                "Design, Folio",
+                "Design, Sample",
             ),
             (
-                "Relier les notes entre elles",
+                "Connect related notes",
                 Status::InProgress,
                 Priority::High,
                 "2026-11-16",
-                "Folio",
+                "Sample",
             ),
             (
-                "Poser les fondations",
+                "Lay the foundations",
                 Status::Done,
                 Priority::Low,
                 "2026-11-10",
-                "Rust",
+                "Development",
             ),
             (
-                "Recueillir les premiers retours",
+                "Gather initial feedback",
                 Status::Todo,
                 Priority::Medium,
                 "2026-11-22",
-                "Produit",
+                "Product",
             ),
         ]
         .into_iter()
@@ -223,9 +233,7 @@ impl State {
             page.properties.priority = priority;
             page.properties.due = Some(due.into());
             page.properties.tags = tags.split(", ").map(str::to_string).collect();
-            page.replace_html(
-                "<p>Les notes, les décisions et les prochaines étapes de cette fiche.</p>",
-            );
+            page.replace_html("<p>Notes, decisions, and next steps for this record.</p>");
             state.pages.push(page);
         }
         state.collapsed.insert("demo-tracker".into());
@@ -245,6 +253,9 @@ impl State {
             .find(|p| Some(&p.id) == self.selected.as_ref())
     }
     pub fn edit(&mut self) {
+        if self.settings.locked || self.current().is_some_and(|p| p.protected.is_some()) {
+            return;
+        }
         self.commit_blocks(true);
         let Some(id) = self.selected.clone() else {
             return;
@@ -292,7 +303,7 @@ impl State {
         let error = self
             .worker
             .as_ref()
-            .ok_or_else(|| "Le service de sauvegarde est indisponible".to_string())
+            .ok_or_else(|| "The backup service is unavailable".to_string())
             .and_then(|worker| worker.save(page, revision))
             .err();
         self.pending.insert(id.into(), Pending { revision, error });
@@ -305,6 +316,12 @@ impl State {
     }
     pub fn accept(&mut self, event: Event) {
         match event {
+            Event::Security(outcome) => self.accept_security(outcome),
+            Event::SecurityFailed(message) => {
+                self.settings.busy = false;
+                self.settings.pending_security = None;
+                self.settings.error = Some(message);
+            }
             Event::Workspace(result) => self.accept_workspace(result),
             Event::Loaded(pages) => {
                 self.pages = pages;

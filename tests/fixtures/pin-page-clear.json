@@ -1,0 +1,37 @@
+{
+  "id": "fixture-pin",
+  "parent_id": null,
+  "title": "Frozen PIN page",
+  "body_html": "<p>Frozen PIN content 🦀</p>\n",
+  "plain_text": "Frozen PIN content 🦀",
+  "favorite": false,
+  "archived": false,
+  "updated_at": 6,
+  "blocks": [
+    {
+      "id": "fixture-pin-block",
+      "kind": "Text",
+      "html": "<p>Frozen PIN content 🦀</p>",
+      "checked": false,
+      "indent": 0,
+      "target_id": null,
+      "collapsed": false,
+      "number_start": null,
+      "embedded": null,
+      "asset": null
+    }
+  ],
+  "emoji": "📄",
+  "cover": 0,
+  "wide": false,
+  "collection": null,
+  "properties": {
+    "status": "Todo",
+    "priority": "Medium",
+    "due": null,
+    "tags": [],
+    "custom": {}
+  },
+  "dashboard": null,
+  "order": 0
+}

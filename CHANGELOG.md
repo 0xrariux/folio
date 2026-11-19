@@ -1,204 +1,243 @@
 # Changelog
 
-## À venir
+## 0.13.0
 
-- Rune actualisé de `70eff811` à `7a92d24d` (627 commits) : patches Cargo
-  des dépendances embarquées, verrouillage et guides alignés ; arrêt ordonné
-  conservant les écritures en attente et la sauvegarde du carnet à la fermeture.
-  Feature `tooling` pour les captures release.
-  [Impacts et suites appliquées](docs/RUNE_UPDATE.md).
+- Library with discovery, local JSON definition/catalog imports, permission review,
+  installation, enable/disable, reviewed upgrades and retained-data management.
+- Module API 1: versioned definitions, compatibility checks, isolated JSON storage
+  and revocable sessions. Only the metadata runtime is supported; no executable
+  code or functional modules are included.
+- Uninstall preserves state; confirmed deletion creates a verified recovery backup.
+  Module state survives notebook encryption, backup, restore and application updates,
+  including unavailable future definitions. Module-only changes are backed up on exit
+  and vault lock; entering Library relocks protected notes.
+- SQL schema 4 and portable notebook format 2 when module state is present, with
+  historical corpus and module lifecycle checks required in production builds.
+  The new storage contract requires a reviewed manual upgrade from schema-3 clients.
 
-- Lignes des bases en tableau construites avec `virtual_rows` : clés stables,
-  focus hors écran et sélection de toutes les fiches filtrées conservés.
-- Recherche Unicode dans les pages, commandes, liens et propriétés : une requête
-  sans accent trouve les formes accentuées, avec surbrillance dans la palette.
-- Repères accessibles de navigation/contenu, titres nommés et annonces des fins
-  de sauvegarde/export et des erreurs asynchrones ; navigation F6/Maj+F6 testée.
-- Mesures des grandes vues et scénarios de capture pour le redimensionnement
-  des tableaux et la recherche Unicode.
+## 0.12.0 — development changes included in 0.13.0
+
+- Fail-closed Turso preflight on a private copy, raw database/WAL recovery snapshots,
+  transactional schema markers and strict document/history readers.
+- Pre-update backups now require complete restoration, reopening and comparison,
+  with a file fingerprint checked again before installation. Manual restore keeps
+  a verified recovery backup; vault conversion verifies the complete notebook.
+- Frozen SQLite/Turso 0.7.2 and encrypted 0.8.3 compatibility fixtures, all document
+  versions, actual process-kill WAL recovery, and mandatory release-profile checks.
+
+- Notebook page dragging now highlights the dragged page and valid destinations,
+  with insertion lines between rows and an outline for nesting inside a page.
+
+- Customizable sidebar shortcuts: drag to reorder, hide, restore, or reset Overview,
+  All pages, Favorites, and Archives. Layout is saved with notebook preferences.
+
+- Sidebar hover now covers the entire rounded page row. Each page has a nearby
+  actions menu, with confirmed deletion available directly for active pages.
+
+- Page icon picker expanded to 35 symbols, with eight theme-aware colors and
+  a reset option. Page colors persist in history, backups, and protected notes.
+
+- English interface, templates, welcome page, and fictional demo content.
+  Existing notebooks retain their original content and stored identifiers.
+- Public-facing README in English, portable documentation paths, sanitized
+  Blender source metadata, and additional local database/credential exclusions.
+
+- Native Apple Silicon `Folio.app` packaging with icon, build provenance and
+  ad-hoc macOS signature. Source versions and dependency pins stay in the repository.
+- Published stable releases replace source compilation in the app: Ed25519-signed
+  metadata, archive size/SHA256, bundle verification, full pre-update backup and
+  separate installer with startup acknowledgement and bundle rollback.
+- Read-only weekly dependency intake, manually dispatched draft-release workflow,
+  and a separate implementation prompt for the future Nexus project manager.
+- Minimal settings include daily release checks, an available-update indicator
+  and release notes; no developer tools are required by the installed app.
+- Optional local vault: master password, native AES-256-GCM database and WAL
+  encryption, encrypted automatic backups, verified migration and explicit locking.
+  Turso still marks the native encryption API experimental.
+- PIN-protected simple notes: title, content and history encrypted with Argon2id
+  and XChaCha20-Poly1305; relock on leaving the note and after restart. Attachments
+  and container pages are outside the scope of per-page PIN protection.
+- Confirmed permanent deletion, retained children and no reinitialization of an
+  intentionally emptied notebook.
+- Document format 7, with readers for versions 1–6.
+  [Settings, updates and encryption scope](docs/SETTINGS.md).
+- Rune updated from `70eff811` to `7a92d24d` (627 commits): application-level vendor
+  patches, aligned lockfile/guides and orderly exit preserving queued writes and
+  the final notebook backup. The `tooling` feature enables release captures.
+  [Integration details](docs/RUNE_UPDATE.md).
+- Database tables built with `virtual_rows`: stable keys, offscreen focus and
+  selection of all filtered records remain supported.
+- Unicode search across pages, commands, links and properties, including accent
+  folding and highlighted original title ranges in the palette.
+- Named navigation/content landmarks, heading levels, save/export/error
+  announcements and tested F6/Shift-F6 navigation.
+- Large-view measurements and repeatable table-resize and Unicode-search captures.
 
 ## 0.10.0
 
-- Tableaux intégrés étirés sur toute la largeur disponible, y compris après
-  redimensionnement ; cadre et en-tête communs aux tableaux et dashboards,
-  avec bordure unique et séparateurs uniquement entre les fiches.
-- Nouveau logo Folio créé dans Blender : F plein aux terminaisons de feuilles
-  pliées, badge mieux proportionné, source `.blend`, rendus PNG et exports SVG.
-  Le monogramme vectoriel est intégré à la barre latérale et au catalogue.
-- Actions secondaires regroupées dans le menu « Plus » en bas de la barre latérale,
-  avec nouvelle page/base, modèles et carnet ; les accès courants restent visibles.
-- Alignement à gauche des noms dans « Avancement par base » et des commandes de
-  navigation ; grille commune aux propriétés intégrées et personnalisées, avec
-  un même départ pour les valeurs éditables, relations et résultats calculés.
-
-- Historique durable (50 versions/page), points de restauration et restauration
-  d’une version en conservant l’état actuel.
-- Sauvegarde/restauration complète `.folio` : pages, vues, fichiers, historique
-  et préférences ; aperçu avant remplacement, écriture SQL transactionnelle et
-  sauvegarde de l’état précédent. Les 14 dernières sauvegardes automatiques sont conservées.
-- Sélection multiple de blocs, copie/collage, duplication, transformation,
-  suppression et déplacement groupés avec leurs descendants et une seule annulation.
-- Déplacement à la souris des cartes Kanban, pages de l’arborescence et dates
-  du calendrier ; ordre persistant, prévention des cycles, Échap et défilement automatique.
-- Vues de bases intégrées aux notes et fiches, choix d’une vue existante et filtre
-  de relation au projet ; création et modification des fiches sources en direct.
-- Relations inter-bases avec colonne inverse automatique, agrégations nombre,
-  terminées, progression, somme ou nombre de fiches restantes et formules numériques.
-- Calendrier mensuel, détail d’un jour, création à une date et sélecteurs natifs Rune.
-- Images et documents copiés dans un dossier géré, redimensionnement des images,
-  ouverture système, récupération de l’original et médias joints à l’export Markdown.
-- Palette globale ⌘K, mentions `@`, liens de blocs, sommaire dynamique et backlinks.
-- Largeur, ordre et visibilité des colonnes par vue ; statut, priorité et échéance
-  modifiables sur une sélection de fiches.
-- Préférences persistantes : thème sombre initial, thème choisi, largeur de la
-  barre latérale et dernière page ouverte.
-- Format de document 6, avec lecture des formats 1 à 5. Démonstrations `workspace`
-  et `calendar`, tests des parcours souris/clavier, fichiers et restaurations.
+- Embedded tables fill available width, including after resizing. Tables and
+  dashboards share a frame/header with one border and separators between records.
+- New Blender-built Folio logo: solid F with folded-leaf ends, revised badge,
+  editable `.blend`, PNG renders and SVG exports, integrated in the sidebar/catalog.
+- Secondary sidebar commands grouped under More: page/database creation,
+  templates and notebook tools, with common actions still visible.
+- Left-aligned collection-progress labels, navigation commands and property grids.
+- Durable history of 50 versions per page, checkpoints and version restoration
+  that also keeps the current state.
+- Full `.folio` backup/restore: pages, views, files, history and preferences;
+  preview, transactional replacement and a backup of the previous notebook.
+  The last 14 automatic backups are retained.
+- Multiple block selection, copy/paste, duplication, transformation, deletion and
+  subtree moves in one undo step.
+- Mouse dragging for Kanban cards, notebook pages and calendar dates, with saved
+  order, cycle prevention, Escape cancellation and automatic scrolling.
+- Database views embedded in notes/records, saved-view selection, project-relation
+  filters and direct creation/editing of source records.
+- Automatic reverse relations, rollups for count/completed/progress/sum/remaining,
+  and numeric formulas.
+- Monthly calendar, day detail, creation on a date and native Rune date pickers.
+- Managed local images/files, image sizing, system opening, original-file recovery
+  and media included in Markdown exports.
+- Global Command-K palette, `@` mentions, block links, dynamic contents and backlinks.
+- Per-view column widths/order/visibility and bulk record status/priority/date edits.
+- Persistent theme, sidebar width and last page, with dark as the initial theme.
+- Document format 6, reading formats 1–5; workspace/calendar demos and tested
+  mouse/keyboard flows, files and restoration.
 
 ## 0.9.0
 
-- Listes à tiroirs et titres H1/H2/H3 repliables, imbriqués jusqu’à six niveaux.
-  L’état ouvert/fermé est enregistré, annulable et accessible au clavier.
-- Organisation des sous-éléments par Tab/Maj+Tab, boutons et menu de bloc ;
-  ajout de contenu dans les tiroirs et commandes pour tout replier ou déplier.
-- Déplacement à la souris ou au clavier, duplication et suppression d’un groupe
-  avec ses enfants, y compris masqués, en une étape d’annulation.
-- Numérotation par niveau conservée au retour d’une sous-liste, avec reprise ou
-  redémarrage ; puces distinctes selon la profondeur.
-- Raccourcis de saisie Markdown, collage de plusieurs éléments avec styles et
-  hiérarchie, sortie progressive des listes vides et désindentation par Retour arrière.
-- Progression des tâches dans les tiroirs et commandes pour cocher/décocher
-  toute la liste ; nouveau modèle « Carnet à tiroirs » et scène `lists`.
-- Export Markdown avec numérotation réelle, six niveaux et arbres repliables
-  en HTML `<details>` ; contenu masqué toujours recherché et exporté.
-- Format de document 5 avec lecture des versions 1 à 4 ; les anciens clients
-  refusent ce nouveau format pour protéger les états et points de redémarrage.
-- Thème sombre par défaut, avec bascule vers le clair conservée.
+- Toggles and collapsible H1/H2/H3 headings, nested up to six indentation levels.
+  Open state is persistent, undoable and keyboard accessible.
+- Tab/Shift-Tab, toolbar and menu organization; child creation and expand/collapse all.
+- Mouse/keyboard subtree moves, duplication and deletion include hidden children
+  in one undo step.
+- Per-level numbering continues after sublists, with restart/continue commands
+  and depth-specific bullets.
+- Markdown input shortcuts, rich multiline list paste, exiting empty lists and
+  Backspace outdenting.
+- Toggle task progress, whole-list check/uncheck, Outline notebook template and
+  the `lists` scene.
+- Markdown export preserves numbering, six levels and HTML `<details>` trees;
+  hidden content remains searchable and exported.
+- Document format 5 reads formats 1–4; older clients refuse it to preserve state
+  and numbering restart points.
+- Dark theme by default, with a persistent light-theme choice.
 
 ## 0.8.0
 
-- Extension de la famille Folio à 59 SVG : 43 nouveaux signes pour les commandes,
-  la navigation, les blocs, les propriétés et les vues de bases.
-- Intégration dans la barre latérale, les menus, les tableaux, le Kanban,
-  les dashboards et l’éditeur, notamment ses poignées de glisser-déposer.
-- Boutons sans texte dotés de libellés accessibles et d’infobulles ; sélections,
-  favoris et cases à cocher utilisent des signes vectoriels cohérents.
-- Deux planches autonomes claire/sombre et scènes natives `icon-catalog` et
-  `icon-controls` pour contrôler les dessins à trois tailles.
-- Les notes et identifiants existants sont conservés ; le format reste en version 4.
+- Expanded the Folio family to 59 SVGs: 43 command/navigation/block/property/view signs.
+- Shared icons in the sidebar, menus, tables, Kanban, dashboards and editor grips.
+- Accessible labels/tooltips for icon-only buttons; consistent selections, stars
+  and checkboxes.
+- Standalone light/dark sheets and native `icon-catalog`/`icon-controls` scenes
+  inspect drawings at three sizes.
+- Existing notes and identifiers preserved; document format remains 4.
 
 ## 0.7.0
 
-- Famille SVG dessinée pour Folio : 15 pictogrammes de pages et un monogramme,
-  avec un trait commun et une couleur adaptée aux thèmes clair et sombre.
-- Remplacement des emojis du catalogue dans la navigation, les titres de pages,
-  les fiches, les liens, les sélecteurs et les encadrés.
-- Sélecteur en grille avec noms accessibles, infobulles et indication du choix
-  actif ; les anciens identifiants sont conservés sans migration des notes.
-- Sources SVG modifiables, planche autonome claire/sombre et scène native
-  `icon-catalog` affichant chaque signe à trois tailles.
+- Original Folio SVG family: 15 page symbols and a mark, with shared strokes and
+  theme-aware colors.
+- Catalog symbols replace emojis in navigation, titles, records, links, selectors
+  and callouts.
+- Grid picker with accessible names, tooltips and active selection; previous
+  identifiers preserved without rewriting existing notes.
+- Editable sources, standalone light/dark catalog and three-size `icon-catalog` scene.
 
 ## 0.6.1
 
-- Séparation des onglets placée sous leurs boutons avec un espacement dédié,
-  sans recouvrement par les fonds sélectionnés ou les états de survol.
-- Tableau : contour indépendant du défilement, bordure réservée dans la mise
-  en page et contenu découpé selon les coins arrondis du cadre.
-- Suppression de la double ligne inférieure ; séparateurs uniquement entre les
-  lignes, en-tête plus lisible et cellules alignées avec leurs titres. L’en-tête
-  reste visible pendant le défilement vertical.
-- Scène de contrôle `launch-table` et captures de comparaison en clair et sombre.
+- Tab separator sits beneath buttons with dedicated spacing, clear of selected
+  backgrounds and hover states.
+- Table outline independent of scrolling; layout reserves border space and clips
+  content to rounded corners.
+- Removed the double bottom line; row-only separators, aligned headers/cells and
+  a header that remains visible while scrolling vertically.
+- `launch-table` inspection scene and light/dark comparison captures.
 
 ## 0.6.0
 
-- Glisser-déposer des blocs à la souris depuis leur poignée `⠿`, dans les deux
-  directions et en fin de liste, avec aperçu flottant et repère d’insertion.
-- Défilement automatique en bord de document ; Échap, perte de focus et dépôt
-  hors éditeur annulent le geste. Les clics et le menu clavier restent disponibles.
-- Une seule étape d’annulation et une sauvegarde au dépôt, sans réécrire les
-  données pendant le survol ; texte enrichi, identifiants, indentation et cases
-  cochées conservés. La numérotation suit l’ordre des blocs.
-- Redessin des numéros après réorganisation et conservation du bloc actif lors
-  de la synchronisation du focus des champs par Rune.
-- Scène `drag-list`, scripts de démonstration et tests souris, annulation,
-  défilement, contenu enrichi, historique et persistance Turso.
-- Rune mis à jour par `git pull --ff-only` de `8a6f2f42` à `70eff811`
-  (56 commits). Le format de document reste en version 4.
+- Grip-based mouse block dragging in both directions and to the end, with floating
+  preview and insertion marker.
+- Automatic scrolling near document edges; Escape, focus loss and dropping outside
+  cancel. Click and keyboard block menus remain available.
+- One undo step and save on drop, without writes during hover; rich text, IDs,
+  indentation and checked states preserved, with numbering following block order.
+- Numbering redraws after reordering; Rune input-focus synchronization preserves
+  the active block.
+- `drag-list` scene, demo scripts and tests for dragging, cancellation, scrolling,
+  rich content, history and Turso persistence.
+- Rune advanced from `8a6f2f42` to `70eff811` with `git pull --ff-only` (56 commits).
+  Document format remains 4.
 
-### Rune : changements récupérés dans la nuit du 9 au 10 novembre 2026
+### Rune changes received November 9–10, 2026
 
-- macOS recharge les shaders Metal précompilés ; corrections de stabilisation
-  des animations, glissements et tailles de lignes contenant du code inline.
-- Corrections d’annulation dans les champs vides, de navigation Tab, de menus
-  macOS et de libération de Secure Event Input au changement de fenêtre.
-- Nouvelles lectures `Tx::focused` dans les gestionnaires et `Tx::by_keys` pour
-  distinguer une activation clavier d’un clic, utilisée par les poignées Folio.
-- Modes de rendu de texte supplémentaires, segmentation des mots CJK, direction
-  par paragraphe, surbrillances de texte persistantes et infobulles multi-lignes.
-- Améliorations des diagrammes Mermaid et de la pile de notifications ToastStack.
+- macOS reloads precompiled Metal shaders; stabilized animations, dragging and
+  line sizing with inline code.
+- Fixed empty-input undo, Tab navigation, macOS menus and release of Secure Event
+  Input when changing windows.
+- Handler-side `Tx::focused` and `Tx::by_keys` distinguish keyboard activation
+  from clicking, used by Folio grips.
+- Additional text-rendering modes, CJK segmentation, paragraph direction,
+  persistent text highlights and multiline tooltips.
+- Mermaid rendering and ToastStack improvements.
 
-Les événements de glisser-déposer existaient déjà avant ce pull ; Folio utilise
-`El::on_drag`, `Drag::cancelled`, les requêtes de cible et la répétition du geste.
+Dragging events already existed before this update. Folio uses `El::on_drag`,
+`Drag::cancelled`, target queries and gesture repetition.
 
 ## 0.5.0
 
-- Vues nommées par base, avec disposition, filtres combinés et tri indépendants ;
-  changements de la vue active enregistrés automatiquement et sélection persistante.
-- Création, renommage et retrait des vues sans supprimer les fiches ; validation
-  des noms, limite de 20 vues et conservation d’une dernière vue.
-- Export Markdown des notes et fiches, avec blocs, styles, code et propriétés.
-- Export CSV de la vue courante ou de toutes les fiches du périmètre, avec
-  colonnes masquées et précision numérique conservées.
-- Boîte native de destination, annulation, écriture atomique sur un thread dédié
-  et confirmation ou erreur visible ; protection du fichier de base en cours.
-- Lecture des formats de document 1 à 3, écriture du format 4 et tests de
-  persistance des vues, de migration et des parcours d’export dans l’interface.
-- Scènes de démonstration des vues enregistrées et du suivi des retards.
+- Named database views with independent layout, combined filters and sorting;
+  active selection and settings persist automatically.
+- Create, rename and remove views without deleting records; validated names,
+  at most 20 views and at least one retained.
+- Markdown export for notes/records, including blocks, styles, code and properties.
+- CSV export for a current view or full scope, preserving hidden-column handling
+  and numeric precision.
+- Native destination picker, cancellation, background atomic writes and visible
+  success/errors; protects the active database from export overwrite.
+- Reads document formats 1–3 and writes format 4; view persistence, migration and
+  UI export-flow tests.
+- Saved-view and overdue-tracking demo scenes.
 
 ## 0.4.0
 
-- Colonnes personnalisées texte, nombre, date et case à cocher : création,
-  renommage, affichage/masquage et édition des cellules avec validation.
-- Filtres combinables par statut, priorité et échéance, communs aux vues de base.
-- Vue Dashboard par base et dashboards globaux avec sélection de plusieurs bases.
-- Indicateurs dynamiques de progression, statuts et échéances ; graphiques
-  cliquables, totaux numériques et décomptes de cases cochées.
-- Avancement par base, échéances à surveiller et accès aux fiches détaillées.
-- Modèle de dashboard, données de démonstration et scènes de prévisualisation.
-- Lecture des anciens documents et enregistrement du format version 3, avec
-  conservation des identifiants et des valeurs masquées dans Turso.
+- Custom text, number, date and checkbox columns: create, rename, show/hide and
+  edit with validation.
+- Combined status/priority/due-date filters shared by collection views.
+- Collection Dashboard view and global dashboards spanning selected collections.
+- Dynamic progress/status/deadline indicators, clickable charts, numeric totals
+  and checkbox counts.
+- Collection progress, upcoming deadlines and links to record detail.
+- Dashboard template, fictional examples and preview scenes.
+- Reads older documents and writes format 3, preserving IDs and hidden values in Turso.
 
 ## 0.3.0
 
-- Bases de fiches plein écran : chaque élément est une page de notes avec des
-  propriétés intégrées (statut, priorité, échéance et étiquettes).
-- Vues tableau et Kanban sur les mêmes fiches, avec création par statut,
-  recherche indépendante, filtre de statut et quatre ordres de tri enregistrés.
-- Formulaire d’échéance et d’étiquettes avec validation et annulation.
-- Liens de pages via `/link` ou `/lien`, recherche de cible, navigation et liens
-  retour automatiques ; les références suivent les renommages.
-- Modèle « Suivi de projet » et exemple de base dans le mode démo.
-- Lecture des documents de version 1 et enregistrement en version 2, avec valeurs
-  par défaut pour les nouveaux champs et sauvegardes transactionnelles Turso.
-- Comparatif fonctionnel documenté dans `NOTION-PARITY.md`.
+- Full-screen record collections: each record is a note page with built-in status,
+  priority, date and tag properties.
+- Table and Kanban over the same records, creation by status, separate record
+  search, status filtering and four persistent sort orders.
+- Date/tag form with validation and cancellation.
+- `/link` and `/lien` page links, target search, navigation and automatic backlinks;
+  references follow renames.
+- Project tracking template and fictional database in demo mode.
+- Reads document format 1 and writes format 2, with defaults for new fields and
+  transactional Turso writes.
+- Feature comparison documented in `NOTION-PARITY.md`.
 
 ## 0.2.0
 
-- Éditeur composé de blocs avec identifiants stables : texte, trois niveaux de
-  titres, listes à puces et numérotées, tâches à cocher, citations, encadrés, code
-  et séparateurs.
-- Commandes `/` filtrables en français et en anglais, sélection au clavier et
-  transformation du type d’un bloc sans perdre son contenu.
-- Ajout, duplication, suppression et déplacement des blocs depuis leur menu ;
-  annulation et rétablissement au niveau du document pendant la session.
-- Modèles de notes de réunion, de projets et de listes de tâches.
-- Icônes de pages, trois couvertures colorées et affichage en pleine largeur.
-- Duplication d’une page, déplacement dans l’arborescence avec protection contre
-  les cycles, navigation précédent/suivant et liens vers les sous-pages.
-- Conversion automatique des documents de la version initiale, avec conservation
-  du texte enrichi et de l’indentation des listes. Écritures atomiques dans Turso.
+- Stable-ID blocks: text, three heading levels, bullet/numbered lists, tasks,
+  quotes, callouts, code and dividers.
+- Slash commands searchable in French and English, keyboard selection and block
+  transformations preserving content.
+- Block menu insertion/duplication/deletion/moving and document-level session undo/redo.
+- Meeting, project and task-list templates.
+- Page icons, three cover colors and full width.
+- Page duplication, cycle-safe hierarchy moves, back/forward navigation and subpage links.
+- Initial-document conversion preserves rich text and list indentation, with
+  atomic Turso writes.
 
 ## 0.1.0
 
-- Premier carnet natif Rust avec Rune : pages et sous-pages, recherche, favoris,
-  archives, texte enrichi, thèmes clair/sombre et stockage Turso local.
+- First native Rust/Rune notebook: pages/subpages, search, favorites, archives,
+  rich text, light/dark themes and local Turso storage.

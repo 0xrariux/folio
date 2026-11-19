@@ -124,7 +124,7 @@ fn a_future_document_version_fails_explicitly_instead_of_replacing_notes() {
                 .await
                 .unwrap_err()
                 .to_string()
-                .contains("plus récente")
+                .contains("newer")
         );
         let mut rows = connection
             .query("SELECT count(*) FROM pages", ())

@@ -79,18 +79,18 @@ fn slash(s: &State, p: Palette) -> El {
         );
     }
     if options.is_empty() {
-        entries = entries.child(label("Aucun type de bloc trouvé", 12.0, p.faint).padding(12.0));
+        entries = entries.child(label("No matching block type", 12.0, p.faint).padding(12.0));
     }
     surface("slash-menu", input_key(id), 330.0, p)
         .child(
             row()
                 .px(8.0)
                 .center_y()
-                .child(label("INSÉRER UN BLOC", 9.0, p.faint))
+                .child(label("INSERT A BLOCK", 9.0, p.faint))
                 .child(el().grow(1.0))
                 .child(super::icons::control(
                     "close-slash",
-                    "Fermer les commandes de blocs",
+                    "Close block commands",
                     &g::CLOSE,
                     p,
                     |s, _| s.panel = Panel::Closed,
@@ -106,29 +106,29 @@ fn slash(s: &State, p: Palette) -> El {
                 })
                 .child(entries),
         )
-        .child(label("↑ ↓  choisir    ↵  insérer    esc  fermer", 9.0, p.faint).padding(8.0))
+        .child(label("↑ ↓  choose    ↵  insert    esc  close", 9.0, p.faint).padding(8.0))
 }
-fn page_menu(s: &State, p: Palette) -> El {
+fn page_menu(s: &State, p: Palette, anchor: impl Into<String>) -> El {
     let archived = s.current().is_some_and(|p| p.archived);
     let wide = s.current().is_some_and(|p| p.wide);
-    let mut menu = surface("page-actions", "page-menu", 260.0, p)
+    let mut menu = surface("page-actions", anchor, 260.0, p)
         .child(icon_item(
             "duplicate-page",
-            "Dupliquer la page",
+            "Duplicate page",
             &g::COPY,
             p,
             |s, _| s.duplicate_page(),
         ))
         .child(icon_item(
             "move-page",
-            "Déplacer vers…",
+            "Move to…",
             &g::ARROW_UP_RIGHT,
             p,
             |s, _| s.panel = Panel::Move,
         ))
         .child(icon_item(
             "page-child",
-            "Ajouter une sous-page",
+            "Add a subpage",
             &g::PLUS,
             p,
             |s, tx| {
@@ -139,14 +139,14 @@ fn page_menu(s: &State, p: Palette) -> El {
         .child(el().h(1.0).fill(p.line))
         .child(super::icons::option(
             "wide-page",
-            "Pleine largeur",
+            "Full width",
             wide,
             p,
             |s, _| s.appearance(None, false, true),
         ))
         .child(icon_item(
             "menu-cover",
-            "Changer la couverture",
+            "Change cover",
             &g::COVER,
             p,
             |s, _| s.appearance(None, true, false),
@@ -155,18 +155,39 @@ fn page_menu(s: &State, p: Palette) -> El {
         menu = menu
             .child(icon_item(
                 "fold-all",
-                "Replier tous les tiroirs",
+                "Collapse all sections",
                 &g::CHEVRON_RIGHT,
                 p,
                 |s, tx| s.fold_all(true, tx),
             ))
             .child(icon_item(
                 "unfold-all",
-                "Déplier tous les tiroirs",
+                "Expand all sections",
                 &g::CHEVRON_DOWN,
                 p,
                 |s, tx| s.fold_all(false, tx),
             ));
+    }
+    menu = menu.child(icon_item(
+        "protect-page",
+        "Protect this page with a PIN",
+        &g::LOCK,
+        p,
+        |s, _| s.protect_current(),
+    ));
+    if let Some(id) = s
+        .selected
+        .as_ref()
+        .filter(|id| s.settings.unlocked.contains(*id))
+    {
+        let id = id.clone();
+        menu = menu.child(icon_item(
+            "lock-page",
+            "Lock this page",
+            &g::LOCK,
+            p,
+            move |s, _| s.lock_page(&id),
+        ));
     }
     use crate::exporting::ExportKind;
     menu = menu.child(el().h(1.0).fill(p.line));
@@ -176,14 +197,14 @@ fn page_menu(s: &State, p: Palette) -> El {
         menu = menu
             .child(icon_item(
                 "export-csv-view",
-                "Exporter la vue en CSV",
+                "Export view as CSV",
                 &g::EXPORT,
                 p,
                 |s, tx| s.export(ExportKind::CsvView, tx),
             ))
             .child(icon_item(
                 "export-csv-all",
-                "Toutes les fiches en CSV",
+                "All records as CSV",
                 &g::EXPORT,
                 p,
                 |s, tx| s.export(ExportKind::CsvAll, tx),
@@ -191,18 +212,18 @@ fn page_menu(s: &State, p: Palette) -> El {
     } else {
         menu = menu.child(icon_item(
             "export-markdown",
-            "Exporter en Markdown",
+            "Export as Markdown",
             &g::EXPORT,
             p,
             |s, tx| s.export(ExportKind::Markdown, tx),
         ));
     }
-    menu.child(el().h(1.0).fill(p.line)).child(icon_item(
+    menu = menu.child(el().h(1.0).fill(p.line)).child(icon_item(
         "archive-page",
         if archived {
-            "Restaurer la page"
+            "Restore page"
         } else {
-            "Archiver la page"
+            "Archive page"
         },
         if archived {
             &g::UNDO
@@ -211,12 +232,23 @@ fn page_menu(s: &State, p: Palette) -> El {
         },
         p,
         |s, _| s.archive(),
-    ))
+    ));
+    if let Some(page) = s.current() {
+        let id = page.id.clone();
+        menu = menu.child(icon_item(
+            "delete-page",
+            "Delete page…",
+            &g::TRASH,
+            p,
+            move |s, _| s.panel = Panel::ConfirmDelete(id.clone()),
+        ));
+    }
+    menu
 }
 fn move_menu(s: &State, p: Palette) -> El {
     let mut entries = col().gap(2.0).child(icon_item(
         "move-root",
-        "Espace personnel (racine)",
+        "Workspace (root)",
         &folio::icons::FOLDER,
         p,
         |s, _| s.move_page(None),
@@ -227,7 +259,7 @@ fn move_menu(s: &State, p: Palette) -> El {
             super::icons::page_action(
                 format!("move-to-{id}"),
                 page.display_title(),
-                &page.emoji,
+                page,
                 p,
                 move |s, _| s.move_page(Some(id.clone())),
             )
@@ -237,7 +269,7 @@ fn move_menu(s: &State, p: Palette) -> El {
         );
     }
     surface("move-menu", "page-menu", 300.0, p)
-        .child(label("DÉPLACER LA PAGE VERS", 10.0, p.faint).padding(9.0))
+        .child(label("MOVE PAGE TO", 10.0, p.faint).padding(9.0))
         .child(
             col()
                 .h((s.pages.len() as f32 * 36.0).clamp(40.0, 300.0))
@@ -252,7 +284,7 @@ fn move_menu(s: &State, p: Palette) -> El {
 fn templates(p: Palette) -> El {
     let mut menu = surface("templates-menu", "sidebar-more", 345.0, p)
         .anchored_fit("sidebar-more", Side::Top, Align::Start, 5.0)
-        .child(label("COMMENCER AVEC UN MODÈLE", 10.0, p.faint).padding(9.0));
+        .child(label("START WITH A TEMPLATE", 10.0, p.faint).padding(9.0));
     for (index, template) in Template::ALL.into_iter().enumerate() {
         let glyph = match template {
             Template::Meeting => &folio::icons::NOTE,
@@ -297,7 +329,7 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
     let convert = id.to_string();
     let mut entries = vec![icon_item(
         "block-convert",
-        "Transformer en…",
+        "Turn into…",
         &g::TEXT,
         p,
         move |s, _| {
@@ -309,10 +341,10 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
         },
     )];
     for (key, title, outdent, glyph) in [
-        ("block-indent", "Indenter · Tab", false, &g::CHEVRON_RIGHT),
+        ("block-indent", "Indent · Tab", false, &g::CHEVRON_RIGHT),
         (
             "block-outdent",
-            "Désindenter · Maj+Tab",
+            "Outdent · Shift+Tab",
             true,
             &g::CHEVRON_LEFT,
         ),
@@ -326,7 +358,7 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
         let id = id.to_string();
         entries.push(icon_item(
             "block-child",
-            "Ajouter un sous-élément",
+            "Add a nested item",
             &g::PLUS,
             p,
             move |s, tx| s.add_child(&id, tx),
@@ -338,9 +370,9 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
         entries.push(icon_item(
             "block-numbering",
             if restart {
-                "Recommencer à 1"
+                "Restart at 1"
             } else {
-                "Continuer la numérotation"
+                "Continue numbering"
             },
             &g::NUMBERED_LIST,
             p,
@@ -358,7 +390,7 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
         entries.push(
             label(
                 format!(
-                    "{} / {} tâches terminées",
+                    "{} / {} tasks completed",
                     tasks.iter().filter(|b| b.data.checked).count(),
                     tasks.len()
                 ),
@@ -368,8 +400,8 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
             .padding(9.0),
         );
         for (key, title, checked) in [
-            ("list-check-all", "Tout cocher dans cette liste", true),
-            ("list-uncheck-all", "Tout décocher dans cette liste", false),
+            ("list-check-all", "Check all tasks in this list", true),
+            ("list-uncheck-all", "Uncheck all tasks in this list", false),
         ] {
             let id = id.to_string();
             entries.push(icon_item(key, title, &g::CHECK, p, move |s, tx| {
@@ -379,8 +411,8 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
         }
     }
     for (key, title, down, glyph) in [
-        ("block-up", "Monter le groupe", false, &g::ARROW_UP),
-        ("block-down", "Descendre le groupe", true, &g::ARROW_DOWN),
+        ("block-up", "Move group up", false, &g::ARROW_UP),
+        ("block-down", "Move group down", true, &g::ARROW_DOWN),
     ] {
         let id = id.to_string();
         entries.push(icon_item(key, title, glyph, p, move |s, tx| {
@@ -392,9 +424,9 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
     entries.push(icon_item(
         "block-copy",
         if count > 1 {
-            "Dupliquer avec les sous-éléments"
+            "Duplicate with nested items"
         } else {
-            "Dupliquer"
+            "Duplicate"
         },
         &g::COPY,
         p,
@@ -404,9 +436,9 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
     entries.push(icon_item(
         "block-delete",
         &if count > 1 {
-            format!("Supprimer le groupe ({count} blocs)")
+            format!("Delete group ({count} blocks)")
         } else {
-            "Supprimer le bloc".into()
+            "Delete block".into()
         },
         &g::TRASH,
         p,
@@ -416,13 +448,13 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
         let url = crate::command_palette::reference_url(page, Some(id));
         entries.push(icon_item(
             "block-copy-link",
-            "Copier le lien vers ce bloc",
+            "Copy link to this block",
             &folio::icons::LINK,
             p,
             move |s, tx| {
                 tx.copy(&url);
                 s.panel = Panel::Closed;
-                s.export_message = Some("Lien du bloc copié.".into());
+                s.export_message = Some("Block link copied.".into());
             },
         ));
     }
@@ -439,12 +471,46 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
     )
 }
 fn icons(s: &State, p: Palette) -> El {
+    use folio::icons::IconColor;
     let active = s.current().and_then(|p| folio::icons::choice(&p.emoji));
+    let active_color = s.current().map_or(IconColor::Default, |p| p.icon_color);
+    let preview_color = super::icons::color(active_color, p, p.accent);
+    let mut colors = row().role("radiogroup").label("Icon color").gap(5.0);
+    for color in IconColor::ALL {
+        let selected = active_color == color;
+        colors = colors.child(
+            super::button(
+                format!("icon-color-{}", color.key()),
+                color.name(),
+                p,
+                move |s, _| s.set_icon_color(color),
+            )
+            .role("radio")
+            .checked(selected)
+            .size(28.0, 28.0)
+            .px(0.0)
+            .radius(8.0)
+            .help(color.name())
+            .border(
+                if selected { 2.0 } else { 1.0 },
+                if selected { p.ink } else { p.line },
+            )
+            .child(if color == IconColor::Default {
+                rune::icon(&g::UNDO, 14.0).color(p.accent).a11y_hidden()
+            } else {
+                el().size(16.0, 16.0)
+                    .radius(8.0)
+                    .fill(super::icons::color(color, p, p.accent))
+                    .a11y_hidden()
+            }),
+        );
+    }
     let mut icons = col().gap(5.0);
     for (row_index, choices) in folio::icons::CHOICES.chunks(5).enumerate() {
         let mut line = row().gap(5.0);
         for (column, choice) in choices.iter().enumerate() {
             let value = choice.value;
+            let selected = active.is_some_and(|a| a.key == choice.key);
             line = line.child(
                 super::button(
                     format!("icon-{}", row_index * 5 + column),
@@ -452,28 +518,57 @@ fn icons(s: &State, p: Palette) -> El {
                     p,
                     move |s, _| s.appearance(Some(value), false, false),
                 )
+                .role("menuitemradio")
+                .checked(selected)
                 .size(52.0, 44.0)
                 .help(choice.name)
-                .fill(if active.is_some_and(|a| a.key == choice.key) {
-                    p.tint
+                .fill(if selected {
+                    preview_color.alpha(0.12)
                 } else {
                     p.bg
                 })
-                .child(rune::icon(choice.glyph, 23.0).color(p.accent).a11y_hidden()),
+                .child(
+                    rune::icon(choice.glyph, 23.0)
+                        .color(preview_color)
+                        .a11y_hidden(),
+                ),
             );
         }
         icons = icons.child(line);
     }
     surface("icon-menu", "page-icon", 320.0, p)
         .padding(12.0)
-        .gap(8.0)
-        .child(label("UNE ICÔNE POUR CETTE PAGE", 9.0, p.faint).padding(8.0))
-        .child(icons)
+        .gap(12.0)
+        .child(label(
+            format!("{} icons", folio::icons::CHOICES.len()),
+            12.0,
+            p.muted,
+        ))
+        .child(colors)
+        .child(
+            col()
+                .key("icon-grid")
+                .h(240.0)
+                .min_h(0.0)
+                .scroll(ScrollSpec {
+                    stick_bottom: false,
+                })
+                .child(icons),
+        )
 }
+
 pub(super) fn view(s: &State, p: Palette) -> Vec<El> {
     let menu = match &s.panel {
-        Panel::Closed => return vec![],
+        Panel::Closed | Panel::Settings | Panel::Library => return vec![],
+        Panel::ModuleReview => return vec![super::library::review(s,p)],
+        Panel::ModuleConfirm => return vec![super::library::confirm(s,p)],
+        Panel::Security => return vec![super::settings::security_dialog(s, p)],
+        Panel::ConfirmDelete(_) => return vec![super::workspace::dialog("Delete this page?",p,col().gap(14.)
+            .child(label("Permanently removes this page and its history. Subpages and backups are kept.",13.,p.ink).w_full().wrap())
+            .child(action("confirm-delete-page",if s.workspace.busy { "Deleting…" } else { "Delete permanently" },p,|s,_|s.confirm_delete()).fill(p.tint).disabled(s.workspace.busy))
+            .child(action("cancel-delete-page","Cancel",p,|s,_|s.panel=Panel::Closed).disabled(s.workspace.busy)))],
         Panel::SidebarMore => super::sidebar::more_menu(s, p),
+        Panel::SidebarNavigation => super::sidebar::navigation_menu(s, p),
         Panel::Workspace => return vec![super::workspace::menu(s, p)],
         Panel::History => return vec![super::workspace::history(s, p)],
         Panel::RestorePreview => return vec![super::workspace::restore(s, p)],
@@ -481,7 +576,8 @@ pub(super) fn view(s: &State, p: Palette) -> Vec<El> {
         Panel::Date(form) => super::calendar::picker(s, form, p),
         Panel::CalendarDay(date) => return vec![super::calendar::day(s, date, p)],
         Panel::Slash { .. } => return vec![slash(s, p)],
-        Panel::Page => page_menu(s, p),
+        Panel::Page => page_menu(s, p, "page-menu"),
+        Panel::SidebarPage(id) => page_menu(s, p, format!("page-actions-{id}")),
         Panel::Move => move_menu(s, p),
         Panel::Templates => templates(p),
         Panel::Block(id) => block_menu(s, id, p),

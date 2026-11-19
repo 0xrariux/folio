@@ -27,7 +27,7 @@ fn toggle_trees_restart_points_and_closed_state_survive_turso_reopening() {
             drop(store);
             let store = Store::open(&path).await.unwrap();
             assert_eq!(store.load().await.unwrap(), vec![page.clone()]);
-            assert_eq!(page.content().version, 6);
+            assert_eq!(page.content().version, 7);
             assert!(page.body_html.contains("<details><summary><h2>"));
             assert!(page.body_html.contains("<ol start=\"7\">"));
         });
@@ -64,16 +64,14 @@ fn markdown_export_keeps_toggle_hierarchy_rich_text_tasks_and_six_levels() {
     page.blocks
         .extend([deep, numbered, NoteBlock::text(Kind::Numbered, "Suite")]);
     let result = folio::export::markdown(&page, &[]).contents;
-    assert!(
-        result.contains("<details open><summary><h2>Un projet, étape par étape</h2></summary>")
-    );
+    assert!(result.contains("<details open><summary><h2>A project, step by step</h2></summary>"));
     assert!(result.contains("<strong>idée 🦀</strong>"));
-    assert!(result.contains("<input type=\"checkbox\" disabled checked> Poser les fondations"));
+    assert!(result.contains("<input type=\"checkbox\" disabled checked> Lay the foundations"));
     assert_eq!(result.matches("<details").count(), 3);
     assert_eq!(result.matches("</details>").count(), 3);
     assert!(result.contains(&format!("{}- [ ] Profondeur six", "    ".repeat(6))));
     assert!(result.contains("5. Séquence à cinq"));
     assert!(result.contains("6. Suite"));
-    assert_eq!(result.matches("Rassembler les idées").count(), 0);
-    assert_eq!(result.matches("Construire et partager").count(), 1);
+    assert_eq!(result.matches("Gather ideas").count(), 0);
+    assert_eq!(result.matches("Build and share").count(), 1);
 }

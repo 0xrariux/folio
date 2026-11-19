@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum ColumnKind {
     #[default]
     Text,
@@ -23,18 +24,19 @@ impl ColumnKind {
     ];
     pub fn name(self) -> &'static str {
         match self {
-            Self::Text => "Texte",
-            Self::Number => "Nombre",
+            Self::Text => "Text",
+            Self::Number => "Number",
             Self::Date => "Date",
-            Self::Checkbox => "Case à cocher",
+            Self::Checkbox => "Checkbox",
             Self::Relation => "Relation",
-            Self::Rollup => "Agrégation",
-            Self::Formula => "Formule",
+            Self::Rollup => "Rollup",
+            Self::Formula => "Formula",
         }
     }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Column {
     pub id: String,
     pub name: String,
@@ -60,6 +62,7 @@ impl Column {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum CellValue {
     Text(String),
     Number(String),
@@ -71,8 +74,8 @@ impl CellValue {
     pub fn display(&self) -> String {
         match self {
             Self::Text(v) | Self::Number(v) | Self::Date(v) => v.clone(),
-            Self::Checkbox(v) => if *v { "Oui" } else { "Non" }.into(),
-            Self::Relation(ids) => format!("{} liens", ids.len()),
+            Self::Checkbox(v) => if *v { "Yes" } else { "No" }.into(),
+            Self::Relation(ids) => format!("{} links", ids.len()),
         }
     }
     pub fn number(&self) -> Option<f64> {
@@ -91,33 +94,32 @@ pub fn parse_cell(kind: ColumnKind, text: &str) -> Result<Option<CellValue>, Str
     match kind {
         ColumnKind::Text => {
             if text.chars().count() > 1000 {
-                return Err("Ce texte doit faire au plus 1 000 caractères.".into());
+                return Err("This text must be at most 1,000 characters long.".into());
             }
             Ok(Some(CellValue::Text(text.into())))
         }
         ColumnKind::Number => {
             let value = text.trim().replace(',', ".");
             if value.len() > 64 || value.parse::<f64>().ok().is_none_or(|v| !v.is_finite()) {
-                return Err("Saisissez un nombre valide et fini, par exemple 12,5.".into());
+                return Err("Enter a valid, finite number, for example 12.5.".into());
             }
             Ok(Some(CellValue::Number(value)))
         }
         ColumnKind::Date => {
             if !crate::collection::valid_date(text.trim()) {
-                return Err("Utilisez une date réelle au format AAAA-MM-JJ.".into());
+                return Err("Use a real date in YYYY-MM-DD format.".into());
             }
             Ok(Some(CellValue::Date(text.trim().into())))
         }
-        ColumnKind::Checkbox => {
-            Err("Une case à cocher se modifie directement dans le tableau.".into())
-        }
+        ColumnKind::Checkbox => Err("Edit checkboxes directly in the table.".into()),
         ColumnKind::Relation | ColumnKind::Rollup | ColumnKind::Formula => {
-            Err("Cette propriété utilise son sélecteur dédié.".into())
+            Err("This property has its own picker.".into())
         }
     }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Calculation {
     #[serde(default)]
     pub reverse_of: Option<String>,
@@ -130,6 +132,7 @@ pub struct Calculation {
     pub expression: String,
 }
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum Aggregate {
     #[default]
     Count,
@@ -148,24 +151,24 @@ impl Aggregate {
     ];
     pub fn name(self) -> &'static str {
         match self {
-            Self::Count => "Nombre de fiches",
-            Self::Done => "Fiches terminées",
-            Self::Progress => "Progression (%)",
-            Self::Sum => "Somme d’une propriété",
-            Self::Remaining => "Fiches restantes",
+            Self::Count => "Record count",
+            Self::Done => "Completed records",
+            Self::Progress => "Progress (%)",
+            Self::Sum => "Sum of a property",
+            Self::Remaining => "Remaining records",
         }
     }
 }
 
 pub fn format_number(number: f64) -> String {
     if number.abs() >= 1e12 {
-        return format!("{number:.2e}").replace('.', ",");
+        return format!("{number:.2e}");
     }
     let rounded = format!("{number:.2}");
     let value = rounded.trim_end_matches('0').trim_end_matches('.');
     if value == "-0" {
         "0".into()
     } else {
-        value.replace('.', ",")
+        value.into()
     }
 }

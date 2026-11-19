@@ -114,7 +114,7 @@ fn view_form_validates_renames_and_removes_configuration_without_records() {
     tap(&mut rt, "save-view");
     tap(&mut rt, "collection-views");
     tap(&mut rt, "rename-view");
-    replace(&mut rt, "view-name", "Vue principale");
+    replace(&mut rt, "view-name", "Main view");
     tap(&mut rt, "save-view");
     assert!(matches!(&rt.state.panel, Panel::Views(f) if f.error.is_some()));
     replace(&mut rt, "view-name", "Mon suivi");
@@ -175,7 +175,7 @@ fn markdown_export_cancels_cleanly_and_keeps_the_original_page_after_navigation(
     tap(&mut rt, "export-markdown");
     assert_eq!(
         rt.file_dialog().unwrap().1.file_name.as_deref(),
-        Some("Un espace pour vos idées.md")
+        Some("Room for your ideas.md")
     );
     rt.resolve_file_dialog(None).unwrap();
     rt.frame(0.0);
@@ -187,14 +187,14 @@ fn markdown_export_cancels_cleanly_and_keeps_the_original_page_after_navigation(
     rt.frame(0.0);
     choose_export(&mut rt, &path);
     let contents = std::fs::read_to_string(&path).unwrap();
-    assert!(contents.starts_with("# Un espace pour vos idées"));
-    assert!(!contents.starts_with("# La boîte à idées"));
+    assert!(contents.starts_with("# Room for your ideas"));
+    assert!(!contents.starts_with("# Ideas"));
     assert!(
         rt.state
             .export_message
             .as_ref()
             .unwrap()
-            .contains("Export enregistré")
+            .contains("Export saved")
     );
     assert!(rt.find("export-notice").is_some());
     tap(&mut rt, "dismiss-export");
@@ -254,7 +254,7 @@ fn failed_exports_report_the_error_and_allow_retry() {
             .export_message
             .as_ref()
             .unwrap()
-            .starts_with("Échec de l’export")
+            .starts_with("Export failed")
     );
     let valid = temp.path().join("valid.csv");
     tap(&mut rt, "page-menu");
@@ -266,6 +266,6 @@ fn failed_exports_report_the_error_and_allow_retry() {
             .export_message
             .as_ref()
             .unwrap()
-            .starts_with("Export enregistré")
+            .starts_with("Export saved")
     );
 }

@@ -1,0 +1,93 @@
+name: Prepare reviewed Apple Silicon release
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: 'Reviewed Folio commit (full 40-character SHA)'
+        required: true
+      version:
+        description: 'Reviewed version, without v (must match Cargo.toml)'
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: folio-release
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: macos-15
+    environment: release
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: folio
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.revision }}
+          path: folio
+          persist-credentials: false
+      - name: Validate reviewed identity
+        env:
+          REVIEWED_SHA: ${{ inputs.revision }}
+          REVIEWED_VERSION: ${{ inputs.version }}
+        run: |
+          test "$(uname -m)" = arm64
+          python3 - <<'PY'
+          import json, os, re, subprocess, tomllib
+          from pathlib import Path
+          sha = os.environ['REVIEWED_SHA']
+          assert re.fullmatch('[0-9a-f]{40}', sha), 'A full reviewed commit SHA is required'
+          assert subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip() == sha
+          assert json.loads(Path('release.json').read_text())['repository'] == os.environ['GITHUB_REPOSITORY']
+          assert tomllib.loads(Path('Cargo.toml').read_text())['package']['version'] == os.environ['REVIEWED_VERSION']
+          pin = json.loads(Path('folio-update.json').read_text())['rune_revision']
+          assert re.fullmatch('[0-9a-f]{40}', pin)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out: out.write('rune=' + pin + '\n')
+          PY
+        id: identity
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: anomalyco/rune
+          ref: ${{ steps.identity.outputs.rune }}
+          path: rune
+          persist-credentials: false
+      - name: Validate candidate
+        run: |
+          cargo fmt --package folio -- --check
+          cargo test --locked --all-targets
+          cargo clippy --locked --all-targets -- -D warnings
+      - name: Load signing key into a private temporary file
+        env:
+          RELEASE_KEY: ${{ secrets.FOLIO_RELEASE_KEY_BASE64 }}
+        run: |
+          umask 077
+          test -n "$RELEASE_KEY"
+          printf '%s' "$RELEASE_KEY" | base64 --decode > "$RUNNER_TEMP/folio-release.pk8"
+      - name: Build signed release assets
+        run: python3 scripts/build-app.py --release --key "$RUNNER_TEMP/folio-release.pk8"
+      - name: Remove private key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/folio-release.pk8"
+      - name: Create draft for final review (does not notify installed apps)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVIEWED_SHA: ${{ inputs.revision }}
+          REVIEWED_VERSION: ${{ inputs.version }}
+        run: |
+          python3 - <<'PY'
+          import os, urllib.request, urllib.error
+          repo = os.environ['GITHUB_REPOSITORY']
+          version = os.environ['REVIEWED_VERSION']
+          request = urllib.request.Request(f'https://api.github.com/repos/{repo}/git/ref/tags/v{version}', headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'User-Agent': 'Folio-release'})
+          try:
+              urllib.request.urlopen(request, timeout=30).close()
+          except urllib.error.HTTPError as error:
+              if error.code != 404: raise
+          else:
+              raise SystemExit('This tag already exists. Never reuse a published version/tag.')
+          PY
+          python3 scripts/release-notes.py > "$RUNNER_TEMP/folio-release-notes.md"
+          gh release create "v$REVIEWED_VERSION" release-artifacts/Folio-*-macos-arm64.zip release-artifacts/folio-release.json release-artifacts/folio-release.sig --repo "$GITHUB_REPOSITORY" --target "$REVIEWED_SHA" --title "Folio $REVIEWED_VERSION" --notes-file "$RUNNER_TEMP/folio-release-notes.md" --draft

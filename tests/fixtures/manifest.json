@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "fixtures": [
+    {
+      "file": "legacy-v1.sqlite.fixture",
+      "sha256": "8fb19f260bacb5ebe908e48ee0bfb492271ce78d748f85b1bb83044e6a2c55a6",
+      "size": 12288
+    },
+    {
+      "file": "notebook-v7.json",
+      "sha256": "2f4eae10368c3e7f2ee180093500b7510de05a191ef0c6ed64780c96f22ba147",
+      "size": 30412
+    },
+    {
+      "file": "turso-0.7.2-v7.sqlite.fixture",
+      "sha256": "6daffcccf91cece8aaf5e08d75b22ad3249f78a0a5a40ae79ce47155e8b85c27",
+      "size": 61440
+    },
+    {
+      "file": "turso-0.8.3-encrypted.db.fixture",
+      "sha256": "db90591bf8ac37a4e1474f23dea410867eeb2382440b021f7a8f779c5152d415",
+      "size": 65536
+    },
+    {
+      "file": "vault-v1.security.fixture",
+      "sha256": "15d08cb9d68b16838aa73c1d52f76a2f100030bd02545626c49ef8dea5e1f2ba",
+      "size": 171
+    },
+    {
+      "file": "encrypted-notebook-v1.folio.fixture",
+      "sha256": "9f792cbaf436fa6d58f278b18d0aa12a0535569c9ba9cf98f5d93de454e4b327",
+      "size": 27226
+    },
+    {
+      "file": "pin-page-clear.json",
+      "sha256": "4a1dda1689d2646f44b9d8f9c808bb5789815883ad57e6bae5f222268b2ae537",
+      "size": 759
+    }
+  ]
+}

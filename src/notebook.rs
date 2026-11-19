@@ -27,13 +27,13 @@ impl State {
         if self.demo {
             self.workspace.busy = false;
             self.export_message =
-                Some("Cette commande de stockage est disponible dans votre carnet local.".into());
+                Some("This storage command is available in your local notebook.".into());
             return;
         }
         if let Err(error) = self
             .worker
             .as_ref()
-            .ok_or("Le service de stockage est indisponible".to_string())
+            .ok_or("The storage service is unavailable".to_string())
             .and_then(|w| w.workspace(request))
         {
             self.workspace.busy = false;
@@ -58,11 +58,11 @@ impl State {
         self.edit();
         tx.save_file(
             FileDialogOptions {
-                title: "Sauvegarder le carnet complet".into(),
-                file_name: Some("Mon carnet.folio".into()),
+                title: "Back up the entire notebook".into(),
+                file_name: Some("My notebook.folio".into()),
                 ..Default::default()
             }
-            .filter("Carnet Folio", &["folio"]),
+            .filter("Folio notebook", &["folio"]),
             |s: &mut State, result, _| match result {
                 Ok(Some(path)) => {
                     s.workspace.busy = true;
@@ -79,10 +79,10 @@ impl State {
         }
         tx.open_file(
             FileDialogOptions {
-                title: "Ouvrir une sauvegarde Folio".into(),
+                title: "Open a Folio backup".into(),
                 ..Default::default()
             }
-            .filter("Carnet Folio", &["folio"]),
+            .filter("Folio notebook", &["folio"]),
             |s: &mut State, result, _| match result {
                 Ok(Some(path)) => {
                     s.workspace.busy = true;
@@ -125,7 +125,7 @@ impl State {
     pub fn attachment_dialog(&mut self, tx: &mut Tx) {
         tx.open_file(
             FileDialogOptions {
-                title: "Ajouter une image ou un document".into(),
+                title: "Add an image or document".into(),
                 ..Default::default()
             },
             |s: &mut State, result, _| match result {
@@ -187,7 +187,7 @@ impl State {
         let id = asset.id.clone();
         tx.save_file(
             FileDialogOptions {
-                title: "Exporter la pièce jointe".into(),
+                title: "Export attachment".into(),
                 file_name: Some(asset.name.clone()),
                 ..Default::default()
             },
@@ -202,7 +202,29 @@ impl State {
         );
     }
     pub fn accept_workspace(&mut self, result: Result<Response, String>) {
+        if self.settings.update_backup_pending
+            && matches!(&result, Err(_) | Ok(Response::Failure { .. }))
+        {
+            self.settings.update_backup_pending = false;
+            self.settings.install_when_saved = false;
+            self.settings.update_status = "Backup failed. Update cancelled.".into();
+        }
         match result {
+            Ok(Response::Library(Ok(reply))) => self.accept_library(reply),
+            Ok(Response::Library(Err(error))) => {
+                self.workspace.busy = false;
+                self.library.pending = false;
+                self.library.error = Some(error);
+            }
+            Ok(Response::UpdateBackupDone(path)) => {
+                self.workspace.busy = false;
+                if self.settings.update_backup_pending {
+                    self.settings.update_backup_pending = false;
+                    self.settings.update_backup = Some(path);
+                    self.settings.install_when_saved = true;
+                }
+            }
+            Ok(Response::Deleted { id, parent }) => self.apply_deleted(&id, parent),
             Ok(Response::Failure { message, blocking }) => {
                 if blocking {
                     self.workspace.busy = false;
@@ -240,12 +262,23 @@ impl State {
                     self.workspace.versions = versions;
                 }
             }
+            Ok(Response::BackupLocked(path)) => {
+                self.workspace.busy = false;
+                self.security_form(crate::settings::SecurityForm::UnlockBackup(path));
+            }
             Ok(Response::Preview(bundle)) => {
                 self.workspace.busy = false;
                 self.workspace.preview = Some(bundle);
                 self.panel = Panel::RestorePreview;
             }
-            Ok(Response::Restored { pages, preferences }) => {
+            Ok(Response::Restored {
+                pages,
+                preferences,
+                modules,
+            }) => {
+                self.settings.unlocked.clear();
+                self.settings.locked_pages.clear();
+                self.accept_library(crate::module_library::Reply::Registry(modules));
                 self.workspace.busy = false;
                 self.pending.clear();
                 self.pages = pages;
@@ -260,12 +293,12 @@ impl State {
                     self.select(&id);
                 }
                 self.panel = Panel::Closed;
-                self.export_message = Some(
-                    "Le carnet a été restauré. Une sauvegarde de l’état précédent est conservée."
-                        .into(),
-                );
+                self.export_message =
+                    Some("Notebook restored. A backup of the previous state has been kept.".into());
             }
             Ok(Response::Page(page)) => {
+                self.settings.unlocked.remove(&page.id);
+                self.settings.locked_pages.remove(&page.id);
                 self.workspace.busy = false;
                 let id = page.id.clone();
                 if let Some(current) = self.pages.iter_mut().find(|p| p.id == id) {
@@ -276,8 +309,9 @@ impl State {
                     self.selected = None;
                     self.select(&id);
                 }
-                self.export_message =
-                    Some("Version restaurée ; l’état précédent figure dans l’historique.".into());
+                self.export_message = Some(
+                    "Version restored; the previous state is available in the history.".into(),
+                );
             }
             Ok(Response::Imported {
                 page,

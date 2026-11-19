@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "t": 0.1,
+      "type": "tap",
+      "key": "page-icon"
+    },
+    {
+      "t": 0.3,
+      "type": "tap",
+      "key": "icon-color-blue"
+    }
+  ]
+}

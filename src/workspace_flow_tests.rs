@@ -75,13 +75,13 @@ fn command_palette_searches_all_pages_and_keyboard_executes_actions() {
     rt.key(Key::Command('k').into());
     rt.frame(0.0);
     assert!(rt.find("palette-search").is_some());
-    replace(&mut rt, "palette-search", "Lancement");
+    replace(&mut rt, "palette-search", "Sample launch");
     rt.key(Key::Enter.into());
     rt.frame(0.0);
     assert_eq!(rt.state.selected.as_deref(), Some("demo-launch"));
     rt.key(Key::Command('k').into());
     rt.frame(0.0);
-    replace(&mut rt, "palette-search", "Changer de thème");
+    replace(&mut rt, "palette-search", "Switch theme");
     let dark = rt.state.dark;
     rt.key(Key::Enter.into());
     rt.frame(0.0);
@@ -342,7 +342,7 @@ fn mentions_block_links_and_toc_keep_targets_and_expand_closed_parents() {
     rt.key(Key::Text("@".into()).into());
     rt.frame(0.0);
     assert!(matches!(rt.state.panel, Panel::Palette(_)));
-    replace(&mut rt, "palette-search", "Lancement");
+    replace(&mut rt, "palette-search", "Sample launch");
     rt.key(Key::Enter.into());
     rt.frame(0.0);
     let block = rt.state.blocks.iter().find(|b| b.data.id == id).unwrap();
@@ -561,7 +561,7 @@ fn formulas_and_rollup_configuration_can_be_created_from_the_properties_form() {
     rt.frame(0.0);
     tap(&mut rt, "page-demo-projects-base");
     tap(&mut rt, "collection-columns");
-    replace(&mut rt, "column-name", "Fiches restantes");
+    replace(&mut rt, "column-name", "Remaining records");
     tap(&mut rt, "column-kind-Rollup");
     tap(&mut rt, "rollup-relation-demo-project-tasks");
     tap(&mut rt, "aggregate-Remaining");
@@ -584,7 +584,7 @@ fn formulas_and_rollup_configuration_can_be_created_from_the_properties_form() {
     replace(
         &mut rt,
         "column-expression",
-        "prop(\"Charge totale (h)\") * 2",
+        "prop(\"Total effort (h)\") * 2",
     );
     tap(&mut rt, "save-column");
     let field = rt
@@ -724,13 +724,16 @@ fn native_backup_and_restore_dialogs_preview_before_replacing_the_notebook() {
     assert_eq!(rt.state.current().unwrap().title, "Avant sauvegarde");
     assert!(!rt.state.workspace.busy);
     drop(rt);
-    assert!(
-        std::fs::read_dir(path.with_extension("backups"))
-            .unwrap()
-            .filter_map(Result::ok)
-            .any(|entry| folio::workspace::Notebook::read(&entry.path())
-                .is_ok_and(|b| b.pages.iter().any(|p| p.title == "Après sauvegarde")))
-    );
+    let recovery = std::fs::read_dir(path.with_extension("backups").join("recovery"))
+        .unwrap()
+        .filter_map(Result::ok)
+        .map(|entry| entry.path())
+        .find(|entry| {
+            folio::workspace::Notebook::read(entry)
+                .is_ok_and(|b| b.pages.iter().any(|p| p.title == "Après sauvegarde"))
+        })
+        .expect("the replaced notebook must have a pinned recovery backup");
+    folio::storage::recovery::BackupProof::verify(&recovery).unwrap();
 }
 
 #[test]
@@ -770,4 +773,228 @@ fn a_record_created_in_a_linked_view_updates_the_inverse_relation_and_rollup() {
     );
     let csv = folio::export::csv_with_context("Projets", &[base], &[project], &rt.state.pages);
     assert!(csv.contents.contains(&created));
+}
+
+#[test]
+fn shortcut_drag_reorders_without_navigation_and_rejects_cancelled_or_unrelated_drops() {
+    use folio::workspace::SidebarShortcut::{AllPages, Archives, Favorites, Overview};
+    let mut rt = app("lists");
+    let selected = rt.state.selected.clone();
+    let pages = rt.state.pages.clone();
+    drag(&mut rt, "open-dashboard", "shortcut-after-archives");
+    assert_eq!(
+        rt.state.workspace.preferences.sidebar_shortcuts,
+        [AllPages, Favorites, Archives, Overview]
+    );
+    assert_eq!(rt.state.selected, selected);
+    assert!(matches!(rt.state.filter, crate::state::Filter::All));
+    drag(&mut rt, "archive-filter", "shortcut-before-all_pages");
+    assert_eq!(
+        rt.state.workspace.preferences.sidebar_shortcuts,
+        [Archives, AllPages, Favorites, Overview]
+    );
+    let before = rt.state.workspace.preferences.sidebar_shortcuts.clone();
+    reveal(&mut rt, "favorites");
+    let (x, y) = rt.find("favorites").unwrap();
+    let (dx, dy) = rt.find("shortcut-before-all_pages").unwrap();
+    rt.pointer_down(x, y);
+    rt.pointer_move(dx, dy);
+    rt.frame(0.);
+    rt.frame(1. / 60.);
+    assert!(rt.find("shortcut-drop-indicator").is_some());
+    assert!(rt.find("entity-drag-preview").is_some());
+    rt.key(Key::Escape.into());
+    rt.pointer_up(dx, dy);
+    rt.frame(0.);
+    assert_eq!(rt.state.workspace.preferences.sidebar_shortcuts, before);
+    drag(&mut rt, "archive-filter", "tree-inside-demo-ideas");
+    assert_eq!(rt.state.workspace.preferences.sidebar_shortcuts, before);
+    assert_eq!(rt.state.selected, selected);
+    assert_eq!(rt.state.pages, pages);
+    tap(&mut rt, "favorites");
+    assert!(matches!(rt.state.filter, crate::state::Filter::Favorites));
+    reveal(&mut rt, "all-pages");
+    let (x, y) = rt.find("all-pages").unwrap();
+    rt.pointer_down(x, y);
+    rt.pointer_move(x + 2., y + 1.);
+    rt.pointer_up(x + 2., y + 1.);
+    rt.frame(0.);
+    assert!(matches!(rt.state.filter, crate::state::Filter::All));
+    assert_eq!(rt.state.workspace.preferences.sidebar_shortcuts, before);
+}
+
+#[test]
+fn notebook_drag_highlights_valid_positions_and_clears_feedback_on_cancel() {
+    for dark in [true, false] {
+        let mut rt = app("lists");
+        rt.update(|s, _| s.dark = dark);
+        reveal(&mut rt, "page-demo-meeting");
+        let row = |rt: &Runtime<State>, key: &str| {
+            rt.elements()
+                .into_iter()
+                .find(|e| e.key.as_deref() == Some(key))
+                .unwrap()
+        };
+        let resting = row(&rt, "page-row-demo-ideas").fill;
+        let pages = rt.state.pages.clone();
+        let (x, y) = rt.find("page-demo-meeting").unwrap();
+        rt.pointer_down(x, y);
+        for (target, below) in [
+            ("tree-before-demo-ideas", false),
+            ("tree-after-demo-ideas", true),
+        ] {
+            let (dx, dy) = rt.find(target).unwrap();
+            rt.pointer_move(dx, dy);
+            rt.frame(0.);
+            rt.frame(1. / 60.);
+            let indicator = row(&rt, "page-drop-indicator");
+            let target_row = row(&rt, "page-row-demo-ideas");
+            assert_eq!(indicator.rect[3], 2.);
+            assert!(
+                (indicator.rect[1] - target_row.rect[1] - if below { 32. } else { 0. }).abs() < 0.1
+            );
+            assert_ne!(target_row.fill, resting);
+            assert!(row(&rt, "page-row-demo-meeting").opacity < 0.9);
+        }
+        let (dx, dy) = rt.find("tree-inside-demo-ideas").unwrap();
+        rt.pointer_move(dx, dy);
+        rt.frame(0.);
+        rt.frame(1. / 60.);
+        assert!(rt.find("page-drop-indicator").is_none());
+        assert_ne!(row(&rt, "page-row-demo-ideas").fill, resting);
+        rt.key(Key::Escape.into());
+        rt.pointer_up(dx, dy);
+        rt.frame(0.);
+        for _ in 0..60 {
+            rt.frame(1. / 60.);
+        }
+        assert!(rt.find("page-drop-indicator").is_none());
+        let fill = row(&rt, "page-row-demo-ideas").fill;
+        assert!((fill.r - resting.r).abs() < 0.0001);
+        assert!((fill.g - resting.g).abs() < 0.0001);
+        assert!((fill.b - resting.b).abs() < 0.0001);
+        assert_eq!(rt.state.pages, pages);
+
+        // A parent cannot be placed inside its own descendant.
+        reveal(&mut rt, "page-demo-ideas");
+        let (x, y) = rt.find("page-demo-ideas").unwrap();
+        let (dx, dy) = rt.find("tree-before-demo-project").unwrap();
+        rt.pointer_down(x, y);
+        rt.pointer_move(dx, dy);
+        rt.frame(0.);
+        rt.frame(1. / 60.);
+        assert!(rt.find("page-drop-indicator").is_none());
+        rt.key(Key::Escape.into());
+        rt.pointer_up(dx, dy);
+        rt.frame(0.);
+        assert_eq!(rt.state.pages, pages);
+    }
+}
+
+#[test]
+fn pre_update_backup_follows_pending_writes_and_keeps_vault_encryption() {
+    use crate::worker::{Event, Worker};
+    let temp = tempfile::tempdir().unwrap();
+    let db = temp.path().join("profile.db");
+    let worker = Worker::start(db, std::sync::Arc::new(|| {}));
+    let mut page = folio::model::Page::new(None);
+    page.title = "update-backup-private-content".into();
+    worker.save(page.clone(), 1).unwrap();
+    let plain = temp.path().join("before-update.folio");
+    worker
+        .workspace(Request::UpdateBackup(plain.clone()))
+        .unwrap();
+    loop {
+        match worker
+            .events
+            .recv_timeout(std::time::Duration::from_secs(15))
+            .unwrap()
+        {
+            Event::Workspace(Ok(Response::UpdateBackupDone(p))) => {
+                assert_eq!(p, plain);
+                break;
+            }
+            Event::Workspace(Err(e))
+            | Event::Workspace(Ok(Response::Failure { message: e, .. }))
+            | Event::LoadFailed(e) => panic!("{e}"),
+            _ => {}
+        }
+    }
+    assert!(
+        folio::workspace::Notebook::read(&plain)
+            .unwrap()
+            .pages
+            .iter()
+            .any(|p| p.id == page.id && p.title == page.title)
+    );
+    const PASSWORD: &str = "update backup fixture password";
+    worker
+        .security(folio::vault::Action::Enable(zeroize::Zeroizing::new(
+            PASSWORD.into(),
+        )))
+        .unwrap();
+    loop {
+        match worker
+            .events
+            .recv_timeout(std::time::Duration::from_secs(20))
+            .unwrap()
+        {
+            Event::Security(folio::vault::Outcome::Opened {
+                encrypted: true, ..
+            }) => break,
+            Event::SecurityFailed(e) => panic!("{e}"),
+            _ => {}
+        }
+    }
+    let encrypted = temp.path().join("encrypted-before-update.folio");
+    worker
+        .workspace(Request::UpdateBackup(encrypted.clone()))
+        .unwrap();
+    loop {
+        match worker
+            .events
+            .recv_timeout(std::time::Duration::from_secs(15))
+            .unwrap()
+        {
+            Event::Workspace(Ok(Response::UpdateBackupDone(p))) => {
+                assert_eq!(p, encrypted);
+                break;
+            }
+            Event::Workspace(Err(e))
+            | Event::Workspace(Ok(Response::Failure { message: e, .. })) => panic!("{e}"),
+            _ => {}
+        }
+    }
+    assert!(
+        !std::fs::read_to_string(&encrypted)
+            .unwrap()
+            .contains(&page.title)
+    );
+    assert!(folio::security::read_backup(&encrypted, None, None).is_err());
+    assert!(
+        folio::security::read_backup(&encrypted, None, Some(PASSWORD))
+            .unwrap()
+            .pages
+            .iter()
+            .any(|p| p.id == page.id)
+    );
+    // An invalid destination must never emit the acknowledgement used to install.
+    worker
+        .workspace(Request::UpdateBackup(
+            temp.path().join("missing-parent/backup.folio"),
+        ))
+        .unwrap();
+    loop {
+        match worker
+            .events
+            .recv_timeout(std::time::Duration::from_secs(15))
+            .unwrap()
+        {
+            Event::Workspace(Ok(Response::Failure { blocking: true, .. })) => break,
+            Event::Workspace(Ok(Response::UpdateBackupDone(_))) => {
+                panic!("failed backup acknowledged")
+            }
+            _ => {}
+        }
+    }
 }

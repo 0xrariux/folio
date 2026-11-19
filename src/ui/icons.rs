@@ -14,16 +14,26 @@ pub(super) fn page(value: &str, size: f32, color: Color) -> El {
     }
 }
 
+pub(super) fn color(value: folio::icons::IconColor, p: Palette, fallback: Color) -> Color {
+    value
+        .rgb(p.dark)
+        .map_or(fallback, |[r, g, b]| super::rgb(r, g, b))
+}
+
+pub(super) fn page_icon(target: &folio::model::Page, size: f32, fallback: Color, p: Palette) -> El {
+    page(&target.emoji, size, color(target.icon_color, p, fallback))
+}
+
 pub(super) fn page_action(
     key: impl Into<String>,
     title: &str,
-    value: &str,
+    target: &folio::model::Page,
     p: Palette,
     f: impl Fn(&mut State, &mut rune::Tx) + 'static,
 ) -> El {
     button(key, title, p, f)
         .gap(8.0)
-        .child(page(value, 16.0, p.accent))
+        .child(page_icon(target, 16.0, p.accent, p))
         .child(label(title, 12.0, p.muted).min_w(0.0).truncate())
 }
 
@@ -70,7 +80,7 @@ pub(super) fn option(
     };
     button(key, title, p, f)
         .label(if checked {
-            format!("{title} (sélectionné)")
+            format!("{title} (selected)")
         } else {
             title.to_string()
         })
@@ -142,7 +152,7 @@ fn gallery(icons: &[(&str, &str, &'static rune::Icon)], p: Palette, width: f32) 
         col()
             .w_full()
             .gap(12.0)
-            .child(label("Une même écriture, à chaque taille.", 13.0, p.muted));
+            .child(label("Consistent icons at every size.", 13.0, p.muted));
     for group in icons.chunks(if width < 680.0 {
         3
     } else if width > 1000.0 {

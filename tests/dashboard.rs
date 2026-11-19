@@ -47,7 +47,7 @@ fn numeric_totals_stay_separate_for_columns_with_identical_names_in_different_ba
     let mut b = Page::new(None);
     let first = Column::new("Charge", ColumnKind::Number);
     let second = Column::new("Charge", ColumnKind::Number);
-    let checkbox = Column::new("Validé", ColumnKind::Checkbox);
+    let checkbox = Column::new("Approved", ColumnKind::Checkbox);
     a.collection = Some(Collection {
         columns: vec![first.clone(), checkbox.clone()],
         ..Default::default()

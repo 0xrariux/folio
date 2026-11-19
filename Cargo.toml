@@ -1,7 +1,8 @@
 [package]
 name = "folio"
-version = "0.10.0"
+version = "0.13.0"
 edition = "2024"
+default-run = "folio"
 license = "MIT"
 description = "A small native workspace for your notes, built with Rune and Turso."
 
@@ -10,6 +11,14 @@ tooling = ["rune/tooling"]
 
 [dependencies]
 anyhow = "1"
+ring = "0.17.14"
+libc = "0.2"
+argon2 = "0.5.3"
+chacha20poly1305 = "0.10.1"
+rand_core = { version = "0.6.4", features = ["getrandom"] }
+zeroize = "1.9"
+semver = "1.0.28"
+reqwest = { version = "0.12.28", default-features = false, features = ["blocking", "json", "rustls-tls"] }
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
 rune = { path = "../rune/crates/rune", features = ["native-file-dialog"] }
 rune-kit = { path = "../rune/crates/rune-kit" }
@@ -17,7 +26,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tokio = { version = "1", features = ["rt", "time"] }
 turso = "=0.8.3"
-uuid = { version = "1", features = ["v4"] }
+uuid = { version = "1", features = ["v4", "serde"] }
 tempfile = "3"
 base64 = "0.22"
 
@@ -38,7 +47,11 @@ debug = false
 
 [profile.release]
 incremental = true
+strip = "symbols"
 
 [lints.clippy]
 dbg_macro = "deny"
 todo = "deny"
+
+# Standalone application workspace.
+[workspace]

@@ -19,7 +19,7 @@ fn collection_settings_properties_and_page_links_survive_reopening() {
     runtime().block_on(async {
         let store = Store::open(&path).await.unwrap();
         let mut parent = Page::new(None);
-        parent.title = "Projet".into();
+        parent.title = "Project".into();
         parent.collection = Some(Collection {
             view: View::Board,
             sort: Sort::Due,

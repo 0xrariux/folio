@@ -54,7 +54,7 @@ pub(super) fn status_button(page: &Page, p: Palette) -> El {
             .a11y_hidden(),
     )
     .child(label(page.properties.status.name(), 12.0, p.muted))
-    .label(format!("Statut : {}", page.properties.status.name()))
+    .label(format!("Status: {}", page.properties.status.name()))
     .fill(status_color(page.properties.status, p).alpha(0.12))
     .h(27.0)
 }
@@ -75,7 +75,7 @@ pub(super) fn priority_button(page: &Page, p: Palette) -> El {
             }
         },
     )
-    .label(format!("Priorité : {}", page.properties.priority.name()))
+    .label(format!("Priority: {}", page.properties.priority.name()))
     .fill(priority_color(page.properties.priority, p).alpha(0.1))
     .h(27.0)
 }
@@ -88,7 +88,7 @@ pub(super) fn details_button(page: &Page, title: &str, p: Palette) -> El {
         tx.focus("property-due", false);
     };
     if title == "•••" {
-        super::icons::control(key, "Éditer échéance et étiquettes", &g::MORE, p, edit)
+        super::icons::control(key, "Edit due date and tags", &g::MORE, p, edit)
     } else {
         super::button(key, title, p, edit)
             .justify_start()
@@ -118,7 +118,7 @@ pub(super) fn title_button(page: &Page, p: Palette) -> El {
             s.select(&id);
             tx.scroll_to_y("document-scroll", 0.0);
         })
-        .child(super::icons::page(&page.emoji, 16.0, p.muted))
+        .child(super::icons::page_icon(page, 16.0, p.muted, p))
         .child(
             label(page.display_title(), 13.0, p.ink)
                 .grow(1.0)
@@ -190,33 +190,33 @@ fn board(s: &State, p: Palette, width: f32) -> El {
                 row()
                     .gap(2.0)
                     .center_y()
-                    .child(details_button(page, "•••", p).label("Éditer échéance et étiquettes"))
+                    .child(details_button(page, "•••", p).label("Edit due date and tags"))
                     .child(el().grow(1.0))
                     .child(
                         super::icons::control(
                             format!("board-back-{}", page.id),
-                            "Reculer le statut",
+                            "Previous status",
                             &g::CHEVRON_LEFT,
                             p,
                             move |s, _| s.set_status(&back_id, status.next(false)),
                         )
-                        .label("Reculer le statut"),
+                        .label("Previous status"),
                     )
                     .child(
                         super::icons::control(
                             format!("board-forward-{}", page.id),
-                            "Avancer le statut",
+                            "Next status",
                             &g::CHEVRON_RIGHT,
                             p,
                             move |s, _| s.set_status(&forward_id, status.next(true)),
                         )
-                        .label("Avancer le statut"),
+                        .label("Next status"),
                     ),
             );
             cards = cards.child(card);
         }
         if selected.is_empty() {
-            cards = cards.child(label("Rien ici pour le moment.", 11.0, p.faint).padding(8.0));
+            cards = cards.child(label("Nothing here yet.", 11.0, p.faint).padding(8.0));
         }
         columns = columns.child(
             col()
@@ -264,7 +264,7 @@ fn board(s: &State, p: Palette, width: f32) -> El {
                 ))
                 .child(super::icons::action(
                     format!("add-{status:?}"),
-                    "Nouvelle fiche",
+                    "New record",
                     &g::PLUS,
                     p,
                     move |s, tx| s.create_record(Some(status), tx),
@@ -299,13 +299,13 @@ pub(super) fn search(s: &State, p: Palette) -> El {
         .child(
             text_input(&s.collection_search, TextStyle::new(12.0, 400.0))
                 .key("collection-search")
-                .label("Rechercher une fiche")
+                .label("Search records")
                 .single_line()
                 .grow(1.0)
                 .min_w(0.0)
                 .color(p.ink)
                 .caret(p.accent, p.tint)
-                .placeholder("Rechercher une fiche…", p.faint)
+                .placeholder("Search records…", p.faint)
                 .on_edit(|s: &mut State| &mut s.collection_search),
         )
 }
@@ -321,11 +321,11 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
         .gap(5.0)
         .center_y();
     for (key, title, view, glyph) in [
-        ("view-table", "Tableau", View::Table, &g::TABLE),
+        ("view-table", "Table", View::Table, &g::TABLE),
         ("view-board", "Kanban", View::Board, &g::BOARD),
         (
             "view-calendar",
-            "Calendrier",
+            "Calendar",
             View::Calendar,
             &folio::icons::CALENDAR,
         ),
@@ -347,7 +347,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
         );
     }
     tabs = tabs.child(el().grow(1.0)).child(label(
-        format!("{} fiche{}", count, if count == 1 { "" } else { "s" }),
+        format!("{} record{}", count, if count == 1 { "" } else { "s" }),
         10.0,
         p.faint,
     ));
@@ -363,9 +363,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 .child(
                     super::icons::action(
                         "collection-views",
-                        settings
-                            .active()
-                            .map_or("Vues enregistrées", |v| v.name.as_str()),
+                        settings.active().map_or("Saved views", |v| v.name.as_str()),
                         &g::TEMPLATES,
                         p,
                         |s, tx| {
@@ -380,7 +378,11 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                             .a11y_hidden(),
                     ),
                 )
-                .child(label("Filtres et tri propres à chaque vue", 10.0, p.faint)),
+                .child(label(
+                    "Each view has its own filters and sort order",
+                    10.0,
+                    p.faint,
+                )),
         )
         .child(
             col()
@@ -405,9 +407,9 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                     super::icons::action(
                         "collection-filter",
                         if filter.active() {
-                            "Filtres actifs"
+                            "Active filters"
                         } else {
-                            "Filtrer"
+                            "Filter"
                         },
                         &g::FILTER,
                         p,
@@ -417,14 +419,14 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 )
                 .child(super::icons::action(
                     "collection-sort",
-                    "Trier",
+                    "Sort",
                     &g::SORT,
                     p,
                     |s, _| s.panel = Panel::CollectionSort,
                 ))
                 .child(super::icons::action(
                     "collection-columns",
-                    "Colonnes",
+                    "Columns",
                     &g::COLUMNS,
                     p,
                     |s, tx| {
@@ -433,7 +435,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                     },
                 ))
                 .child(
-                    super::icons::action("new-record", "Nouveau", &g::PLUS, p, |s, tx| {
+                    super::icons::action("new-record", "New", &g::PLUS, p, |s, tx| {
                         s.create_record(None, tx)
                     })
                     .fill(p.tint),
@@ -442,7 +444,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
     if filter.active() || !s.collection_search.text.is_empty() {
         body = body.child(action(
             "reset-tracking",
-            "Effacer les filtres et la recherche",
+            "Clear filters and search",
             p,
             |s, _| s.clear_tracking(),
         ));
@@ -480,25 +482,25 @@ pub(super) fn properties(s: &State, page: &Page, p: Palette) -> El {
         .py(7.0)
         .child(property_row(
             "status",
-            "Statut",
+            "Status",
             status_button(page, p).px(6.0).justify_start(),
             p,
         ))
         .child(property_row(
             "priority",
-            "Priorité",
+            "Priority",
             priority_button(page, p).px(6.0).justify_start(),
             p,
         ))
         .child(property_row(
             "due",
-            "Échéance",
+            "Due date",
             details_button(
                 page,
                 page.properties
                     .due
                     .as_deref()
-                    .unwrap_or("Ajouter une échéance ou des étiquettes"),
+                    .unwrap_or("Add a due date or tags"),
                 p,
             ),
             p,
@@ -508,7 +510,7 @@ pub(super) fn properties(s: &State, page: &Page, p: Palette) -> El {
         } else {
             property_row(
                 "tags",
-                "Étiquettes",
+                "Tags",
                 label(page.properties.tags.join(" · "), 11.0, p.accent)
                     .px(6.0)
                     .w_full()

@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "t": 0.15,
+      "type": "down",
+      "key": "page-demo-project"
+    },
+    {
+      "t": 0.4,
+      "type": "move",
+      "key": "tree-after-demo-home"
+    },
+    {
+      "t": 0.95,
+      "type": "up",
+      "key": "tree-after-demo-home"
+    }
+  ]
+}

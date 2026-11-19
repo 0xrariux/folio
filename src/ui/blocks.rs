@@ -23,7 +23,7 @@ pub(super) fn toolbar(s: &State, p: Palette, width: f32) -> El {
     bar = bar
         .child(super::icons::action(
             "block-type",
-            active.map_or("Texte", |b| b.data.kind.name()),
+            active.map_or("Text", |b| b.data.kind.name()),
             active.map_or(&g::TEXT, |b| g::block(b.data.kind)),
             p,
             |s, _| {
@@ -38,18 +38,18 @@ pub(super) fn toolbar(s: &State, p: Palette, width: f32) -> El {
         ))
         .child(el().w(1.0).h(16.0).fill(p.line));
     for (key, title, mark) in [
-        ("bold", "Gras", Mark::Bold),
-        ("italic", "Italique", Mark::Italic),
-        ("underline", "Souligné", Mark::Underline),
+        ("bold", "Bold", Mark::Bold),
+        ("italic", "Italic", Mark::Italic),
+        ("underline", "Underline", Mark::Underline),
         ("inline-code", "Code", Mark::Code),
     ] {
         let selected = active.is_some_and(|b| b.edit.has_mark(&mark));
         bar = bar.child(
             Button::new(if width < 610.0 {
                 match key {
-                    "bold" => "G",
+                    "bold" => "B",
                     "italic" => "I",
-                    "underline" => "S",
+                    "underline" => "U",
                     _ => "</>",
                 }
             } else {
@@ -78,7 +78,7 @@ pub(super) fn toolbar(s: &State, p: Palette, width: f32) -> El {
         bar = bar
             .child(super::icons::control(
                 "list-outdent",
-                "Désindenter · Maj+Tab",
+                "Outdent · Shift+Tab",
                 &g::CHEVRON_LEFT,
                 p,
                 move |s, tx| {
@@ -87,7 +87,7 @@ pub(super) fn toolbar(s: &State, p: Palette, width: f32) -> El {
             ))
             .child(super::icons::control(
                 "list-indent",
-                "Indenter · Tab",
+                "Indent · Tab",
                 &g::CHEVRON_RIGHT,
                 p,
                 move |s, tx| {
@@ -97,14 +97,14 @@ pub(super) fn toolbar(s: &State, p: Palette, width: f32) -> El {
     }
     bar.child(super::icons::control(
         "undo",
-        "Annuler",
+        "Undo",
         &g::UNDO,
         p,
         |s, tx| s.undo_document(false, tx),
     ))
     .child(super::icons::control(
         "redo",
-        "Rétablir",
+        "Redo",
         &g::REDO,
         p,
         |s, tx| s.undo_document(true, tx),
@@ -156,9 +156,9 @@ fn block(
         .caret(p.accent, p.tint)
         .placeholder(
             if kind == Kind::Code {
-                "Écrivez du code…"
+                "Write some code…"
             } else {
-                "Écrivez, ou tapez / pour insérer un bloc…"
+                "Write, or type / to insert a block…"
             },
             p.faint,
         )
@@ -199,9 +199,9 @@ fn block(
             super::icons::control(
                 format!("toggle-{id}"),
                 if b.data.collapsed {
-                    "Déplier le tiroir"
+                    "Expand section"
                 } else {
-                    "Replier le tiroir"
+                    "Collapse section"
                 },
                 if b.data.collapsed {
                     &g::CHEVRON_RIGHT
@@ -220,7 +220,7 @@ fn block(
             row()
                 .key(format!("check-{id}"))
                 .role("checkbox")
-                .label(format!("Terminer : {}", b.edit.text))
+                .label(format!("Complete: {}", b.edit.text))
                 .checked(b.data.checked)
                 .focusable(true)
                 .size(17.0, 17.0)
@@ -272,10 +272,10 @@ fn block(
                 format!(
                     "{}{}",
                     p.display_title(),
-                    if p.archived { " (archivée)" } else { "" }
+                    if p.archived { " (archived)" } else { "" }
                 )
             })
-            .unwrap_or_else(|| "Page introuvable".into());
+            .unwrap_or_else(|| "Page not found".into());
         let target_id = target.map(|p| p.id.clone());
         let block_id = b.data.id.clone();
         row()
@@ -302,10 +302,9 @@ fn block(
                     .color(p.accent)
                     .a11y_hidden(),
             )
-            .child(super::icons::page(
-                target.map_or("📄", |p| p.emoji.as_str()),
-                16.0,
-                p.accent,
+            .child(target.map_or_else(
+                || super::icons::page("📄", 16.0, p.accent),
+                |target| super::icons::page_icon(target, 16.0, p.accent, p),
             ))
             .child(label(title, 14.0, p.ink).grow(1.0).min_w(0.0).truncate())
     } else if kind == Kind::Divider {
@@ -330,12 +329,12 @@ fn block(
                 .collect();
             let hint = if !tasks.is_empty() {
                 format!(
-                    "{}/{} tâches",
+                    "{}/{} tasks",
                     tasks.iter().filter(|b| b.data.checked).count(),
                     tasks.len()
                 )
             } else if !children.is_empty() {
-                format!("{} éléments", children.len())
+                format!("{} items", children.len())
             } else {
                 String::new()
             };
@@ -413,7 +412,7 @@ fn block(
         .child(
             super::icons::control(
                 format!("add-after-{}", b.data.id),
-                "Ajouter un bloc après",
+                "Add a block after",
                 &g::PLUS,
                 p,
                 move |s, tx| s.add_block(Some(&plus_id), Kind::Text, true, tx),
@@ -424,7 +423,7 @@ fn block(
         .child(
             super::icons::control(
                 format!("handle-{}", b.data.id),
-                "Déplacer le bloc ou ouvrir son menu",
+                "Move block or open its menu",
                 &g::GRIP,
                 p,
                 move |s, tx| {
@@ -433,8 +432,8 @@ fn block(
             )
             .w(20.0)
             .px(0.0)
-            .label("Déplacer le bloc ou ouvrir son menu")
-            .help("Glisser pour déplacer · Cliquer pour le menu · Échap pour annuler")
+            .label("Move block or open its menu")
+            .help("Drag to move · Click for menu · Escape to cancel")
             .cursor(if dragging {
                 Cursor::Grabbing
             } else {
@@ -493,7 +492,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
             blocks = blocks.child(row().pl(52.0 + (b.data.indent as f32 + 1.0) * 18.0).child(
                 super::icons::action(
                     format!("toggle-add-{id}"),
-                    "Ajouter du contenu au tiroir",
+                    "Add content to this section",
                     &g::PLUS,
                     p,
                     move |s, tx| s.add_child(&id, tx),
@@ -507,7 +506,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
             .w_full()
             .h(38.0)
             .child(
-                super::icons::action("new-block", "Ajouter un bloc", &g::PLUS, p, |s, tx| {
+                super::icons::action("new-block", "Add a block", &g::PLUS, p, |s, tx| {
                     s.add_block(None, Kind::Text, true, tx)
                 })
                 .w_full()

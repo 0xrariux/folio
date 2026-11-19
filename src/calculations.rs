@@ -31,7 +31,7 @@ fn calculate(
 ) -> Result<f64, String> {
     let key = (record.id.clone(), column.id.clone());
     if visited.len() >= 32 || !visited.insert(key.clone()) {
-        return Err("Référence circulaire".into());
+        return Err("Circular reference".into());
     }
     let result = (|| match column.kind {
         ColumnKind::Number => Ok(record
@@ -50,14 +50,14 @@ fn calculate(
                 .iter()
                 .find(|p| Some(&p.id) == record.parent_id.as_ref())
                 .and_then(|p| p.collection.as_ref())
-                .ok_or("Base introuvable")?;
+                .ok_or("Database not found")?;
             let relation = base
                 .columns
                 .iter()
                 .find(|c| {
                     Some(&c.id) == column.config.relation.as_ref() && c.kind == ColumnKind::Relation
                 })
-                .ok_or("Choisir une relation")?;
+                .ok_or("Choose a relation")?;
             let records = related(pages, record, relation);
             let done = records
                 .iter()
@@ -83,7 +83,7 @@ fn calculate(
                                 .iter()
                                 .find(|c| Some(&c.id) == column.config.property.as_ref())
                         })
-                        .ok_or("Choisir une propriété numérique")?;
+                        .ok_or("Choose a numeric property")?;
                     records.into_iter().try_fold(0.0, |sum, p| {
                         calculate(p, target, pages, visited).map(|v| sum + v)
                     })
@@ -95,20 +95,20 @@ fn calculate(
                 .iter()
                 .find(|p| Some(&p.id) == record.parent_id.as_ref())
                 .and_then(|p| p.collection.as_ref())
-                .ok_or("Base introuvable")?;
+                .ok_or("Database not found")?;
             let mut expression = column.config.expression.clone();
             if expression.len() > 2000 {
-                return Err("Formule trop longue".into());
+                return Err("Formula too long".into());
             }
             while let Some(start) = expression.find("prop(\"") {
                 let rest = &expression[start + 6..];
-                let end = rest.find("\")").ok_or("Utiliser prop(\"Nom\")")?;
+                let end = rest.find("\")").ok_or("Use prop(\"Name\")")?;
                 let name = &rest[..end];
                 let field = base
                     .columns
                     .iter()
                     .find(|c| c.name == name || c.id == name)
-                    .ok_or_else(|| format!("Propriété inconnue : {name}"))?;
+                    .ok_or_else(|| format!("Unknown property: {name}"))?;
                 let n = calculate(record, field, pages, visited)?;
                 expression.replace_range(start..start + 6 + end + 2, &format!("({n})"));
             }
@@ -122,14 +122,14 @@ fn calculate(
             );
             evaluate(&expression)
         }
-        _ => Err("Propriété non numérique".into()),
+        _ => Err("Property is not numeric".into()),
     })();
     visited.remove(&key);
     result.and_then(|n| {
         if n.is_finite() {
             Ok(n)
         } else {
-            Err("Résultat hors limite".into())
+            Err("Result out of range".into())
         }
     })
 }
@@ -199,7 +199,7 @@ pub fn evaluate(expression: &str) -> Result<f64, String> {
                 } else if self.take(b'/') {
                     let d = self.atom()?;
                     if d == 0.0 {
-                        return Err("Division par zéro".into());
+                        return Err("Division by zero".into());
                     }
                     n /= d;
                 } else {
@@ -210,7 +210,7 @@ pub fn evaluate(expression: &str) -> Result<f64, String> {
         fn atom(&mut self) -> Result<f64, String> {
             self.depth += 1;
             if self.depth > 32 {
-                return Err("Formule trop imbriquée".into());
+                return Err("Formula nested too deeply".into());
             }
             let result = if self.take(b'-') {
                 self.atom().map(|n| -n)
@@ -219,7 +219,7 @@ pub fn evaluate(expression: &str) -> Result<f64, String> {
             } else if self.take(b'(') {
                 let n = self.sum()?;
                 if !self.take(b')') {
-                    return Err("Parenthèse manquante".into());
+                    return Err("Missing parenthesis".into());
                 }
                 Ok(n)
             } else {
@@ -235,14 +235,14 @@ pub fn evaluate(expression: &str) -> Result<f64, String> {
                 std::str::from_utf8(&self.text[start..self.at])
                     .ok()
                     .and_then(|s| s.parse::<f64>().ok())
-                    .ok_or("Nombre ou propriété attendu".into())
+                    .ok_or("Expected a number or property".into())
             };
             self.depth -= 1;
             result
         }
     }
     if expression.len() > 2000 {
-        return Err("Formule trop longue".into());
+        return Err("Formula too long".into());
     }
     let mut parser = Parser {
         text: expression.as_bytes(),
@@ -252,7 +252,7 @@ pub fn evaluate(expression: &str) -> Result<f64, String> {
     let n = parser.sum()?;
     parser.space();
     if parser.at != parser.text.len() || !n.is_finite() {
-        return Err("Formule invalide ou résultat hors limite".into());
+        return Err("Invalid formula or result out of range".into());
     }
     Ok(n)
 }

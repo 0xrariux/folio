@@ -1,6 +1,7 @@
 use super::{Palette, label};
 use crate::state::{Filter, Panel, State};
 use folio::icons::{self as glyph, controls as g};
+use folio::workspace::SidebarShortcut;
 use rune::{Align, El, ScrollSpec, Side, TextStyle, col, el, row, text, text_input};
 
 fn sidebar_action(
@@ -31,7 +32,7 @@ pub(super) fn more_menu(s: &State, p: Palette) -> El {
     .anchored_fit("sidebar-more", Side::Top, Align::Start, 5.0)
     .child(icon_item(
         "new-page-bottom",
-        "Nouvelle page",
+        "New page",
         &g::PLUS,
         p,
         |s, tx| {
@@ -41,7 +42,7 @@ pub(super) fn more_menu(s: &State, p: Palette) -> El {
     ))
     .child(icon_item(
         "new-collection",
-        "Nouvelle base",
+        "New database",
         &glyph::DATABASE,
         p,
         |s, tx| {
@@ -51,7 +52,7 @@ pub(super) fn more_menu(s: &State, p: Palette) -> El {
     ))
     .child(icon_item(
         "templates",
-        "Modèles",
+        "Templates",
         &g::TEMPLATES,
         p,
         |s, _| s.panel = Panel::Templates,
@@ -59,59 +60,282 @@ pub(super) fn more_menu(s: &State, p: Palette) -> El {
     .child(el().h(1.0).fill(p.line))
     .child(icon_item(
         "workspace-menu",
-        "Votre carnet",
+        "Your notebook",
         &glyph::FOLDER,
         p,
         |s, _| s.panel = Panel::Workspace,
     ))
 }
 
-fn nav(
-    key: &str,
-    title: &str,
-    glyph: &'static rune::Icon,
-    filter: Filter,
-    s: &State,
-    p: Palette,
-) -> El {
-    let selected = s.filter == filter;
+fn nav(shortcut: SidebarShortcut, s: &State, p: Palette) -> El {
+    use crate::entity_drag::Kind;
+    let key = match shortcut {
+        SidebarShortcut::Overview => "open-dashboard",
+        SidebarShortcut::AllPages => "all-pages",
+        SidebarShortcut::Favorites => "favorites",
+        SidebarShortcut::Archives => "archive-filter",
+    };
+    let selected = matches!(
+        (shortcut, s.filter),
+        (SidebarShortcut::AllPages, Filter::All)
+            | (SidebarShortcut::Favorites, Filter::Favorites)
+            | (SidebarShortcut::Archives, Filter::Archive)
+    );
+    let source = format!("shortcut:{}", shortcut.key());
+    let click_id = source.clone();
+    let dragging = s
+        .workspace
+        .entity_drag
+        .as_ref()
+        .is_some_and(|d| d.kind == Kind::Shortcut && d.active);
+    let moving = dragging
+        && s.workspace
+            .entity_drag
+            .as_ref()
+            .is_some_and(|d| d.id == source);
+    let before_key = format!("shortcut-before-{}", shortcut.key());
+    let after_key = format!("shortcut-after-{}", shortcut.key());
+    let before = dragging && super::entity_target(s, &before_key);
+    let after = dragging && super::entity_target(s, &after_key);
     row()
         .key(key)
         .role("button")
-        .label(title)
+        .label(shortcut.name())
         .focusable(true)
         .h(34.0)
+        .w_full()
         .px(10.0)
         .gap(10.0)
         .center_y()
         .radius(6.0)
-        .fill(if selected { p.tint } else { p.sidebar })
+        .fill(if selected || moving {
+            p.tint
+        } else {
+            p.sidebar
+        })
+        .opacity(if moving { 0.55 } else { 1.0 })
         .hover(p.ink.alpha(0.04))
-        .on_press(move |s: &mut State| {
-            s.filter = filter;
+        .cursor(if moving {
+            rune::Cursor::Grabbing
+        } else {
+            rune::Cursor::Grab
+        })
+        .on_drag(move |s: &mut State, drag, tx| s.drag_entity(&source, Kind::Shortcut, drag, tx))
+        .on_press_tx(move |s: &mut State, tx| {
+            if s.entity_click(&click_id) {
+                return;
+            }
+            match shortcut {
+                SidebarShortcut::Overview => {
+                    s.open_dashboard();
+                    tx.scroll_to_y("document-scroll", 0.0);
+                }
+                SidebarShortcut::AllPages => s.filter = Filter::All,
+                SidebarShortcut::Favorites => s.filter = Filter::Favorites,
+                SidebarShortcut::Archives => s.filter = Filter::Archive,
+            }
             s.panel = Panel::Closed;
         })
         .child(
-            rune::icon(glyph, 16.0)
+            rune::icon(shortcut_icon(shortcut), 16.0)
                 .color(if selected { p.accent } else { p.faint })
                 .a11y_hidden(),
         )
         .child(label(
-            title,
+            shortcut.name(),
             12.0,
             if selected { p.accent } else { p.muted },
         ))
+        .child(if before {
+            el().key("shortcut-drop-indicator")
+                .absolute(0.0, 0.0)
+                .w_full()
+                .h(2.0)
+                .radius(1.0)
+                .fill(p.accent)
+                .a11y_hidden()
+        } else if after {
+            el().key("shortcut-drop-indicator")
+                .absolute(0.0, 32.0)
+                .w_full()
+                .h(2.0)
+                .radius(1.0)
+                .fill(p.accent)
+                .a11y_hidden()
+        } else {
+            el()
+        })
+        .child(
+            col()
+                .absolute(0.0, 0.0)
+                .w_full()
+                .h_full()
+                .a11y_hidden()
+                .child(el().key(before_key).w_full().h(17.0))
+                .child(el().key(after_key).w_full().h(17.0)),
+        )
+}
+
+fn shortcut_icon(shortcut: SidebarShortcut) -> &'static rune::Icon {
+    match shortcut {
+        SidebarShortcut::Overview => &glyph::DASHBOARD,
+        SidebarShortcut::AllPages => &g::TEXT,
+        SidebarShortcut::Favorites => &g::STAR,
+        SidebarShortcut::Archives => &glyph::ARCHIVE,
+    }
+}
+
+fn navigation(s: &State, p: Palette) -> El {
+    let mut shortcuts = col().w_full().gap(2.0).child(
+        row()
+            .h(22.0)
+            .px(10.0)
+            .center_y()
+            .child(label("SHORTCUTS", 9.0, p.faint).grow(1.0))
+            .child(
+                super::icons::control(
+                    "customize-navigation",
+                    "Customize shortcuts",
+                    &g::MORE,
+                    p,
+                    |s, _| s.panel = Panel::SidebarNavigation,
+                )
+                .size(24.0, 22.0)
+                .px(4.0)
+                .disabled(
+                    s.workspace.busy
+                        || s.settings.busy
+                        || s.settings.locked
+                        || (!s.demo && !s.workspace.preferences_loaded),
+                ),
+            ),
+    );
+    for &shortcut in &s.workspace.preferences.sidebar_shortcuts {
+        shortcuts = shortcuts.child(nav(shortcut, s, p));
+    }
+    shortcuts
+}
+
+pub(super) fn navigation_menu(s: &State, p: Palette) -> El {
+    let visible = &s.workspace.preferences.sidebar_shortcuts;
+    let mut body = col().gap(4.0).child(
+        row()
+            .center_y()
+            .px(8.0)
+            .child(label("Shortcuts", 12.0, p.muted).grow(1.0))
+            .child(super::icons::control(
+                "reset-shortcuts",
+                "Reset shortcuts",
+                &g::UNDO,
+                p,
+                |s, _| s.reset_sidebar_shortcuts(),
+            )),
+    );
+    for (index, &shortcut) in visible.iter().enumerate() {
+        body = body.child(
+            row()
+                .h(34.0)
+                .gap(6.0)
+                .px(8.0)
+                .center_y()
+                .child(
+                    rune::icon(shortcut_icon(shortcut), 16.0)
+                        .color(p.muted)
+                        .a11y_hidden(),
+                )
+                .child(
+                    label(shortcut.name(), 12.0, p.ink)
+                        .grow(1.0)
+                        .min_w(0.0)
+                        .truncate(),
+                )
+                .child(
+                    super::icons::control(
+                        format!("shortcut-up-{}", shortcut.key()),
+                        &format!("Move {} up", shortcut.name()),
+                        &g::ARROW_UP,
+                        p,
+                        move |s, _| s.move_sidebar_shortcut(shortcut, true),
+                    )
+                    .size(24.0, 26.0)
+                    .px(4.0)
+                    .disabled(index == 0),
+                )
+                .child(
+                    super::icons::control(
+                        format!("shortcut-down-{}", shortcut.key()),
+                        &format!("Move {} down", shortcut.name()),
+                        &g::ARROW_DOWN,
+                        p,
+                        move |s, _| s.move_sidebar_shortcut(shortcut, false),
+                    )
+                    .size(24.0, 26.0)
+                    .px(4.0)
+                    .disabled(index + 1 == visible.len()),
+                )
+                .child(
+                    super::icons::control(
+                        format!("shortcut-hide-{}", shortcut.key()),
+                        &format!("Hide {}", shortcut.name()),
+                        &g::CLOSE,
+                        p,
+                        move |s, _| s.show_sidebar_shortcut(shortcut, false),
+                    )
+                    .size(24.0, 26.0)
+                    .px(4.0),
+                ),
+        );
+    }
+    let hidden: Vec<_> = SidebarShortcut::ALL
+        .into_iter()
+        .filter(|shortcut| !visible.contains(shortcut))
+        .collect();
+    if !hidden.is_empty() {
+        body = body.child(label("Hidden", 9.0, p.faint).padding(8.0));
+        for shortcut in hidden {
+            body = body.child(
+                super::panels::icon_item(
+                    format!("shortcut-add-{}", shortcut.key()),
+                    shortcut.name(),
+                    &g::PLUS,
+                    p,
+                    move |s, _| s.show_sidebar_shortcut(shortcut, true),
+                )
+                .label(format!("Show {}", shortcut.name())),
+            );
+        }
+    }
+    super::panels::surface("sidebar-navigation-menu", "customize-navigation", 300.0, p).child(body)
 }
 
 pub(super) fn view(s: &State, p: Palette) -> El {
     let rows = s.sidebar_pages();
+    let dragged_page = s
+        .workspace
+        .entity_drag
+        .as_ref()
+        .filter(|drag| drag.active && drag.kind == crate::entity_drag::Kind::Page)
+        .and_then(|drag| {
+            s.pages
+                .iter()
+                .find(|page| page.id == drag.id && !page.archived)
+        });
     let mut pages = col().w_full().gap(2.0);
     for (page, depth) in &rows {
         let id = page.id.clone();
         let collapse_id = id.clone();
         let drag_id = id.clone();
         let zone_id = id.clone();
+        let menu_id = id.clone();
         let selected = s.selected.as_ref() == Some(&id);
+        let moving = dragged_page.is_some_and(|source| source.id == page.id);
+        let allowed = !page.archived
+            && dragged_page.is_some_and(|source| {
+                source.id != page.id && !s.ancestors(&page.id).iter().any(|id| id == &source.id)
+            });
+        let before = allowed && super::entity_target(s, &format!("tree-before-{zone_id}"));
+        let after = allowed && super::entity_target(s, &format!("tree-after-{zone_id}"));
+        let inside = allowed && super::entity_target(s, &format!("tree-inside-{zone_id}"));
         let has_children = s
             .pages
             .iter()
@@ -120,9 +344,9 @@ pub(super) fn view(s: &State, p: Palette) -> El {
             super::icons::control(
                 format!("fold-{id}"),
                 if s.collapsed.contains(&id) {
-                    "Déplier la page"
+                    "Expand page"
                 } else {
-                    "Replier la page"
+                    "Collapse page"
                 },
                 if s.collapsed.contains(&id) {
                     &g::CHEVRON_RIGHT
@@ -149,13 +373,15 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                 .px(4.0 + (*depth).min(6) as f32 * 12.0)
                 .center_y()
                 .radius(6.0)
-                .fill(
-                    if selected || super::entity_target(s, &format!("tree-inside-{zone_id}")) {
-                        p.tint
-                    } else {
-                        p.sidebar
-                    },
-                )
+                .hover(p.ink.alpha(0.045))
+                .hover_group()
+                .fill(if selected || moving || before || after || inside {
+                    p.tint
+                } else {
+                    p.sidebar
+                })
+                .opacity(if moving { 0.65 } else { 1.0 })
+                .border(if inside { 1.0 } else { 0.0 }, p.accent)
                 .child(toggle)
                 .child(
                     row()
@@ -168,7 +394,11 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                         .min_w(0.0)
                         .gap(7.0)
                         .center_y()
-                        .hover(p.ink.alpha(0.045))
+                        .cursor(if moving {
+                            rune::Cursor::Grabbing
+                        } else {
+                            rune::Cursor::Grab
+                        })
                         .on_drag(move |s: &mut State, d, tx| {
                             s.drag_entity(&drag_id, crate::entity_drag::Kind::Page, d, tx)
                         })
@@ -180,10 +410,11 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                             tx.scroll_to_y("document-scroll", 0.0);
                             tx.instant();
                         })
-                        .child(super::icons::page(
-                            &page.emoji,
+                        .child(super::icons::page_icon(
+                            page,
                             16.0,
                             if selected { p.accent } else { p.muted },
+                            p,
                         ))
                         .child(
                             label(
@@ -201,6 +432,33 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                             el()
                         }),
                 )
+                .child(
+                    super::icons::control(
+                        format!("page-actions-{menu_id}"),
+                        "Page actions",
+                        &g::MORE,
+                        p,
+                        move |s, _| {
+                            s.select(&menu_id);
+                            s.panel = Panel::SidebarPage(menu_id.clone());
+                        },
+                    )
+                    .size(24.0, 26.0)
+                    .px(4.0)
+                    .group_opacity(0.35, 1.0)
+                    .disabled(s.workspace.busy || s.settings.busy),
+                )
+                .child(if before || after {
+                    el().key("page-drop-indicator")
+                        .absolute(0.0, if before { 0.0 } else { 32.0 })
+                        .w_full()
+                        .h(2.0)
+                        .radius(1.0)
+                        .fill(p.accent)
+                        .a11y_hidden()
+                } else {
+                    el()
+                })
                 .child(
                     col()
                         .absolute(0.0, 0.0)
@@ -230,20 +488,22 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                     6.0
                 },
             )
-            .fill(if super::entity_target(s, "tree-root") {
-                p.tint
-            } else {
-                rune::Color::TRANSPARENT
-            })
-            .help("Déposer ici pour déplacer la page à la racine"),
+            .fill(
+                if dragged_page.is_some() && super::entity_target(s, "tree-root") {
+                    p.tint
+                } else {
+                    rune::Color::TRANSPARENT
+                },
+            )
+            .help("Drop here to move the page to the root"),
     );
     if rows.is_empty() {
-        pages = pages.child(label("Aucune page ici.", 12.0, p.faint).padding(12.0));
+        pages = pages.child(label("No pages here.", 12.0, p.faint).padding(12.0));
     }
     col()
         .key("sidebar")
         .role("navigation")
-        .label("Navigation du carnet")
+        .label("Notebook navigation")
         .w(s.workspace.preferences.sidebar_width as f32)
         .h_full()
         .fill(p.sidebar)
@@ -270,7 +530,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                         )
                         .child(text("folio").font(TextStyle::new(22.0, 600.0)).color(p.ink))
                         .child(el().grow(1.0))
-                        .child(label("PERSONNEL", 9.0, p.faint)),
+                        .child(label("WORKSPACE", 9.0, p.faint)),
                 )
                 .child(
                     row()
@@ -286,66 +546,29 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                         .child(
                             text_input(&s.search, TextStyle::new(12.0, 400.0))
                                 .key("search")
-                                .label("Rechercher dans les pages")
+                                .label("Search pages")
                                 .single_line()
                                 .grow(1.0)
                                 .min_w(0.0)
                                 .color(p.ink)
                                 .caret(p.accent, p.tint)
-                                .placeholder("Rechercher…", p.faint)
+                                .placeholder("Search…", p.faint)
                                 .on_edit(|s: &mut State| &mut s.search),
                         )
                         .child(label("⌘K", 10.0, p.faint)),
                 )
-                .child(
-                    col()
-                        .gap(2.0)
-                        .child(sidebar_action(
-                            "open-dashboard",
-                            "Vue d’ensemble",
-                            &glyph::DASHBOARD,
-                            p,
-                            |s, tx| {
-                                s.open_dashboard();
-                                tx.scroll_to_y("document-scroll", 0.0);
-                            },
-                        ))
-                        .child(nav(
-                            "all-pages",
-                            "Toutes les pages",
-                            &g::TEXT,
-                            Filter::All,
-                            s,
-                            p,
-                        ))
-                        .child(nav(
-                            "favorites",
-                            "Favoris",
-                            &g::STAR,
-                            Filter::Favorites,
-                            s,
-                            p,
-                        ))
-                        .child(nav(
-                            "archive-filter",
-                            "Archives",
-                            &glyph::ARCHIVE,
-                            Filter::Archive,
-                            s,
-                            p,
-                        )),
-                ),
+                .child(navigation(s, p)),
         )
         .child(
             row()
                 .px(22.0)
                 .py(12.0)
                 .center_y()
-                .child(label("VOTRE CARNET", 9.0, p.faint))
+                .child(label("YOUR NOTEBOOK", 9.0, p.faint))
                 .child(el().grow(1.0))
                 .child(super::icons::control(
                     "new-page",
-                    "Nouvelle page",
+                    "New page",
                     &g::PLUS,
                     p,
                     |s, tx| {
@@ -372,7 +595,33 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                 .padding(16.0)
                 .gap(6.0)
                 .child(
-                    sidebar_action("sidebar-more", "Plus", &g::MORE, p, |s, _| {
+                    sidebar_action("library", "Library", &glyph::LIBRARY, p, |s, _| {
+                        s.open_library()
+                    })
+                    .fill(
+                        if matches!(
+                            s.panel,
+                            Panel::Library | Panel::ModuleReview | Panel::ModuleConfirm
+                        ) {
+                            p.tint
+                        } else {
+                            p.sidebar
+                        },
+                    ),
+                )
+                .child(sidebar_action(
+                    "settings",
+                    if s.settings.remote.as_ref().is_some_and(|r| r.ahead) {
+                        "Settings · Update available"
+                    } else {
+                        "Settings"
+                    },
+                    &g::SETTINGS,
+                    p,
+                    |s, _| s.open_settings(),
+                ))
+                .child(
+                    sidebar_action("sidebar-more", "More", &g::MORE, p, |s, _| {
                         s.panel = if matches!(s.panel, Panel::SidebarMore) {
                             Panel::Closed
                         } else {
@@ -405,7 +654,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                                 .color(p.faint)
                                 .a11y_hidden(),
                         )
-                        .child(label("Votre carnet, sur cet appareil", 10.0, p.faint)),
+                        .child(label("Your notebook, on this device", 10.0, p.faint)),
                 ),
         )
 }

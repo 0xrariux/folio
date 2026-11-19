@@ -1,38 +1,46 @@
-# Pictogrammes Folio
+# Folio icons
 
-Une famille de 59 dessins SVG créés pour Folio : 15 pictogrammes de pages,
-un monogramme et 43 signes de commandes, navigation, blocs et propriétés.
-Les fichiers sont fournis sous la licence MIT du projet.
+35 page icons share a 24 × 24 grid, 1.5 px strokes, rounded caps, and rounded
+joins. They are original SVGs supplied under the project's MIT license.
+The Folio monogram and command icons use the same visual language.
 
-- Grille `24 × 24`, trait `1.5`, extrémités et jointures arrondies pour les pictogrammes.
-- Couleur `currentColor` : les mêmes fichiers servent en clair et en sombre.
-- Formes SVG simples, sans polices ni ressources externes ; aucune dépendance à Blender à l’exécution.
-- Le monogramme utilise un F plein avec deux coupes diagonales évoquant des feuilles
-  pliées. Son [fichier Blender et ses exports](../brand/README.md) sont éditables ;
-  le SVG embarqué partage exactement le même contour et reste net à petite taille.
+[Page icons](catalog.svg) · [Color variations](colors.svg) · [Controls](controls.svg)
 
-[Planche des pages et du monogramme](catalog.svg) ·
-[Planche des commandes](controls.svg). Chaque planche comprend les deux thèmes.
+## Page customization
 
-Les noms et correspondances avec les anciens emojis vivent dans
-[`src/icons.rs`](../../src/icons.rs). Les commandes et correspondances avec les
-types de blocs vivent dans [`src/icons/controls.rs`](../../src/icons/controls.rs).
-Rune charge les SVG embarqués avec son type
-`Icon` ; les fichiers exportés sont les sources effectivement utilisées par
-l’interface. Les notes gardent leurs identifiants et leur texte.
+Click a page's icon to choose a symbol and color. The scrollable picker contains
+all 35 symbols. Colors update the preview immediately; choosing a symbol closes
+the picker. The reset swatch returns to the theme's default color.
 
-Après modification d’un SVG ou du catalogue, régénérer les deux planches avec :
+Eight colors are available: Sage, Teal, Blue, Violet, Rose, Coral, Amber, and Gray.
+Each has a darker variant for the light theme and a softer variant for the dark
+theme. Every variant has at least 3:1 contrast against its page background.
+The chosen color follows the page in the sidebar, page links, and record cards.
+
+Symbols and colors are stored separately. Existing emoji identifiers are still
+recognized, and documents without a color keep their previous theme color.
+The optional `icon_color` field is retained in database saves, history, backups,
+and protected notes. Existing notes are not recolored automatically.
+
+## Sources
+
+- [Page catalog](../../src/icons.rs) maps stored identifiers to SVGs.
+- [Palette](../../src/icons/colors.rs) defines the shared light/dark color pairs.
+- [Controls](../../src/icons/controls.rs) maps commands and block types.
+- [UI](../../src/ui/icons.rs) applies page colors wherever the icons are rendered.
+
+All icons use `currentColor`, with no font, texture, or external asset dependencies.
+The [Folio logo and Blender source](../brand/README.md) remain available separately.
+
+Regenerate the three SVG sheets after editing the catalog or palette:
 
 ```sh
 python3 scripts/build-icon-sheet.py
 ```
 
-Contrôler le rendu réel aux trois tailles dans la scène de démonstration :
+Preview the native application using fictional demo content:
 
 ```sh
 FOLIO_DEMO=1 cargo run --locked -- --scene icon-catalog
-FOLIO_DEMO=1 cargo run --locked -- --scene icon-controls
+FOLIO_DEMO=1 cargo run --locked -- --script scripts/icon-colors.json
 ```
-
-Les noms de fichier correspondent aux identifiants du catalogue. Les anciens
-emojis restent reconnus ; le catalogue central définit les nouveaux identifiants.

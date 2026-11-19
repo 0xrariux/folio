@@ -6,6 +6,7 @@ pub enum Kind {
     Card,
     Page,
     Calendar,
+    Shortcut,
 }
 pub struct Session {
     pub id: String,
@@ -33,10 +34,14 @@ impl State {
         false
     }
     pub fn drag_entity(&mut self, id: &str, kind: Kind, drag: &Drag, tx: &mut Tx) {
+        if kind == Kind::Shortcut && !self.can_customize_sidebar() {
+            return;
+        }
         if drag.phase == Phase::Down {
             let scroll_key = match kind {
                 Kind::Page => "pages-scroll".into(),
                 Kind::Calendar => "document-scroll".into(),
+                Kind::Shortcut => "sidebar-shortcuts".into(),
                 Kind::Card => self
                     .pages
                     .iter()
@@ -126,6 +131,7 @@ impl State {
                         }
                     }
                     Kind::Page => s.drop_page(&source, &target),
+                    Kind::Shortcut => s.drop_sidebar_shortcut(&source, &target),
                 }
             },
         );

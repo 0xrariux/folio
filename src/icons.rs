@@ -1,6 +1,8 @@
 //! Folio's monogram and 24-point line icons. Legacy emoji values keep their stored identity.
 use rune::Icon;
+mod colors;
 pub mod controls;
+pub use colors::IconColor;
 
 macro_rules! glyph {
     ($name:ident, $file:literal) => {
@@ -27,6 +29,26 @@ glyph!(BOOKMARK, "bookmark");
 glyph!(LINK, "link");
 glyph!(ARCHIVE, "archive");
 glyph!(FOLIO, "folio");
+glyph!(COMPASS, "compass");
+glyph!(GLOBE, "globe");
+glyph!(HOME, "home");
+glyph!(BRIEFCASE, "briefcase");
+glyph!(TERMINAL, "terminal");
+glyph!(FLASK, "flask");
+glyph!(PALETTE, "palette");
+glyph!(CAMERA, "camera");
+glyph!(MUSIC, "music");
+glyph!(HEART, "heart");
+glyph!(SPARKLES, "sparkles");
+glyph!(COFFEE, "coffee");
+glyph!(MOUNTAIN, "mountain");
+glyph!(PLANT, "plant");
+glyph!(GRADUATION, "graduation");
+glyph!(WALLET, "wallet");
+glyph!(TREND, "trend");
+glyph!(LAYERS, "layers");
+glyph!(PUZZLE, "puzzle");
+glyph!(PEOPLE, "people");
 
 pub struct Choice {
     pub key: &'static str,
@@ -43,49 +65,49 @@ pub const CHOICES: &[Choice] = &[
     },
     Choice {
         key: "leaf",
-        name: "Idées en germe",
+        name: "Growing ideas",
         value: "🌿",
         glyph: &LEAF,
     },
     Choice {
         key: "idea",
-        name: "Idée",
+        name: "Idea",
         value: "💡",
         glyph: &IDEA,
     },
     Choice {
         key: "note",
-        name: "Carnet",
+        name: "Notebook",
         value: "📝",
         glyph: &NOTE,
     },
     Choice {
         key: "project",
-        name: "Projet",
+        name: "Project",
         value: "🚀",
         glyph: &PROJECT,
     },
     Choice {
         key: "tasks",
-        name: "Tâches",
+        name: "Tasks",
         value: "✅",
         glyph: &TASKS,
     },
     Choice {
         key: "library",
-        name: "Bibliothèque",
+        name: "Library",
         value: "📚",
         glyph: &LIBRARY,
     },
     Choice {
         key: "target",
-        name: "Objectif",
+        name: "Goal",
         value: "🎯",
         glyph: &TARGET,
     },
     Choice {
         key: "database",
-        name: "Base de données",
+        name: "Database",
         value: "🗂️",
         glyph: &DATABASE,
     },
@@ -97,25 +119,25 @@ pub const CHOICES: &[Choice] = &[
     },
     Choice {
         key: "calendar",
-        name: "Calendrier",
+        name: "Calendar",
         value: "folio:calendar",
         glyph: &CALENDAR,
     },
     Choice {
         key: "folder",
-        name: "Dossier",
+        name: "Folder",
         value: "folio:folder",
         glyph: &FOLDER,
     },
     Choice {
         key: "bookmark",
-        name: "Repère",
+        name: "Bookmark",
         value: "folio:bookmark",
         glyph: &BOOKMARK,
     },
     Choice {
         key: "link",
-        name: "Lien",
+        name: "Link",
         value: "folio:link",
         glyph: &LINK,
     },
@@ -124,6 +146,126 @@ pub const CHOICES: &[Choice] = &[
         name: "Archive",
         value: "folio:archive",
         glyph: &ARCHIVE,
+    },
+    Choice {
+        key: "compass",
+        name: "Compass",
+        value: "folio:compass",
+        glyph: &COMPASS,
+    },
+    Choice {
+        key: "globe",
+        name: "Globe",
+        value: "folio:globe",
+        glyph: &GLOBE,
+    },
+    Choice {
+        key: "home",
+        name: "Home",
+        value: "folio:home",
+        glyph: &HOME,
+    },
+    Choice {
+        key: "briefcase",
+        name: "Briefcase",
+        value: "folio:briefcase",
+        glyph: &BRIEFCASE,
+    },
+    Choice {
+        key: "terminal",
+        name: "Terminal",
+        value: "folio:terminal",
+        glyph: &TERMINAL,
+    },
+    Choice {
+        key: "flask",
+        name: "Flask",
+        value: "folio:flask",
+        glyph: &FLASK,
+    },
+    Choice {
+        key: "palette",
+        name: "Palette",
+        value: "folio:palette",
+        glyph: &PALETTE,
+    },
+    Choice {
+        key: "camera",
+        name: "Camera",
+        value: "folio:camera",
+        glyph: &CAMERA,
+    },
+    Choice {
+        key: "music",
+        name: "Music",
+        value: "folio:music",
+        glyph: &MUSIC,
+    },
+    Choice {
+        key: "heart",
+        name: "Heart",
+        value: "folio:heart",
+        glyph: &HEART,
+    },
+    Choice {
+        key: "sparkles",
+        name: "Sparkles",
+        value: "folio:sparkles",
+        glyph: &SPARKLES,
+    },
+    Choice {
+        key: "coffee",
+        name: "Coffee",
+        value: "folio:coffee",
+        glyph: &COFFEE,
+    },
+    Choice {
+        key: "mountain",
+        name: "Mountain",
+        value: "folio:mountain",
+        glyph: &MOUNTAIN,
+    },
+    Choice {
+        key: "plant",
+        name: "Plant",
+        value: "folio:plant",
+        glyph: &PLANT,
+    },
+    Choice {
+        key: "graduation",
+        name: "Graduation",
+        value: "folio:graduation",
+        glyph: &GRADUATION,
+    },
+    Choice {
+        key: "wallet",
+        name: "Wallet",
+        value: "folio:wallet",
+        glyph: &WALLET,
+    },
+    Choice {
+        key: "trend",
+        name: "Trend",
+        value: "folio:trend",
+        glyph: &TREND,
+    },
+    Choice {
+        key: "layers",
+        name: "Layers",
+        value: "folio:layers",
+        glyph: &LAYERS,
+    },
+    Choice {
+        key: "puzzle",
+        name: "Puzzle",
+        value: "folio:puzzle",
+        glyph: &PUZZLE,
+    },
+    Choice {
+        key: "people",
+        name: "People",
+        value: "folio:people",
+        glyph: &PEOPLE,
     },
 ];
 

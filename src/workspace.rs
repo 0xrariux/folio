@@ -11,11 +11,77 @@ use std::{
 
 pub const MAX_FILE: u64 = 50 * 1024 * 1024;
 pub const MAX_BACKUP: u64 = 512 * 1024 * 1024;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SidebarShortcut {
+    Overview,
+    AllPages,
+    Favorites,
+    Archives,
+}
+impl SidebarShortcut {
+    pub const ALL: [Self; 4] = [
+        Self::Overview,
+        Self::AllPages,
+        Self::Favorites,
+        Self::Archives,
+    ];
+
+    pub fn defaults() -> Vec<Self> {
+        Self::ALL.to_vec()
+    }
+
+    pub fn from_key(key: &str) -> Option<Self> {
+        Self::ALL.into_iter().find(|shortcut| shortcut.key() == key)
+    }
+
+    pub fn key(self) -> &'static str {
+        match self {
+            Self::Overview => "overview",
+            Self::AllPages => "all_pages",
+            Self::Favorites => "favorites",
+            Self::Archives => "archives",
+        }
+    }
+
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Overview => "Overview",
+            Self::AllPages => "All pages",
+            Self::Favorites => "Favorites",
+            Self::Archives => "Archives",
+        }
+    }
+}
+
+fn deserialize_shortcuts<'de, D: serde::Deserializer<'de>>(
+    deserializer: D,
+) -> Result<Vec<SidebarShortcut>, D::Error> {
+    let names = Vec::<String>::deserialize(deserializer)?;
+    let mut shortcuts = Vec::new();
+    for name in names {
+        let shortcut = SidebarShortcut::from_key(&name).ok_or_else(|| {
+            serde::de::Error::custom("This shortcut requires a newer version of Folio")
+        })?;
+        if !shortcuts.contains(&shortcut) {
+            shortcuts.push(shortcut);
+        }
+    }
+    Ok(shortcuts)
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Preferences {
     pub dark: bool,
     pub sidebar_width: u16,
     pub last_page: Option<String>,
+    #[serde(
+        default = "SidebarShortcut::defaults",
+        deserialize_with = "deserialize_shortcuts"
+    )]
+    pub sidebar_shortcuts: Vec<SidebarShortcut>,
 }
 impl Default for Preferences {
     fn default() -> Self {
@@ -23,10 +89,12 @@ impl Default for Preferences {
             dark: true,
             sidebar_width: 248,
             last_page: None,
+            sidebar_shortcuts: SidebarShortcut::defaults(),
         }
     }
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Asset {
     pub id: String,
     pub name: String,
@@ -39,6 +107,7 @@ fn full_width() -> u16 {
     100
 }
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct EmbeddedView {
     pub base_id: String,
     pub view_id: Option<String>,
@@ -46,13 +115,15 @@ pub struct EmbeddedView {
     pub relation_filter: Option<String>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct HistoryEntry {
     pub id: String,
     pub page_id: String,
     pub created_at: i64,
     pub page: Page,
 }
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Notebook {
     pub format: u32,
     pub document_version: u32,
@@ -60,6 +131,8 @@ pub struct Notebook {
     pub preferences: Preferences,
     pub history: Vec<HistoryEntry>,
     pub assets: BTreeMap<String, String>,
+    #[serde(default, skip_serializing_if = "crate::modules::Registry::is_empty")]
+    pub modules: crate::modules::Registry,
 }
 impl Notebook {
     pub fn capture(
@@ -70,11 +143,12 @@ impl Notebook {
     ) -> Result<Self> {
         let mut bundle = Self {
             format: 1,
-            document_version: 6,
+            document_version: crate::document::CURRENT_VERSION,
             pages,
             preferences,
             history,
             assets: BTreeMap::new(),
+            modules: Default::default(),
         };
         let mut total = 0;
         for page in bundle
@@ -91,7 +165,7 @@ impl Notebook {
                 total += bytes.len() as u64;
                 ensure!(
                     total <= MAX_BACKUP / 2,
-                    "Les pièces jointes dépassent la taille d’une sauvegarde (256 Mio)."
+                    "Attachments exceed the backup size limit (256 MiB)."
                 );
                 bundle
                     .assets
@@ -103,87 +177,61 @@ impl Notebook {
     }
     pub fn validate(&self) -> Result<()> {
         ensure!(
-            self.format == 1 && matches!(self.document_version, 1..=6),
-            "Cette sauvegarde nécessite une version plus récente de Folio."
+            (self.format == 1 || self.format == 2)
+                && (self.format == 2 || self.modules.is_empty())
+                && matches!(self.document_version, 1..=crate::document::CURRENT_VERSION),
+            "This backup requires a newer version of Folio."
         );
         ensure!(
             self.pages.len() <= 100_000 && self.history.len() <= 100_000,
-            "Sauvegarde trop volumineuse."
+            "Backup too large."
         );
-        let mut ids = HashSet::new();
-        for page in &self.pages {
-            ensure!(
-                !page.id.is_empty() && ids.insert(&page.id),
-                "Identifiants de pages invalides ou dupliqués."
-            );
-        }
+        self.modules.validate()?;
+        validate_structure(&self.pages, &self.history)?;
         for page in self
             .pages
             .iter()
             .chain(self.history.iter().map(|h| &h.page))
         {
-            ensure!(!page.blocks.is_empty(), "Une page ne contient aucun bloc.");
-            let mut blocks = HashSet::new();
-            for b in &page.blocks {
+            for asset in page.blocks.iter().filter_map(|b| b.asset.as_ref()) {
+                let encoded = self
+                    .assets
+                    .get(&asset.id)
+                    .context("Missing attachment data")?;
                 ensure!(
-                    blocks.insert(&b.id) && !b.id.is_empty(),
-                    "Identifiants de blocs dupliqués ou vides."
+                    STANDARD.decode(encoded)?.len() as u64 == asset.size,
+                    "Attachment size does not match its metadata"
                 );
-                ensure!(b.indent <= 6, "Profondeur de bloc invalide.");
-                if let Some(asset) = &b.asset {
-                    ensure!(
-                        uuid::Uuid::parse_str(&asset.id).is_ok(),
-                        "Identifiant de pièce jointe invalide."
-                    );
-                    ensure!(
-                        self.assets.contains_key(&asset.id),
-                        "Pièce jointe manquante : {}",
-                        asset.name
-                    );
-                }
-            }
-        }
-        for page in &self.pages {
-            let mut seen = HashSet::new();
-            let mut at = Some(page.id.as_str());
-            while let Some(id) = at {
-                ensure!(seen.insert(id), "Cycle dans l’arborescence des pages.");
-                at = self
-                    .pages
-                    .iter()
-                    .find(|p| p.id == id)
-                    .and_then(|p| p.parent_id.as_deref());
             }
         }
         let mut total = 0;
         for (id, encoded) in &self.assets {
-            ensure!(
-                uuid::Uuid::parse_str(id).is_ok(),
-                "Identifiant de pièce jointe invalide."
-            );
+            ensure!(uuid::Uuid::parse_str(id).is_ok(), "Invalid attachment ID.");
             ensure!(
                 encoded.len() as u64 <= MAX_FILE * 4 / 3 + 8,
-                "Pièce jointe trop volumineuse."
+                "Attachment too large."
             );
-            let bytes = STANDARD.decode(encoded).context("Pièce jointe corrompue")?;
-            ensure!(
-                bytes.len() as u64 <= MAX_FILE,
-                "Pièce jointe trop volumineuse."
-            );
+            let bytes = STANDARD.decode(encoded).context("Corrupted attachment")?;
+            ensure!(bytes.len() as u64 <= MAX_FILE, "Attachment too large.");
             total += bytes.len() as u64;
-            ensure!(total <= MAX_BACKUP / 2, "Sauvegarde trop volumineuse.");
+            ensure!(total <= MAX_BACKUP / 2, "Backup too large.");
         }
         Ok(())
     }
     pub fn read(path: &Path) -> Result<Self> {
         let bundle: Self = serde_json::from_slice(&read_limited(path, MAX_BACKUP)?)
-            .context("Lecture de la sauvegarde Folio")?;
+            .context("Reading the Folio backup")?;
         bundle.validate()?;
         Ok(bundle)
     }
     pub fn write(&self, path: &Path) -> Result<()> {
         self.validate()?;
-        crate::export::write_atomic(path, &serde_json::to_string(self)?)
+        let encoded = serde_json::to_string(self)?;
+        ensure!(
+            encoded.len() as u64 <= MAX_BACKUP,
+            "The backup exceeds the supported size"
+        );
+        crate::export::write_atomic(path, &encoded)
     }
     pub fn install_assets(&self, folder: &Path) -> Result<()> {
         self.validate()?;
@@ -194,7 +242,7 @@ impl Notebook {
             if path.exists() {
                 ensure!(
                     read_limited(&path, MAX_FILE)? == bytes,
-                    "Une pièce jointe existante diffère de la sauvegarde."
+                    "An existing attachment differs from the backup."
                 );
             } else {
                 use std::io::Write;
@@ -211,23 +259,19 @@ pub fn asset_dir(database: &Path) -> PathBuf {
     database.with_extension("assets")
 }
 pub fn asset_path(folder: &Path, id: &str) -> Result<PathBuf> {
-    ensure!(
-        uuid::Uuid::parse_str(id).is_ok(),
-        "Identifiant de pièce jointe invalide."
-    );
+    ensure!(uuid::Uuid::parse_str(id).is_ok(), "Invalid attachment ID.");
     Ok(folder.join(id))
 }
 pub fn read_limited(path: &Path, limit: u64) -> Result<Vec<u8>> {
-    let file =
-        std::fs::File::open(path).with_context(|| format!("Ouverture de {}", path.display()))?;
+    let file = std::fs::File::open(path).with_context(|| format!("Opening {}", path.display()))?;
     ensure!(
         file.metadata()?.is_file() && file.metadata()?.len() <= limit,
-        "Fichier trop volumineux (maximum {} Mio).",
+        "File too large (maximum {} MiB).",
         limit / 1024 / 1024
     );
     let mut bytes = Vec::new();
     file.take(limit + 1).read_to_end(&mut bytes)?;
-    ensure!(bytes.len() as u64 <= limit, "Fichier trop volumineux.");
+    ensure!(bytes.len() as u64 <= limit, "File too large.");
     Ok(bytes)
 }
 pub fn import_asset(source: &Path, folder: &Path) -> Result<Asset> {
@@ -287,6 +331,74 @@ pub fn export_assets(assets: &[Asset], source: &Path, destination: &Path) -> Res
         temp.as_file().sync_all()?;
         temp.persist(destination.join(asset_export_name(asset)))
             .map_err(|e| e.error)?;
+    }
+    Ok(())
+}
+
+/// Shared structural validation for live storage and portable backups. Never repairs data.
+pub fn validate_structure(pages: &[Page], history: &[HistoryEntry]) -> Result<()> {
+    let mut ids = HashSet::new();
+    for page in pages {
+        ensure!(
+            !page.id.is_empty() && ids.insert(page.id.as_str()),
+            "Invalid or duplicate page IDs"
+        );
+    }
+    let mut revisions = HashSet::new();
+    for entry in history {
+        ensure!(
+            !entry.id.is_empty() && revisions.insert(&entry.id),
+            "Invalid or duplicate history IDs"
+        );
+        ensure!(
+            entry.page_id == entry.page.id && ids.contains(entry.page_id.as_str()),
+            "Orphaned or mismatched history entry"
+        );
+    }
+    for page in pages.iter().chain(history.iter().map(|h| &h.page)) {
+        validate_page(page)?;
+    }
+    let parents: std::collections::HashMap<_, _> = pages
+        .iter()
+        .map(|p| (p.id.as_str(), p.parent_id.as_deref()))
+        .collect();
+    // Memoize completed paths: deep notebooks are checked in linear time.
+    let mut complete = HashSet::new();
+    for page in pages {
+        let mut chain = HashSet::new();
+        let mut at = Some(page.id.as_str());
+        while let Some(id) = at {
+            if complete.contains(id) {
+                break;
+            }
+            ensure!(chain.insert(id), "Cycle in the page hierarchy");
+            at = *parents.get(id).context("Missing parent page")?;
+        }
+        complete.extend(chain);
+    }
+    Ok(())
+}
+
+pub fn validate_page(page: &Page) -> Result<()> {
+    ensure!(!page.id.is_empty(), "Empty page identity");
+    ensure!(!page.blocks.is_empty(), "A page contains no blocks");
+    let mut blocks = HashSet::new();
+    for block in &page.blocks {
+        ensure!(
+            !block.id.is_empty() && blocks.insert(&block.id),
+            "Duplicate or empty block IDs"
+        );
+        ensure!(block.indent <= 6, "Invalid block depth");
+        if let Some(asset) = &block.asset {
+            ensure!(
+                uuid::Uuid::parse_str(&asset.id).is_ok(),
+                "Invalid attachment ID"
+            );
+            ensure!(
+                asset.size <= MAX_FILE,
+                "Attachment exceeds the supported size"
+            );
+        }
     }
     Ok(())
 }

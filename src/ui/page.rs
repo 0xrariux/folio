@@ -21,7 +21,7 @@ fn cover(style: u8, p: Palette) -> El {
         .child(el().grow(1.0))
         .child(el().size(130.0, 65.0).radius(40.0).fill(glow.alpha(0.18)))
         .child(
-            action("cover-cycle-top", "Changer la couverture", p, |s, _| {
+            action("cover-cycle-top", "Change cover", p, |s, _| {
                 s.appearance(None, true, false)
             })
             .fill(Color::WHITE.alpha(0.65)),
@@ -37,7 +37,7 @@ fn header(s: &State, p: Palette) -> El {
         .border_sides([0.0, 0.0, 1.0, 0.0], p.line)
         .child(super::icons::control(
             "back",
-            "Page précédente",
+            "Previous page",
             &g::CHEVRON_LEFT,
             p,
             |s, tx| {
@@ -47,7 +47,7 @@ fn header(s: &State, p: Palette) -> El {
         ))
         .child(super::icons::control(
             "forward",
-            "Page suivante",
+            "Next page",
             &g::CHEVRON_RIGHT,
             p,
             |s, tx| {
@@ -55,7 +55,7 @@ fn header(s: &State, p: Palette) -> El {
                 tx.scroll_to_y("document-scroll", 0.0);
             },
         ))
-        .child(label("Espace personnel", 11.0, p.faint));
+        .child(label("Workspace", 11.0, p.faint));
     if let Some(page) = s.current() {
         for id in s.ancestors(&page.id) {
             let Some(parent) = s.pages.iter().find(|p| p.id == id) else {
@@ -85,9 +85,9 @@ fn header(s: &State, p: Palette) -> El {
             .child(super::icons::control(
                 "favorite-page",
                 if page.favorite {
-                    "Retirer des favoris"
+                    "Remove from favorites"
                 } else {
-                    "Ajouter aux favoris"
+                    "Add to favorites"
                 },
                 if page.favorite {
                     &g::STAR_FILLED
@@ -99,7 +99,7 @@ fn header(s: &State, p: Palette) -> El {
             ))
             .child(super::icons::control(
                 "page-menu",
-                "Actions de la page",
+                "Page actions",
                 &g::MORE,
                 p,
                 |s, _| s.panel = Panel::Page,
@@ -112,16 +112,16 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
     let Some(page) = s.current() else {
         let (title, hint) = match s.phase {
             Phase::Loading => (
-                "Votre carnet s’ouvre…",
-                "Vos pages arrivent dans un instant.",
+                "Opening your notebook…",
+                "Your pages will be ready in a moment.",
             ),
             Phase::Failed(_) => (
-                "Le carnet n’a pas pu être ouvert.",
-                "Le détail de l’erreur est affiché ci-dessous.",
+                "The notebook could not be opened.",
+                "Error details are shown below.",
             ),
             Phase::Ready => (
-                "Une page blanche, mille possibilités.",
-                "Créez une page pour commencer votre carnet.",
+                "A blank page, endless possibilities.",
+                "Create a page to start your notebook.",
             ),
         };
         return col().grow(1.0).min_h(0.0).child(header(s, p)).child(
@@ -133,6 +133,9 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 .child(label(hint, 13.0, p.muted)),
         );
     };
+    if page.protected.is_some() {
+        return super::settings::locked_page(s, page, p);
+    }
     let words = page.plain_text.split_whitespace().count();
     let tasks = s
         .blocks
@@ -157,22 +160,22 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                     row()
                         .key("page-icon")
                         .role("button")
-                        .label("Changer l’icône de la page")
+                        .label("Change page icon")
                         .focusable(true)
                         .size(58.0, 58.0)
                         .center()
                         .radius(6.0)
                         .hover(p.tint)
                         .on_press(|s: &mut State| s.panel = Panel::Icons)
-                        .child(super::icons::page(&page.emoji, 40.0, p.accent)),
+                        .child(super::icons::page_icon(page, 40.0, p.accent, p)),
                 )
                 .child(el().grow(1.0))
                 .child(super::icons::action(
                     "cover-cycle",
                     if page.cover == 0 {
-                        "Ajouter une couverture"
+                        "Add a cover"
                     } else {
-                        "Couverture"
+                        "Cover"
                     },
                     &g::COVER,
                     p,
@@ -189,12 +192,12 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 .child(
                     text_input(&s.title, TextStyle::new(36.0, 650.0))
                         .key("page-title")
-                        .label("Titre de la page")
+                        .label("Page title")
                         .w_full()
                         .single_line()
                         .color(p.ink)
                         .caret(p.accent, p.tint)
-                        .placeholder("Sans titre", p.faint)
+                        .placeholder("Untitled", p.faint)
                         .on_edit(|s: &mut State| &mut s.title)
                         .on_input_change(|s: &mut State, _| s.edit())
                         .on_submit(|s: &mut State, tx| s.focus_active(tx)),
@@ -206,16 +209,16 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 .center_y()
                 .child(label(
                     if page.archived {
-                        "Page archivée".into()
+                        "Archived page".into()
                     } else if page.dashboard.is_some() {
                         format!(
-                            "{} fiches · {} bases",
+                            "{} records · {} databases",
                             s.tracking_items().len(),
                             s.tracking_sources().len()
                         )
                     } else if page.collection.is_some() {
                         format!(
-                            "{} fiches",
+                            "{} records",
                             s.pages
                                 .iter()
                                 .filter(|item| item.parent_id.as_deref() == Some(&page.id)
@@ -223,7 +226,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                                 .count()
                         )
                     } else {
-                        format!("{words} mots")
+                        format!("{words} words")
                     },
                     11.0,
                     p.faint,
@@ -231,18 +234,18 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 .child(label("·", 11.0, p.faint))
                 .child(label(
                     if page.dashboard.is_some() {
-                        "Suivi dynamique".into()
+                        "Project tracking".into()
                     } else if page.collection.is_some() {
-                        "Tableau, Kanban, Calendrier et Dashboard".into()
+                        "Table, Kanban, Calendar, and Dashboard".into()
                     } else {
-                        format!("{} blocs", s.blocks.len())
+                        format!("{} blocks", s.blocks.len())
                     },
                     11.0,
                     p.faint,
                 ))
                 .child(if tasks > 0 {
                     label(
-                        format!("·   {done}/{tasks} tâches terminées"),
+                        format!("·   {done}/{tasks} tasks completed"),
                         11.0,
                         p.accent,
                     )
@@ -288,14 +291,14 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
         let mut links = col()
             .gap(4.0)
             .py(12.0)
-            .child(label("DANS CETTE PAGE", 9.0, p.faint));
+            .child(label("ON THIS PAGE", 9.0, p.faint));
         for child in children {
             let id = child.id.clone();
             links = links.child(
                 super::icons::page_action(
                     format!("child-link-{id}"),
                     child.display_title(),
-                    &child.emoji,
+                    child,
                     p,
                     move |s, tx| {
                         s.select(&id);
@@ -316,9 +319,9 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
             .child(super::icons::action(
                 "new-child",
                 if page.collection.is_some() {
-                    "Nouvelle fiche"
+                    "New record"
                 } else {
-                    "Ajouter une sous-page"
+                    "Add a subpage"
                 },
                 &g::PLUS,
                 p,
@@ -333,7 +336,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
             ))
             .child(super::icons::action(
                 "page-templates",
-                "Choisir un modèle",
+                "Choose a template",
                 &g::TEMPLATES,
                 p,
                 |s, _| s.panel = Panel::Templates,
@@ -348,7 +351,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
             .py(12.0)
             .border_sides([1.0, 0.0, 0.0, 0.0], p.line)
             .child(label(
-                format!("{} LIENS RETOUR", backlinks.len()),
+                format!("{} BACKLINKS", backlinks.len()),
                 10.0,
                 p.faint,
             ));
@@ -358,7 +361,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
                 super::icons::page_action(
                     format!("backlink-{id}"),
                     source.display_title(),
-                    &source.emoji,
+                    source,
                     p,
                     move |s, tx| {
                         s.select(&id);

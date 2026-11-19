@@ -27,7 +27,7 @@ impl State {
             return;
         }
         let mut page = Page::new(None);
-        page.title = "Nouvelle base de données".into();
+        page.title = "New database".into();
         page.emoji = "🗂️".into();
         page.collection = Some(Collection::default());
         page.wide = true;
@@ -166,7 +166,7 @@ impl State {
         let due = form.due.text.trim().to_string();
         let tags = parse_tags(&form.tags.text);
         let error = if !due.is_empty() && !valid_date(&due) {
-            Some("Échéance invalide. Utilisez une date réelle au format AAAA-MM-JJ.".into())
+            Some("Invalid due date. Use a real date in YYYY-MM-DD format.".into())
         } else {
             tags.as_ref().err().cloned()
         };

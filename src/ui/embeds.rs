@@ -66,7 +66,7 @@ pub(super) fn database(s: &State, block: &NoteBlock, p: Palette) -> El {
     let Some(embed) = &block.embedded else {
         return icons::action(
             format!("choose-embed-{block_id}"),
-            "Choisir une base existante",
+            "Choose an existing database",
             &folio::icons::DATABASE,
             p,
             move |s, tx| {
@@ -83,10 +83,10 @@ pub(super) fn database(s: &State, block: &NoteBlock, p: Palette) -> El {
         .iter()
         .find(|p| p.id == embed.base_id && !p.archived)
     else {
-        return label("La base liée n’est plus disponible.", 12.0, p.faint);
+        return label("The linked database is no longer available.", 12.0, p.faint);
     };
     let Some(base) = &source.collection else {
-        return label("Cette page n’est pas une base.", 12.0, p.faint);
+        return label("This page is not a database.", 12.0, p.faint);
     };
     let records = items(s, block);
     let mut settings = base.clone();
@@ -123,7 +123,7 @@ pub(super) fn database(s: &State, block: &NoteBlock, p: Palette) -> El {
                 )
                 .child(action(
                     format!("embed-config-{}", block.id),
-                    "Vue…",
+                    "View…",
                     p,
                     move |s, tx| {
                         s.open_palette(Mode::Embed {
@@ -135,7 +135,7 @@ pub(super) fn database(s: &State, block: &NoteBlock, p: Palette) -> El {
                 ))
                 .child(icons::control(
                     format!("embed-new-{}", block.id),
-                    "Nouvelle fiche",
+                    "New record",
                     &folio::icons::controls::PLUS,
                     p,
                     move |s, tx| s.new_embedded_record(&new_id, tx),
@@ -148,7 +148,7 @@ pub(super) fn database(s: &State, block: &NoteBlock, p: Palette) -> El {
         .count();
     box_ = box_.child(label(
         format!(
-            "{count} fiches · {done} terminées · {} % d’avancement",
+            "{count} records · {done} completed · {}% progress",
             (done * 100).checked_div(count).unwrap_or(0)
         ),
         11.0,
@@ -169,8 +169,8 @@ pub(super) fn database(s: &State, block: &NoteBlock, p: Palette) -> El {
             .relation_filter
             .as_ref()
             .and_then(|id| relations.iter().find(|(key, _)| key == id))
-            .map_or("Toutes les fiches".to_string(), |(_, name)| {
-                format!("Liées à cette page via {name}")
+            .map_or("All records".to_string(), |(_, name)| {
+                format!("Linked to this page via {name}")
             });
         box_ = box_.child(
             action(
@@ -287,7 +287,7 @@ pub(super) fn media(s: &State, block: &NoteBlock, p: Palette) -> El {
         let id = block.id.clone();
         return action(
             format!("attach-{id}"),
-            "Choisir une image ou un fichier…",
+            "Choose an image or file…",
             p,
             |s, tx| s.attachment_dialog(tx),
         );
@@ -324,7 +324,7 @@ pub(super) fn media(s: &State, block: &NoteBlock, p: Palette) -> El {
                     .size(16.0, 10.0)
                     .fill(p.line)
                     .radius(3.0)
-                    .help("Glisser pour redimensionner l’image")
+                    .help("Drag to resize the image")
                     .on_drag(move |s: &mut State, d, _| {
                         if let Some(b) = s.blocks.iter_mut().find(|b| b.data.id == id)
                             && let Some(asset) = &mut b.data.asset
@@ -346,7 +346,7 @@ pub(super) fn media(s: &State, block: &NoteBlock, p: Palette) -> El {
         );
         if let Some(error) = image.error() {
             body = body.child(label(
-                format!("Aperçu indisponible : {error}"),
+                format!("Preview unavailable: {error}"),
                 11.0,
                 p.faint,
             ));
@@ -358,7 +358,7 @@ pub(super) fn media(s: &State, block: &NoteBlock, p: Palette) -> El {
             .center_y()
             .child(
                 label(
-                    format!("{} · {} Ko", asset.name, asset.size / 1024),
+                    format!("{} · {} KiB", asset.name, asset.size / 1024),
                     11.0,
                     p.muted,
                 )
@@ -368,7 +368,7 @@ pub(super) fn media(s: &State, block: &NoteBlock, p: Palette) -> El {
             )
             .child(action(
                 format!("open-asset-{}", block.id),
-                "Ouvrir",
+                "Open",
                 p,
                 move |s, _| {
                     s.workspace_request(crate::workspace_worker::Request::OpenAsset(
@@ -378,7 +378,7 @@ pub(super) fn media(s: &State, block: &NoteBlock, p: Palette) -> El {
             ))
             .child(action(
                 format!("export-asset-{}", block.id),
-                "Exporter",
+                "Export",
                 p,
                 move |s, tx| s.export_asset(&export, tx),
             )),
@@ -392,7 +392,7 @@ pub(super) fn toc(s: &State, p: Palette) -> El {
         .padding(10.0)
         .radius(5.0)
         .fill(p.sidebar)
-        .child(label("SUR CETTE PAGE", 10.0, p.faint));
+        .child(label("ON THIS PAGE", 10.0, p.faint));
     for b in s.blocks.iter().filter(|b| {
         matches!(
             b.data.kind,
@@ -432,14 +432,14 @@ fn data_grid(
     let columns: Vec<_> = settings.columns.iter().filter(|c| c.visible).collect();
     let mut header = super::table::header_row(format!("embed-header-{}", block.id), 36.0, p)
         .child(
-            super::table::column_heading("Nom", p)
+            super::table::column_heading("Name", p)
                 .px(6.0)
                 .w(200.0)
                 .min_w(200.0)
                 .grow(1.0),
         )
-        .child(super::table::column_heading("Statut", p).px(6.0).w(100.0))
-        .child(super::table::column_heading("Échéance", p).px(6.0).w(105.0));
+        .child(super::table::column_heading("Status", p).px(6.0).w(100.0))
+        .child(super::table::column_heading("Due date", p).px(6.0).w(105.0));
     for c in &columns {
         header = header.child(
             super::table::column_heading(&c.name, p)
@@ -548,7 +548,7 @@ fn data_grid(
         rows = rows.child(line);
     }
     if records.is_empty() {
-        rows = rows.child(label("Aucune fiche pour cette vue.", 12.0, p.faint).padding(12.0));
+        rows = rows.child(label("No records in this view.", 12.0, p.faint).padding(12.0));
     }
     let count = records.len().min(100);
     let height = 36.0
@@ -560,7 +560,7 @@ fn data_grid(
     super::table::frame(
         format!("embed-frame-{}", block.id),
         format!("embed-table-{}", block.id),
-        "Fiches de la vue intégrée",
+        "Embedded view records",
         rows,
         height,
         320.0,
@@ -576,7 +576,7 @@ fn mini_calendar(s: &State, block: &NoteBlock, records: &[&Page], p: Palette) ->
             .center_y()
             .child(icons::control(
                 format!("embed-month-prev-{}", block.id),
-                "Mois précédent",
+                "Previous month",
                 &folio::icons::controls::CHEVRON_LEFT,
                 p,
                 |s, _| s.step_calendar(false),
@@ -584,7 +584,7 @@ fn mini_calendar(s: &State, block: &NoteBlock, records: &[&Page], p: Palette) ->
             .child(label(month.format("%m / %Y").to_string(), 13.0, p.ink))
             .child(icons::control(
                 format!("embed-month-next-{}", block.id),
-                "Mois suivant",
+                "Next month",
                 &folio::icons::controls::CHEVRON_RIGHT,
                 p,
                 |s, _| s.step_calendar(true),

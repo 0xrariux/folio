@@ -98,22 +98,22 @@ impl State {
         match &form.mode {
             Mode::Commands => {
                 for (key, title) in [
-                    ("new", "Nouvelle page"),
-                    ("base", "Nouvelle base"),
-                    ("templates", "Choisir un modèle"),
-                    ("theme", "Changer de thème"),
-                    ("backup", "Sauvegarder le carnet complet"),
-                    ("restore", "Restaurer un carnet"),
-                    ("history", "Historique de cette page"),
-                    ("file", "Ajouter une image ou un fichier"),
-                    ("embed", "Insérer une base dans la page"),
-                    ("block-link", "Insérer un lien vers un bloc"),
+                    ("new", "New page"),
+                    ("base", "New database"),
+                    ("templates", "Choose a template"),
+                    ("theme", "Switch theme"),
+                    ("backup", "Back up the entire notebook"),
+                    ("restore", "Restore a notebook"),
+                    ("history", "Page history"),
+                    ("file", "Add an image or file"),
+                    ("embed", "Insert a database in the page"),
+                    ("block-link", "Insert a link to a block"),
                 ] {
                     if Fold::for_language("fr").contains(title, q) {
                         items.push(Item {
                             key: key.into(),
                             title: title.into(),
-                            detail: "Commande".into(),
+                            detail: "Command".into(),
                             action: Action::Command(key),
                         });
                     }
@@ -127,7 +127,7 @@ impl State {
                     items.push(Item {
                         key: p.id.clone(),
                         title: p.display_title().into(),
-                        detail: "Page du carnet".into(),
+                        detail: "Notebook page".into(),
                         action: Action::Page(p.id.clone()),
                     });
                 }
@@ -142,7 +142,7 @@ impl State {
                     items.push(Item {
                         key: p.id.clone(),
                         title: p.display_title().into(),
-                        detail: "Mention de page".into(),
+                        detail: "Page mention".into(),
                         action: Action::Page(p.id.clone()),
                     });
                 }
@@ -183,7 +183,7 @@ impl State {
                     items.push(Item {
                         key: p.id.clone(),
                         title: p.display_title().into(),
-                        detail: "Base existante".into(),
+                        detail: "Existing database".into(),
                         action: Action::Base(p.id.clone()),
                     });
                 }
@@ -199,8 +199,8 @@ impl State {
                 {
                     items.push(Item {
                         key: "current".into(),
-                        title: "Vue courante de la base".into(),
-                        detail: "Même source de données".into(),
+                        title: "Current database view".into(),
+                        detail: "Same data source".into(),
                         action: Action::View(None),
                     });
                     for v in settings
@@ -211,7 +211,7 @@ impl State {
                         items.push(Item {
                             key: v.id.clone(),
                             title: v.name.clone(),
-                            detail: "Vue enregistrée".into(),
+                            detail: "Saved view".into(),
                             action: Action::View(Some(v.id.clone())),
                         });
                     }
@@ -239,9 +239,9 @@ impl State {
                             key: p.id.clone(),
                             title: p.display_title().into(),
                             detail: if selected {
-                                "Liée — cliquer pour retirer"
+                                "Linked — click to remove"
                             } else {
-                                "Cliquer pour lier"
+                                "Click to link"
                             }
                             .into(),
                             action: Action::Relation(p.id.clone()),
@@ -411,7 +411,7 @@ impl State {
                 .split_once("#block=")
                 .map_or((rest, None), |(p, b)| (p, Some(b)));
             if !self.pages.iter().any(|p| p.id == page) {
-                self.export_message = Some("Cette page n’existe plus.".into());
+                self.export_message = Some("This page no longer exists.".into());
                 return;
             }
             self.select(page);
@@ -426,7 +426,7 @@ impl State {
     }
     pub fn goto_block(&mut self, id: &str, tx: &mut Tx) {
         let Some(index) = self.blocks.iter().position(|b| b.data.id == id) else {
-            self.export_message = Some("Ce bloc n’existe plus.".into());
+            self.export_message = Some("This block no longer exists.".into());
             return;
         };
         for i in 0..index {

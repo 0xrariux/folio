@@ -97,13 +97,13 @@ impl State {
         };
         let name = form.name.text.trim().to_string();
         let error = if name.is_empty() || name.chars().count() > 40 {
-            Some("Donnez un nom de 1 à 40 caractères à cette colonne.")
+            Some("Give this column a name of 1 to 40 characters.")
         } else if settings.columns.iter().any(|c| {
             Some(&c.id) != form.id.as_ref() && c.name.to_lowercase() == name.to_lowercase()
         }) {
-            Some("Une colonne porte déjà ce nom.")
+            Some("A column with this name already exists.")
         } else if form.id.is_none() && settings.columns.len() >= 12 {
-            Some("Cette base contient déjà 12 colonnes personnalisées.")
+            Some("This database already has 12 custom columns.")
         } else {
             None
         };
@@ -133,9 +133,8 @@ impl State {
                 .map_or(12, |c| c.columns.len());
             if count + if target == &collection_id { 2 } else { 1 } > 12 {
                 if let Panel::Columns(f) = &mut self.panel {
-                    f.error = Some(
-                        "La base cible n’a pas assez de place pour une relation inverse.".into(),
-                    );
+                    f.error =
+                        Some("The target database has no room for a reverse relation.".into());
                 }
                 return;
             }
@@ -150,7 +149,7 @@ impl State {
             })
         {
             if let Panel::Columns(f) = &mut self.panel {
-                f.error = Some("Choisissez la base à relier.".into());
+                f.error = Some("Choose the database to link.".into());
             }
             return;
         }
@@ -163,7 +162,7 @@ impl State {
             })
         {
             if let Panel::Columns(f) = &mut self.panel {
-                f.error = Some("Choisissez une propriété de relation.".into());
+                f.error = Some("Choose a relation property.".into());
             }
             return;
         }
@@ -198,14 +197,14 @@ impl State {
                 .find(|p| p.id == target)
                 .and_then(|p| p.collection.as_mut())
             {
-                let mut name = format!("{source_name} (liens)");
+                let mut name = format!("{source_name} (links)");
                 let mut n = 2;
                 while settings
                     .columns
                     .iter()
                     .any(|c| c.name.eq_ignore_ascii_case(&name))
                 {
-                    name = format!("{source_name} (liens {n})");
+                    name = format!("{source_name} (links {n})");
                     n += 1;
                 }
                 let mut inverse = Column::new(&name, ColumnKind::Relation);
@@ -313,7 +312,7 @@ impl State {
         };
         let result = self
             .field_column(&form.record_id, &form.column_id)
-            .ok_or_else(|| "Cette colonne n’est plus disponible pour cette fiche.".to_string())
+            .ok_or_else(|| "This column is no longer available for this record.".to_string())
             .and_then(|c| parse_cell(c.kind, &form.value.text));
         let value = match result {
             Ok(value) => value,

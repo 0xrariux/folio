@@ -10,10 +10,12 @@ mod entity_drag;
 mod exporting;
 mod linking;
 mod lists;
+mod module_library;
 mod navigation;
 mod notebook;
 mod saved_views;
 mod selection;
+mod settings;
 mod state;
 mod table_layout;
 mod tracking;
@@ -36,6 +38,11 @@ fn init() -> State {
 fn setup(state: &mut State, wake: rune::Waker) {
     state.workspace.images = Some(rune::ImageCache::new(wake.clone()));
     state.export_wake = Some(wake.clone());
+    state.settings.version_check.set_waker(wake.clone());
+    if let Ok(message) = std::env::var("FOLIO_UPDATE_ERROR") {
+        state.settings.update_status = message;
+        state.panel = state::Panel::Settings;
+    }
     if !state.demo {
         state.worker = Some(worker::Worker::start(database_path(), wake));
     }
@@ -48,6 +55,15 @@ fn poll(state: &mut State, _: f64, tx: &mut Tx) -> bool {
         .map(|worker| worker.events.try_iter().collect())
         .unwrap_or_default();
     let mut changed = poll_updates(state, events, tx);
+    changed |= state.poll_settings(tx);
+    if !state.demo
+        && ((matches!(state.phase, state::Phase::Ready)
+            && state.workspace.preferences_loaded
+            && state.library.loaded)
+            || state.settings.locked)
+    {
+        folio::updates::acknowledge_startup();
+    }
     if !state.demo {
         let today = folio::dashboard::local_today();
         if today != state.today {
@@ -86,7 +102,7 @@ fn poll_updates(state: &mut State, events: Vec<worker::Event>, tx: &mut Tx) -> b
                 .get(id)
                 .is_some_and(|p| p.revision == *revision) =>
             {
-                errors.push(format!("Échec de l’enregistrement : {message}"));
+                errors.push(format!("Save failed: {message}"));
             }
             Event::Saved { .. } => saved = true,
             _ => {}
@@ -98,7 +114,7 @@ fn poll_updates(state: &mut State, events: Vec<worker::Event>, tx: &mut Tx) -> b
         tx.announce(errors.join(". "), rune::LiveRegion::Assertive);
     } else if state.export_message != previous_message {
         if let Some(message) = &state.export_message {
-            let how = if message.starts_with("Échec de l’export") {
+            let how = if message.starts_with("Export failed") {
                 rune::LiveRegion::Assertive
             } else {
                 rune::LiveRegion::Polite
@@ -106,13 +122,13 @@ fn poll_updates(state: &mut State, events: Vec<worker::Event>, tx: &mut Tx) -> b
             tx.announce(message, how);
         }
     } else if saved && had_pending && state.pending.is_empty() {
-        tx.announce("Tout est enregistré", rune::LiveRegion::Polite);
+        tx.announce("All changes saved", rune::LiveRegion::Polite);
     }
     changed
 }
 
 fn on_key(state: &mut State, event: &KeyEvent, tx: &mut Tx) -> bool {
-    if state.workspace.busy {
+    if state.workspace.busy || state.settings.busy || state.settings.locked {
         return true;
     }
     if state.handle_selection_key(event, tx) {
@@ -132,7 +148,18 @@ fn on_key(state: &mut State, event: &KeyEvent, tx: &mut Tx) -> bool {
             state.open_palette(crate::command_palette::Mode::Commands);
             tx.focus("palette-search", false);
         }
-        Key::Escape => state.panel = state::Panel::Closed,
+        Key::Escape => {
+            if matches!(
+                state.panel,
+                state::Panel::ModuleReview | state::Panel::ModuleConfirm
+            ) {
+                state.close_module_dialog();
+            } else if matches!(state.panel, state::Panel::Security) {
+                state.cancel_security();
+            } else {
+                state.panel = state::Panel::Closed;
+            }
+        }
         _ => return false,
     }
     true
@@ -141,12 +168,92 @@ fn on_key(state: &mut State, event: &KeyEvent, tx: &mut Tx) -> bool {
 fn main() {
     // Drain queued storage writes through Worker::drop before exiting.
     rune::orderly_exit();
+    let args: Vec<_> = std::env::args_os().collect();
+    if args.get(1).is_some_and(|a| a == "--apply-update") {
+        let result = args
+            .get(2)
+            .ok_or_else(|| anyhow::anyhow!("Missing installation plan"))
+            .and_then(|p| folio::updates::apply(std::path::Path::new(p)));
+        if let Err(error) = result {
+            eprintln!("{error:#}");
+            std::process::exit(1);
+        }
+        return;
+    }
+    if args.get(1).is_some_and(|a| a == "--verify-backup") {
+        let result = (|| -> anyhow::Result<()> {
+            let path = args
+                .get(2)
+                .ok_or_else(|| anyhow::anyhow!("Missing backup path"))?;
+            tokio::runtime::Builder::new_current_thread()
+                .enable_all()
+                .build()?
+                .block_on(folio::storage::recovery::certify_plain_backup(
+                    std::path::Path::new(path),
+                ))?;
+            println!("Backup restored, reopened and verified in an isolated database.");
+            Ok(())
+        })();
+        if let Err(error) = result {
+            eprintln!("{error:#}");
+            std::process::exit(1);
+        }
+        return;
+    }
+    if args.get(1).is_some_and(|a| a == "--release-info") {
+        println!(
+            "{}",
+            serde_json::json!({
+                "version": folio::updates::VERSION, "revision": folio::updates::REVISION,
+                "dirty": env!("FOLIO_BUILD_DIRTY") == "true",
+                "target": folio::updates::config().target,
+                "storage_contract": folio::updates::config().storage_contract,
+                "rune_revision": serde_json::from_str::<serde_json::Value>(include_str!("../folio-update.json")).expect("valid Rune pin")["rune_revision"],
+                "turso": folio::storage::TURSO_VERSION, "rust": env!("FOLIO_RUST_VERSION"),
+                "schema_version": folio::storage::SCHEMA_VERSION, "document_version": folio::document::CURRENT_VERSION, "backup_verification": 1, "module_api": folio::modules::API_VERSION,
+            })
+        );
+        return;
+    }
+    if std::env::args().any(|arg| arg == "--check-update") {
+        match folio::updates::check() {
+            Ok(remote) => println!(
+                "Local {} {} ; GitHub {} {} ; update available: {}",
+                folio::updates::VERSION,
+                folio::updates::REVISION,
+                remote.version,
+                remote.revision,
+                remote.ahead
+            ),
+            Err(e) => {
+                eprintln!("{e:#}");
+                std::process::exit(1);
+            }
+        }
+        return;
+    }
+    if std::env::args().any(|arg| arg == "--version") {
+        println!(
+            "Folio {} ({})",
+            folio::updates::VERSION,
+            folio::updates::REVISION
+        );
+        return;
+    }
     rune::run(AppSpec {
         min_size: Some((920.0, 620.0)),
         setup: Some(setup),
         poll: Some(poll),
         on_key: Some(on_key),
         scenes: &[
+            ("settings", |s| s.open_settings()),
+            ("library", |s| s.open_library()),
+            ("security", |s| {
+                s.security_form(crate::settings::SecurityForm::EnableVault)
+            }),
+            ("locked", |s| {
+                s.accept_security(folio::vault::Outcome::Locked)
+            }),
             ("workspace", |s| s.demo_workspace()),
             ("calendar", |s| s.demo_calendar()),
             ("lists", |s| s.demo_lists()),
@@ -224,3 +331,9 @@ mod workspace_tests;
 
 #[cfg(test)]
 mod rune_update_tests;
+
+#[cfg(test)]
+mod settings_tests;
+
+#[cfg(test)]
+mod module_library_tests;

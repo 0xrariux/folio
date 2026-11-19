@@ -12,6 +12,8 @@ macro_rules! glyph {
     };
 }
 glyph!(SEARCH, "search");
+glyph!(SETTINGS, "settings");
+glyph!(LOCK, "lock");
 glyph!(PLUS, "plus");
 glyph!(CLOSE, "close");
 glyph!(CHEVRON_LEFT, "chevron-left");
@@ -63,117 +65,117 @@ pub struct Symbol {
 pub const ALL: &[Symbol] = &[
     Symbol {
         key: "number",
-        name: "Nombre",
+        name: "Number",
         glyph: &NUMBER,
     },
     Symbol {
         key: "search",
-        name: "Rechercher",
+        name: "Search",
         glyph: &SEARCH,
     },
     Symbol {
         key: "plus",
-        name: "Ajouter",
+        name: "Add",
         glyph: &PLUS,
     },
     Symbol {
         key: "close",
-        name: "Fermer",
+        name: "Close",
         glyph: &CLOSE,
     },
     Symbol {
         key: "chevron-left",
-        name: "Précédent",
+        name: "Back",
         glyph: &CHEVRON_LEFT,
     },
     Symbol {
         key: "chevron-right",
-        name: "Suivant",
+        name: "Next",
         glyph: &CHEVRON_RIGHT,
     },
     Symbol {
         key: "chevron-down",
-        name: "Déplier",
+        name: "Expand",
         glyph: &CHEVRON_DOWN,
     },
     Symbol {
         key: "arrow-up",
-        name: "Monter",
+        name: "Move up",
         glyph: &ARROW_UP,
     },
     Symbol {
         key: "arrow-down",
-        name: "Descendre",
+        name: "Move down",
         glyph: &ARROW_DOWN,
     },
     Symbol {
         key: "arrow-up-right",
-        name: "Ouvrir le lien",
+        name: "Open link",
         glyph: &ARROW_UP_RIGHT,
     },
     Symbol {
         key: "undo",
-        name: "Annuler",
+        name: "Undo",
         glyph: &UNDO,
     },
     Symbol {
         key: "redo",
-        name: "Rétablir",
+        name: "Redo",
         glyph: &REDO,
     },
     Symbol {
         key: "grip",
-        name: "Déplacer le bloc",
+        name: "Move block",
         glyph: &GRIP,
     },
     Symbol {
         key: "copy",
-        name: "Dupliquer",
+        name: "Duplicate",
         glyph: &COPY,
     },
     Symbol {
         key: "trash",
-        name: "Supprimer",
+        name: "Delete",
         glyph: &TRASH,
     },
     Symbol {
         key: "expand",
-        name: "Pleine largeur",
+        name: "Full width",
         glyph: &EXPAND,
     },
     Symbol {
         key: "cover",
-        name: "Couverture",
+        name: "Cover",
         glyph: &COVER,
     },
     Symbol {
         key: "export",
-        name: "Exporter",
+        name: "Export",
         glyph: &EXPORT,
     },
     Symbol {
         key: "sun",
-        name: "Mode clair",
+        name: "Light mode",
         glyph: &SUN,
     },
     Symbol {
         key: "moon",
-        name: "Mode sombre",
+        name: "Dark mode",
         glyph: &MOON,
     },
     Symbol {
         key: "star",
-        name: "Favori",
+        name: "Favorite",
         glyph: &STAR,
     },
     Symbol {
         key: "star-filled",
-        name: "Favori actif",
+        name: "Favorited",
         glyph: &STAR_FILLED,
     },
     Symbol {
         key: "table",
-        name: "Tableau",
+        name: "Table",
         glyph: &TABLE,
     },
     Symbol {
@@ -183,77 +185,77 @@ pub const ALL: &[Symbol] = &[
     },
     Symbol {
         key: "filter",
-        name: "Filtrer",
+        name: "Filter",
         glyph: &FILTER,
     },
     Symbol {
         key: "sort",
-        name: "Trier",
+        name: "Sort",
         glyph: &SORT,
     },
     Symbol {
         key: "columns",
-        name: "Colonnes",
+        name: "Columns",
         glyph: &COLUMNS,
     },
     Symbol {
         key: "flag",
-        name: "Priorité",
+        name: "Priority",
         glyph: &FLAG,
     },
     Symbol {
         key: "clock",
-        name: "Échéance",
+        name: "Due date",
         glyph: &CLOCK,
     },
     Symbol {
         key: "alert",
-        name: "Attention",
+        name: "Warning",
         glyph: &ALERT,
     },
     Symbol {
         key: "check",
-        name: "Validé",
+        name: "Approved",
         glyph: &CHECK,
     },
     Symbol {
         key: "status-dot",
-        name: "Statut",
+        name: "Status",
         glyph: &STATUS_DOT,
     },
     Symbol {
         key: "text",
-        name: "Texte",
+        name: "Text",
         glyph: &TEXT,
     },
     Symbol {
         key: "heading-1",
-        name: "Titre 1",
+        name: "Heading 1",
         glyph: &HEADING_1,
     },
     Symbol {
         key: "heading-2",
-        name: "Titre 2",
+        name: "Heading 2",
         glyph: &HEADING_2,
     },
     Symbol {
         key: "heading-3",
-        name: "Titre 3",
+        name: "Heading 3",
         glyph: &HEADING_3,
     },
     Symbol {
         key: "bullet-list",
-        name: "Liste à puces",
+        name: "Bulleted list",
         glyph: &BULLET_LIST,
     },
     Symbol {
         key: "numbered-list",
-        name: "Liste numérotée",
+        name: "Numbered list",
         glyph: &NUMBERED_LIST,
     },
     Symbol {
         key: "quote",
-        name: "Citation",
+        name: "Quote",
         glyph: &QUOTE,
     },
     Symbol {
@@ -263,17 +265,17 @@ pub const ALL: &[Symbol] = &[
     },
     Symbol {
         key: "divider",
-        name: "Séparateur",
+        name: "Divider",
         glyph: &DIVIDER,
     },
     Symbol {
         key: "templates",
-        name: "Modèles",
+        name: "Templates",
         glyph: &TEMPLATES,
     },
     Symbol {
         key: "more",
-        name: "Autres actions",
+        name: "More actions",
         glyph: &MORE,
     },
 ];

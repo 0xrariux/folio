@@ -99,12 +99,13 @@ impl State {
     }
 
     pub fn refresh_references(&mut self, target: &str) {
-        let Some(title) = self
-            .pages
-            .iter()
-            .find(|p| p.id == target)
-            .map(|p| p.display_title().to_string())
-        else {
+        let Some(title) = self.pages.iter().find(|p| p.id == target).map(|p| {
+            if self.protected_page(&p.id) {
+                "Protected page".to_string()
+            } else {
+                p.display_title().to_string()
+            }
+        }) else {
             return;
         };
         let mut changed = Vec::new();

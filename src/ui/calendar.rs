@@ -16,7 +16,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
             .center_y()
             .child(icons::control(
                 "calendar-prev",
-                "Mois précédent",
+                "Previous month",
                 &folio::icons::controls::CHEVRON_LEFT,
                 p,
                 |s, _| s.step_calendar(false),
@@ -24,17 +24,17 @@ pub(super) fn view(s: &State, p: Palette) -> El {
             .child(label(month.format("%m / %Y").to_string(), 16.0, p.ink))
             .child(icons::control(
                 "calendar-next",
-                "Mois suivant",
+                "Next month",
                 &folio::icons::controls::CHEVRON_RIGHT,
                 p,
                 |s, _| s.step_calendar(true),
             ))
-            .child(action("calendar-today", "Aujourd’hui", p, |s, _| {
+            .child(action("calendar-today", "Today", p, |s, _| {
                 s.workspace.calendar_month = s.today[..7].into()
             })),
     );
     let mut weekdays = row().w_full().gap(4.0);
-    for day in ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"] {
+    for day in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] {
         weekdays = weekdays.child(label(day, 10.0, p.faint).grow(1.0).min_w(0.0));
     }
     body = body.child(weekdays);
@@ -112,7 +112,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                     cell = cell.child(
                         action(
                             format!("calendar-more-{date}"),
-                            &format!("+{} fiches", matching.len() - 2),
+                            &format!("+{} records", matching.len() - 2),
                             p,
                             move |s, _| s.panel = Panel::CalendarDay(day_date.clone()),
                         )
@@ -136,7 +136,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         .filter(|p| p.properties.due.is_none())
         .collect();
     if !undated.is_empty() {
-        body = body.child(label("SANS ÉCHÉANCE — glisser vers un jour", 10.0, p.faint));
+        body = body.child(label("NO DUE DATE — drag to a day", 10.0, p.faint));
         for record in undated.iter().take(20) {
             let id = record.id.clone();
             let drag_id = id.clone();
@@ -167,7 +167,7 @@ pub(super) fn picker(s: &State, form: &DatePicker, p: Palette) -> El {
             .center_y()
             .child(icons::control(
                 "date-prev",
-                "Mois précédent",
+                "Previous month",
                 &folio::icons::controls::CHEVRON_LEFT,
                 p,
                 |s, _| {
@@ -181,7 +181,7 @@ pub(super) fn picker(s: &State, form: &DatePicker, p: Palette) -> El {
             .child(label(form.month.format("%m / %Y").to_string(), 13.0, p.ink).grow(1.0))
             .child(icons::control(
                 "date-next",
-                "Mois suivant",
+                "Next month",
                 &folio::icons::controls::CHEVRON_RIGHT,
                 p,
                 |s, _| {
@@ -194,7 +194,7 @@ pub(super) fn picker(s: &State, form: &DatePicker, p: Palette) -> El {
             )),
     );
     let mut names = row().gap(2.0);
-    for name in ["L", "M", "M", "J", "V", "S", "D"] {
+    for name in ["M", "T", "W", "T", "F", "S", "S"] {
         names = names.child(label(name, 10.0, p.faint).w(33.0));
     }
     body = body.child(names);
@@ -218,7 +218,7 @@ pub(super) fn picker(s: &State, form: &DatePicker, p: Palette) -> El {
     body = body.child(
         text_input(&form.value, TextStyle::new(12.0, 400.0))
             .key("date-value")
-            .label("Date AAAA-MM-JJ")
+            .label("Date YYYY-MM-DD")
             .single_line()
             .w_full()
             .h(32.0)
@@ -241,7 +241,7 @@ pub(super) fn picker(s: &State, form: &DatePicker, p: Palette) -> El {
                     } else if folio::collection::valid_date(&date) {
                         s.pick_date(Some(&date));
                     } else {
-                        f.error = Some("Date invalide : AAAA-MM-JJ".into());
+                        f.error = Some("Invalid date: YYYY-MM-DD".into());
                     }
                 }
             }),
@@ -252,11 +252,11 @@ pub(super) fn picker(s: &State, form: &DatePicker, p: Palette) -> El {
     body = body.child(
         row()
             .gap(5.0)
-            .child(action("date-today", "Aujourd’hui", p, |s, _| {
+            .child(action("date-today", "Today", p, |s, _| {
                 let today = s.today.clone();
                 s.pick_date(Some(&today));
             }))
-            .child(action("date-clear", "Effacer", p, |s, _| s.pick_date(None))),
+            .child(action("date-clear", "Clear", p, |s, _| s.pick_date(None))),
     );
     let _ = s;
     surface("date-picker", &form.anchor, 275.0, p)
@@ -276,7 +276,7 @@ pub(super) fn day(s: &State, date: &str, p: Palette) -> El {
     let date = date.to_string();
     let new_date = date.clone();
     let title = chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d")
-        .map_or(date, |d| d.format("%d / %m / %Y").to_string());
+        .map_or(date, |d| d.format("%Y-%m-%d").to_string());
     super::workspace::dialog(
         &title,
         p,
@@ -292,7 +292,7 @@ pub(super) fn day(s: &State, date: &str, p: Palette) -> El {
             )
             .child(icons::action(
                 "calendar-new-on-day",
-                "Nouvelle fiche à cette date",
+                "New record on this date",
                 &folio::icons::controls::PLUS,
                 p,
                 move |s, tx| {

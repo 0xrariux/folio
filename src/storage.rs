@@ -5,46 +5,162 @@ use anyhow::{Context, Result};
 use crate::document::PageContent;
 use crate::model::{Page, welcome};
 
+mod health;
+mod modules;
+pub mod recovery;
+pub use health::{APPLICATION_ID, SCHEMA_VERSION};
+pub const TURSO_VERSION: &str = env!("FOLIO_TURSO_VERSION");
+pub fn storage_contract() -> String {
+    format!(
+        "turso-{TURSO_VERSION}-schema{SCHEMA_VERSION}-notebook{}-vault{}",
+        crate::document::CURRENT_VERSION,
+        crate::security::FORMAT_VERSION
+    )
+}
+
 /// Owned by one background thread: the UI never waits for database I/O.
 pub struct Store {
     _database: turso::Database,
     pub(crate) connection: turso::Connection,
+    pub(crate) module_instance: uuid::Uuid,
+    pub(crate) module_epoch: std::sync::atomic::AtomicU64,
 }
 
 impl Store {
     pub async fn open(path: &Path) -> Result<Self> {
+        Self::open_with_encryption(path, None).await
+    }
+    pub async fn open_with_encryption(
+        path: &Path,
+        encryption: Option<turso::EncryptionOpts>,
+    ) -> Result<Self> {
+        // A dependency/schema bump cannot silently keep advertising the old storage contract.
+        let _ = crate::updates::config();
         if let Some(parent) = path.parent().filter(|p| !p.as_os_str().is_empty()) {
-            std::fs::create_dir_all(parent).context("Création du dossier des notes")?;
+            std::fs::create_dir_all(parent).context("Creating the notes directory")?;
         }
-        let path = path
-            .to_str()
-            .context("Le chemin de la base doit être UTF-8")?;
-        let database = turso::Builder::new_local(path).build().await?;
-        let connection = database.connect()?;
-        // One idempotent migration for the initial schema, including across restarts.
-        connection
-            .execute(include_str!("../migrations/001_initial.sql"), ())
-            .await?;
-        connection
-            .execute(
+        let existed = path.exists();
+        let wal = PathBuf::from(format!("{}-wal", path.display()));
+        let has_wal = wal.metadata().is_ok_and(|m| m.len() > 32);
+        anyhow::ensure!(
+            existed || !has_wal,
+            "The main database is missing but its WAL exists. Preserve both files; no empty notebook was created."
+        );
+        if !existed {
+            anyhow::ensure!(
+                !path.with_extension("backups").exists()
+                    && !path.with_extension("recovery").exists()
+                    && !crate::workspace::asset_dir(path).exists(),
+                "The notebook database is missing but earlier profile files exist. Restore a verified backup; no empty replacement was created."
+            );
+        }
+        if existed {
+            anyhow::ensure!(
+                path.metadata()?.len() > 0 || has_wal,
+                "The database is empty or truncated. Preserve the profile and restore a verified backup."
+            );
+        }
+        // Turso may convert a SQLite journal header when opening a file. Validate a
+        // private copy first, so even a refused/foreign/corrupt profile stays byte-for-byte intact.
+        let saved = if existed {
+            Some(recovery::snapshot(path, "before open")?)
+        } else {
+            None
+        };
+        if let Some(saved) = &saved {
+            let probe = tempfile::Builder::new()
+                .prefix("preflight-")
+                .tempdir_in(saved)?;
+            let check = probe.path().join("check.db");
+            std::fs::copy(saved.join("database"), &check)?;
+            if saved.join("database-wal").exists() {
+                std::fs::copy(
+                    saved.join("database-wal"),
+                    probe.path().join("check.db-wal"),
+                )?;
+            }
+            let candidate = Self::connect(&check, encryption.clone()).await?;
+            candidate.preflight().await?;
+            anyhow::ensure!(
+                candidate
+                    .scalar(
+                        "SELECT COUNT(*) FROM sqlite_schema WHERE type='table' AND name='pages'"
+                    )
+                    .await?
+                    == 1,
+                "Existing profile contains no pages table. No empty replacement was created."
+            );
+        }
+        let store = Self::connect(path, encryption).await?;
+        let migration = store.preflight().await?;
+        if migration {
+            if existed {
+                anyhow::ensure!(
+                    store
+                        .scalar(
+                            "SELECT COUNT(*) FROM sqlite_schema WHERE type='table' AND name='pages'"
+                        )
+                        .await?
+                        == 1,
+                    "Existing profile contains no pages table. No empty replacement was created."
+                );
+            }
+            let tx = store.connection.unchecked_transaction().await?;
+            tx.execute(include_str!("../migrations/001_initial.sql"), ())
+                .await?;
+            tx.execute(
                 "CREATE INDEX IF NOT EXISTS pages_parent ON pages(parent_id)",
                 (),
             )
             .await?;
-        connection
-            .execute(include_str!("../migrations/002_blocks.sql"), ())
-            .await?;
-        for statement in include_str!("../migrations/003_workspace.sql")
-            .split(';')
-            .filter(|s| !s.trim().is_empty())
-        {
-            connection.execute(statement, ()).await?;
+            tx.execute(include_str!("../migrations/002_blocks.sql"), ())
+                .await?;
+            for statement in include_str!("../migrations/003_workspace.sql")
+                .split(';')
+                .filter(|s| !s.trim().is_empty())
+            {
+                tx.execute(statement, ()).await?;
+            }
+            store.migrate_legacy().await?;
+            crate::workspace::validate_structure(
+                &store.load().await?,
+                &store.history(None).await?,
+            )?;
+            store.preferences().await?;
+            tx.execute(format!("PRAGMA user_version={SCHEMA_VERSION}"), ())
+                .await?;
+            tx.execute(format!("PRAGMA application_id={APPLICATION_ID}"), ())
+                .await?;
+            tx.commit().await?;
         }
+        store.verify_storage().await?;
+        if let Some(saved) = saved {
+            recovery::mark_verified(&saved, migration || has_wal)?;
+        }
+        Ok(store)
+    }
+    async fn connect(path: &Path, encryption: Option<turso::EncryptionOpts>) -> Result<Self> {
+        let mut builder =
+            turso::Builder::new_local(path.to_str().context("The database path must be UTF-8")?)
+                .experimental_vacuum(true);
+        if let Some(encryption) = encryption {
+            builder = builder
+                .experimental_encryption(true)
+                .with_encryption(encryption);
+        }
+        let database = builder.build().await?;
+        let connection = database.connect()?;
+        connection.execute("PRAGMA synchronous=FULL", ()).await?;
         let store = Self {
             _database: database,
             connection,
+            module_instance: uuid::Uuid::new_v4(),
+            module_epoch: std::sync::atomic::AtomicU64::new(0),
         };
-        store.migrate_legacy().await?;
+        anyhow::ensure!(
+            store.scalar("PRAGMA synchronous").await? == 2,
+            "The database engine did not enable durable transactions"
+        );
         Ok(store)
     }
 
@@ -79,15 +195,23 @@ impl Store {
 
     pub async fn load_or_seed(&self) -> Result<Vec<Page>> {
         let mut pages = self.load().await?;
-        if pages.is_empty() {
+        let mut initialized = self
+            .connection
+            .query("SELECT value FROM preferences WHERE key='initialized'", ())
+            .await?;
+        let seeded = initialized.next().await?.is_some();
+        drop(initialized);
+        if pages.is_empty() && !seeded {
             let page = welcome();
             self.save(&page).await?;
             pages.push(page);
         }
+        self.connection.execute("INSERT INTO preferences VALUES ('initialized', 'true') ON CONFLICT(key) DO NOTHING", ()).await?;
         Ok(pages)
     }
 
     pub async fn save(&self, page: &Page) -> Result<()> {
+        crate::workspace::validate_page(page)?;
         let old = self.load_one(&page.id).await?;
         let record = if let Some(old) = old.filter(|old| old != page) {
             let mut rows = self
@@ -160,19 +284,19 @@ pub fn database_path() -> PathBuf {
 
 fn decode_page(row: turso::Row) -> Result<Page> {
     let content: PageContent =
-        serde_json::from_str(&row.get::<String>(8)?).context("Lecture du document de blocs")?;
+        serde_json::from_str(&row.get::<String>(8)?).context("Reading the block document")?;
     anyhow::ensure!(
-        matches!(content.version, 1..=6),
-        "Cette version du document nécessite une version plus récente de Folio"
+        matches!(content.version, 1..=crate::document::CURRENT_VERSION),
+        "This document requires a newer version of Folio"
     );
     anyhow::ensure!(
         !content.blocks.is_empty(),
-        "Le document ne contient aucun bloc"
+        "The document contains no blocks"
     );
     let mut ids = std::collections::HashSet::new();
     anyhow::ensure!(
         content.blocks.iter().all(|block| ids.insert(&block.id)),
-        "Le document contient des identifiants de blocs dupliqués"
+        "The document contains duplicate block IDs"
     );
     Ok(Page {
         id: row.get(0)?,
@@ -185,12 +309,14 @@ fn decode_page(row: turso::Row) -> Result<Page> {
         updated_at: row.get(7)?,
         blocks: content.blocks,
         emoji: content.emoji,
+        icon_color: content.icon_color,
         cover: content.cover,
         wide: content.wide,
         collection: content.collection,
         properties: content.properties,
         dashboard: content.dashboard,
         order: content.order,
+        protected: content.protected,
     })
 }
 
@@ -233,6 +359,7 @@ impl Store {
         Ok(versions)
     }
     pub async fn checkpoint(&self, page: &Page) -> Result<()> {
+        crate::workspace::validate_page(page)?;
         self.connection
             .execute(
                 "INSERT INTO page_history VALUES (?, ?, ?, ?)",
@@ -248,12 +375,18 @@ impl Store {
         Ok(())
     }
     pub async fn notebook(&self, assets: &Path) -> Result<crate::workspace::Notebook> {
-        crate::workspace::Notebook::capture(
+        let mut notebook = crate::workspace::Notebook::capture(
             self.load().await?,
             self.preferences().await?,
             self.history(None).await?,
             assets,
-        )
+        )?;
+        notebook.modules = self.module_registry().await?;
+        if !notebook.modules.is_empty() {
+            notebook.format = 2;
+        }
+        notebook.validate()?;
+        Ok(notebook)
     }
     /// Asset files are installed first. A failed SQL transaction keeps the current notebook intact.
     pub async fn restore_notebook(
@@ -300,7 +433,92 @@ impl Store {
             .await?;
         }
         tx.execute("INSERT INTO preferences VALUES ('app', ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", (serde_json::to_string(&notebook.preferences)?,)).await?;
+        tx.execute("INSERT INTO preferences VALUES('modules',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", (serde_json::to_string(&notebook.modules)?,)).await?;
+        tx.execute(
+            "INSERT INTO preferences VALUES ('initialized', 'true') ON CONFLICT(key) DO NOTHING",
+            (),
+        )
+        .await?;
         tx.commit().await?;
+        self.module_epoch
+            .fetch_add(1, std::sync::atomic::Ordering::AcqRel);
         Ok(())
+    }
+}
+
+impl Store {
+    /// Replace the current page and every saved revision in one transaction.
+    pub async fn protect_page(&self, id: &str, keys: &crate::security::PageKey) -> Result<Page> {
+        let page = self.load_one(id).await?.context("Page not found")?;
+        let locked = crate::security::seal_page(&page, keys)?;
+        let history = self.history(Some(id)).await?;
+        let protected_history: Vec<_> = history
+            .into_iter()
+            .map(|h| {
+                crate::security::seal_page(&h.page, keys)
+                    .and_then(|p| Ok((h.id, serde_json::to_string(&p)?)))
+            })
+            .collect::<Result<_>>()?;
+        let tx = self.connection.unchecked_transaction().await?;
+        tx.execute(
+            "UPDATE pages SET title=?, body_html=?, plain_text=? WHERE id=?",
+            (
+                locked.title.clone(),
+                locked.body_html.clone(),
+                locked.plain_text.clone(),
+                id,
+            ),
+        )
+        .await?;
+        tx.execute(
+            "UPDATE page_content SET content_json=? WHERE page_id=?",
+            (serde_json::to_string(&locked.content())?, id),
+        )
+        .await?;
+        for (version, json) in protected_history {
+            tx.execute(
+                "UPDATE page_history SET content_json=? WHERE id=?",
+                (json, version),
+            )
+            .await?;
+        }
+        tx.commit().await?;
+        Ok(locked)
+    }
+}
+
+impl Store {
+    pub async fn delete_archived(&self, id: &str) -> Result<Option<String>> {
+        self.delete_page(id, true).await
+    }
+
+    pub async fn delete_confirmed(&self, id: &str) -> Result<Option<String>> {
+        self.delete_page(id, false).await
+    }
+
+    async fn delete_page(&self, id: &str, require_archived: bool) -> Result<Option<String>> {
+        let page = self.load_one(id).await?.context("Page not found")?;
+        anyhow::ensure!(
+            !require_archived || page.archived,
+            "Archive the page before permanently deleting it."
+        );
+        let tx = self.connection.unchecked_transaction().await?;
+        tx.execute(
+            "UPDATE pages SET parent_id=? WHERE parent_id=?",
+            (page.parent_id.clone(), id),
+        )
+        .await?;
+        tx.execute("DELETE FROM page_history WHERE page_id=?", (id,))
+            .await?;
+        tx.execute("DELETE FROM page_content WHERE page_id=?", (id,))
+            .await?;
+        tx.execute("DELETE FROM pages WHERE id=?", (id,)).await?;
+        tx.execute(
+            "INSERT INTO preferences VALUES ('initialized','true') ON CONFLICT(key) DO NOTHING",
+            (),
+        )
+        .await?;
+        tx.commit().await?;
+        Ok(page.parent_id)
     }
 }

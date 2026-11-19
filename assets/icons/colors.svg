@@ -1,0 +1,507 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 760">
+<title>Folio — icon colors</title>
+<rect width="520" height="760" fill="#fdfcf9"/>
+<rect x="520" width="520" height="760" fill="#1d1f1e"/>
+<g font-family="Inter, system-ui, sans-serif" fill="#2b312a">
+<text x="32" y="54" font-size="26">Folio / Icon colors</text>
+<text x="32" y="126" font-size="12">Sage</text>
+<g color="#41653e" transform="translate(136 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#41653e" transform="translate(191 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#41653e" transform="translate(246 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#41653e" transform="translate(301 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#41653e" transform="translate(356 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#41653e" transform="translate(411 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="32" y="202" font-size="12">Teal</text>
+<g color="#2d7773" transform="translate(136 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#2d7773" transform="translate(191 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#2d7773" transform="translate(246 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#2d7773" transform="translate(301 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#2d7773" transform="translate(356 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#2d7773" transform="translate(411 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="32" y="278" font-size="12">Blue</text>
+<g color="#3969a0" transform="translate(136 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#3969a0" transform="translate(191 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#3969a0" transform="translate(246 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#3969a0" transform="translate(301 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#3969a0" transform="translate(356 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#3969a0" transform="translate(411 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="32" y="354" font-size="12">Violet</text>
+<g color="#7056a0" transform="translate(136 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#7056a0" transform="translate(191 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#7056a0" transform="translate(246 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#7056a0" transform="translate(301 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#7056a0" transform="translate(356 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#7056a0" transform="translate(411 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="32" y="430" font-size="12">Rose</text>
+<g color="#9f4b72" transform="translate(136 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#9f4b72" transform="translate(191 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#9f4b72" transform="translate(246 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#9f4b72" transform="translate(301 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#9f4b72" transform="translate(356 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#9f4b72" transform="translate(411 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="32" y="506" font-size="12">Coral</text>
+<g color="#ab503c" transform="translate(136 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#ab503c" transform="translate(191 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#ab503c" transform="translate(246 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#ab503c" transform="translate(301 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#ab503c" transform="translate(356 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#ab503c" transform="translate(411 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="32" y="582" font-size="12">Amber</text>
+<g color="#976a22" transform="translate(136 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#976a22" transform="translate(191 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#976a22" transform="translate(246 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#976a22" transform="translate(301 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#976a22" transform="translate(356 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#976a22" transform="translate(411 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="32" y="658" font-size="12">Gray</text>
+<g color="#637078" transform="translate(136 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#637078" transform="translate(191 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#637078" transform="translate(246 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#637078" transform="translate(301 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#637078" transform="translate(356 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#637078" transform="translate(411 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+</g>
+<g font-family="Inter, system-ui, sans-serif" fill="#e8eae4">
+<text x="552" y="54" font-size="26">Folio / Icon colors</text>
+<text x="552" y="126" font-size="12">Sage</text>
+<g color="#99bd92" transform="translate(656 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#99bd92" transform="translate(711 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#99bd92" transform="translate(766 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#99bd92" transform="translate(821 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#99bd92" transform="translate(876 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#99bd92" transform="translate(931 102) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="552" y="202" font-size="12">Teal</text>
+<g color="#7ec0b7" transform="translate(656 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#7ec0b7" transform="translate(711 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#7ec0b7" transform="translate(766 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#7ec0b7" transform="translate(821 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#7ec0b7" transform="translate(876 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#7ec0b7" transform="translate(931 178) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="552" y="278" font-size="12">Blue</text>
+<g color="#8bb0da" transform="translate(656 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#8bb0da" transform="translate(711 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#8bb0da" transform="translate(766 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#8bb0da" transform="translate(821 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#8bb0da" transform="translate(876 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#8bb0da" transform="translate(931 254) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="552" y="354" font-size="12">Violet</text>
+<g color="#b6a2da" transform="translate(656 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#b6a2da" transform="translate(711 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#b6a2da" transform="translate(766 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#b6a2da" transform="translate(821 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#b6a2da" transform="translate(876 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#b6a2da" transform="translate(931 330) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="552" y="430" font-size="12">Rose</text>
+<g color="#d79db8" transform="translate(656 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#d79db8" transform="translate(711 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#d79db8" transform="translate(766 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#d79db8" transform="translate(821 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#d79db8" transform="translate(876 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#d79db8" transform="translate(931 406) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="552" y="506" font-size="12">Coral</text>
+<g color="#e1a58b" transform="translate(656 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#e1a58b" transform="translate(711 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#e1a58b" transform="translate(766 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#e1a58b" transform="translate(821 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#e1a58b" transform="translate(876 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#e1a58b" transform="translate(931 482) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="552" y="582" font-size="12">Amber</text>
+<g color="#d9bc79" transform="translate(656 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#d9bc79" transform="translate(711 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#d9bc79" transform="translate(766 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#d9bc79" transform="translate(821 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#d9bc79" transform="translate(876 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#d9bc79" transform="translate(931 558) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+<text x="552" y="658" font-size="12">Gray</text>
+<g color="#aeb8bc" transform="translate(656 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>
+  </g>
+</g>
+<g color="#aeb8bc" transform="translate(711 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19C1 12 7 4 20 4c0 12-7 18-15 15Z"/><path d="m4 21 11-11M8 17v-5M8 17h5"/>
+  </g>
+</g>
+<g color="#aeb8bc" transform="translate(766 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 16c-1-5 4-11 12-12 0 8-5 13-10 12Z"/><path d="m8 10-4 1-2 4h6m6 1-1 4-4 2v-6M6 18l-2 2"/><circle cx="15.5" cy="8.5" r="1.5"/>
+  </g>
+</g>
+<g color="#aeb8bc" transform="translate(821 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21 4.5 13.5a5.3 5.3 0 0 1 7.5-7.5 5.3 5.3 0 0 1 7.5 7.5L12 21Z"/>
+  </g>
+</g>
+<g color="#aeb8bc" transform="translate(876 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>
+  </g>
+</g>
+<g color="#aeb8bc" transform="translate(931 634) scale(1.5)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 7 9-4 9 4-9 4-9-4ZM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </g>
+</g>
+</g>
+</svg>

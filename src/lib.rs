@@ -10,3 +10,9 @@ pub mod outline;
 pub mod storage;
 pub mod templates;
 pub mod workspace;
+
+pub mod security;
+pub mod updates;
+pub mod vault;
+
+pub mod modules;

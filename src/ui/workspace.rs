@@ -14,8 +14,14 @@ pub(super) fn dialog(title: &str, p: Palette, body: El) -> El {
         .fill(rune::Color::BLACK.alpha(0.28))
         .center()
         .modal_tx(true, |s: &mut State, _| {
-            if !s.workspace.busy {
-                s.panel = Panel::Closed;
+            if !s.workspace.busy && !s.settings.busy {
+                if matches!(s.panel, Panel::ModuleReview | Panel::ModuleConfirm) {
+                    s.close_module_dialog();
+                } else if matches!(s.panel, Panel::Security) {
+                    s.cancel_security();
+                } else {
+                    s.panel = Panel::Closed;
+                }
             }
         })
         .child(
@@ -39,10 +45,21 @@ pub(super) fn dialog(title: &str, p: Palette, body: El) -> El {
                         .child(el().grow(1.0))
                         .child(icons::control(
                             "close-workspace",
-                            "Fermer",
+                            "Close",
                             &g::CLOSE,
                             p,
-                            |s, _| s.panel = Panel::Closed,
+                            |s, _| {
+                                if s.settings.busy || s.workspace.busy {
+                                    return;
+                                }
+                                if matches!(s.panel, Panel::ModuleReview | Panel::ModuleConfirm) {
+                                    s.close_module_dialog();
+                                } else if matches!(s.panel, Panel::Security) {
+                                    s.cancel_security();
+                                } else {
+                                    s.panel = Panel::Closed;
+                                }
+                            },
                         )),
                 )
                 .child(body),
@@ -50,20 +67,20 @@ pub(super) fn dialog(title: &str, p: Palette, body: El) -> El {
 }
 pub(super) fn menu(s: &State, p: Palette) -> El {
     let body = col().gap(5.0)
-        .child(icon_item("workspace-backup", "Sauvegarder le carnet complet…", &g::EXPORT, p, |s, tx| s.backup_dialog(tx)))
-        .child(icon_item("workspace-restore", "Restaurer une sauvegarde…", &g::UNDO, p, |s, tx| s.restore_dialog(tx)))
-        .child(icon_item("workspace-history", "Historique de cette page", &g::CLOCK, p, |s, _| s.open_history()))
-        .child(icon_item("workspace-attach", "Ajouter une image ou un document…", &g::COVER, p, |s, tx| s.attachment_dialog(tx)))
-        .child(icon_item("workspace-commands", "Ouvrir les commandes · ⌘K", &g::SEARCH, p, |s, tx| { s.open_palette(Mode::Commands); tx.focus("palette-search", false); }))
-        .child(label(if s.demo { "Le mode démo garde les notes en mémoire." } else { "Sauvegardes automatiques à l’ouverture et après une session modifiée. Les 14 dernières sont conservées à côté de la base." }, 11.0, p.faint).w_full().wrap());
-    dialog("Votre carnet", p, body)
+        .child(icon_item("workspace-backup", "Back up the entire notebook…", &g::EXPORT, p, |s, tx| s.backup_dialog(tx)))
+        .child(icon_item("workspace-restore", "Restore a backup…", &g::UNDO, p, |s, tx| s.restore_dialog(tx)))
+        .child(icon_item("workspace-history", "Page history", &g::CLOCK, p, |s, _| s.open_history()))
+        .child(icon_item("workspace-attach", "Add an image or document…", &g::COVER, p, |s, tx| s.attachment_dialog(tx)))
+        .child(icon_item("workspace-commands", "Open commands · ⌘K", &g::SEARCH, p, |s, tx| { s.open_palette(Mode::Commands); tx.focus("palette-search", false); }))
+        .child(label(if s.demo { "Demo mode keeps notes in memory." } else { "Automatic backups run at startup and after an edited session. The latest 14 are kept beside the database." }, 11.0, p.faint).w_full().wrap());
+    dialog("Your notebook", p, body)
 }
 pub(super) fn history(s: &State, p: Palette) -> El {
     let mut rows = col().gap(6.0);
     for version in &s.workspace.versions {
         let id = version.id.clone();
         let date = chrono::DateTime::from_timestamp(version.created_at, 0)
-            .map_or_else(String::new, |d| d.format("%d/%m/%Y %H:%M UTC").to_string());
+            .map_or_else(String::new, |d| d.format("%Y-%m-%d %H:%M UTC").to_string());
         rows = rows.child(
             row()
                 .gap(10.0)
@@ -75,14 +92,14 @@ pub(super) fn history(s: &State, p: Palette) -> El {
                         .gap(3.0)
                         .child(label(&version.page.title, 12.0, p.ink).truncate())
                         .child(label(
-                            format!("{date} · {} blocs", version.page.blocks.len()),
+                            format!("{date} · {} blocks", version.page.blocks.len()),
                             10.0,
                             p.faint,
                         )),
                 )
                 .child(action(
                     format!("restore-version-{id}"),
-                    "Restaurer",
+                    "Restore",
                     p,
                     move |s, _| {
                         s.workspace.busy = true;
@@ -92,26 +109,22 @@ pub(super) fn history(s: &State, p: Palette) -> El {
         );
     }
     if s.workspace.versions.is_empty() {
-        rows = rows.child(label(
-            "Aucune version antérieure enregistrée.",
-            12.0,
-            p.faint,
-        ));
+        rows = rows.child(label("No earlier versions saved.", 12.0, p.faint));
     }
-    dialog("Historique de la page", p, col().gap(12.0)
-        .child(label("Les modifications conservent une version précédente par minute, jusqu’à 50 versions. Restaurer conserve aussi l’état actuel.", 11.0, p.muted).w_full().wrap())
+    dialog("Page history", p, col().gap(12.0)
+        .child(label("Edits preserve one previous version per minute, up to 50 versions. Restoring also keeps the current state.", 11.0, p.muted).w_full().wrap())
         .child(col().h(280.0).min_h(0.0).scroll(ScrollSpec { stick_bottom: false }).child(rows))
-        .child(icons::action("checkpoint", "Créer un point de restauration", &g::PLUS, p, |s, _| s.checkpoint())))
+        .child(icons::action("checkpoint", "Create a restore point", &g::PLUS, p, |s, _| s.checkpoint())))
 }
 pub(super) fn restore(s: &State, p: Palette) -> El {
     let Some(bundle) = &s.workspace.preview else {
         return el();
     };
-    dialog("Restaurer ce carnet", p, col().gap(12.0)
-        .child(label(format!("{} pages · {} fichiers · {} versions de pages", bundle.pages.len(), bundle.assets.len(), bundle.history.len()), 14.0, p.ink))
-        .child(label("Le carnet actuel sera remplacé. Une sauvegarde complète de son état sera créée avant la restauration.", 12.0, p.muted).w_full().wrap())
-        .child(row().gap(8.0).child(el().grow(1.0)).child(action("cancel-restore", "Annuler", p, |s, _| { s.workspace.preview = None; s.panel = Panel::Closed; }))
-            .child(action("confirm-restore", "Restaurer le carnet", p, |s, _| s.confirm_restore()).fill(p.tint))))
+    dialog("Restore this notebook", p, col().gap(12.0)
+        .child(label(format!("{} pages · {} files · {} page versions · {} modules", bundle.pages.len(), bundle.assets.len(), bundle.history.len(), bundle.modules.records.len()), 14.0, p.ink))
+        .child(label("The current notebook will be replaced. A complete backup of its state will be created before restoring.", 12.0, p.muted).w_full().wrap())
+        .child(row().gap(8.0).child(el().grow(1.0)).child(action("cancel-restore", "Cancel", p, |s, _| { s.workspace.preview = None; s.panel = Panel::Closed; }))
+            .child(action("confirm-restore", "Restore notebook", p, |s, _| s.confirm_restore()).fill(p.tint))))
 }
 pub(super) fn busy(p: Palette) -> El {
     el().key("workspace-busy")
@@ -122,7 +135,7 @@ pub(super) fn busy(p: Palette) -> El {
         .center()
         .modal(false, |_: &mut State| {})
         .child(
-            label("Le carnet est en cours de traitement…", 14.0, p.ink)
+            label("Processing notebook…", 14.0, p.ink)
                 .padding(22.0)
                 .radius(8.0)
                 .fill(p.bg),
@@ -130,11 +143,11 @@ pub(super) fn busy(p: Palette) -> El {
 }
 pub(super) fn palette(s: &State, form: &Form, p: Palette) -> El {
     let title = match &form.mode {
-        Mode::Commands => "Pages et commandes",
-        Mode::Mention { .. } => "Mentionner une page",
-        Mode::BlockLink { .. } => "Lier un bloc",
-        Mode::Embed { .. } => "Insérer une vue de base",
-        Mode::Relation { .. } => "Lier des fiches",
+        Mode::Commands => "Pages and commands",
+        Mode::Mention { .. } => "Mention a page",
+        Mode::BlockLink { .. } => "Link a block",
+        Mode::Embed { .. } => "Insert a database view",
+        Mode::Relation { .. } => "Link records",
     };
     let items = s.palette_items();
     let mut rows = col().gap(3.0);
@@ -179,7 +192,7 @@ pub(super) fn palette(s: &State, form: &Form, p: Palette) -> El {
             .child(
                 text_input(&form.query, TextStyle::new(14.0, 400.0))
                     .key("palette-search")
-                    .label("Rechercher une page ou une commande")
+                    .label("Search pages or commands")
                     .single_line()
                     .w_full()
                     .h(36.0)
@@ -188,7 +201,7 @@ pub(super) fn palette(s: &State, form: &Form, p: Palette) -> El {
                     .radius(6.0)
                     .color(p.ink)
                     .caret(p.accent, p.tint)
-                    .placeholder("Rechercher…", p.faint)
+                    .placeholder("Search…", p.faint)
                     .on_edit(|s: &mut State| s.palette_edit())
                     .on_input_key(|s: &mut State, event, tx| {
                         let items = s.palette_items();
@@ -235,7 +248,7 @@ pub(super) fn palette(s: &State, form: &Form, p: Palette) -> El {
                     .child(rows),
             )
             .child(label(
-                "↑ ↓ choisir · Entrée ouvrir · Échap fermer",
+                "↑ ↓ choose · Enter open · Escape close",
                 10.0,
                 p.faint,
             )),

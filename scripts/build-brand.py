@@ -144,7 +144,7 @@ path = path_data()
 )
 (DEST / "folio-logo.svg").write_text(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">\n'
-    '  <title>Folio — feuilles pliées</title>\n'
+    '  <title>Folio — folded paper</title>\n'
     '  <rect width="64" height="64" rx="18" fill="#99bd92"/>\n'
     f'  <path fill="#1d1f1e" transform="translate(4 4) scale(2.333333)" d="{path}"/>\n'
     '</svg>\n'
@@ -191,5 +191,15 @@ render("folio-logo-studio.png", (0, -4, 20), 6.2, False)
 bpy.context.view_layer.objects.active = glyph
 bpy.ops.object.select_all(action="DESELECT")
 glyph.select_set(True)
+# Blender saves fixed-size path buffers, including bytes beyond the terminating
+# NUL. Overwrite their old contents before setting portable, relative paths.
+for screen in bpy.data.screens:
+    for screen_area in screen.areas:
+        for space in screen_area.spaces:
+            if space.type == "FILE_BROWSER" and space.params:
+                space.params.directory = b"_" * 1023
+                space.params.directory = b"//"
+scene.render.filepath = "_" * 1023
+scene.render.filepath = "//folio-logo-studio.png"
 bpy.ops.wm.save_as_mainfile(filepath=str(DEST / "folio-logo.blend"))
 print("Folio logo: Blender master, SVGs and two PNG renders exported.")

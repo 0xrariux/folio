@@ -11,25 +11,25 @@ impl State {
         if !self.demo {
             return;
         }
-        let mut relation = Column::new("Tâches du projet", ColumnKind::Relation);
+        let mut relation = Column::new("Project tasks", ColumnKind::Relation);
         relation.id = "demo-project-tasks".into();
         relation.config.target_base = Some("demo-tracker".into());
         relation.config.reverse_of = Some("demo-task-project".into());
-        let mut progress = Column::new("Progression (%)", ColumnKind::Rollup);
+        let mut progress = Column::new("Progress (%)", ColumnKind::Rollup);
         progress.id = "demo-project-progress".into();
         progress.config.relation = Some(relation.id.clone());
         progress.config.aggregate = Aggregate::Progress;
-        let mut hours = Column::new("Charge totale (h)", ColumnKind::Rollup);
+        let mut hours = Column::new("Total effort (h)", ColumnKind::Rollup);
         hours.id = "demo-project-hours".into();
         hours.config.relation = Some(relation.id.clone());
         hours.config.aggregate = Aggregate::Sum;
         hours.config.property = Some("demo-hours".into());
-        let mut budget = Column::new("Budget indicatif", ColumnKind::Formula);
+        let mut budget = Column::new("Estimated budget", ColumnKind::Formula);
         budget.id = "demo-project-budget".into();
-        budget.config.expression = "prop(\"Charge totale (h)\") * 80".into();
+        budget.config.expression = "prop(\"Total effort (h)\") * 80".into();
         let mut projects = Page::new(None);
         projects.id = "demo-projects-base".into();
-        projects.title = "Les projets de Folio".into();
+        projects.title = "Sample projects".into();
         projects.emoji = "🗂️".into();
         projects.wide = true;
         projects.collection = Some(Collection {
@@ -39,7 +39,7 @@ impl State {
         self.pages.push(projects);
         let mut project = Page::new(Some("demo-projects-base".into()));
         project.id = "demo-workspace-project".into();
-        project.title = "Construire Folio".into();
+        project.title = "Sample project".into();
         project.emoji = "🚀".into();
         project.wide = true;
         project.properties.custom.insert(
@@ -50,7 +50,7 @@ impl State {
                 "demo-record-3".into(),
             ]),
         );
-        let mut owner = Column::new("Projet", ColumnKind::Relation);
+        let mut owner = Column::new("Project", ColumnKind::Relation);
         owner.id = "demo-task-project".into();
         owner.config.target_base = Some("demo-projects-base".into());
         if let Some(base) = self
@@ -78,16 +78,16 @@ impl State {
         });
         project.blocks = vec![
             NoteBlock::new(Kind::TableOfContents),
-            NoteBlock::text(Kind::Heading2, "Le projet, au même endroit"),
+            NoteBlock::text(Kind::Heading2, "Everything in one place"),
             NoteBlock::text(
                 Kind::Text,
-                "Les notes, les tâches et leurs indicateurs partagent les mêmes données. Les propriétés ci-dessus se recalculent depuis les fiches liées.",
+                "Notes, tasks, and metrics share the same data. The properties above are calculated from linked records.",
             ),
             embed,
-            NoteBlock::text(Kind::Heading2, "Décisions et prochaines étapes"),
-            NoteBlock::text(Kind::Toggle, "Préparer la prochaine livraison"),
-            NoteBlock::text(Kind::Todo, "Valider le parcours d’écriture"),
-            NoteBlock::text(Kind::Todo, "Vérifier les sauvegardes du carnet"),
+            NoteBlock::text(Kind::Heading2, "Decisions and next steps"),
+            NoteBlock::text(Kind::Toggle, "Prepare the next release"),
+            NoteBlock::text(Kind::Todo, "Review the writing workflow"),
+            NoteBlock::text(Kind::Todo, "Check notebook backups"),
         ];
         project.blocks[6].indent = 1;
         project.blocks[7].indent = 1;

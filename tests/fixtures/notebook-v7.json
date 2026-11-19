@@ -1,0 +1,1080 @@
+{
+  "format": 1,
+  "document_version": 7,
+  "pages": [
+    {
+      "id": "fixture-note",
+      "parent_id": null,
+      "title": "All supported blocks 🦀",
+      "body_html": "<p>Rich fixture content 🦀</p>",
+      "plain_text": "Rich fixture content 🦀",
+      "favorite": true,
+      "archived": false,
+      "updated_at": 1,
+      "blocks": [
+        {
+          "id": "fixture-block-00",
+          "kind": "Text",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-01",
+          "kind": "Heading1",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-02",
+          "kind": "Heading2",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-03",
+          "kind": "Heading3",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-04",
+          "kind": "Bullet",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-05",
+          "kind": "Numbered",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": 3,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-06",
+          "kind": "Todo",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": true,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-07",
+          "kind": "Toggle",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": true,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-08",
+          "kind": "ToggleHeading1",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": true,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-09",
+          "kind": "ToggleHeading2",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": true,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-10",
+          "kind": "ToggleHeading3",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": true,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-11",
+          "kind": "Quote",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-12",
+          "kind": "Callout",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-13",
+          "kind": "Code",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-14",
+          "kind": "Divider",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-15",
+          "kind": "PageLink",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": "fixture-record-2",
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        },
+        {
+          "id": "fixture-block-16",
+          "kind": "DatabaseView",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": {
+            "base_id": "fixture-base",
+            "view_id": "view-table",
+            "relation_filter": null
+          },
+          "asset": null
+        },
+        {
+          "id": "fixture-block-17",
+          "kind": "Image",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "name": "fixture.png",
+            "mime": "image/png",
+            "size": 68,
+            "width_percent": 73
+          }
+        },
+        {
+          "id": "fixture-block-18",
+          "kind": "Attachment",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": {
+            "id": "00000000-0000-4000-8000-000000000002",
+            "name": "fixture.bin",
+            "mime": "application/octet-stream",
+            "size": 23,
+            "width_percent": 73
+          }
+        },
+        {
+          "id": "fixture-block-19",
+          "kind": "TableOfContents",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        }
+      ],
+      "emoji": "folio:heart",
+      "icon_color": "rose",
+      "cover": 2,
+      "wide": true,
+      "collection": null,
+      "properties": {
+        "status": "Todo",
+        "priority": "Medium",
+        "due": null,
+        "tags": [
+          "fixture"
+        ],
+        "custom": {}
+      },
+      "dashboard": null,
+      "order": 1024
+    },
+    {
+      "id": "fixture-base",
+      "parent_id": null,
+      "title": "A collection",
+      "body_html": "<p>Rich fixture content 🦀</p>",
+      "plain_text": "Rich fixture content 🦀",
+      "favorite": false,
+      "archived": false,
+      "updated_at": 2,
+      "blocks": [
+        {
+          "id": "fixture-block-32",
+          "kind": "Text",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        }
+      ],
+      "emoji": "folio:heart",
+      "icon_color": "rose",
+      "cover": 2,
+      "wide": true,
+      "collection": {
+        "view": "Table",
+        "sort": "Title",
+        "status": null,
+        "priority": null,
+        "deadline": "All",
+        "columns": [
+          {
+            "id": "c-text",
+            "name": "Text",
+            "kind": "Text",
+            "visible": true,
+            "config": {
+              "reverse_of": null,
+              "auto_inverse": false,
+              "target_base": null,
+              "relation": null,
+              "property": null,
+              "aggregate": "Count",
+              "expression": ""
+            }
+          },
+          {
+            "id": "c-number",
+            "name": "Number",
+            "kind": "Number",
+            "visible": true,
+            "config": {
+              "reverse_of": null,
+              "auto_inverse": false,
+              "target_base": null,
+              "relation": null,
+              "property": null,
+              "aggregate": "Count",
+              "expression": ""
+            }
+          },
+          {
+            "id": "c-date",
+            "name": "Date",
+            "kind": "Date",
+            "visible": true,
+            "config": {
+              "reverse_of": null,
+              "auto_inverse": false,
+              "target_base": null,
+              "relation": null,
+              "property": null,
+              "aggregate": "Count",
+              "expression": ""
+            }
+          },
+          {
+            "id": "c-checkbox",
+            "name": "Checkbox",
+            "kind": "Checkbox",
+            "visible": true,
+            "config": {
+              "reverse_of": null,
+              "auto_inverse": false,
+              "target_base": null,
+              "relation": null,
+              "property": null,
+              "aggregate": "Count",
+              "expression": ""
+            }
+          },
+          {
+            "id": "c-relation",
+            "name": "Relation",
+            "kind": "Relation",
+            "visible": true,
+            "config": {
+              "reverse_of": null,
+              "auto_inverse": false,
+              "target_base": "fixture-base",
+              "relation": null,
+              "property": null,
+              "aggregate": "Count",
+              "expression": ""
+            }
+          },
+          {
+            "id": "c-rollup",
+            "name": "Rollup",
+            "kind": "Rollup",
+            "visible": true,
+            "config": {
+              "reverse_of": null,
+              "auto_inverse": false,
+              "target_base": null,
+              "relation": "c-relation",
+              "property": "c-number",
+              "aggregate": "Sum",
+              "expression": ""
+            }
+          },
+          {
+            "id": "c-formula",
+            "name": "Formula",
+            "kind": "Formula",
+            "visible": true,
+            "config": {
+              "reverse_of": null,
+              "auto_inverse": false,
+              "target_base": null,
+              "relation": null,
+              "property": null,
+              "aggregate": "Count",
+              "expression": "1 + 2"
+            }
+          }
+        ],
+        "hidden": [
+          "Tags"
+        ],
+        "views": [
+          {
+            "id": "view-table",
+            "name": "Table fixture",
+            "view": "Table",
+            "sort": "Title",
+            "filter": {
+              "status": null,
+              "priority": null,
+              "deadline": "All"
+            },
+            "layout": {
+              "order": [
+                "title",
+                "c-number",
+                "status"
+              ],
+              "widths": {
+                "title": 280,
+                "c-number": 175
+              },
+              "hidden": [
+                "c-text"
+              ]
+            }
+          },
+          {
+            "id": "view-board",
+            "name": "Board fixture",
+            "view": "Board",
+            "sort": "Title",
+            "filter": {
+              "status": null,
+              "priority": null,
+              "deadline": "All"
+            },
+            "layout": {
+              "order": [
+                "title",
+                "c-number",
+                "status"
+              ],
+              "widths": {
+                "title": 280,
+                "c-number": 175
+              },
+              "hidden": [
+                "c-text"
+              ]
+            }
+          },
+          {
+            "id": "view-calendar",
+            "name": "Calendar fixture",
+            "view": "Calendar",
+            "sort": "Title",
+            "filter": {
+              "status": null,
+              "priority": null,
+              "deadline": "All"
+            },
+            "layout": {
+              "order": [
+                "title",
+                "c-number",
+                "status"
+              ],
+              "widths": {
+                "title": 280,
+                "c-number": 175
+              },
+              "hidden": [
+                "c-text"
+              ]
+            }
+          },
+          {
+            "id": "view-dashboard",
+            "name": "Dashboard fixture",
+            "view": "Dashboard",
+            "sort": "Title",
+            "filter": {
+              "status": null,
+              "priority": null,
+              "deadline": "All"
+            },
+            "layout": {
+              "order": [
+                "title",
+                "c-number",
+                "status"
+              ],
+              "widths": {
+                "title": 280,
+                "c-number": 175
+              },
+              "hidden": [
+                "c-text"
+              ]
+            }
+          }
+        ],
+        "active_view": "view-table",
+        "layout": {
+          "order": [
+            "title",
+            "c-number",
+            "status"
+          ],
+          "widths": {
+            "title": 280,
+            "c-number": 175
+          },
+          "hidden": [
+            "c-text"
+          ]
+        }
+      },
+      "properties": {
+        "status": "Todo",
+        "priority": "Medium",
+        "due": null,
+        "tags": [
+          "fixture"
+        ],
+        "custom": {}
+      },
+      "dashboard": null,
+      "order": 2048
+    },
+    {
+      "id": "fixture-record",
+      "parent_id": "fixture-base",
+      "title": "A record",
+      "body_html": "<p>Rich fixture content 🦀</p>",
+      "plain_text": "Rich fixture content 🦀",
+      "favorite": false,
+      "archived": false,
+      "updated_at": 3,
+      "blocks": [
+        {
+          "id": "fixture-block-33",
+          "kind": "Text",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        }
+      ],
+      "emoji": "folio:heart",
+      "icon_color": "rose",
+      "cover": 2,
+      "wide": true,
+      "collection": null,
+      "properties": {
+        "status": "InProgress",
+        "priority": "High",
+        "due": "2026-11-19",
+        "tags": [
+          "fixture"
+        ],
+        "custom": {
+          "c-text": {
+            "Text": "Keep this value"
+          },
+          "c-number": {
+            "Number": "123.45"
+          },
+          "c-date": {
+            "Date": "2026-12-01"
+          },
+          "c-checkbox": {
+            "Checkbox": true
+          },
+          "c-relation": {
+            "Relation": [
+              "fixture-record-2"
+            ]
+          }
+        }
+      },
+      "dashboard": null,
+      "order": 3072
+    },
+    {
+      "id": "fixture-record-2",
+      "parent_id": "fixture-base",
+      "title": "An archived record",
+      "body_html": "<p>Rich fixture content 🦀</p>",
+      "plain_text": "Rich fixture content 🦀",
+      "favorite": true,
+      "archived": true,
+      "updated_at": 4,
+      "blocks": [
+        {
+          "id": "fixture-block-34",
+          "kind": "Text",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        }
+      ],
+      "emoji": "folio:heart",
+      "icon_color": "rose",
+      "cover": 2,
+      "wide": true,
+      "collection": null,
+      "properties": {
+        "status": "Todo",
+        "priority": "Medium",
+        "due": null,
+        "tags": [
+          "fixture"
+        ],
+        "custom": {}
+      },
+      "dashboard": null,
+      "order": 4096
+    },
+    {
+      "id": "fixture-dashboard",
+      "parent_id": null,
+      "title": "A dashboard",
+      "body_html": "<p>Rich fixture content 🦀</p>",
+      "plain_text": "Rich fixture content 🦀",
+      "favorite": false,
+      "archived": false,
+      "updated_at": 5,
+      "blocks": [
+        {
+          "id": "fixture-block-35",
+          "kind": "Text",
+          "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+          "checked": false,
+          "indent": 0,
+          "target_id": null,
+          "collapsed": false,
+          "number_start": null,
+          "embedded": null,
+          "asset": null
+        }
+      ],
+      "emoji": "folio:heart",
+      "icon_color": "rose",
+      "cover": 2,
+      "wide": true,
+      "collection": null,
+      "properties": {
+        "status": "Todo",
+        "priority": "Medium",
+        "due": null,
+        "tags": [
+          "fixture"
+        ],
+        "custom": {}
+      },
+      "dashboard": {
+        "scope": {
+          "Selected": [
+            "fixture-base"
+          ]
+        },
+        "filter": {
+          "status": "InProgress",
+          "priority": "High",
+          "deadline": "NextWeek"
+        }
+      },
+      "order": 5120
+    }
+  ],
+  "preferences": {
+    "dark": false,
+    "sidebar_width": 312,
+    "last_page": "fixture-note",
+    "sidebar_shortcuts": [
+      "favorites",
+      "all_pages",
+      "overview"
+    ]
+  },
+  "history": [
+    {
+      "id": "history-record",
+      "page_id": "fixture-record",
+      "created_at": 41,
+      "page": {
+        "id": "fixture-record",
+        "parent_id": "fixture-base",
+        "title": "Earlier record revision",
+        "body_html": "<p>Rich fixture content 🦀</p>",
+        "plain_text": "Rich fixture content 🦀",
+        "favorite": false,
+        "archived": false,
+        "updated_at": 0,
+        "blocks": [
+          {
+            "id": "fixture-block-33",
+            "kind": "Text",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          }
+        ],
+        "emoji": "folio:heart",
+        "icon_color": "rose",
+        "cover": 2,
+        "wide": true,
+        "collection": null,
+        "properties": {
+          "status": "InProgress",
+          "priority": "High",
+          "due": "2026-11-19",
+          "tags": [
+            "fixture"
+          ],
+          "custom": {
+            "c-text": {
+              "Text": "Keep this value"
+            },
+            "c-number": {
+              "Number": "123.45"
+            },
+            "c-date": {
+              "Date": "2026-12-01"
+            },
+            "c-checkbox": {
+              "Checkbox": true
+            },
+            "c-relation": {
+              "Relation": [
+                "fixture-record-2"
+              ]
+            }
+          }
+        },
+        "dashboard": null,
+        "order": 3072
+      }
+    },
+    {
+      "id": "history-note",
+      "page_id": "fixture-note",
+      "created_at": 40,
+      "page": {
+        "id": "fixture-note",
+        "parent_id": null,
+        "title": "All supported blocks 🦀",
+        "body_html": "<p>Rich fixture content 🦀</p>",
+        "plain_text": "Rich fixture content 🦀",
+        "favorite": true,
+        "archived": false,
+        "updated_at": 1,
+        "blocks": [
+          {
+            "id": "fixture-block-00",
+            "kind": "Text",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-01",
+            "kind": "Heading1",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-02",
+            "kind": "Heading2",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-03",
+            "kind": "Heading3",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-04",
+            "kind": "Bullet",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-05",
+            "kind": "Numbered",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": 3,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-06",
+            "kind": "Todo",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": true,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-07",
+            "kind": "Toggle",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": true,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-08",
+            "kind": "ToggleHeading1",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": true,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-09",
+            "kind": "ToggleHeading2",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": true,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-10",
+            "kind": "ToggleHeading3",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": true,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-11",
+            "kind": "Quote",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-12",
+            "kind": "Callout",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-13",
+            "kind": "Code",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-14",
+            "kind": "Divider",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-15",
+            "kind": "PageLink",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": "fixture-record-2",
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          },
+          {
+            "id": "fixture-block-16",
+            "kind": "DatabaseView",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": {
+              "base_id": "fixture-base",
+              "view_id": "view-table",
+              "relation_filter": null
+            },
+            "asset": null
+          },
+          {
+            "id": "fixture-block-17",
+            "kind": "Image",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "name": "fixture.png",
+              "mime": "image/png",
+              "size": 68,
+              "width_percent": 73
+            }
+          },
+          {
+            "id": "fixture-block-18",
+            "kind": "Attachment",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "fixture.bin",
+              "mime": "application/octet-stream",
+              "size": 23,
+              "width_percent": 73
+            }
+          },
+          {
+            "id": "fixture-block-19",
+            "kind": "TableOfContents",
+            "html": "<p>Keep <strong>rich</strong> text: café 日本語 🦀</p>",
+            "checked": false,
+            "indent": 0,
+            "target_id": null,
+            "collapsed": false,
+            "number_start": null,
+            "embedded": null,
+            "asset": null
+          }
+        ],
+        "emoji": "folio:heart",
+        "icon_color": "rose",
+        "cover": 2,
+        "wide": true,
+        "collection": null,
+        "properties": {
+          "status": "Todo",
+          "priority": "Medium",
+          "due": null,
+          "tags": [
+            "fixture"
+          ],
+          "custom": {}
+        },
+        "dashboard": null,
+        "order": 1024
+      }
+    }
+  ],
+  "assets": {
+    "00000000-0000-4000-8000-000000000001": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a4l0AAAAASUVORK5CYII=",
+    "00000000-0000-4000-8000-000000000002": "AEZvbGlvIGJpbmFyeSBmaXh0dXJl/wo="
+  }
+}

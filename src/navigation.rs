@@ -25,6 +25,21 @@ impl State {
         self.load_page(id);
     }
     fn load_page(&mut self, id: &str) {
+        if let Some(previous) = self
+            .selected
+            .clone()
+            .filter(|previous| previous != id && self.settings.unlocked.contains(previous))
+        {
+            if let Some(locked) = self.settings.locked_pages.remove(&previous)
+                && let Some(page) = self.pages.iter_mut().find(|p| p.id == previous)
+            {
+                *page = locked;
+            }
+            self.settings.unlocked.remove(&previous);
+            if let Some(worker) = &self.worker {
+                let _ = worker.security(folio::vault::Action::LockPage(previous));
+            }
+        }
         self.selection.clear();
         self.workspace.selected_records.clear();
         self.workspace.entity_drag = None;
@@ -91,11 +106,22 @@ impl State {
         self.persist(&id);
     }
     pub fn duplicate_page(&mut self) {
+        if self
+            .selected
+            .as_ref()
+            .is_some_and(|id| self.protected_page(id))
+        {
+            self.export_message = Some(
+                "Duplicating a protected page is disabled to avoid creating a plain-text copy."
+                    .into(),
+            );
+            return;
+        }
         let Some(mut copy) = self.current().cloned() else {
             return;
         };
         copy.id = uuid::Uuid::new_v4().to_string();
-        copy.title = format!("{} (copie)", copy.display_title());
+        copy.title = format!("{} (copy)", copy.display_title());
         copy.favorite = false;
         copy.archived = false;
         copy.updated_at = now();
@@ -184,5 +210,192 @@ impl State {
         }
         self.panel = Panel::Closed;
         self.persist(&id);
+    }
+
+    pub fn set_icon_color(&mut self, color: folio::icons::IconColor) {
+        if self.settings.locked || self.current().is_none_or(|p| p.protected.is_some()) {
+            return;
+        }
+        let Some(page) = self
+            .pages
+            .iter_mut()
+            .find(|p| Some(&p.id) == self.selected.as_ref())
+        else {
+            return;
+        };
+        page.icon_color = color;
+        page.updated_at = now();
+        let id = page.id.clone();
+        self.persist(&id);
+    }
+}
+
+impl State {
+    pub fn confirm_delete(&mut self) {
+        if self.workspace.busy || self.settings.busy || self.settings.locked {
+            return;
+        }
+        let Panel::ConfirmDelete(id) = self.panel.clone() else {
+            return;
+        };
+        let Some(page) = self.pages.iter().find(|p| p.id == id) else {
+            return;
+        };
+        if page.protected.is_some() {
+            self.export_message = Some("Unlock the page before deleting it.".into());
+            self.panel = Panel::Closed;
+            return;
+        }
+        let parent = page.parent_id.clone();
+        if self.demo {
+            self.apply_deleted(&id, parent);
+        } else {
+            self.edit();
+            self.workspace.busy = true;
+            self.workspace_request(crate::workspace_worker::Request::DeletePage(id));
+        }
+    }
+    pub fn apply_deleted(&mut self, id: &str, parent: Option<String>) {
+        self.pages.retain(|p| p.id != id);
+        for page in &mut self.pages {
+            if page.parent_id.as_deref() == Some(id) {
+                page.parent_id = parent.clone();
+            }
+        }
+        self.pending.remove(id);
+        self.settings.unlocked.remove(id);
+        self.settings.locked_pages.remove(id);
+        self.history.retain(|p| p != id);
+        self.history_at = self.history_at.min(self.history.len().saturating_sub(1));
+        self.workspace.busy = false;
+        self.panel = Panel::Closed;
+        if self.selected.as_deref() == Some(id) {
+            self.selected = None;
+            self.title = TextEdit::new("");
+            self.blocks.clear();
+            self.active = None;
+            self.undo.clear();
+            self.redo.clear();
+            self.selection.clear();
+            self.workspace.versions.clear();
+            if let Some(next) = self
+                .pages
+                .iter()
+                .find(|p| !p.archived)
+                .map(|p| p.id.clone())
+            {
+                self.select(&next);
+            }
+        }
+        self.export_message =
+            Some("Page permanently deleted from the notebook. Earlier backups are kept.".into());
+    }
+}
+
+impl State {
+    pub(crate) fn can_customize_sidebar(&self) -> bool {
+        !self.workspace.busy
+            && !self.settings.busy
+            && !self.settings.locked
+            && (self.demo || self.workspace.preferences_loaded)
+    }
+
+    pub fn move_sidebar_shortcut(&mut self, shortcut: folio::workspace::SidebarShortcut, up: bool) {
+        if !self.can_customize_sidebar() {
+            return;
+        }
+        let shortcuts = &mut self.workspace.preferences.sidebar_shortcuts;
+        let Some(from) = shortcuts.iter().position(|item| *item == shortcut) else {
+            return;
+        };
+        let to = if up {
+            from.checked_sub(1)
+        } else {
+            from.checked_add(1)
+        };
+        let Some(to) = to.filter(|to| *to < shortcuts.len()) else {
+            return;
+        };
+        shortcuts.swap(from, to);
+        self.save_preferences();
+    }
+
+    pub fn show_sidebar_shortcut(
+        &mut self,
+        shortcut: folio::workspace::SidebarShortcut,
+        show: bool,
+    ) {
+        use folio::workspace::SidebarShortcut;
+        if !self.can_customize_sidebar() {
+            return;
+        }
+        let shortcuts = &mut self.workspace.preferences.sidebar_shortcuts;
+        if show {
+            if shortcuts.contains(&shortcut) {
+                return;
+            }
+            shortcuts.push(shortcut);
+        } else {
+            let Some(index) = shortcuts.iter().position(|item| *item == shortcut) else {
+                return;
+            };
+            shortcuts.remove(index);
+            if matches!(
+                (shortcut, self.filter),
+                (SidebarShortcut::Favorites, Filter::Favorites)
+                    | (SidebarShortcut::Archives, Filter::Archive)
+            ) {
+                self.filter = Filter::All;
+            }
+        }
+        self.save_preferences();
+    }
+
+    pub fn reset_sidebar_shortcuts(&mut self) {
+        if !self.can_customize_sidebar() {
+            return;
+        }
+        self.workspace.preferences.sidebar_shortcuts =
+            folio::workspace::SidebarShortcut::defaults();
+        self.save_preferences();
+    }
+}
+
+impl State {
+    pub fn drop_sidebar_shortcut(&mut self, source: &str, target: &str) {
+        use folio::workspace::SidebarShortcut;
+        if !self.can_customize_sidebar() {
+            return;
+        }
+        let Some(source) = source
+            .strip_prefix("shortcut:")
+            .and_then(SidebarShortcut::from_key)
+        else {
+            return;
+        };
+        let (target, after) = if let Some(key) = target.strip_prefix("shortcut-before-") {
+            (key, false)
+        } else if let Some(key) = target.strip_prefix("shortcut-after-") {
+            (key, true)
+        } else {
+            return;
+        };
+        let Some(target) = SidebarShortcut::from_key(target).filter(|target| *target != source)
+        else {
+            return;
+        };
+        let shortcuts = &mut self.workspace.preferences.sidebar_shortcuts;
+        let Some(from) = shortcuts.iter().position(|item| *item == source) else {
+            return;
+        };
+        if !shortcuts.contains(&target) {
+            return;
+        }
+        shortcuts.remove(from);
+        let to = shortcuts.iter().position(|item| *item == target).unwrap() + usize::from(after);
+        shortcuts.insert(to, source);
+        if from != to {
+            self.save_preferences();
+        }
     }
 }

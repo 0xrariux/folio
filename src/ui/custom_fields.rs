@@ -60,7 +60,7 @@ pub(super) fn cell_with_key(
             .h(31.0)
             .px(6.0)
             .center_y()
-            .help("Valeur calculée automatiquement")
+            .help("Automatically calculated value")
             .child(label(&title, 12.0, p.ink).min_w(0.0).truncate());
     }
     let kind = column.kind;
@@ -68,7 +68,7 @@ pub(super) fn cell_with_key(
     row()
         .key(key)
         .role("button")
-        .label(format!("Modifier {} : {}", column.name, title))
+        .label(format!("Edit {}: {}", column.name, title))
         .focusable(true)
         .h(31.0)
         .w_full()
@@ -147,14 +147,14 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
                 )
                 .child(super::icons::control(
                     format!("column-up-{key}"),
-                    "Déplacer à gauche",
+                    "Move left",
                     &folio::icons::controls::ARROW_UP,
                     p,
                     move |s, _| s.move_column(&up, false),
                 ))
                 .child(super::icons::control(
                     format!("column-down-{key}"),
-                    "Déplacer à droite",
+                    "Move right",
                     &folio::icons::controls::ARROW_DOWN,
                     p,
                     move |s, _| s.move_column(&down, true),
@@ -173,7 +173,7 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
                 .child(
                     super::button(
                         format!("toggle-column-{id}"),
-                        &format!("Afficher la colonne {}", column.name),
+                        &format!("Show column {}", column.name),
                         p,
                         move |s, _| s.toggle_column(&id),
                     )
@@ -181,7 +181,7 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
                     .checked(column.visible)
                     .size(30.0, 30.0)
                     .px(6.0)
-                    .help(format!("Afficher ou masquer {}", column.name))
+                    .help(format!("Show or hide {}", column.name))
                     .child(super::icons::checkbox_mark(column.visible, p)),
                 )
                 .child(
@@ -192,21 +192,21 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
                 )
                 .child(super::icons::control(
                     format!("column-up-{}", column.id),
-                    "Déplacer la colonne vers la gauche",
+                    "Move column left",
                     &folio::icons::controls::ARROW_UP,
                     p,
                     move |s, _| s.move_column(&up_id, false),
                 ))
                 .child(super::icons::control(
                     format!("column-down-{}", column.id),
-                    "Déplacer la colonne vers la droite",
+                    "Move column right",
                     &folio::icons::controls::ARROW_DOWN,
                     p,
                     move |s, _| s.move_column(&down_id, true),
                 ))
                 .child(action(
                     format!("rename-column-{}", column.id),
-                    "Renommer",
+                    "Rename",
                     p,
                     move |s, tx| {
                         s.edit_column(&edit_id);
@@ -223,11 +223,11 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
         .child(
             row()
                 .center_y()
-                .child(label("COLONNES DU TABLEAU", 10.0, p.faint))
+                .child(label("TABLE COLUMNS", 10.0, p.faint))
                 .child(el().grow(1.0))
                 .child(super::icons::control(
                     "close-columns",
-                    "Fermer les colonnes",
+                    "Close columns",
                     &folio::icons::controls::CLOSE,
                     p,
                     |s, _| s.panel = Panel::Closed,
@@ -245,9 +245,9 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
         .child(el().h(1.0).fill(p.line))
         .child(label(
             if form.id.is_some() {
-                "RENOMMER UNE COLONNE"
+                "RENAME COLUMN"
             } else {
-                "NOUVELLE COLONNE"
+                "NEW COLUMN"
             },
             10.0,
             p.faint,
@@ -255,7 +255,7 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
         .child(
             text_input(&form.name, TextStyle::new(13.0, 400.0))
                 .key("column-name")
-                .label("Nom de la colonne")
+                .label("Column name")
                 .single_line()
                 .w_full()
                 .h(32.0)
@@ -264,7 +264,7 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
                 .radius(5.0)
                 .color(p.ink)
                 .caret(p.accent, p.tint)
-                .placeholder("Ex. Charge (h), Référent…", p.faint)
+                .placeholder("E.g. Effort (h), Owner…", p.faint)
                 .on_edit(|s: &mut State| s.column_name_edit())
                 .on_submit(|s: &mut State, _| s.save_column())
                 .on_input_key(|s: &mut State, event, _| {
@@ -309,7 +309,7 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
         }
     } else {
         menu = menu.child(label(
-            format!("Type conservé : {}", form.kind.name()),
+            format!("Type unchanged: {}", form.kind.name()),
             11.0,
             p.faint,
         ));
@@ -322,9 +322,9 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
         super::icons::action(
             "save-column",
             if form.id.is_some() {
-                "Enregistrer la propriété"
+                "Save property"
             } else {
-                "Ajouter la colonne"
+                "Add column"
             },
             if form.id.is_some() {
                 &folio::icons::controls::CHECK
@@ -366,11 +366,11 @@ pub(super) fn columns(s: &State, form: &ColumnForm, p: Palette) -> El {
 
 pub(super) fn cell_form(s: &State, form: &CellForm, p: Palette) -> El {
     let column = s.field_column(&form.record_id, &form.column_id);
-    let title = column.map_or("Valeur", |c| c.name.as_str());
+    let title = column.map_or("Value", |c| c.name.as_str());
     let hint = match column.map(|c| c.kind) {
-        Some(ColumnKind::Number) => "Un nombre, ou vide pour effacer",
-        Some(ColumnKind::Date) => "AAAA-MM-JJ, ou vide pour effacer",
-        _ => "Une valeur, ou vide pour effacer",
+        Some(ColumnKind::Number) => "A number, or leave blank to clear",
+        Some(ColumnKind::Date) => "YYYY-MM-DD, or leave blank to clear",
+        _ => "A value, or leave blank to clear",
     };
     let mut menu = surface("cell-form", &form.anchor, 320.0, p)
         .padding(12.0)
@@ -407,10 +407,10 @@ pub(super) fn cell_form(s: &State, form: &CellForm, p: Palette) -> El {
         row()
             .gap(6.0)
             .child(el().grow(1.0))
-            .child(action("cancel-cell", "Annuler", p, |s, _| {
+            .child(action("cancel-cell", "Cancel", p, |s, _| {
                 s.panel = Panel::Closed
             }))
-            .child(action("save-cell", "Enregistrer", p, |s, _| s.save_cell()).fill(p.tint)),
+            .child(action("save-cell", "Save", p, |s, _| s.save_cell()).fill(p.tint)),
     )
 }
 
@@ -420,7 +420,7 @@ pub(super) fn sources(s: &State, p: Palette) -> El {
     };
     let mut rows = col()
         .gap(2.0)
-        .child(item("sources-all", "Toutes les bases", p, |s, _| {
+        .child(item("sources-all", "All databases", p, |s, _| {
             s.dashboard_scope(None)
         }));
     for source in s
@@ -444,11 +444,11 @@ pub(super) fn sources(s: &State, p: Palette) -> El {
         .child(
             row()
                 .center_y()
-                .child(label("BASES À SUIVRE", 10.0, p.faint))
+                .child(label("DATABASES TO TRACK", 10.0, p.faint))
                 .child(el().grow(1.0))
                 .child(super::icons::control(
                     "close-sources",
-                    "Fermer les bases suivies",
+                    "Close tracked databases",
                     &folio::icons::controls::CLOSE,
                     p,
                     |s, _| s.panel = Panel::Closed,

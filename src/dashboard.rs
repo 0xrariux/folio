@@ -7,6 +7,7 @@ use chrono::{Days, NaiveDate};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum Deadline {
     #[default]
     All,
@@ -18,15 +19,16 @@ impl Deadline {
     pub const ALL: [Self; 4] = [Self::All, Self::Overdue, Self::NextWeek, Self::NoDate];
     pub fn name(self) -> &'static str {
         match self {
-            Self::All => "Toutes les échéances",
-            Self::Overdue => "En retard",
-            Self::NextWeek => "Dans les 7 jours",
-            Self::NoDate => "Sans échéance",
+            Self::All => "All due dates",
+            Self::Overdue => "Overdue",
+            Self::NextWeek => "Next 7 days",
+            Self::NoDate => "No due date",
         }
     }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct TrackingFilter {
     #[serde(default)]
     pub status: Option<Status>,
@@ -52,6 +54,7 @@ impl TrackingFilter {
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum Scope {
     #[default]
     All,
@@ -66,6 +69,7 @@ impl Scope {
     }
 }
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct DashboardConfig {
     #[serde(default)]
     pub scope: Scope,

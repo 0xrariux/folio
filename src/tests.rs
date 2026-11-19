@@ -17,6 +17,11 @@ fn runtime() -> Runtime<State> {
 }
 
 fn tap(rt: &mut Runtime<State>, key: &str) {
+    // The notebook scrolls independently of the fixed Library/Settings footer.
+    rt.update(|_, tx| tx.scroll_into_view(key));
+    for _ in 0..35 {
+        rt.frame(1.0 / 60.0);
+    }
     let (x, y) = rt
         .find(key)
         .unwrap_or_else(|| panic!("Missing control: {key}"));
@@ -79,7 +84,7 @@ fn archived_parent_does_not_hide_its_children_and_search_reads_content() {
     assert_eq!(state.sidebar_pages().len(), 1);
     state.archive();
     state.filter = Filter::All;
-    state.search.text = "PRESSION".into();
+    state.search.text = "EXPLORING".into();
     assert_eq!(
         state
             .sidebar_pages()

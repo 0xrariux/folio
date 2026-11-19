@@ -1,185 +1,66 @@
-# Folio et Notion — état des lieux
+# Folio feature status
 
-Comparaison fonctionnelle au 10 novembre 2026. « Partiel » décrit un périmètre
-réduit et utilisable, sans prétendre reproduire toute la fonction de Notion.
-Le tableau ci-dessous conserve le bilan de l’itération 0.3, partie de Folio 0.2.
-La version actuelle est 0.10 ; les changements récents sont détaillés ci-dessous.
+Current scope: Folio 0.13. This describes Folio's implemented behavior, rather
+than claiming complete feature or performance parity with Notion. Earlier
+iterations are recorded in the [changelog](CHANGELOG.md).
 
-## État courant — Folio 0.10
+| Area | Available | Remaining scope |
+|---|---|---|
+| Editor | 20 block kinds, rich text, toggles, nested lists, multiple selection and subtree operations | Block columns and advanced typography |
+| Organization | Pages/subpages, favorites, archives, confirmed deletion, drag order/nesting | Shared spaces and collaboration permissions |
+| Collections | Table, Kanban, Calendar, Dashboard, named views, combined filters and sorting | Gallery, timeline and complex nested filters |
+| Tables | Per-view widths/order/visibility, bulk record edits, virtualized rows | Spreadsheet-style keyboard cell editing |
+| Relations/calculations | Reverse relations, count/completion/sum/remaining rollups, numeric formulas | Full formula language and automations |
+| Project pages | Embedded source views, shared records and project-relation filters | Free widget arrangement |
+| Navigation | Command-K palette, Unicode search, mentions, page/block links, contents and backlinks | Indexed whole-notebook search and published external links |
+| Media | Managed local images/files, image sizing and original-file export | Remote media, embedded PDF reader and shared storage |
+| History/portability | 50 versions/page, checkpoints, full `.folio` backup/restore, Markdown/CSV export | Notion/Markdown/CSV import and sync |
+| Appearance | Dark/light themes, persistent sidebar preferences, 35 symbols/eight colors and customizable shortcuts | Cross-device preferences |
+| Security | Optional encrypted Turso vault and PIN-protected eligible simple notes | Attachment encryption and independent security audit |
+| Application delivery | Apple Silicon `.app`, signed release protocol and guarded in-app bundle replacement | Developer ID/notarization; a reviewed published release is still required |
+| Modules | Library, local definitions/catalogs, reviewed lifecycle, private state and recovery | Functional modules, executable runtime, remote marketplace and data-migration handlers |
 
-| Domaine | Disponible dans Folio | Périmètre restant |
-| --- | --- | --- |
-| Éditeur | 20 types de blocs, tiroirs, listes imbriquées, sélection multiple et opérations groupées | Colonnes de blocs et réglages typographiques avancés |
-| Organisation | Pages/sous-pages, favoris, archives, ordre et parenté à la souris | Permissions et espaces partagés |
-| Bases | Tableau, Kanban, Calendrier et Dashboard ; vues nommées, filtres et tris | Galerie, timeline et filtres imbriqués complexes |
-| Tableaux | Largeur, ordre, visibilité par vue ; modifications de fiches en lot | Édition de cellules au clavier comparable à un tableur |
-| Relations et calculs | Relations avec inverse automatique, agrégations et formules numériques | Langage de formules complet et automatisations |
-| Pages de projet | Vues de bases intégrées, données partagées, filtre sur la relation au projet | Disposition libre des widgets |
-| Navigation | Palette globale ⌘K, mentions @, liens de blocs, sommaire et backlinks | Recherche indexée et liens externes publiés |
-| Médias | Images redimensionnables et documents locaux copiés dans le carnet | Médias distants, lecteur PDF et stockage partagé |
-| Historique et portabilité | 50 versions/page, checkpoints, sauvegarde/restauration `.folio` avec médias et préférences ; Markdown/CSV | Import Notion/Markdown/CSV et synchronisation |
-| Préférences | Sombre par défaut, thème choisi, largeur latérale et dernière page persistants | Préférences synchronisées entre machines |
+The calendar, Kanban and notebook tree support cancellable dragging. Embedded
+views edit original records, and relation-filtered creation links new tasks to
+its project. Formulas support arithmetic and `prop("Column name")`; they do not
+provide a general programming language. Widgets have a fixed layout.
 
-Le calendrier permet de déplacer les échéances à la souris. Les cartes Kanban et
-les pages de l’arborescence se déplacent aussi par glisser-déposer, avec annulation
-et prévention des cycles. Les vues intégrées partagent les fiches originales ;
-une tâche ajoutée dans le projet entre automatiquement dans sa relation et ses
-calculs lorsque le filtre de relation est activé.
+Built-in statuses are To do, In progress and Done; priorities are Low, Medium and
+High. Dates use `YYYY-MM-DD`. Records accept up to 12 tags of 40 characters each.
+Archived records are excluded from collection views. Record search is separate
+from the global page filter. Named views retain their filters and sorting.
 
-Les formules sont numériques (`prop("Charge") * 80`, opérations et parenthèses).
-Les agrégations proposent nombre, terminées, progression, somme et nombre de fiches restantes.
-Le format de document est 6, avec lecture des formats 1 à 5.
+Links use stable page identities; renaming updates labels without changing their
+destination. Backlinks exclude archived sources and group references from the
+same page. Missing targets remain visible. Duplicating a page leaves its children
+attached to the original; duplicating a collection copies configuration, while
+records stay in the source collection. Active children of an archived parent
+remain accessible at the root.
 
-Les sections suivantes conservent l’historique des itérations ; leurs limites
-s’appliquent à la version décrite, pas à la version courante.
+Current document format is 7, with readers for versions 1–6; module storage uses
+SQL schema 4 and portable notebook format 2 when nonempty. Unsupported old clients
+refuse newer data rather than rewriting it with information loss. Page/document
+writes and notebook restoration are transactional. See [storage safety](docs/DATA_SAFETY.md).
 
-## Évolution Folio 0.9
+The notebook loads into memory. Virtualized table rows preserve offscreen focus
+and selection, but do not virtualize the whole application. No evidence establishes
+performance parity with Notion. Local encryption is not a security certification;
+Turso's native encryption remains experimental and attachments remain plaintext.
 
-- Listes à tiroirs et titres repliables H1/H2/H3 avec état enregistré ; les blocs
-  imbriqués ont une hiérarchie commune, limitée à six niveaux de retrait.
-- Les déplacements, duplications et suppressions emportent les sous-éléments.
-  Le dépôt prend le niveau de sa cible en conservant les retraits relatifs.
-- Numérotation par niveau, reprise/redémarrage, raccourcis Markdown, collage
-  enrichi de listes, commandes de tâches groupées et modèle de carnet à tiroirs.
-- L’export conserve les tiroirs via HTML `<details>` dans le fichier Markdown.
-  Le format 5 protège ces données contre les anciens clients.
-- Le thème sombre devient le choix initial. Le clair reste disponible.
+## Future directions
 
-Le geste déplace un groupe à la fois ; la sélection de plusieurs blocs distincts,
-le choix libre de styles de puces et les colonnes de blocs restent à développer.
+- Import with correct links/media mapping.
+- Indexed search and scalable notebook navigation.
+- Block columns, widget arrangement, gallery and timeline.
+- Richer formulas and explicit local automation capabilities.
+- Functional modules using the host boundaries already prepared.
+- Sync/collaboration after defining conflict resolution and permissions.
 
-## Évolution Folio 0.8
-
-- Extension de l’identité visuelle aux commandes et types de blocs : 43 signes
-  supplémentaires, soit 59 SVG communs aux thèmes clair et sombre.
-- Navigation, menus, vues, propriétés et poignées utilisent cette famille,
-  avec des libellés accessibles pour les actions sans texte.
-- Cette itération consolide l’interface ; le périmètre fonctionnel reste inchangé.
-
-## Évolution Folio 0.7
-
-- Identité visuelle commune : pictogrammes SVG pour les pages et bases, sélecteur
-  de 15 icônes et monogramme Folio. Les identifiants précédents restent lisibles.
-- Cette itération concerne l’apparence. Les relations, calendriers et autres
-  priorités fonctionnelles ci-dessous restent à développer.
-
-## Évolution Folio 0.6
-
-- Les blocs des pages et les éléments de listes se réorganisent à la souris
-  depuis leur poignée, avec aperçu, repère avant/après et défilement automatique.
-- Le dépôt conserve le contenu enrichi et constitue une seule étape d’annulation.
-  Échap, perte de focus et dépôt hors éditeur annulent sans réordonner les données.
-- Les cartes Kanban et les pages de l’arborescence se déplacent encore par leurs
-  commandes existantes ; le geste actuel déplace un seul bloc et garde son indentation.
-
-## Évolution Folio 0.5
-
-- Les bases ont désormais des vues nommées avec leurs propres filtres, tris et
-  dispositions Tableau/Kanban/Dashboard. La sélection et les réglages sont
-  persistants ; création, renommage et retrait sont disponibles dans l’interface.
-- Les notes et fiches s’exportent en Markdown. Les bases et dashboards s’exportent
-  en CSV, au choix selon la vue courante ou pour toutes les fiches du périmètre.
-- L’export utilise une boîte native, une écriture atomique en arrière-plan et
-  une confirmation ou erreur visible. Les tests couvrent aussi son annulation.
-- Les formats antérieurs restent lisibles ; le format 4 protège les nouvelles
-  vues contre une réécriture par les anciens clients.
-
-Ces fonctions restent limitées : recherche temporaire, colonnes communes à la
-base, export Markdown d’une page seule avec liens internes Folio, absence
-d’import et de sauvegarde complète du carnet. Les relations, formules, vues
-calendrier et disposition libre des widgets restent à construire.
-
-## Évolution Folio 0.4
-
-- Le schéma de base devient extensible : jusqu’à 12 colonnes personnalisées
-  texte, nombre, date ou case à cocher, avec renommage et visibilité configurables.
-- Les filtres de statut, priorité et échéance se combinent. Ils restent communs
-  aux trois vues Tableau, Kanban et Dashboard d’une base.
-- Des dashboards globaux regroupent plusieurs bases avec un périmètre et des
-  filtres propres, indépendants des filtres des bases sources.
-- Les widgets affichent des indicateurs, graphiques, sommes et décomptes issus
-  des fiches. Ils réagissent aux changements de données et de filtres.
-- Les anciennes données restent lisibles ; les nouvelles sauvegardes utilisent
-  le format de document 3 pour protéger les champs inconnus des anciens clients.
-
-La parité reste partielle : les types de colonnes sont limités à quatre, leur
-type est fixé à la création, les widgets ont une disposition prédéfinie et les
-relations, formules et sources externes restaient absentes à ce stade ; les vues
-nommées ont été ajoutées en 0.5.
-
-## Bilan de l’itération 0.3
-
-| Domaine | Notion | Folio 0.2 au départ | Folio 0.3 après cette itération |
-| --- | --- | --- | --- |
-| Pages et organisation | Pages et sous-pages organisables | Pages, sous-pages, favoris, recherche, archives, déplacements | Conservé ; les fiches de bases restent navigables dans l’arborescence |
-| Édition par blocs | Éditeur riche avec nombreux types de blocs | 11 types, commandes `/`, styles, déplacement par menu, annulation en session | 12 types avec le lien de page ; glisser-déposer, médias, colonnes et toggles encore absents |
-| Modèles et apparence | Modèles et personnalisation de pages | 3 modèles, icônes, couvertures colorées, pleine largeur et thèmes | 4 modèles, dont un suivi de projet en Kanban |
-| Bases de données | Collections dont chaque élément est une page éditable | Absent | Ajouté, partiel : bases plein écran, fiches contenant leurs blocs et propriétés |
-| Propriétés | Types configurables, dont statut, date, sélections, relations et formules | Absent | Statut, priorité, échéance et étiquettes intégrés ; schéma fixe, sans ajout de colonnes personnalisées |
-| Tableau et Kanban | Plusieurs représentations d’une même base | Absent | Ajouté : mêmes fiches dans les deux vues ; changement de statut par menu ou chevrons |
-| Filtres, tri et recherche de base | Réglages avancés et vues configurables | Absent | Filtre de statut, recherche titre/contenu/étiquettes, tri nom/modification/échéance/priorité ; réglages communs aux deux vues |
-| Autres vues | Notamment calendrier, galerie et timeline | Absent | Toujours absent |
-| Liens et backlinks | Liens de pages et de blocs, mentions, backlinks | Absent | Liens de pages en blocs via `/link` ou `/lien`, recherche de cible et liens retour automatiques ; mentions inline et ancres de blocs encore absentes |
-| Relations et calculs | Relations, rollups et formules | Absent | Toujours absent ; les liens de navigation ne fournissent pas ces calculs |
-| Portabilité | Exports de pages et bases, notamment Markdown/CSV | Absent | Toujours absent ; l’HTML interne ne constitue pas un export utilisateur |
-| Collaboration | Partage, permissions et édition collaborative | Absent | Toujours absent ; carnet local personnel |
-| Historique durable | Restauration de versions, selon l’offre | Annulation pendant l’édition de la page | Conservé ; aucune restauration de versions après fermeture |
-
-Les fonctions de bases, propriétés et vues de Notion sont documentées dans
-[Introduction aux bases](https://www.notion.com/help/intro-to-databases),
-[Propriétés](https://www.notion.com/help/database-properties) et
-[Vues de bases](https://www.notion.com/help/category/database-views).
-La comparaison des liens suit [Liens et backlinks](https://www.notion.com/help/create-links-and-backlinks).
-Les autres périmètres se réfèrent à
-[Export](https://www.notion.com/help/export-your-content),
-[Partage et permissions](https://www.notion.com/help/sharing-and-permissions) et
-[Sauvegarde et historique](https://www.notion.com/help/back-up-your-data).
-
-## Choix de cette itération
-
-Les bases et les liens documentaires étaient les deux écarts les plus structurants
-avec le carnet 0.2. Ils permettent maintenant un suivi de projet local : une vue
-Kanban pour les statuts, une vue tableau pour les propriétés, puis une page de
-notes derrière chaque fiche. Une note peut pointer vers cette fiche et retrouver
-le chemin inverse grâce aux liens retour.
-
-Les statuts proposés sont À faire, En cours et Terminé. Les priorités sont Basse,
-Moyenne et Haute. Les dates sont validées au format AAAA-MM-JJ. Une fiche peut
-porter jusqu’à 12 étiquettes de 40 caractères chacune. Les fiches archivées sont
-exclues des vues. La recherche dans une base ne change pas le filtre global de
-la barre latérale. Le filtre de statut et le tri sont conservés à la réouverture.
-
-Les liens utilisent les identifiants stables des pages. Renommer une cible met à
-jour le titre affiché et les libellés enregistrés des références. Les liens retour
-ignorent les sources archivées et regroupent plusieurs liens d’une même source.
-Une référence vers une cible manquante reste visible comme « Page introuvable ».
-
-La duplication d’une page conserve le comportement 0.2 : copie de son contenu et
-de son apparence, sans ses sous-pages. Pour une base, elle copie donc sa
-configuration ; les fiches restent dans la base originale. L’archivage d’un parent
-conserve également le comportement précédent : ses enfants actifs restent
-accessibles à la racine jusqu’à restauration du parent.
-
-## Données et compatibilité
-
-Les propriétés, la configuration de base et les références de pages sont
-conservées dans le document JSON versionné existant, avec des valeurs par défaut
-pour les documents 0.2. Les identifiants de pages et de blocs sont conservés.
-Les sauvegardes 0.3 utilisent la version de document 2 ; les documents de version 1
-restent lisibles. L’ancienne application 0.2 refuse la version 2, ce qui évite de
-réenregistrer ces documents avec perte des nouvelles propriétés.
-
-Les pages et leurs documents sont toujours écrits dans la même transaction Turso.
-Les réglages de base et propriétés passent par la même file de sauvegarde et le
-même suivi des accusés de réception que les notes.
-
-## Priorités restantes après 0.10
-
-1. Import de Markdown/CSV et d’exports Notion avec correspondance des liens et médias.
-2. Recherche indexée, pagination et navigation virtualisée pour les gros carnets.
-3. Colonnes de blocs, disposition des widgets, galerie et timeline.
-4. Formules plus riches et automatisations locales.
-5. Synchronisation et collaboration après définition de la résolution des conflits.
-
-Aucune mesure ne permet encore d’affirmer une parité de performance avec Notion.
-Le carnet est chargé en mémoire et les index de recherche restent simples.
+Notion reference material for readers comparing product concepts:
+[databases](https://www.notion.com/help/intro-to-databases),
+[properties](https://www.notion.com/help/database-properties),
+[views](https://www.notion.com/help/category/database-views),
+[links](https://www.notion.com/help/create-links-and-backlinks),
+[export](https://www.notion.com/help/export-your-content),
+[sharing](https://www.notion.com/help/sharing-and-permissions) and
+[backup/history](https://www.notion.com/help/back-up-your-data).

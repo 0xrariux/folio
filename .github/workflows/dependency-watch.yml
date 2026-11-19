@@ -1,0 +1,24 @@
+name: Weekly dependency review
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Collect upstream versions without changing project pins
+        run: python3 scripts/check-dependencies.py
+      - name: Show report
+        if: always()
+        run: cat release-artifacts/dependency-watch/report.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: dependency-review
+          path: release-artifacts/dependency-watch/
+          retention-days: 90

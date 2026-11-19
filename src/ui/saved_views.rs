@@ -22,7 +22,7 @@ pub(super) fn form(s: &State, form: &ViewForm, p: Palette) -> El {
     }
     if settings.views.is_empty() {
         views = views.child(
-            label("Enregistrez votre première vue ci-dessous.", 11.0, p.faint)
+            label("Save your first view below.", 11.0, p.faint)
                 .w_full()
                 .wrap()
                 .padding(6.0),
@@ -33,11 +33,11 @@ pub(super) fn form(s: &State, form: &ViewForm, p: Palette) -> El {
         .child(
             row()
                 .center_y()
-                .child(label("VUES DE CETTE BASE", 10.0, p.faint))
+                .child(label("VIEWS IN THIS DATABASE", 10.0, p.faint))
                 .child(el().grow(1.0))
                 .child(super::icons::control(
                     "close-views",
-                    "Fermer les vues",
+                    "Close views",
                     &folio::icons::controls::CLOSE,
                     p,
                     |s, _| s.panel = Panel::Closed,
@@ -56,39 +56,36 @@ pub(super) fn form(s: &State, form: &ViewForm, p: Palette) -> El {
         let id = active.id.clone();
         let mut actions = row()
             .gap(5.0)
-            .child(action("rename-view", "Renommer", p, |s, tx| {
+            .child(action("rename-view", "Rename", p, |s, tx| {
                 s.open_views(true);
                 tx.focus("view-name", false);
             }));
         if settings.views.len() > 1 {
-            actions = actions.child(action(
-                "remove-view",
-                "Retirer cette vue",
-                p,
-                move |s, _| s.remove_view(&id),
-            ));
+            actions = actions.child(action("remove-view", "Remove this view", p, move |s, _| {
+                s.remove_view(&id)
+            }));
         }
         menu = menu.child(actions);
     }
     menu = menu.child(el().h(1.0).fill(p.line))
-        .child(label(if form.rename { "RENOMMER LA VUE" } else { "ENREGISTRER LES RÉGLAGES ACTUELS" }, 10.0, p.faint))
+        .child(label(if form.rename { "RENAME VIEW" } else { "SAVE CURRENT SETTINGS" }, 10.0, p.faint))
         .child(text_input(&form.name, TextStyle::new(13.0, 400.0))
-            .key("view-name").label("Nom de la vue").single_line().w_full()
+            .key("view-name").label("View name").single_line().w_full()
             .h(34.0).px(8.0).radius(5.0).border(1.0, p.line).color(p.ink).caret(p.accent, p.tint)
-            .placeholder("Ex. Cette semaine, Priorités…", p.faint)
+            .placeholder("E.g. This week, Priorities…", p.faint)
             .on_edit(|s: &mut State| s.view_name_edit())
             .on_submit(|s: &mut State, _| s.save_view())
             .on_input_key(|s: &mut State, event, _| {
                 if event.key == Key::Escape { s.panel = Panel::Closed; true } else { false }
             }))
-        .child(label("La disposition, les filtres et le tri sont mémorisés. Les modifications de la vue active sont enregistrées automatiquement.", 11.0, p.faint).w_full().wrap());
+        .child(label("The layout, filters, and sort order are saved. Changes to the active view are saved automatically.", 11.0, p.faint).w_full().wrap());
     if let Some(error) = &form.error {
         menu = menu.child(label(error, 11.0, p.ink).w_full().wrap());
     }
     menu = menu.child(
         row()
             .gap(6.0)
-            .child(action("new-view", "Nouvelle vue", p, |s, tx| {
+            .child(action("new-view", "New view", p, |s, tx| {
                 s.open_views(false);
                 tx.focus("view-name", false);
             }))
@@ -96,11 +93,7 @@ pub(super) fn form(s: &State, form: &ViewForm, p: Palette) -> El {
             .child(
                 action(
                     "save-view",
-                    if form.rename {
-                        "Renommer"
-                    } else {
-                        "Créer la vue"
-                    },
+                    if form.rename { "Rename" } else { "Create view" },
                     p,
                     |s, _| s.save_view(),
                 )
