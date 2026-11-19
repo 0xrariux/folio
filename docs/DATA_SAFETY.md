@@ -147,6 +147,21 @@ intact/new profile for encrypted backups. For a damaged profile, preserve its ra
 files and open a fresh separate profile before using Restore. Do not overwrite
 the damaged original as a first recovery attempt.
 
+## Rust 1.100 compatibility
+
+Folio 0.13.1 retains Turso **0.8.3**, SQL schema **4**, document format **7**,
+notebook formats **1/2** and vault format **1**. It explicitly enables Turso's
+`mimalloc` feature instead of the default feature set. The optional `fts` extension
+is unused by Folio and its 0.8.3 allocator shim collides with Rust 1.100's stabilized
+`Vec::new_in`. Disabling it avoids patching or upgrading the storage engine.
+
+Folio searches its in-memory documents, not SQL FTS indexes. Its existing strict
+schema validation already rejects additional virtual/index tables outside the
+supported notebook schema. Existing supported notebooks therefore have no FTS
+index to migrate. Encryption features remain enabled through the Turso SDK.
+The production historical/encrypted corpus, full restoration rehearsals and
+module-state tests still gate the build under the new compiler.
+
 ## Limits and release discipline
 
 This is a tested recovery strategy, not a guarantee against every hardware fault,

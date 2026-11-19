@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.13.1
+
+- Rust 1.100.0 and Rune pinned to `f54cbcfa84d995d339c243a579218f5062c940b5`
+  (89 commits since the previous pin), with the new internal crate split and
+  aligned vendor patches. Cargo fetches the exact Git sources without relying on
+  a shared neighboring checkout. Published dependencies remain locked.
+- Use Rune’s mouse-down activation for page, More and shortcut menus, while
+  retaining keyboard activation and existing drag/drop behavior.
+- Resolve Git metadata paths for application build provenance in worktrees;
+  validate Rune/vendor Git sources during packaging and accept both Cargo
+  dependency forms in the weekly version report.
+- Keep Turso at 0.8.3, with its unused optional FTS extension disabled because
+  its allocator shim conflicts with Rust 1.100. Encryption and the storage/document
+  contracts stay unchanged; historical storage and module checks remain required.
+- Receive upstream fixes for Metal resource lifetime, long-field accessibility,
+  scroll targeting, popup interaction and CPU/GPU rendering consistency.
+  [Upgrade impact and validation](docs/RUNE_UPDATE.md).
+
 ## 0.13.0
 
 - Library with discovery, local JSON definition/catalog imports, permission review,

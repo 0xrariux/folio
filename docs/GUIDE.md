@@ -11,19 +11,17 @@ Open `Folio.app` from a reviewed release. Downloaded builds are ad-hoc signed,
 without Apple Developer ID or notarization; macOS may require manual approval.
 See [builds and releases](RELEASES.md) for distribution details.
 
-For development, keep the repositories next to each other:
+For development, clone Folio:
 
 ```sh
-git clone https://github.com/anomalyco/rune.git
-git -C rune checkout 7a92d24d63d9be8480e3e475489d2a4d0ed48c8d
 git clone https://github.com/0xrariux/folio.git
 cd folio
 cargo run --locked
 ```
 
-`rust-toolchain.toml` selects Rust 1.99.1. `Cargo.lock` resolves published
-libraries, including Turso 0.8.3. Rune and its vendor patches resolve from
-`../rune`; keep that checkout at the full SHA in `folio-update.json`.
+`rust-toolchain.toml` selects Rust 1.100.0. `Cargo.lock` resolves published
+libraries, including Turso 0.8.3. Cargo downloads Rune and its vendor patches at the full Git SHA recorded in
+`Cargo.toml` and `folio-update.json`; it does not use a neighboring Rune checkout.
 The first compilation can take several minutes.
 
 To build a native application:

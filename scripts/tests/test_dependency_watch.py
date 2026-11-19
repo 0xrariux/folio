@@ -1,7 +1,9 @@
 import importlib.util
 import json
 from pathlib import Path
+import tempfile
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location("watch", Path(__file__).parents[1] / "check-dependencies.py")
 watch = importlib.util.module_from_spec(spec)
@@ -11,7 +13,7 @@ spec.loader.exec_module(watch)
 class DependencyWatch(unittest.TestCase):
     def fixture(self, url):
         if "channel-rust" in url:
-            return '[pkg.rust]\nversion = "1.100.0 (fixture)"'
+            return '[pkg.rust]\nversion = "999.0.0 (fixture)"'
         if "RELEASES.md" in url:
             return 'Version 1.100.0\nCompiler notes\nVersion 1.99.0\nOld notes'
         if "crates.io" in url:
@@ -50,6 +52,18 @@ class DependencyWatch(unittest.TestCase):
         report = watch.collect(unavailable)
         self.assertEqual(report['dependencies'][0]['status'], 'changelog check failed')
         self.assertIn('notes unavailable', watch.markdown(report))
+
+    def test_dependency_version_is_read_from_both_cargo_manifest_forms(self):
+        for dependency in ['"=0.8.3"', '{ version = "=0.8.3", default-features = false, features = ["mimalloc"] }']:
+            with self.subTest(dependency=dependency), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                (root / 'Cargo.toml').write_text('[package]\nversion = "0.13.1"\n[dependencies]\nturso = ' + dependency + '\n')
+                (root / 'rust-toolchain.toml').write_text('[toolchain]\nchannel = "1.100.0"\n')
+                (root / 'folio-update.json').write_text(json.dumps({'rune_revision': 'a' * 40}))
+                with patch.object(watch, 'ROOT', root):
+                    report = watch.collect(self.fixture)
+                self.assertEqual(report['dependencies'][1]['pinned'], '0.8.3')
+                self.assertEqual(report['dependencies'][1]['status'], 'review required')
 
 
 if __name__ == '__main__':

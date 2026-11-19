@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import platform
 import plistlib
+import re
 import shutil
 import subprocess
 import tempfile
@@ -23,6 +24,27 @@ def output(*args):
     return run(*args, stdout=subprocess.PIPE, text=True).stdout.strip()
 
 
+def rune_checkout(metadata, manifest, pin):
+    """Resolve the exact Cargo source, including vendor overrides, before packaging."""
+    if not re.fullmatch(r"[0-9a-f]{40}", pin):
+        raise ValueError("Rune requires a full reviewed Git revision")
+    repository = "https://github.com/anomalyco/rune.git"
+    specs = {name: manifest["dependencies"][name] for name in ["rune", "rune-kit"]}
+    specs.update(manifest["patch"]["crates-io"])
+    expected = f"git+{repository}?rev={pin}#{pin}"
+    for name, spec in specs.items():
+        if not isinstance(spec, dict) or spec.get("git") != repository or spec.get("rev") != pin:
+            raise ValueError(f"{name} differs from the reviewed Rune pin")
+        packages = [package for package in metadata["packages"] if package["name"] == name]
+        if len(packages) != 1 or packages[0].get("source") != expected:
+            raise ValueError(f"{name} did not resolve from the reviewed Rune source")
+    for package in metadata["packages"]:
+        if package["name"].startswith("rune-") and package.get("source") != expected:
+            raise ValueError(f"{package['name']} did not resolve from the reviewed Rune source")
+    package = next(p for p in metadata["packages"] if p["name"] == "rune")
+    return Path(package["manifest_path"]).parents[2]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--development", action="store_true", help="Allow unpublished local changes; cannot produce release assets")
@@ -36,11 +58,16 @@ def main():
         parser.error("--release requires --key and a clean, committed checkout")
     cfg = json.loads((ROOT / "release.json").read_text())
     pin = json.loads((ROOT / "folio-update.json").read_text())["rune_revision"]
-    rune = (ROOT / "../rune").resolve()
+    manifest = tomllib.loads((ROOT / "Cargo.toml").read_text())
+    metadata = json.loads(output("cargo", "metadata", "--locked", "--format-version", "1"))
+    try:
+        rune = rune_checkout(metadata, manifest, pin)
+    except ValueError as error:
+        parser.error(str(error))
     if output("git", "-C", str(rune), "rev-parse", "HEAD") != pin:
-        parser.error("Rune checkout differs from folio-update.json; use an isolated checkout at the pinned commit")
-    if output("git", "-C", str(rune), "status", "--porcelain"):
-        parser.error("Rune has local changes; use an isolated clean checkout")
+        parser.error("Cargo's Rune checkout differs from folio-update.json")
+    if output("git", "-C", str(rune), "status", "--porcelain", "--untracked-files=no"):
+        parser.error("Cargo's Rune source has local changes; restore a clean dependency cache")
     if not args.development and output("git", "status", "--porcelain"):
         parser.error("Commit the reviewed changes first, or use --development for a local app")
     if not cfg["public_key"]:
@@ -55,7 +82,6 @@ def main():
         run("cargo", "test", "--release", "--locked", "--test", "data_safety", "--test", "modules", env=env)
     run("cargo", "build", "--release", "--locked", "--bin", "folio", env=env)
     # Respect CARGO_TARGET_DIR (CI and isolated worktrees may relocate it).
-    metadata = json.loads(output("cargo", "metadata", "--locked", "--no-deps", "--format-version", "1"))
     target = Path(metadata["target_directory"]) / "release"
     binary = target / "folio"
     build = json.loads(output(str(binary), "--release-info"))

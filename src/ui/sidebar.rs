@@ -200,6 +200,7 @@ fn navigation(s: &State, p: Palette) -> El {
                     p,
                     |s, _| s.panel = Panel::SidebarNavigation,
                 )
+                .press_on_down()
                 .size(24.0, 22.0)
                 .px(4.0)
                 .disabled(
@@ -628,6 +629,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                             Panel::SidebarMore
                         };
                     })
+                    .press_on_down()
                     .w_full()
                     .h(34.0)
                     .justify_start()

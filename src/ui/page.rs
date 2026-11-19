@@ -97,13 +97,12 @@ fn header(s: &State, p: Palette) -> El {
                 p,
                 |s, _| s.favorite(),
             ))
-            .child(super::icons::control(
-                "page-menu",
-                "Page actions",
-                &g::MORE,
-                p,
-                |s, _| s.panel = Panel::Page,
-            ));
+            .child(
+                super::icons::control("page-menu", "Page actions", &g::MORE, p, |s, _| {
+                    s.panel = Panel::Page
+                })
+                .press_on_down(),
+            );
     }
     bar
 }

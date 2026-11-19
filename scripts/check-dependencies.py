@@ -22,7 +22,8 @@ def collect(get=fetch):
     cargo = tomllib.loads((ROOT / "Cargo.toml").read_text())
     pin = json.loads((ROOT / "folio-update.json").read_text())["rune_revision"]
     rust = tomllib.loads((ROOT / "rust-toolchain.toml").read_text())["toolchain"]["channel"]
-    turso = cargo["dependencies"]["turso"].lstrip("=")
+    turso_spec = cargo["dependencies"]["turso"]
+    turso = (turso_spec if isinstance(turso_spec, str) else turso_spec["version"]).lstrip("=")
     rows = []
     sources = [
         ("Rust", rust, "https://static.rust-lang.org/dist/channel-rust-stable.toml", "https://doc.rust-lang.org/releases.html", "Compiler/MSRV, warnings and platform support; rebuild and run the full suite."),

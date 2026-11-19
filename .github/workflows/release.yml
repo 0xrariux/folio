@@ -45,20 +45,13 @@ jobs:
           assert tomllib.loads(Path('Cargo.toml').read_text())['package']['version'] == os.environ['REVIEWED_VERSION']
           pin = json.loads(Path('folio-update.json').read_text())['rune_revision']
           assert re.fullmatch('[0-9a-f]{40}', pin)
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as out: out.write('rune=' + pin + '\n')
           PY
-        id: identity
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          repository: anomalyco/rune
-          ref: ${{ steps.identity.outputs.rune }}
-          path: rune
-          persist-credentials: false
       - name: Validate candidate
         run: |
           cargo fmt --package folio -- --check
           cargo test --locked --all-targets
           cargo clippy --locked --all-targets -- -D warnings
+          python3 -m unittest discover -s scripts/tests -v
       - name: Load signing key into a private temporary file
         env:
           RELEASE_KEY: ${{ secrets.FOLIO_RELEASE_KEY_BASE64 }}

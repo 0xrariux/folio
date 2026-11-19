@@ -22,8 +22,9 @@ change. Do not replace the application with a prototype or a web interface.
 ## 1. Audit, inventory and launcher
 
 Reuse existing project, Git, build and process management. Migrate existing data
-without loss. Folio is a standalone `repos/folio` folder beside `repos/rune`;
-preserve the required dependency layout when creating isolated candidates.
+without loss. Folio is a standalone repository. Its Rune crates and vendor patches
+use exact Git dependencies in Cargo.toml, aligned with `folio-update.json`. Cargo
+fetches that source; Folio no longer requires a neighboring Rune checkout.
 
 For each project distinguish:
 
@@ -85,8 +86,8 @@ or approve publication.
 ## 4. Isolated candidates, builds and validation
 
 Use a worktree and branch per candidate. Never move the shared Rune checkout or
-another project's branch. Reproduce relative dependency paths with a project-specific
-pinned Rune. No overwriting user changes, broad clean/reset, silent stash or force push.
+another project's branch. Respect each project's actual dependency resolution;
+Folio uses Cargo Git pins rather than a shared relative checkout. No overwriting user changes, broad clean/reset, silent stash or force push.
 
 The agent updates pins, Cargo.lock and necessary code/tests, then proposes the
 application version and changelog based on assessed impact. A dependency version

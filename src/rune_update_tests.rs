@@ -66,6 +66,45 @@ fn mounted(rt: &Runtime<State>) -> usize {
 }
 
 #[test]
+fn menu_triggers_open_on_mouse_down_once_and_keep_keyboard_activation() {
+    for (key, expected) in [
+        ("page-menu", Panel::Page),
+        ("sidebar-more", Panel::SidebarMore),
+        ("customize-navigation", Panel::SidebarNavigation),
+    ] {
+        let mut rt = app(State::demo());
+        reveal(&mut rt, key);
+        let (x, y) = rt.find(key).unwrap();
+        rt.pointer_down(x, y);
+        rt.frame(0.);
+        assert_eq!(
+            std::mem::discriminant(&rt.state.panel),
+            std::mem::discriminant(&expected),
+            "{key} did not open on mouse down"
+        );
+        rt.pointer_up(x, y);
+        rt.frame(0.);
+        assert_eq!(
+            std::mem::discriminant(&rt.state.panel),
+            std::mem::discriminant(&expected),
+            "{key} activated again on release"
+        );
+        rt.key(Key::Escape.into());
+        rt.frame(0.);
+        assert!(matches!(rt.state.panel, Panel::Closed));
+        rt.update(|_, tx| tx.focus(key, false));
+        rt.frame(0.);
+        rt.key(Key::Text(" ".into()).into());
+        rt.frame(0.);
+        assert_eq!(
+            std::mem::discriminant(&rt.state.panel),
+            std::mem::discriminant(&expected),
+            "{key} lost keyboard activation"
+        );
+    }
+}
+
+#[test]
 fn virtual_table_reaches_unmounted_rows_and_keeps_selection_after_reordering() {
     let mut rt = app(base(1_000));
     assert!(mounted(&rt) < 100);

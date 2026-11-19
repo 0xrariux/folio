@@ -34,22 +34,28 @@ See [Apple's guidance](https://support.apple.com/en-us/102445).
 |---|---|
 | Folio version | `Cargo.toml`, `Cargo.lock`, top entry of `CHANGELOG.md` |
 | Rust toolchain | `rust-toolchain.toml` |
-| Rune source and vendored patches | full SHA in `folio-update.json`; clean checkout at that SHA |
+| Rune source and vendored patches | full SHA in `folio-update.json` and Cargo.toml; locked Git sources |
 | Turso | exact dependency in `Cargo.toml` and resolved `Cargo.lock` |
 | Update protocol and trust anchor | `release.json` |
 | Published stable build | immutable Git tag `vVERSION`, signed GitHub Release assets |
 | Running executable | `folio --release-info`, also embedded in `Contents/Resources/build-info.json` |
 
+The current source pins Rust **1.100.0** and Rune
+`f54cbcfa84d995d339c243a579218f5062c940b5`. Turso stays at **0.8.3**, with
+its unused optional FTS extension disabled for compiler compatibility; the
+notebook storage contract is unchanged. See [upgrade notes](RUNE_UPDATE.md).
+
 Rune's crate version alone is insufficient: its Git revision and vendor patches
-are part of each build. The build script checks the pinned Rune checkout, the
-source revision and whether Folio has uncommitted changes. It uses `--locked`,
+are part of each build. The build script checks all manifest pins and resolved
+Cargo sources, Cargo's Rune checkout, the source revision and whether Folio has
+uncommitted changes. It uses `--locked`,
 remaps local source paths out of compiler diagnostics and packages the existing
 brand icon. The public key is embedded in the executable; the private key is not.
 
-The Cargo layout uses sibling `folio` and `rune` repositories under a common
-parent. Isolated CI/developer builds must reproduce this layout because path
-dependencies use `../rune`. Do not move a shared Rune checkout to test an
-upgrade while other projects are using it.
+Rune is a Git dependency fetched by Cargo, including the vendor overrides.
+A Folio checkout or worktree can build independently of other projects and their
+Rune checkouts. Keep every Rune/vendor `rev` aligned with `folio-update.json`;
+packaging rejects missing, mixed, registry or path replacements.
 
 ## Weekly intake, with approval
 

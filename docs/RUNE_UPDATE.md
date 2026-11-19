@@ -1,4 +1,87 @@
-# Rune integration — November 15, 2026
+# Rust and Rune upgrade — November 19, 2026
+
+Folio 0.13.1 pins **Rust 1.100.0** and Rune
+`f54cbcfa84d995d339c243a579218f5062c940b5` (the verified `dev` head on November 19).
+Rune advanced **89 commits** from `7a92d24d63d9be8480e3e475489d2a4d0ed48c8d`,
+adding **84** unreleased changelog fragments; its main changelog did not change.
+The sources and impact analysis were read from those exact commits.
+
+## Changes affecting Folio
+
+| Area | Upstream change | Folio action |
+|---|---|---|
+| Rust | Stable 1.100.0, including stabilized allocator APIs and a new internal Cargo build-directory layout | Pin the exact compiler; retain Cargo metadata-based target-directory lookup and verify the packaged executable's provenance |
+| Rune internals | Core, editing, GPU, image, media, spellchecking and text moved to separate crates; runtime and component internals became type-erased | Keep using supported `rune`/`rune-kit` public re-exports; lock all Rune crates/vendor patches to one Git revision and validate every target |
+| Vendor patches | New `sctk-adwaita` patch alongside the existing platform patches | Mirror the application-level patch so the pinned vendor dependency set is consistent; this does not add Linux distribution support |
+| Menus | `El::press_on_down` opens a mouse-triggered menu before release without running the action twice | Apply it to page actions, More and shortcut customization; keep destructive actions and drag grips on their existing gesture paths |
+| Rendering | Native Metal resources survive command-buffer completion; CPU/GPU first-frame and drag-alpha fixes | Keep the default Metal backend and inspect native demo rendering and drag/drop behavior |
+| Editing/accessibility | Large text fields retain text ranges and visible-line/caret geometry; field alignment and scale handling fixed | Retain secure `TextEdit` inputs and named landmarks; exercise editor, PIN and accessibility regressions |
+| Scrolling/popovers | Focused scroll keys, wheel chaining, overlay occlusion, exit lookups and scaled-row reveal fixed | Validate existing virtual tables, Library pagination, menus and notebook dragging |
+| Application provenance | Isolated worktrees have a `.git` file and non-main branches | Resolve HEAD/index/current-branch paths with Git rather than assuming `.git/refs/heads/main` |
+| Turso compatibility | Rust's new inherent `Vec::new_in` shadows Turso 0.8.3's optional FTS allocator shim | Disable unused FTS, retain `mimalloc`, encryption and exact engine version; do not patch the shared registry or migrate the notebook |
+
+Folio starts storage on a dedicated background worker from its setup hook,
+explicitly schedules polling work with `Tx::wake_after`, uses public APIs and
+opts into `rune::orderly_exit` to drain writes. These contracts remain intact. New opt-in live-list/prepare-text APIs are
+not enabled without a measured need. Windows/Linux/web-only changes are recorded
+as upstream changes, not claimed as validated Folio platforms.
+
+## Storage boundary
+
+Turso remains **0.8.3**. SQL schema **4**, documents **7**, notebook backup formats
+**1/2**, vault format **1** and the signed-release storage contract are unchanged.
+Folio does not create FTS indexes and continues using its document search.
+The frozen fixture producer remains pinned to historical Turso 0.7.2.
+Do not regenerate its fixtures or use a real notebook to test this update.
+See [storage safety](DATA_SAFETY.md).
+
+## Validation
+
+Validation uses an isolated Folio worktree and exact Cargo Git sources,
+synthetic profiles and the unchanged historical/encrypted corpus. Required gates:
+
+```sh
+cargo fmt --package folio -- --check
+cargo check --locked --all-targets
+cargo test --locked --all-targets
+cargo clippy --locked --all-targets -- -D warnings
+python3 -m unittest discover -s scripts/tests -v
+python3 scripts/build-app.py --development --verify-storage
+```
+
+Folio now resolves Rune through Cargo Git dependencies, so the main checkout and
+CI can build without moving a shared Rune repository. Packaging verifies that
+every Rune/vendor source matches the full reviewed revision.
+
+The build script must still locate `release/folio` through Cargo metadata after
+Rust 1.100's internal cache-layout change. Release-profile storage and module tests
+run with the same compiler/deployment flags as the application. Native captures
+use `FOLIO_DEMO=1`; no personal notebook is opened.
+
+Local results on November 19, 2026:
+
+- **163 Rust tests passed** with the final Cargo Git dependency graph. Two helper
+  tests remain intentionally ignored; the crash writer is exercised by its parent.
+- **9 Python tests passed**, including manifest-form handling and rejection of
+  mixed, unpinned or overridden Rune sources during packaging.
+- All-target checking, project-only formatting and Clippy with `-D warnings` passed.
+- **26 production-profile storage/module tests passed** (18 historical/data-safety
+  and 8 module lifecycle tests), followed by successful `.app` packaging/signature verification.
+- Native Metal captures of Library at minimum window size, a resized table and
+  an active block drag completed with Metal API validation enabled and no validation errors.
+- The real upstream monitor reports Rust 1.100.0, Rune `f54cbcfa` and Turso 0.8.3
+  current. No dependency pins were changed by the monitor.
+
+## Sources for this upgrade
+
+- [Rust 1.100 announcement](https://blog.rust-lang.org/2026/11/12/Rust-1.100.0/)
+- [Pinned Rune comparison](https://github.com/anomalyco/rune/compare/7a92d24d63d9be8480e3e475489d2a4d0ed48c8d...f54cbcfa84d995d339c243a579218f5062c940b5)
+- [Rune changelog fragments at the pin](https://github.com/anomalyco/rune/tree/f54cbcfa84d995d339c243a579218f5062c940b5/changelog/unreleased)
+- [Rune dependency and vendor definitions](https://github.com/anomalyco/rune/blob/f54cbcfa84d995d339c243a579218f5062c940b5/Cargo.toml)
+
+---
+
+## Previous integration — November 15, 2026
 
 This historical report predates Settings, encryption and document format 7.
 See the current [settings guide](SETTINGS.md), [release guide](RELEASES.md) and

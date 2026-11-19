@@ -4,6 +4,7 @@ fn main() {
     println!("cargo:rerun-if-changed=release.json");
     println!("cargo:rerun-if-changed=module-library.json");
     println!("cargo:rerun-if-changed=Cargo.lock");
+    println!("cargo:rerun-if-changed=rust-toolchain.toml");
     let lock = std::fs::read_to_string("Cargo.lock").expect("committed Cargo.lock");
     let versions: Vec<_> = lock
         .split("[[package]]")
@@ -18,14 +19,32 @@ fn main() {
         .collect();
     assert_eq!(versions.len(), 1, "one resolved Turso engine is required");
     println!("cargo:rustc-env=FOLIO_TURSO_VERSION={}", versions[0]);
-    for path in [
-        ".git/HEAD",
-        ".git/index",
-        ".git/refs/heads/main",
-        ".git/packed-refs",
-    ] {
-        if std::path::Path::new(path).is_file() {
-            println!("cargo:rerun-if-changed={path}");
+    // A worktree has a .git file, and its branch need not be main.
+    let branch = Command::new("git")
+        .args(["symbolic-ref", "--quiet", "HEAD"])
+        .output()
+        .ok()
+        .filter(|o| o.status.success())
+        .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_owned());
+    for name in [
+        Some("HEAD"),
+        Some("index"),
+        Some("packed-refs"),
+        branch.as_deref(),
+    ]
+    .into_iter()
+    .flatten()
+    {
+        if let Ok(output) = Command::new("git")
+            .args(["rev-parse", "--git-path", name])
+            .output()
+            && output.status.success()
+        {
+            let path = String::from_utf8_lossy(&output.stdout);
+            let path = path.trim();
+            if std::path::Path::new(path).is_file() {
+                println!("cargo:rerun-if-changed={path}");
+            }
         }
     }
     let rust = Command::new("rustc")

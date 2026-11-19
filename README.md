@@ -30,7 +30,7 @@ This project does not use an Apple Developer account: downloaded applications
 are not notarized and macOS may require manual approval. No public release is
 provided until the reviewed release workflow has been completed.
 
-For a local application build, with the pinned Rune checkout available:
+For a local application build after cloning Folio and installing Rust:
 
 ```sh
 python3 scripts/build-app.py --development
@@ -57,17 +57,14 @@ See the [module format and lifecycle](docs/MODULES.md).
 ## Development
 
 Rust is pinned in `rust-toolchain.toml`, Turso in Cargo.toml/Cargo.lock, and Rune
-by full Git SHA in `folio-update.json`. The current source layout is:
+by full Git SHA in `folio-update.json` and Cargo.toml. Cargo fetches Rune and its
+vendor patches at that exact revision; no neighboring checkout is required.
+The packaging script rejects mismatched manifest pins or resolved sources.
 
-```text
-workspace/
-  rune/                  # clean checkout at the pinned SHA
-  folio/                 # this repository
+```sh
+git clone https://github.com/0xrariux/folio.git
+cd folio
 ```
-
-Clone Rune from `https://github.com/anomalyco/rune.git`, check out the revision in
-`folio-update.json`, then clone Folio into that layout. The Cargo path dependencies
-and vendor patches resolve `../rune` from the Folio root.
 
 ```sh
 cargo run --locked
