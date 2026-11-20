@@ -66,7 +66,7 @@ move, hide, restore and reset actions. Hiding a shortcut never deletes pages;
 the menu remains accessible even with all shortcuts hidden. The layout, sidebar
 width, chosen theme and last page are saved with the notebook.
 
-Click the page icon to choose from 65 symbols and eight colors. Reset returns to
+Click the page icon to choose from 105 symbols and eight colors. Reset returns to
 the theme color. Existing emoji identifiers remain readable. Cover selection
 cycles through three colors and then removes the cover. Dark is the initial theme.
 See [icons](../assets/icons/README.md) and [logo sources](../assets/brand/README.md).

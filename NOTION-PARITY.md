@@ -15,7 +15,7 @@ iterations are recorded in the [changelog](CHANGELOG.md).
 | Navigation | Command-K palette, Unicode search, mentions, page/block links, contents and backlinks | Indexed whole-notebook search and published external links |
 | Media | Managed local images/files, image sizing and original-file export | Remote media, embedded PDF reader and shared storage |
 | History/portability | 50 versions/page, checkpoints, full `.folio` backup/restore, Markdown/CSV export | Notion/Markdown/CSV import and sync |
-| Appearance | Dark/light themes, persistent sidebar preferences, 65 symbols/eight colors and customizable shortcuts | Cross-device preferences |
+| Appearance | Dark/light themes, persistent sidebar preferences, 105 symbols/eight colors and customizable shortcuts | Cross-device preferences |
 | Security | Optional encrypted Turso vault and PIN-protected eligible simple notes | Attachment encryption and independent security audit |
 | Application delivery | Apple Silicon `.app`, signed release protocol and guarded in-app bundle replacement | Developer ID/notarization; a reviewed published release is still required |
 | Modules | Library, local definitions/catalogs, reviewed lifecycle, private state and recovery | Functional modules, executable runtime, remote marketplace and data-migration handlers |

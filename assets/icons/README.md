@@ -1,13 +1,14 @@
 # Folio icons
 
-65 page icons share a 24 × 24 grid, 1.5 px strokes, rounded caps, and rounded
+105 page icons share a 24 × 24 grid, 1.5 px strokes, rounded caps, and rounded
 joins. They are original SVGs supplied under the project's MIT license.
 The Folio monogram and command icons use the same visual language.
 
 [Page icons](catalog.svg) · [Color variations](colors.svg) · [Controls](controls.svg)
 
-The latest 30 symbols cover work, creativity, nature, travel, hobbies, and daily
-life. Their [editable Blender master](page-icons.blend) and
+The Blender collection covers 70 symbols for work, finance, healthcare, science,
+visual arts, music, games, home, travel, nature, and daily life.
+Their [editable Blender master](page-icons.blend) and
 [Blender preview](page-icons-blender.png) share the same stroke paths as their
 native SVG assets. The app uses vectors so every icon stays sharp at small sizes
 and inherits the selected page color.
@@ -16,7 +17,7 @@ Blender is only needed to edit or regenerate the sources, not to build or run Fo
 ## Page customization
 
 Click a page's icon to choose a symbol and color. The scrollable picker contains
-all 65 symbols. Colors update the preview immediately; choosing a symbol closes
+all 105 symbols. Colors update the preview immediately; choosing a symbol closes
 the picker. The reset swatch returns to the theme's default color.
 
 Eight colors are available: Sage, Teal, Blue, Violet, Rose, Coral, Amber, and Gray.

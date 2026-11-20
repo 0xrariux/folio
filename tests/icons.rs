@@ -16,7 +16,7 @@ fn icon_and_color_survive_database_history_backup_and_legacy_documents() {
         .unwrap()
         .block_on(async {
             let mut page = Page::new(None);
-            page.emoji = "folio:moon-stars".into();
+            page.emoji = "folio:medical-kit".into();
             page.icon_color = IconColor::Blue;
             let store = Store::open(&path).await.unwrap();
             store.save(&page).await.unwrap();

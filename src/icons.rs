@@ -80,6 +80,47 @@ glyph!(TROPHY, "trophy");
 glyph!(SHIELD, "shield");
 glyph!(KEY, "key");
 
+glyph!(COINS, "coins");
+glyph!(BANK, "bank");
+glyph!(CREDIT_CARD, "credit-card");
+glyph!(RECEIPT, "receipt");
+glyph!(CALCULATOR, "calculator");
+glyph!(MEDICAL_KIT, "medical-kit");
+glyph!(STETHOSCOPE, "stethoscope");
+glyph!(PILL, "pill");
+glyph!(ACTIVITY, "activity");
+glyph!(BRAIN, "brain");
+glyph!(MICROSCOPE, "microscope");
+glyph!(ATOM, "atom");
+glyph!(DNA, "dna");
+glyph!(TELESCOPE, "telescope");
+glyph!(MAGNET, "magnet");
+glyph!(THEATRE, "theatre");
+glyph!(PICTURE, "picture");
+glyph!(EASEL, "easel");
+glyph!(SCULPTURE, "sculpture");
+glyph!(SWATCHES, "swatches");
+glyph!(GUITAR, "guitar");
+glyph!(PIANO, "piano");
+glyph!(DRUM, "drum");
+glyph!(SPEAKER, "speaker");
+glyph!(WAVEFORM, "waveform");
+glyph!(DICE, "dice");
+glyph!(CHESS_KNIGHT, "chess-knight");
+glyph!(CARDS, "cards");
+glyph!(JOYSTICK, "joystick");
+glyph!(GHOST, "ghost");
+glyph!(LAMP, "lamp");
+glyph!(SOFA, "sofa");
+glyph!(BED, "bed");
+glyph!(COOKING_POT, "cooking-pot");
+glyph!(BATH, "bath");
+glyph!(HARD_HAT, "hard-hat");
+glyph!(WRENCH, "wrench");
+glyph!(BUILDING, "building");
+glyph!(SCALES, "scales");
+glyph!(PACKAGE, "package");
+
 pub struct Choice {
     pub key: &'static str,
     pub name: &'static str,
@@ -476,6 +517,246 @@ pub const CHOICES: &[Choice] = &[
         name: "Key",
         value: "folio:key",
         glyph: &KEY,
+    },
+    Choice {
+        key: "coins",
+        name: "Coins",
+        value: "folio:coins",
+        glyph: &COINS,
+    },
+    Choice {
+        key: "bank",
+        name: "Banking",
+        value: "folio:bank",
+        glyph: &BANK,
+    },
+    Choice {
+        key: "credit-card",
+        name: "Payments",
+        value: "folio:credit-card",
+        glyph: &CREDIT_CARD,
+    },
+    Choice {
+        key: "receipt",
+        name: "Expenses",
+        value: "folio:receipt",
+        glyph: &RECEIPT,
+    },
+    Choice {
+        key: "calculator",
+        name: "Accounting",
+        value: "folio:calculator",
+        glyph: &CALCULATOR,
+    },
+    Choice {
+        key: "medical-kit",
+        name: "Healthcare",
+        value: "folio:medical-kit",
+        glyph: &MEDICAL_KIT,
+    },
+    Choice {
+        key: "stethoscope",
+        name: "Medicine",
+        value: "folio:stethoscope",
+        glyph: &STETHOSCOPE,
+    },
+    Choice {
+        key: "pill",
+        name: "Medication",
+        value: "folio:pill",
+        glyph: &PILL,
+    },
+    Choice {
+        key: "activity",
+        name: "Fitness",
+        value: "folio:activity",
+        glyph: &ACTIVITY,
+    },
+    Choice {
+        key: "brain",
+        name: "Mental wellbeing",
+        value: "folio:brain",
+        glyph: &BRAIN,
+    },
+    Choice {
+        key: "microscope",
+        name: "Research",
+        value: "folio:microscope",
+        glyph: &MICROSCOPE,
+    },
+    Choice {
+        key: "atom",
+        name: "Physics",
+        value: "folio:atom",
+        glyph: &ATOM,
+    },
+    Choice {
+        key: "dna",
+        name: "Biology",
+        value: "folio:dna",
+        glyph: &DNA,
+    },
+    Choice {
+        key: "telescope",
+        name: "Astronomy",
+        value: "folio:telescope",
+        glyph: &TELESCOPE,
+    },
+    Choice {
+        key: "magnet",
+        name: "Engineering",
+        value: "folio:magnet",
+        glyph: &MAGNET,
+    },
+    Choice {
+        key: "theatre",
+        name: "Performing arts",
+        value: "folio:theatre",
+        glyph: &THEATRE,
+    },
+    Choice {
+        key: "picture",
+        name: "Visual arts",
+        value: "folio:picture",
+        glyph: &PICTURE,
+    },
+    Choice {
+        key: "easel",
+        name: "Painting",
+        value: "folio:easel",
+        glyph: &EASEL,
+    },
+    Choice {
+        key: "sculpture",
+        name: "Sculpture",
+        value: "folio:sculpture",
+        glyph: &SCULPTURE,
+    },
+    Choice {
+        key: "swatches",
+        name: "Color design",
+        value: "folio:swatches",
+        glyph: &SWATCHES,
+    },
+    Choice {
+        key: "guitar",
+        name: "Guitar",
+        value: "folio:guitar",
+        glyph: &GUITAR,
+    },
+    Choice {
+        key: "piano",
+        name: "Piano",
+        value: "folio:piano",
+        glyph: &PIANO,
+    },
+    Choice {
+        key: "drum",
+        name: "Percussion",
+        value: "folio:drum",
+        glyph: &DRUM,
+    },
+    Choice {
+        key: "speaker",
+        name: "Audio",
+        value: "folio:speaker",
+        glyph: &SPEAKER,
+    },
+    Choice {
+        key: "waveform",
+        name: "Sound production",
+        value: "folio:waveform",
+        glyph: &WAVEFORM,
+    },
+    Choice {
+        key: "dice",
+        name: "Board games",
+        value: "folio:dice",
+        glyph: &DICE,
+    },
+    Choice {
+        key: "chess-knight",
+        name: "Chess",
+        value: "folio:chess-knight",
+        glyph: &CHESS_KNIGHT,
+    },
+    Choice {
+        key: "cards",
+        name: "Card games",
+        value: "folio:cards",
+        glyph: &CARDS,
+    },
+    Choice {
+        key: "joystick",
+        name: "Arcade",
+        value: "folio:joystick",
+        glyph: &JOYSTICK,
+    },
+    Choice {
+        key: "ghost",
+        name: "Video games",
+        value: "folio:ghost",
+        glyph: &GHOST,
+    },
+    Choice {
+        key: "lamp",
+        name: "Lighting",
+        value: "folio:lamp",
+        glyph: &LAMP,
+    },
+    Choice {
+        key: "sofa",
+        name: "Living room",
+        value: "folio:sofa",
+        glyph: &SOFA,
+    },
+    Choice {
+        key: "bed",
+        name: "Bedroom",
+        value: "folio:bed",
+        glyph: &BED,
+    },
+    Choice {
+        key: "cooking-pot",
+        name: "Cooking",
+        value: "folio:cooking-pot",
+        glyph: &COOKING_POT,
+    },
+    Choice {
+        key: "bath",
+        name: "Bathroom",
+        value: "folio:bath",
+        glyph: &BATH,
+    },
+    Choice {
+        key: "hard-hat",
+        name: "Construction",
+        value: "folio:hard-hat",
+        glyph: &HARD_HAT,
+    },
+    Choice {
+        key: "wrench",
+        name: "Maintenance",
+        value: "folio:wrench",
+        glyph: &WRENCH,
+    },
+    Choice {
+        key: "building",
+        name: "Real estate",
+        value: "folio:building",
+        glyph: &BUILDING,
+    },
+    Choice {
+        key: "scales",
+        name: "Legal",
+        value: "folio:scales",
+        glyph: &SCALES,
+    },
+    Choice {
+        key: "package",
+        name: "Logistics",
+        value: "folio:package",
+        glyph: &PACKAGE,
     },
 ];
 

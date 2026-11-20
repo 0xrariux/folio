@@ -1,4 +1,4 @@
-"""Build 30 original Folio page icons as SVGs and an editable Blender contact sheet.
+"""Build original Folio page icons as SVGs and an editable Blender contact sheet.
 
 Run with Blender: blender --background --factory-startup --threads 4
     --python scripts/build-page-icons.py
@@ -37,6 +37,19 @@ def rounded_rect(x, y, width, height, radius=1.5):
             ("C", x + radius - k, bottom, x, bottom - radius + k, x, bottom - radius),
             ("L", x, y + radius),
             ("C", x, y + radius - k, x + radius - k, y, x + radius, y), ("Z",)]
+
+
+def ellipse(x, y, rx, ry, angle=0):
+    radians = math.radians(angle)
+    c, s = math.cos(radians), math.sin(radians)
+    result = []
+    for command in circle(0, 0, 1):
+        coordinates = []
+        for px, py in zip(command[1::2], command[2::2]):
+            coordinates.extend((x + px * rx * c - py * ry * s,
+                                y + px * rx * s + py * ry * c))
+        result.append((command[0], *coordinates))
+    return result
 
 
 ICONS = [
@@ -125,6 +138,138 @@ ICONS = [
                                ("L", 4, 6), ("Z",)], poly((8, 12), (11, 15), (16, 9))]),
     ("key", "Key", [circle(8, 8, 5), poly((11.5, 11.5), (21, 21)),
                      poly((17, 17), (20, 14)), poly((20, 20), (22, 18))]),
+    # Finance and business.
+    ("coins", "Coins", [ellipse(9, 6, 6, 3),
+                         [("M", 3, 6), ("L", 3, 11), ("C", 3, 15, 15, 15, 15, 11), ("L", 15, 6)],
+                         [("M", 3, 10), ("C", 3, 14, 15, 14, 15, 10)],
+                         [("M", 15, 10), ("C", 23, 9, 23, 16, 15, 16)],
+                         [("M", 9, 14), ("L", 9, 18), ("C", 9, 22, 21, 22, 21, 18), ("L", 21, 13)]]),
+    ("bank", "Banking", [poly((3, 8), (12, 3), (21, 8), closed=True),
+                          *[poly((x, 11), (x, 18)) for x in [6, 12, 18]],
+                          poly((4, 21), (20, 21)), poly((3, 18), (21, 18))]),
+    ("credit-card", "Payments", [rounded_rect(2.5, 5, 19, 14, 2), poly((2.5, 10), (21.5, 10)),
+                                 poly((6, 15), (10, 15))]),
+    ("receipt", "Expenses", [poly((5, 3), (19, 3), (19, 21), (15.5, 19), (12, 21), (8.5, 19), (5, 21), closed=True),
+                             poly((9, 7), (15, 7)), poly((9, 11), (15, 11)), poly((9, 15), (12, 15))]),
+    ("calculator", "Accounting", [rounded_rect(5, 2.5, 14, 19, 2), rounded_rect(8, 6, 8, 4, .5),
+                                  *[poly((x, y), (x + 1, y)) for x in [8, 11.5, 15] for y in [14, 18]]]),
+    # Health and wellbeing.
+    ("medical-kit", "Healthcare", [rounded_rect(3, 7, 18, 14, 2),
+                                   poly((8, 7), (8, 3), (16, 3), (16, 7)),
+                                   poly((12, 11), (12, 17)), poly((9, 14), (15, 14))]),
+    ("stethoscope", "Medicine", [[("M", 4, 3), ("L", 4, 9), ("C", 4, 16, 14, 16, 14, 9), ("L", 14, 3)],
+                                  poly((3, 3), (5, 3)), poly((13, 3), (15, 3)),
+                                  [("M", 9, 14), ("L", 9, 17), ("C", 9, 23, 20, 23, 20, 17), ("L", 20, 13)],
+                                  circle(20, 10, 2.5)]),
+    ("pill", "Medication", [[("M", 4, 12), ("L", 12, 4), ("C", 17, -1, 25, 7, 20, 12),
+                             ("L", 12, 20), ("C", 7, 25, -1, 17, 4, 12), ("Z",)],
+                            poly((8, 8), (16, 16))]),
+    ("activity", "Fitness", [poly((2, 12), (6, 12), (9, 4), (14, 20), (17, 12), (22, 12))]),
+    ("brain", "Mental wellbeing", [[("M", 12, 5), ("C", 10, 1, 5, 2, 5, 6),
+                                    ("C", 0, 7, 2, 12, 4, 13), ("C", 0, 17, 5, 22, 8, 20),
+                                    ("C", 10, 23, 12, 20, 12, 18), ("Z",)],
+                                   [("M", 12, 5), ("C", 14, 1, 19, 2, 19, 6),
+                                    ("C", 24, 7, 22, 12, 20, 13), ("C", 24, 17, 19, 22, 16, 20),
+                                    ("C", 14, 23, 12, 20, 12, 18)],
+                                   [("M", 5, 6), ("C", 5, 9, 7, 10, 8, 10)],
+                                   [("M", 19, 6), ("C", 19, 9, 17, 10, 16, 10)],
+                                   poly((7, 15), (9, 17)), poly((17, 15), (15, 17))]),
+    # Research and sciences.
+    ("microscope", "Research", [poly((9, 3), (13, 5), (8, 15), (4, 13), closed=True),
+                                poly((10, 2), (14, 4)), poly((5, 17), (12, 17)),
+                                [("M", 13, 9), ("C", 22, 9, 22, 21, 13, 21)], poly((4, 21), (20, 21))]),
+    ("atom", "Physics", [ellipse(12, 12, 10, 4), ellipse(12, 12, 10, 4, 60),
+                          ellipse(12, 12, 10, 4, 120), circle(12, 12, 1)]),
+    ("dna", "Biology", [[("M", 7, 2), ("C", 7, 12, 17, 12, 17, 22)],
+                         [("M", 17, 2), ("C", 17, 12, 7, 12, 7, 22)],
+                         *[poly((x, y), (24 - x, y)) for x, y in [(7.5, 5), (9, 8), (9, 16), (7.5, 19)]]]),
+    ("telescope", "Astronomy", [poly((3, 10), (17, 3), (20, 9), (6, 16), closed=True),
+                                poly((17, 3), (18, 2.5)), poly((20, 9), (21, 8.5)),
+                                poly((11, 13.5), (11, 17), (7, 22)), poly((11, 17), (16, 22))]),
+    ("magnet", "Engineering", [[("M", 4, 4), ("L", 4, 13), ("C", 4, 24, 20, 24, 20, 13),
+                                ("L", 20, 4), ("L", 15, 4), ("L", 15, 13),
+                                ("C", 15, 17, 9, 17, 9, 13), ("L", 9, 4), ("Z",)],
+                               poly((4, 8), (9, 8)), poly((15, 8), (20, 8))]),
+    # Arts and visual creation.
+    ("theatre", "Performing arts", [[("M", 3, 3), ("C", 8, 5, 12, 5, 17, 3), ("L", 17, 9),
+                                     ("C", 17, 18, 3, 18, 3, 9), ("Z",)],
+                                    poly((6, 8), (7, 8)), poly((12, 8), (13, 8)),
+                                    [("M", 7, 11), ("C", 8, 13, 11, 13, 12, 11)],
+                                    [("M", 18, 8), ("L", 21, 7), ("L", 21, 14), ("C", 21, 21, 14, 23, 10, 18)]]),
+    ("picture", "Visual arts", [rounded_rect(3, 3, 18, 18, 2), circle(8, 8, 2),
+                                poly((3, 17), (9, 12), (13, 16), (17, 12), (21, 16))]),
+    ("easel", "Painting", [rounded_rect(4, 5, 16, 12, 1), poly((12, 2), (12, 5)),
+                           poly((3, 17), (21, 17)), poly((8, 17), (5, 22)), poly((16, 17), (19, 22)),
+                           poly((8, 13), (11, 9), (16, 13))]),
+    ("sculpture", "Sculpture", [circle(12, 6, 3.5),
+                                [("M", 9, 9), ("L", 9, 12), ("C", 5, 13, 4, 15, 4, 18),
+                                 ("L", 20, 18), ("C", 20, 15, 19, 13, 15, 12), ("L", 15, 9)],
+                                poly((6, 18), (6, 21), (18, 21), (18, 18))]),
+    ("swatches", "Color design", [rounded_rect(3, 3, 6, 18, 1.5), poly((3, 9), (9, 9)), poly((3, 15), (9, 15)),
+                                  poly((9, 7), (12, 4), (17, 9), (9, 17)),
+                                  poly((17, 11), (21, 11), (21, 21), (6, 21)), poly((15, 15), (15, 21))]),
+    # Music and audio.
+    ("guitar", "Guitar", [[("M", 10, 9), ("C", 6, 6, 3, 9, 5, 12),
+                           ("C", -1, 16, 8, 25, 12, 19), ("C", 15, 21, 18, 18, 15, 14),
+                           ("L", 20, 6), ("L", 18, 4), ("Z",)],
+                          poly((18, 4), (20, 2), (22, 4), (20, 6)), circle(10, 14, 2), poly((6, 17), (8, 19))]),
+    ("piano", "Piano", [rounded_rect(3, 4, 18, 16, 1),
+                         *[poly((x, 4), (x, 20)) for x in [9, 15]],
+                         *[rounded_rect(x, 4, 2, 9, .4) for x in [8, 14]]]),
+    ("drum", "Percussion", [ellipse(12, 10, 9, 3),
+                            [("M", 3, 10), ("L", 3, 18), ("C", 3, 22, 21, 22, 21, 18), ("L", 21, 10)],
+                            poly((4, 12), (8, 19), (12, 13), (16, 19), (20, 12)),
+                            poly((5, 3), (12, 7)), poly((19, 2), (14, 7))]),
+    ("speaker", "Audio", [rounded_rect(5, 2.5, 14, 19, 2), circle(12, 14.5, 4), circle(12, 6.5, 1.3)]),
+    ("waveform", "Sound production", [*[poly((x, 12 - h), (x, 12 + h))
+                                         for x, h in [(3, 2), (7.5, 6), (12, 9), (16.5, 4), (21, 7)]]]),
+    # Games and play.
+    ("dice", "Board games", [rounded_rect(3, 3, 18, 18, 3),
+                             *[circle(x, y, .8) for x, y in [(7, 7), (17, 7), (12, 12), (7, 17), (17, 17)]]]),
+    ("chess-knight", "Chess", [poly((6, 18), (6, 15), (11, 10), (7, 12), (3, 9), (8, 4), (8, 2.5),
+                                   (13, 4), (17, 7), (19, 18)),
+                               poly((5, 18), (20, 18), (20, 21), (5, 21), closed=True), circle(10, 7, .65)]),
+    ("cards", "Card games", [rounded_rect(7, 3, 14, 18, 2), poly((7, 4), (3, 5), (3, 19), (7, 19)),
+                             poly((14, 8), (17, 12), (14, 16), (11, 12), closed=True)]),
+    ("joystick", "Arcade", [poly((3, 15), (6, 12), (9, 12)), poly((15, 12), (18, 12), (21, 15)),
+                            rounded_rect(3, 15, 18, 6, 1.5), circle(12, 5.5, 3), poly((12, 8.5), (12, 15)),
+                            poly((17, 18), (18, 18))]),
+    ("ghost", "Video games", [[("M", 4, 11), ("C", 4, 0, 20, 0, 20, 11),
+                               ("L", 20, 21), ("L", 16, 18), ("L", 12, 21), ("L", 8, 18), ("L", 4, 21), ("Z",)],
+                              circle(9, 10, 1), circle(15, 10, 1)]),
+    # Home and everyday life.
+    ("lamp", "Lighting", [poly((8, 3), (16, 3), (20, 13), (4, 13), closed=True),
+                           poly((12, 13), (12, 21)), poly((8, 21), (16, 21)), poly((17, 13), (17, 17))]),
+    ("sofa", "Living room", [[("M", 5, 11), ("L", 5, 7), ("C", 5, 3, 19, 3, 19, 7), ("L", 19, 11)],
+                             [("M", 6, 15), ("L", 6, 12), ("C", 6, 8, 2, 8, 2, 12), ("L", 2, 19),
+                              ("L", 22, 19), ("L", 22, 12), ("C", 22, 8, 18, 8, 18, 12), ("L", 18, 15), ("Z",)],
+                             poly((5, 19), (5, 21)), poly((19, 19), (19, 21))]),
+    ("bed", "Bedroom", [poly((3, 21), (3, 5), (21, 5), (21, 21)), rounded_rect(3, 12, 18, 6, 1),
+                         rounded_rect(6, 8, 5, 4, .8), rounded_rect(13, 8, 5, 4, .8)]),
+    ("cooking-pot", "Cooking", [[("M", 5, 10), ("L", 5, 17), ("C", 5, 23, 19, 23, 19, 17), ("L", 19, 10), ("Z",)],
+                                poly((2, 13), (5, 13)), poly((19, 13), (22, 13)), poly((4, 10), (20, 10)),
+                                [("M", 8, 6), ("C", 11, 4, 6, 4, 9, 2)],
+                                [("M", 14, 6), ("C", 17, 4, 12, 4, 15, 2)]]),
+    ("bath", "Bathroom", [[("M", 3, 12), ("L", 3, 15), ("C", 3, 22, 21, 22, 21, 15), ("L", 21, 12)],
+                           poly((2, 12), (22, 12)), poly((6, 19), (5, 22)), poly((18, 19), (19, 22)),
+                           [("M", 5, 12), ("L", 5, 5), ("C", 5, 1, 10, 1, 10, 5)], poly((8, 6), (12, 6))]),
+    # Industry, services and logistics.
+    ("hard-hat", "Construction", [[("M", 4, 16), ("L", 4, 12), ("C", 4, 2, 20, 2, 20, 12), ("L", 20, 16)],
+                                   rounded_rect(2, 16, 20, 4, 1), poly((9, 10), (9, 3), (15, 3), (15, 10))]),
+    ("wrench", "Maintenance", [[("M", 14, 3), ("C", 20, 0, 24, 7, 20, 11),
+                                ("C", 18, 13, 16, 13, 14, 12), ("L", 6, 21),
+                                ("C", 3, 24, 0, 20, 3, 18), ("L", 12, 10),
+                                ("C", 10, 8, 10, 5, 11, 4), ("L", 14, 7), ("L", 17, 6), ("Z",)]]),
+    ("building", "Real estate", [rounded_rect(5, 3, 14, 18, 1), poly((10, 21), (10, 16), (14, 16), (14, 21)),
+                                  *[poly((x, y), (x + 1, y)) for x in [9, 14] for y in [7, 11]]]),
+    ("scales", "Legal", [poly((12, 3), (12, 21)), poly((7, 21), (17, 21)), poly((4, 6), (20, 6)),
+                          poly((5, 6), (2, 14), (8, 14), closed=True),
+                          poly((19, 6), (16, 14), (22, 14), closed=True),
+                          [("M", 2, 14), ("C", 3, 18, 7, 18, 8, 14)],
+                          [("M", 16, 14), ("C", 17, 18, 21, 18, 22, 14)]]),
+    ("package", "Logistics", [poly((3, 7), (12, 3), (21, 7), (21, 17), (12, 21), (3, 17), closed=True),
+                              poly((3, 7), (12, 11), (21, 7)), poly((12, 11), (12, 21)),
+                              poly((7.5, 5), (16.5, 9), (16.5, 13))]),
 ]
 
 
@@ -190,13 +335,16 @@ def build():
         obj = bpy.data.objects.new(text, data); bpy.context.collection.objects.link(obj)
         obj.location = (x, y, 1); data.materials.append(mat)
 
-    label('Folio / More ways to make a page yours', 132, 32, 6, ink)
-    label('30 new symbols / 24-point grid / rounded strokes', 132, 23, 3.2, muted)
+    columns = 8
+    rows = math.ceil(len(ICONS) / columns)
+    width, height = columns * 44 + 16, rows * 44 + 64
+    label('Folio / More ways to make a page yours', columns * 22, 32, 6, ink)
+    label(f'{len(ICONS)} original symbols / 24-point grid / rounded strokes', columns * 22, 23, 3.2, muted)
     for index, (key, name, paths) in enumerate(ICONS):
         (DEST / f'{key}.svg').write_text(svg(paths))
         collection = bpy.data.collections.new(f'{index + 36:02} / {name}')
         bpy.context.scene.collection.children.link(collection)
-        origin = ((index % 6) * 44 + 10, -(index // 6) * 44)
+        origin = ((index % columns) * 44 + 10, -(index // columns) * 44)
         for n, path in enumerate(paths):
             points, closed = samples(path)
             data = bpy.data.curves.new(f'{key} / stroke {n + 1}', 'CURVE')
@@ -221,15 +369,17 @@ def build():
     scene = bpy.context.scene
     scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'; scene.cycles.samples = 32
     scene.cycles.use_denoising = True
-    scene.render.resolution_x = 1584; scene.render.resolution_y = 1500; scene.render.resolution_percentage = 100
+    scene.render.resolution_x = width * 5; scene.render.resolution_y = height * 5
+    scene.render.resolution_percentage = 100
     scene.render.image_settings.file_format = 'PNG'; scene.render.image_settings.color_mode = 'RGBA'
     scene.view_settings.view_transform = 'Standard'
     scene.world.use_nodes = True
     scene.world.node_tree.nodes['Background'].inputs['Color'].default_value = tuple(linear(c) for c in (29, 31, 30)) + (1,)
     scene.world.node_tree.nodes['Background'].inputs['Strength'].default_value = 1
     camera = bpy.data.objects.new('Folio / orthographic', bpy.data.cameras.new('Folio / orthographic'))
-    bpy.context.collection.objects.link(camera); camera.location = (132, -89, 400)
-    camera.data.type = 'ORTHO'; camera.data.ortho_scale = 276; scene.camera = camera
+    bpy.context.collection.objects.link(camera); camera.location = (columns * 22, -(rows - 1) * 22 - 1, 400)
+    camera.data.type = 'ORTHO'; camera.data.sensor_fit = 'HORIZONTAL'; camera.data.ortho_scale = width
+    scene.camera = camera
     scene.render.filepath = str(DEST / 'page-icons-blender.png')
     bpy.ops.render.render(write_still=True)
     # Clear full fixed-size buffers, including bytes after the NUL, before saving.
@@ -240,7 +390,7 @@ def build():
                     space.params.directory = b'_' * 1023; space.params.directory = b'//'
     scene.render.filepath = '_' * 1023; scene.render.filepath = '//page-icons-blender.png'
     bpy.ops.wm.save_as_mainfile(filepath=str(DEST / 'page-icons.blend'))
-    print('Generated 30 SVG icons, the Blender master and its preview.')
+    print(f'Generated {len(ICONS)} SVG icons, the Blender master and its preview.')
 
 
 if __name__ == '__main__':

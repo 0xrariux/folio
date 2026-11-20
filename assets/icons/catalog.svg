@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 2618">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 4058">
 <title>Folio — Page icons</title>
-<rect width="1040" height="2618" fill="#fdfcf9"/>
-<rect x="520" width="520" height="2618" fill="#1d1f1e"/>
+<rect width="1040" height="4058" fill="#fdfcf9"/>
+<rect x="520" width="520" height="4058" fill="#1d1f1e"/>
 <g font-family="Inter, system-ui, sans-serif" fill="#2b312a">
 <text x="32" y="54" font-size="26" font-weight="500">Folio / Page icons</text>
-<text x="32" y="84" font-size="12" fill="#697265">66 icons · a consistent style</text>
+<text x="32" y="84" font-size="12" fill="#697265">106 icons · a consistent style</text>
 <path d="M32 108h456" stroke="#e2e5db"/>
 <rect x="32" y="138" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
 <g color="#41653e" transform="translate(66 160) scale(1.666667)">
@@ -956,10 +956,766 @@
   </g>
 </g>
 <text x="202" y="2554" text-anchor="middle" font-size="10.5">Key</text>
+<rect x="264" y="2442" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 2464) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 6 C15 7.65685 12.3137 9 9 9 C5.68629 9 3 7.65685 3 6 C3 4.34315 5.68629 3 9 3 C12.3137 3 15 4.34315 15 6 Z"/>
+    <path d="M3 6 L3 11 C3 15 15 15 15 11 L15 6"/>
+    <path d="M3 10 C3 14 15 14 15 10"/>
+    <path d="M15 10 C23 9 23 16 15 16"/>
+    <path d="M9 14 L9 18 C9 22 21 22 21 18 L21 13"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 2516) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 6 C15 7.65685 12.3137 9 9 9 C5.68629 9 3 7.65685 3 6 C3 4.34315 5.68629 3 9 3 C12.3137 3 15 4.34315 15 6 Z"/>
+    <path d="M3 6 L3 11 C3 15 15 15 15 11 L15 6"/>
+    <path d="M3 10 C3 14 15 14 15 10"/>
+    <path d="M15 10 C23 9 23 16 15 16"/>
+    <path d="M9 14 L9 18 C9 22 21 22 21 18 L21 13"/>
+  </g>
+</g>
+<text x="318" y="2554" text-anchor="middle" font-size="10.5">Coins</text>
+<rect x="380" y="2442" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 2464) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8 L12 3 L21 8 Z"/>
+    <path d="M6 11 L6 18"/>
+    <path d="M12 11 L12 18"/>
+    <path d="M18 11 L18 18"/>
+    <path d="M4 21 L20 21"/>
+    <path d="M3 18 L21 18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 2516) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8 L12 3 L21 8 Z"/>
+    <path d="M6 11 L6 18"/>
+    <path d="M12 11 L12 18"/>
+    <path d="M18 11 L18 18"/>
+    <path d="M4 21 L20 21"/>
+    <path d="M3 18 L21 18"/>
+  </g>
+</g>
+<text x="434" y="2554" text-anchor="middle" font-size="10.5">Banking</text>
+<rect x="32" y="2586" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 5 L19.5 5 C20.6046 5 21.5 5.89543 21.5 7 L21.5 17 C21.5 18.1046 20.6046 19 19.5 19 L4.5 19 C3.39543 19 2.5 18.1046 2.5 17 L2.5 7 C2.5 5.89543 3.39543 5 4.5 5 Z"/>
+    <path d="M2.5 10 L21.5 10"/>
+    <path d="M6 15 L10 15"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 5 L19.5 5 C20.6046 5 21.5 5.89543 21.5 7 L21.5 17 C21.5 18.1046 20.6046 19 19.5 19 L4.5 19 C3.39543 19 2.5 18.1046 2.5 17 L2.5 7 C2.5 5.89543 3.39543 5 4.5 5 Z"/>
+    <path d="M2.5 10 L21.5 10"/>
+    <path d="M6 15 L10 15"/>
+  </g>
+</g>
+<text x="86" y="2698" text-anchor="middle" font-size="10.5">Payments</text>
+<rect x="148" y="2586" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 L19 21 L15.5 19 L12 21 L8.5 19 L5 21 Z"/>
+    <path d="M9 7 L15 7"/>
+    <path d="M9 11 L15 11"/>
+    <path d="M9 15 L12 15"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 L19 21 L15.5 19 L12 21 L8.5 19 L5 21 Z"/>
+    <path d="M9 7 L15 7"/>
+    <path d="M9 11 L15 11"/>
+    <path d="M9 15 L12 15"/>
+  </g>
+</g>
+<text x="202" y="2698" text-anchor="middle" font-size="10.5">Expenses</text>
+<rect x="264" y="2586" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M8.5 6 L15.5 6 C15.7761 6 16 6.22386 16 6.5 L16 9.5 C16 9.77614 15.7761 10 15.5 10 L8.5 10 C8.22386 10 8 9.77614 8 9.5 L8 6.5 C8 6.22386 8.22386 6 8.5 6 Z"/>
+    <path d="M8 14 L9 14"/>
+    <path d="M8 18 L9 18"/>
+    <path d="M11.5 14 L12.5 14"/>
+    <path d="M11.5 18 L12.5 18"/>
+    <path d="M15 14 L16 14"/>
+    <path d="M15 18 L16 18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M8.5 6 L15.5 6 C15.7761 6 16 6.22386 16 6.5 L16 9.5 C16 9.77614 15.7761 10 15.5 10 L8.5 10 C8.22386 10 8 9.77614 8 9.5 L8 6.5 C8 6.22386 8.22386 6 8.5 6 Z"/>
+    <path d="M8 14 L9 14"/>
+    <path d="M8 18 L9 18"/>
+    <path d="M11.5 14 L12.5 14"/>
+    <path d="M11.5 18 L12.5 18"/>
+    <path d="M15 14 L16 14"/>
+    <path d="M15 18 L16 18"/>
+  </g>
+</g>
+<text x="318" y="2698" text-anchor="middle" font-size="10.5">Accounting</text>
+<rect x="380" y="2586" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 7 L19 7 C20.1046 7 21 7.89543 21 9 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 9 C3 7.89543 3.89543 7 5 7 Z"/>
+    <path d="M8 7 L8 3 L16 3 L16 7"/>
+    <path d="M12 11 L12 17"/>
+    <path d="M9 14 L15 14"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 7 L19 7 C20.1046 7 21 7.89543 21 9 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 9 C3 7.89543 3.89543 7 5 7 Z"/>
+    <path d="M8 7 L8 3 L16 3 L16 7"/>
+    <path d="M12 11 L12 17"/>
+    <path d="M9 14 L15 14"/>
+  </g>
+</g>
+<text x="434" y="2698" text-anchor="middle" font-size="10.5">Healthcare</text>
+<rect x="32" y="2730" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 3 L4 9 C4 16 14 16 14 9 L14 3"/>
+    <path d="M3 3 L5 3"/>
+    <path d="M13 3 L15 3"/>
+    <path d="M9 14 L9 17 C9 23 20 23 20 17 L20 13"/>
+    <path d="M22.5 10 C22.5 11.3807 21.3807 12.5 20 12.5 C18.6193 12.5 17.5 11.3807 17.5 10 C17.5 8.61929 18.6193 7.5 20 7.5 C21.3807 7.5 22.5 8.61929 22.5 10 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 3 L4 9 C4 16 14 16 14 9 L14 3"/>
+    <path d="M3 3 L5 3"/>
+    <path d="M13 3 L15 3"/>
+    <path d="M9 14 L9 17 C9 23 20 23 20 17 L20 13"/>
+    <path d="M22.5 10 C22.5 11.3807 21.3807 12.5 20 12.5 C18.6193 12.5 17.5 11.3807 17.5 10 C17.5 8.61929 18.6193 7.5 20 7.5 C21.3807 7.5 22.5 8.61929 22.5 10 Z"/>
+  </g>
+</g>
+<text x="86" y="2842" text-anchor="middle" font-size="10.5">Medicine</text>
+<rect x="148" y="2730" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12 L12 4 C17 -1 25 7 20 12 L12 20 C7 25 -1 17 4 12 Z"/>
+    <path d="M8 8 L16 16"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12 L12 4 C17 -1 25 7 20 12 L12 20 C7 25 -1 17 4 12 Z"/>
+    <path d="M8 8 L16 16"/>
+  </g>
+</g>
+<text x="202" y="2842" text-anchor="middle" font-size="10.5">Medication</text>
+<rect x="264" y="2730" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12 L6 12 L9 4 L14 20 L17 12 L22 12"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12 L6 12 L9 4 L14 20 L17 12 L22 12"/>
+  </g>
+</g>
+<text x="318" y="2842" text-anchor="middle" font-size="10.5">Fitness</text>
+<rect x="380" y="2730" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5 C10 1 5 2 5 6 C0 7 2 12 4 13 C0 17 5 22 8 20 C10 23 12 20 12 18 Z"/>
+    <path d="M12 5 C14 1 19 2 19 6 C24 7 22 12 20 13 C24 17 19 22 16 20 C14 23 12 20 12 18"/>
+    <path d="M5 6 C5 9 7 10 8 10"/>
+    <path d="M19 6 C19 9 17 10 16 10"/>
+    <path d="M7 15 L9 17"/>
+    <path d="M17 15 L15 17"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5 C10 1 5 2 5 6 C0 7 2 12 4 13 C0 17 5 22 8 20 C10 23 12 20 12 18 Z"/>
+    <path d="M12 5 C14 1 19 2 19 6 C24 7 22 12 20 13 C24 17 19 22 16 20 C14 23 12 20 12 18"/>
+    <path d="M5 6 C5 9 7 10 8 10"/>
+    <path d="M19 6 C19 9 17 10 16 10"/>
+    <path d="M7 15 L9 17"/>
+    <path d="M17 15 L15 17"/>
+  </g>
+</g>
+<text x="434" y="2842" text-anchor="middle" font-size="10.5">Mental wellbeing</text>
+<rect x="32" y="2874" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L13 5 L8 15 L4 13 Z"/>
+    <path d="M10 2 L14 4"/>
+    <path d="M5 17 L12 17"/>
+    <path d="M13 9 C22 9 22 21 13 21"/>
+    <path d="M4 21 L20 21"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L13 5 L8 15 L4 13 Z"/>
+    <path d="M10 2 L14 4"/>
+    <path d="M5 17 L12 17"/>
+    <path d="M13 9 C22 9 22 21 13 21"/>
+    <path d="M4 21 L20 21"/>
+  </g>
+</g>
+<text x="86" y="2986" text-anchor="middle" font-size="10.5">Research</text>
+<rect x="148" y="2874" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 12 C22 14.2091 17.5228 16 12 16 C6.47715 16 2 14.2091 2 12 C2 9.79086 6.47715 8 12 8 C17.5228 8 22 9.79086 22 12 Z"/>
+    <path d="M17 20.6603 C15.0868 21.7648 11.2973 18.7829 8.5359 14 C5.77447 9.21707 5.08683 4.44432 7 3.33975 C8.91317 2.23518 12.7027 5.21707 15.4641 10 C18.2255 14.7829 18.9132 19.5557 17 20.6603 Z"/>
+    <path d="M7 20.6603 C5.08683 19.5557 5.77447 14.7829 8.5359 10 C11.2973 5.21707 15.0868 2.23518 17 3.33975 C18.9132 4.44432 18.2255 9.21707 15.4641 14 C12.7027 18.7829 8.91317 21.7648 7 20.6603 Z"/>
+    <path d="M13 12 C13 12.5523 12.5523 13 12 13 C11.4477 13 11 12.5523 11 12 C11 11.4477 11.4477 11 12 11 C12.5523 11 13 11.4477 13 12 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 12 C22 14.2091 17.5228 16 12 16 C6.47715 16 2 14.2091 2 12 C2 9.79086 6.47715 8 12 8 C17.5228 8 22 9.79086 22 12 Z"/>
+    <path d="M17 20.6603 C15.0868 21.7648 11.2973 18.7829 8.5359 14 C5.77447 9.21707 5.08683 4.44432 7 3.33975 C8.91317 2.23518 12.7027 5.21707 15.4641 10 C18.2255 14.7829 18.9132 19.5557 17 20.6603 Z"/>
+    <path d="M7 20.6603 C5.08683 19.5557 5.77447 14.7829 8.5359 10 C11.2973 5.21707 15.0868 2.23518 17 3.33975 C18.9132 4.44432 18.2255 9.21707 15.4641 14 C12.7027 18.7829 8.91317 21.7648 7 20.6603 Z"/>
+    <path d="M13 12 C13 12.5523 12.5523 13 12 13 C11.4477 13 11 12.5523 11 12 C11 11.4477 11.4477 11 12 11 C12.5523 11 13 11.4477 13 12 Z"/>
+  </g>
+</g>
+<text x="202" y="2986" text-anchor="middle" font-size="10.5">Physics</text>
+<rect x="264" y="2874" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2 C7 12 17 12 17 22"/>
+    <path d="M17 2 C17 12 7 12 7 22"/>
+    <path d="M7.5 5 L16.5 5"/>
+    <path d="M9 8 L15 8"/>
+    <path d="M9 16 L15 16"/>
+    <path d="M7.5 19 L16.5 19"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2 C7 12 17 12 17 22"/>
+    <path d="M17 2 C17 12 7 12 7 22"/>
+    <path d="M7.5 5 L16.5 5"/>
+    <path d="M9 8 L15 8"/>
+    <path d="M9 16 L15 16"/>
+    <path d="M7.5 19 L16.5 19"/>
+  </g>
+</g>
+<text x="318" y="2986" text-anchor="middle" font-size="10.5">Biology</text>
+<rect x="380" y="2874" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L17 3 L20 9 L6 16 Z"/>
+    <path d="M17 3 L18 2.5"/>
+    <path d="M20 9 L21 8.5"/>
+    <path d="M11 13.5 L11 17 L7 22"/>
+    <path d="M11 17 L16 22"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L17 3 L20 9 L6 16 Z"/>
+    <path d="M17 3 L18 2.5"/>
+    <path d="M20 9 L21 8.5"/>
+    <path d="M11 13.5 L11 17 L7 22"/>
+    <path d="M11 17 L16 22"/>
+  </g>
+</g>
+<text x="434" y="2986" text-anchor="middle" font-size="10.5">Astronomy</text>
+<rect x="32" y="3018" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L4 13 C4 24 20 24 20 13 L20 4 L15 4 L15 13 C15 17 9 17 9 13 L9 4 Z"/>
+    <path d="M4 8 L9 8"/>
+    <path d="M15 8 L20 8"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L4 13 C4 24 20 24 20 13 L20 4 L15 4 L15 13 C15 17 9 17 9 13 L9 4 Z"/>
+    <path d="M4 8 L9 8"/>
+    <path d="M15 8 L20 8"/>
+  </g>
+</g>
+<text x="86" y="3130" text-anchor="middle" font-size="10.5">Engineering</text>
+<rect x="148" y="3018" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3 C8 5 12 5 17 3 L17 9 C17 18 3 18 3 9 Z"/>
+    <path d="M6 8 L7 8"/>
+    <path d="M12 8 L13 8"/>
+    <path d="M7 11 C8 13 11 13 12 11"/>
+    <path d="M18 8 L21 7 L21 14 C21 21 14 23 10 18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3 C8 5 12 5 17 3 L17 9 C17 18 3 18 3 9 Z"/>
+    <path d="M6 8 L7 8"/>
+    <path d="M12 8 L13 8"/>
+    <path d="M7 11 C8 13 11 13 12 11"/>
+    <path d="M18 8 L21 7 L21 14 C21 21 14 23 10 18"/>
+  </g>
+</g>
+<text x="202" y="3130" text-anchor="middle" font-size="10.5">Performing arts</text>
+<rect x="264" y="3018" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 5 C3 3.89543 3.89543 3 5 3 Z"/>
+    <path d="M10 8 C10 9.10457 9.10457 10 8 10 C6.89543 10 6 9.10457 6 8 C6 6.89543 6.89543 6 8 6 C9.10457 6 10 6.89543 10 8 Z"/>
+    <path d="M3 17 L9 12 L13 16 L17 12 L21 16"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 5 C3 3.89543 3.89543 3 5 3 Z"/>
+    <path d="M10 8 C10 9.10457 9.10457 10 8 10 C6.89543 10 6 9.10457 6 8 C6 6.89543 6.89543 6 8 6 C9.10457 6 10 6.89543 10 8 Z"/>
+    <path d="M3 17 L9 12 L13 16 L17 12 L21 16"/>
+  </g>
+</g>
+<text x="318" y="3130" text-anchor="middle" font-size="10.5">Visual arts</text>
+<rect x="380" y="3018" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 5 L19 5 C19.5523 5 20 5.44772 20 6 L20 16 C20 16.5523 19.5523 17 19 17 L5 17 C4.44772 17 4 16.5523 4 16 L4 6 C4 5.44772 4.44772 5 5 5 Z"/>
+    <path d="M12 2 L12 5"/>
+    <path d="M3 17 L21 17"/>
+    <path d="M8 17 L5 22"/>
+    <path d="M16 17 L19 22"/>
+    <path d="M8 13 L11 9 L16 13"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 5 L19 5 C19.5523 5 20 5.44772 20 6 L20 16 C20 16.5523 19.5523 17 19 17 L5 17 C4.44772 17 4 16.5523 4 16 L4 6 C4 5.44772 4.44772 5 5 5 Z"/>
+    <path d="M12 2 L12 5"/>
+    <path d="M3 17 L21 17"/>
+    <path d="M8 17 L5 22"/>
+    <path d="M16 17 L19 22"/>
+    <path d="M8 13 L11 9 L16 13"/>
+  </g>
+</g>
+<text x="434" y="3130" text-anchor="middle" font-size="10.5">Painting</text>
+<rect x="32" y="3162" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15.5 6 C15.5 7.933 13.933 9.5 12 9.5 C10.067 9.5 8.5 7.933 8.5 6 C8.5 4.067 10.067 2.5 12 2.5 C13.933 2.5 15.5 4.067 15.5 6 Z"/>
+    <path d="M9 9 L9 12 C5 13 4 15 4 18 L20 18 C20 15 19 13 15 12 L15 9"/>
+    <path d="M6 18 L6 21 L18 21 L18 18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15.5 6 C15.5 7.933 13.933 9.5 12 9.5 C10.067 9.5 8.5 7.933 8.5 6 C8.5 4.067 10.067 2.5 12 2.5 C13.933 2.5 15.5 4.067 15.5 6 Z"/>
+    <path d="M9 9 L9 12 C5 13 4 15 4 18 L20 18 C20 15 19 13 15 12 L15 9"/>
+    <path d="M6 18 L6 21 L18 21 L18 18"/>
+  </g>
+</g>
+<text x="86" y="3274" text-anchor="middle" font-size="10.5">Sculpture</text>
+<rect x="148" y="3162" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 3 L7.5 3 C8.32843 3 9 3.67157 9 4.5 L9 19.5 C9 20.3284 8.32843 21 7.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 4.5 C3 3.67157 3.67157 3 4.5 3 Z"/>
+    <path d="M3 9 L9 9"/>
+    <path d="M3 15 L9 15"/>
+    <path d="M9 7 L12 4 L17 9 L9 17"/>
+    <path d="M17 11 L21 11 L21 21 L6 21"/>
+    <path d="M15 15 L15 21"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 3 L7.5 3 C8.32843 3 9 3.67157 9 4.5 L9 19.5 C9 20.3284 8.32843 21 7.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 4.5 C3 3.67157 3.67157 3 4.5 3 Z"/>
+    <path d="M3 9 L9 9"/>
+    <path d="M3 15 L9 15"/>
+    <path d="M9 7 L12 4 L17 9 L9 17"/>
+    <path d="M17 11 L21 11 L21 21 L6 21"/>
+    <path d="M15 15 L15 21"/>
+  </g>
+</g>
+<text x="202" y="3274" text-anchor="middle" font-size="10.5">Color design</text>
+<rect x="264" y="3162" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 9 C6 6 3 9 5 12 C-1 16 8 25 12 19 C15 21 18 18 15 14 L20 6 L18 4 Z"/>
+    <path d="M18 4 L20 2 L22 4 L20 6"/>
+    <path d="M12 14 C12 15.1046 11.1046 16 10 16 C8.89543 16 8 15.1046 8 14 C8 12.8954 8.89543 12 10 12 C11.1046 12 12 12.8954 12 14 Z"/>
+    <path d="M6 17 L8 19"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 9 C6 6 3 9 5 12 C-1 16 8 25 12 19 C15 21 18 18 15 14 L20 6 L18 4 Z"/>
+    <path d="M18 4 L20 2 L22 4 L20 6"/>
+    <path d="M12 14 C12 15.1046 11.1046 16 10 16 C8.89543 16 8 15.1046 8 14 C8 12.8954 8.89543 12 10 12 C11.1046 12 12 12.8954 12 14 Z"/>
+    <path d="M6 17 L8 19"/>
+  </g>
+</g>
+<text x="318" y="3274" text-anchor="middle" font-size="10.5">Guitar</text>
+<rect x="380" y="3162" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L20 4 C20.5523 4 21 4.44772 21 5 L21 19 C21 19.5523 20.5523 20 20 20 L4 20 C3.44772 20 3 19.5523 3 19 L3 5 C3 4.44772 3.44772 4 4 4 Z"/>
+    <path d="M9 4 L9 20"/>
+    <path d="M15 4 L15 20"/>
+    <path d="M8.4 4 L9.6 4 C9.82091 4 10 4.17909 10 4.4 L10 12.6 C10 12.8209 9.82091 13 9.6 13 L8.4 13 C8.17909 13 8 12.8209 8 12.6 L8 4.4 C8 4.17909 8.17909 4 8.4 4 Z"/>
+    <path d="M14.4 4 L15.6 4 C15.8209 4 16 4.17909 16 4.4 L16 12.6 C16 12.8209 15.8209 13 15.6 13 L14.4 13 C14.1791 13 14 12.8209 14 12.6 L14 4.4 C14 4.17909 14.1791 4 14.4 4 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L20 4 C20.5523 4 21 4.44772 21 5 L21 19 C21 19.5523 20.5523 20 20 20 L4 20 C3.44772 20 3 19.5523 3 19 L3 5 C3 4.44772 3.44772 4 4 4 Z"/>
+    <path d="M9 4 L9 20"/>
+    <path d="M15 4 L15 20"/>
+    <path d="M8.4 4 L9.6 4 C9.82091 4 10 4.17909 10 4.4 L10 12.6 C10 12.8209 9.82091 13 9.6 13 L8.4 13 C8.17909 13 8 12.8209 8 12.6 L8 4.4 C8 4.17909 8.17909 4 8.4 4 Z"/>
+    <path d="M14.4 4 L15.6 4 C15.8209 4 16 4.17909 16 4.4 L16 12.6 C16 12.8209 15.8209 13 15.6 13 L14.4 13 C14.1791 13 14 12.8209 14 12.6 L14 4.4 C14 4.17909 14.1791 4 14.4 4 Z"/>
+  </g>
+</g>
+<text x="434" y="3274" text-anchor="middle" font-size="10.5">Piano</text>
+<rect x="32" y="3306" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10 C21 11.6569 16.9706 13 12 13 C7.02944 13 3 11.6569 3 10 C3 8.34315 7.02944 7 12 7 C16.9706 7 21 8.34315 21 10 Z"/>
+    <path d="M3 10 L3 18 C3 22 21 22 21 18 L21 10"/>
+    <path d="M4 12 L8 19 L12 13 L16 19 L20 12"/>
+    <path d="M5 3 L12 7"/>
+    <path d="M19 2 L14 7"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10 C21 11.6569 16.9706 13 12 13 C7.02944 13 3 11.6569 3 10 C3 8.34315 7.02944 7 12 7 C16.9706 7 21 8.34315 21 10 Z"/>
+    <path d="M3 10 L3 18 C3 22 21 22 21 18 L21 10"/>
+    <path d="M4 12 L8 19 L12 13 L16 19 L20 12"/>
+    <path d="M5 3 L12 7"/>
+    <path d="M19 2 L14 7"/>
+  </g>
+</g>
+<text x="86" y="3418" text-anchor="middle" font-size="10.5">Percussion</text>
+<rect x="148" y="3306" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M16 14.5 C16 16.7091 14.2091 18.5 12 18.5 C9.79086 18.5 8 16.7091 8 14.5 C8 12.2909 9.79086 10.5 12 10.5 C14.2091 10.5 16 12.2909 16 14.5 Z"/>
+    <path d="M13.3 6.5 C13.3 7.21797 12.718 7.8 12 7.8 C11.282 7.8 10.7 7.21797 10.7 6.5 C10.7 5.78203 11.282 5.2 12 5.2 C12.718 5.2 13.3 5.78203 13.3 6.5 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M16 14.5 C16 16.7091 14.2091 18.5 12 18.5 C9.79086 18.5 8 16.7091 8 14.5 C8 12.2909 9.79086 10.5 12 10.5 C14.2091 10.5 16 12.2909 16 14.5 Z"/>
+    <path d="M13.3 6.5 C13.3 7.21797 12.718 7.8 12 7.8 C11.282 7.8 10.7 7.21797 10.7 6.5 C10.7 5.78203 11.282 5.2 12 5.2 C12.718 5.2 13.3 5.78203 13.3 6.5 Z"/>
+  </g>
+</g>
+<text x="202" y="3418" text-anchor="middle" font-size="10.5">Audio</text>
+<rect x="264" y="3306" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L3 14"/>
+    <path d="M7.5 6 L7.5 18"/>
+    <path d="M12 3 L12 21"/>
+    <path d="M16.5 8 L16.5 16"/>
+    <path d="M21 5 L21 19"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L3 14"/>
+    <path d="M7.5 6 L7.5 18"/>
+    <path d="M12 3 L12 21"/>
+    <path d="M16.5 8 L16.5 16"/>
+    <path d="M21 5 L21 19"/>
+  </g>
+</g>
+<text x="318" y="3418" text-anchor="middle" font-size="10.5">Sound production</text>
+<rect x="380" y="3306" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C19.6569 3 21 4.34315 21 6 L21 18 C21 19.6569 19.6569 21 18 21 L6 21 C4.34315 21 3 19.6569 3 18 L3 6 C3 4.34315 4.34315 3 6 3 Z"/>
+    <path d="M7.8 7 C7.8 7.44183 7.44183 7.8 7 7.8 C6.55817 7.8 6.2 7.44183 6.2 7 C6.2 6.55817 6.55817 6.2 7 6.2 C7.44183 6.2 7.8 6.55817 7.8 7 Z"/>
+    <path d="M17.8 7 C17.8 7.44183 17.4418 7.8 17 7.8 C16.5582 7.8 16.2 7.44183 16.2 7 C16.2 6.55817 16.5582 6.2 17 6.2 C17.4418 6.2 17.8 6.55817 17.8 7 Z"/>
+    <path d="M12.8 12 C12.8 12.4418 12.4418 12.8 12 12.8 C11.5582 12.8 11.2 12.4418 11.2 12 C11.2 11.5582 11.5582 11.2 12 11.2 C12.4418 11.2 12.8 11.5582 12.8 12 Z"/>
+    <path d="M7.8 17 C7.8 17.4418 7.44183 17.8 7 17.8 C6.55817 17.8 6.2 17.4418 6.2 17 C6.2 16.5582 6.55817 16.2 7 16.2 C7.44183 16.2 7.8 16.5582 7.8 17 Z"/>
+    <path d="M17.8 17 C17.8 17.4418 17.4418 17.8 17 17.8 C16.5582 17.8 16.2 17.4418 16.2 17 C16.2 16.5582 16.5582 16.2 17 16.2 C17.4418 16.2 17.8 16.5582 17.8 17 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C19.6569 3 21 4.34315 21 6 L21 18 C21 19.6569 19.6569 21 18 21 L6 21 C4.34315 21 3 19.6569 3 18 L3 6 C3 4.34315 4.34315 3 6 3 Z"/>
+    <path d="M7.8 7 C7.8 7.44183 7.44183 7.8 7 7.8 C6.55817 7.8 6.2 7.44183 6.2 7 C6.2 6.55817 6.55817 6.2 7 6.2 C7.44183 6.2 7.8 6.55817 7.8 7 Z"/>
+    <path d="M17.8 7 C17.8 7.44183 17.4418 7.8 17 7.8 C16.5582 7.8 16.2 7.44183 16.2 7 C16.2 6.55817 16.5582 6.2 17 6.2 C17.4418 6.2 17.8 6.55817 17.8 7 Z"/>
+    <path d="M12.8 12 C12.8 12.4418 12.4418 12.8 12 12.8 C11.5582 12.8 11.2 12.4418 11.2 12 C11.2 11.5582 11.5582 11.2 12 11.2 C12.4418 11.2 12.8 11.5582 12.8 12 Z"/>
+    <path d="M7.8 17 C7.8 17.4418 7.44183 17.8 7 17.8 C6.55817 17.8 6.2 17.4418 6.2 17 C6.2 16.5582 6.55817 16.2 7 16.2 C7.44183 16.2 7.8 16.5582 7.8 17 Z"/>
+    <path d="M17.8 17 C17.8 17.4418 17.4418 17.8 17 17.8 C16.5582 17.8 16.2 17.4418 16.2 17 C16.2 16.5582 16.5582 16.2 17 16.2 C17.4418 16.2 17.8 16.5582 17.8 17 Z"/>
+  </g>
+</g>
+<text x="434" y="3418" text-anchor="middle" font-size="10.5">Board games</text>
+<rect x="32" y="3450" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 L6 15 L11 10 L7 12 L3 9 L8 4 L8 2.5 L13 4 L17 7 L19 18"/>
+    <path d="M5 18 L20 18 L20 21 L5 21 Z"/>
+    <path d="M10.65 7 C10.65 7.35899 10.359 7.65 10 7.65 C9.64101 7.65 9.35 7.35899 9.35 7 C9.35 6.64101 9.64101 6.35 10 6.35 C10.359 6.35 10.65 6.64101 10.65 7 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 L6 15 L11 10 L7 12 L3 9 L8 4 L8 2.5 L13 4 L17 7 L19 18"/>
+    <path d="M5 18 L20 18 L20 21 L5 21 Z"/>
+    <path d="M10.65 7 C10.65 7.35899 10.359 7.65 10 7.65 C9.64101 7.65 9.35 7.35899 9.35 7 C9.35 6.64101 9.64101 6.35 10 6.35 C10.359 6.35 10.65 6.64101 10.65 7 Z"/>
+  </g>
+</g>
+<text x="86" y="3562" text-anchor="middle" font-size="10.5">Chess</text>
+<rect x="148" y="3450" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L9 21 C7.89543 21 7 20.1046 7 19 L7 5 C7 3.89543 7.89543 3 9 3 Z"/>
+    <path d="M7 4 L3 5 L3 19 L7 19"/>
+    <path d="M14 8 L17 12 L14 16 L11 12 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L9 21 C7.89543 21 7 20.1046 7 19 L7 5 C7 3.89543 7.89543 3 9 3 Z"/>
+    <path d="M7 4 L3 5 L3 19 L7 19"/>
+    <path d="M14 8 L17 12 L14 16 L11 12 Z"/>
+  </g>
+</g>
+<text x="202" y="3562" text-anchor="middle" font-size="10.5">Card games</text>
+<rect x="264" y="3450" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 15 L6 12 L9 12"/>
+    <path d="M15 12 L18 12 L21 15"/>
+    <path d="M4.5 15 L19.5 15 C20.3284 15 21 15.6716 21 16.5 L21 19.5 C21 20.3284 20.3284 21 19.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 16.5 C3 15.6716 3.67157 15 4.5 15 Z"/>
+    <path d="M15 5.5 C15 7.15685 13.6569 8.5 12 8.5 C10.3431 8.5 9 7.15685 9 5.5 C9 3.84315 10.3431 2.5 12 2.5 C13.6569 2.5 15 3.84315 15 5.5 Z"/>
+    <path d="M12 8.5 L12 15"/>
+    <path d="M17 18 L18 18"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 15 L6 12 L9 12"/>
+    <path d="M15 12 L18 12 L21 15"/>
+    <path d="M4.5 15 L19.5 15 C20.3284 15 21 15.6716 21 16.5 L21 19.5 C21 20.3284 20.3284 21 19.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 16.5 C3 15.6716 3.67157 15 4.5 15 Z"/>
+    <path d="M15 5.5 C15 7.15685 13.6569 8.5 12 8.5 C10.3431 8.5 9 7.15685 9 5.5 C9 3.84315 10.3431 2.5 12 2.5 C13.6569 2.5 15 3.84315 15 5.5 Z"/>
+    <path d="M12 8.5 L12 15"/>
+    <path d="M17 18 L18 18"/>
+  </g>
+</g>
+<text x="318" y="3562" text-anchor="middle" font-size="10.5">Arcade</text>
+<rect x="380" y="3450" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11 C4 0 20 0 20 11 L20 21 L16 18 L12 21 L8 18 L4 21 Z"/>
+    <path d="M10 10 C10 10.5523 9.55228 11 9 11 C8.44772 11 8 10.5523 8 10 C8 9.44772 8.44772 9 9 9 C9.55228 9 10 9.44772 10 10 Z"/>
+    <path d="M16 10 C16 10.5523 15.5523 11 15 11 C14.4477 11 14 10.5523 14 10 C14 9.44772 14.4477 9 15 9 C15.5523 9 16 9.44772 16 10 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11 C4 0 20 0 20 11 L20 21 L16 18 L12 21 L8 18 L4 21 Z"/>
+    <path d="M10 10 C10 10.5523 9.55228 11 9 11 C8.44772 11 8 10.5523 8 10 C8 9.44772 8.44772 9 9 9 C9.55228 9 10 9.44772 10 10 Z"/>
+    <path d="M16 10 C16 10.5523 15.5523 11 15 11 C14.4477 11 14 10.5523 14 10 C14 9.44772 14.4477 9 15 9 C15.5523 9 16 9.44772 16 10 Z"/>
+  </g>
+</g>
+<text x="434" y="3562" text-anchor="middle" font-size="10.5">Video games</text>
+<rect x="32" y="3594" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3 L16 3 L20 13 L4 13 Z"/>
+    <path d="M12 13 L12 21"/>
+    <path d="M8 21 L16 21"/>
+    <path d="M17 13 L17 17"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3 L16 3 L20 13 L4 13 Z"/>
+    <path d="M12 13 L12 21"/>
+    <path d="M8 21 L16 21"/>
+    <path d="M17 13 L17 17"/>
+  </g>
+</g>
+<text x="86" y="3706" text-anchor="middle" font-size="10.5">Lighting</text>
+<rect x="148" y="3594" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 11 L5 7 C5 3 19 3 19 7 L19 11"/>
+    <path d="M6 15 L6 12 C6 8 2 8 2 12 L2 19 L22 19 L22 12 C22 8 18 8 18 12 L18 15 Z"/>
+    <path d="M5 19 L5 21"/>
+    <path d="M19 19 L19 21"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 11 L5 7 C5 3 19 3 19 7 L19 11"/>
+    <path d="M6 15 L6 12 C6 8 2 8 2 12 L2 19 L22 19 L22 12 C22 8 18 8 18 12 L18 15 Z"/>
+    <path d="M5 19 L5 21"/>
+    <path d="M19 19 L19 21"/>
+  </g>
+</g>
+<text x="202" y="3706" text-anchor="middle" font-size="10.5">Living room</text>
+<rect x="264" y="3594" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21 L3 5 L21 5 L21 21"/>
+    <path d="M4 12 L20 12 C20.5523 12 21 12.4477 21 13 L21 17 C21 17.5523 20.5523 18 20 18 L4 18 C3.44772 18 3 17.5523 3 17 L3 13 C3 12.4477 3.44772 12 4 12 Z"/>
+    <path d="M6.8 8 L10.2 8 C10.6418 8 11 8.35817 11 8.8 L11 11.2 C11 11.6418 10.6418 12 10.2 12 L6.8 12 C6.35817 12 6 11.6418 6 11.2 L6 8.8 C6 8.35817 6.35817 8 6.8 8 Z"/>
+    <path d="M13.8 8 L17.2 8 C17.6418 8 18 8.35817 18 8.8 L18 11.2 C18 11.6418 17.6418 12 17.2 12 L13.8 12 C13.3582 12 13 11.6418 13 11.2 L13 8.8 C13 8.35817 13.3582 8 13.8 8 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21 L3 5 L21 5 L21 21"/>
+    <path d="M4 12 L20 12 C20.5523 12 21 12.4477 21 13 L21 17 C21 17.5523 20.5523 18 20 18 L4 18 C3.44772 18 3 17.5523 3 17 L3 13 C3 12.4477 3.44772 12 4 12 Z"/>
+    <path d="M6.8 8 L10.2 8 C10.6418 8 11 8.35817 11 8.8 L11 11.2 C11 11.6418 10.6418 12 10.2 12 L6.8 12 C6.35817 12 6 11.6418 6 11.2 L6 8.8 C6 8.35817 6.35817 8 6.8 8 Z"/>
+    <path d="M13.8 8 L17.2 8 C17.6418 8 18 8.35817 18 8.8 L18 11.2 C18 11.6418 17.6418 12 17.2 12 L13.8 12 C13.3582 12 13 11.6418 13 11.2 L13 8.8 C13 8.35817 13.3582 8 13.8 8 Z"/>
+  </g>
+</g>
+<text x="318" y="3706" text-anchor="middle" font-size="10.5">Bedroom</text>
+<rect x="380" y="3594" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 10 L5 17 C5 23 19 23 19 17 L19 10 Z"/>
+    <path d="M2 13 L5 13"/>
+    <path d="M19 13 L22 13"/>
+    <path d="M4 10 L20 10"/>
+    <path d="M8 6 C11 4 6 4 9 2"/>
+    <path d="M14 6 C17 4 12 4 15 2"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 10 L5 17 C5 23 19 23 19 17 L19 10 Z"/>
+    <path d="M2 13 L5 13"/>
+    <path d="M19 13 L22 13"/>
+    <path d="M4 10 L20 10"/>
+    <path d="M8 6 C11 4 6 4 9 2"/>
+    <path d="M14 6 C17 4 12 4 15 2"/>
+  </g>
+</g>
+<text x="434" y="3706" text-anchor="middle" font-size="10.5">Cooking</text>
+<rect x="32" y="3738" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12 L3 15 C3 22 21 22 21 15 L21 12"/>
+    <path d="M2 12 L22 12"/>
+    <path d="M6 19 L5 22"/>
+    <path d="M18 19 L19 22"/>
+    <path d="M5 12 L5 5 C5 1 10 1 10 5"/>
+    <path d="M8 6 L12 6"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12 L3 15 C3 22 21 22 21 15 L21 12"/>
+    <path d="M2 12 L22 12"/>
+    <path d="M6 19 L5 22"/>
+    <path d="M18 19 L19 22"/>
+    <path d="M5 12 L5 5 C5 1 10 1 10 5"/>
+    <path d="M8 6 L12 6"/>
+  </g>
+</g>
+<text x="86" y="3850" text-anchor="middle" font-size="10.5">Bathroom</text>
+<rect x="148" y="3738" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 16 L4 12 C4 2 20 2 20 12 L20 16"/>
+    <path d="M3 16 L21 16 C21.5523 16 22 16.4477 22 17 L22 19 C22 19.5523 21.5523 20 21 20 L3 20 C2.44772 20 2 19.5523 2 19 L2 17 C2 16.4477 2.44772 16 3 16 Z"/>
+    <path d="M9 10 L9 3 L15 3 L15 10"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 16 L4 12 C4 2 20 2 20 12 L20 16"/>
+    <path d="M3 16 L21 16 C21.5523 16 22 16.4477 22 17 L22 19 C22 19.5523 21.5523 20 21 20 L3 20 C2.44772 20 2 19.5523 2 19 L2 17 C2 16.4477 2.44772 16 3 16 Z"/>
+    <path d="M9 10 L9 3 L15 3 L15 10"/>
+  </g>
+</g>
+<text x="202" y="3850" text-anchor="middle" font-size="10.5">Construction</text>
+<rect x="264" y="3738" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(298 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3 C20 0 24 7 20 11 C18 13 16 13 14 12 L6 21 C3 24 0 20 3 18 L12 10 C10 8 10 5 11 4 L14 7 L17 6 Z"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(310 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3 C20 0 24 7 20 11 C18 13 16 13 14 12 L6 21 C3 24 0 20 3 18 L12 10 C10 8 10 5 11 4 L14 7 L17 6 Z"/>
+  </g>
+</g>
+<text x="318" y="3850" text-anchor="middle" font-size="10.5">Maintenance</text>
+<rect x="380" y="3738" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(414 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C18.5523 3 19 3.44772 19 4 L19 20 C19 20.5523 18.5523 21 18 21 L6 21 C5.44772 21 5 20.5523 5 20 L5 4 C5 3.44772 5.44772 3 6 3 Z"/>
+    <path d="M10 21 L10 16 L14 16 L14 21"/>
+    <path d="M9 7 L10 7"/>
+    <path d="M9 11 L10 11"/>
+    <path d="M14 7 L15 7"/>
+    <path d="M14 11 L15 11"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(426 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C18.5523 3 19 3.44772 19 4 L19 20 C19 20.5523 18.5523 21 18 21 L6 21 C5.44772 21 5 20.5523 5 20 L5 4 C5 3.44772 5.44772 3 6 3 Z"/>
+    <path d="M10 21 L10 16 L14 16 L14 21"/>
+    <path d="M9 7 L10 7"/>
+    <path d="M9 11 L10 11"/>
+    <path d="M14 7 L15 7"/>
+    <path d="M14 11 L15 11"/>
+  </g>
+</g>
+<text x="434" y="3850" text-anchor="middle" font-size="10.5">Real estate</text>
+<rect x="32" y="3882" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(66 3904) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3 L12 21"/>
+    <path d="M7 21 L17 21"/>
+    <path d="M4 6 L20 6"/>
+    <path d="M5 6 L2 14 L8 14 Z"/>
+    <path d="M19 6 L16 14 L22 14 Z"/>
+    <path d="M2 14 C3 18 7 18 8 14"/>
+    <path d="M16 14 C17 18 21 18 22 14"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(78 3956) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3 L12 21"/>
+    <path d="M7 21 L17 21"/>
+    <path d="M4 6 L20 6"/>
+    <path d="M5 6 L2 14 L8 14 Z"/>
+    <path d="M19 6 L16 14 L22 14 Z"/>
+    <path d="M2 14 C3 18 7 18 8 14"/>
+    <path d="M16 14 C17 18 21 18 22 14"/>
+  </g>
+</g>
+<text x="86" y="3994" text-anchor="middle" font-size="10.5">Legal</text>
+<rect x="148" y="3882" width="108" height="128" rx="8" fill="none" stroke="#e2e5db"/>
+<g color="#41653e" transform="translate(182 3904) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7 L12 3 L21 7 L21 17 L12 21 L3 17 Z"/>
+    <path d="M3 7 L12 11 L21 7"/>
+    <path d="M12 11 L12 21"/>
+    <path d="M7.5 5 L16.5 9 L16.5 13"/>
+  </g>
+</g>
+<g color="#697265" transform="translate(194 3956) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7 L12 3 L21 7 L21 17 L12 21 L3 17 Z"/>
+    <path d="M3 7 L12 11 L21 7"/>
+    <path d="M12 11 L12 21"/>
+    <path d="M7.5 5 L16.5 9 L16.5 13"/>
+  </g>
+</g>
+<text x="202" y="3994" text-anchor="middle" font-size="10.5">Logistics</text>
 </g>
 <g font-family="Inter, system-ui, sans-serif" fill="#e8eae4">
 <text x="552" y="54" font-size="26" font-weight="500">Folio / Page icons</text>
-<text x="552" y="84" font-size="12" fill="#a3aaa0">66 icons · a consistent style</text>
+<text x="552" y="84" font-size="12" fill="#a3aaa0">106 icons · a consistent style</text>
 <path d="M552 108h456" stroke="#353a35"/>
 <rect x="552" y="138" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
 <g color="#99bd92" transform="translate(586 160) scale(1.666667)">
@@ -1911,5 +2667,761 @@
   </g>
 </g>
 <text x="722" y="2554" text-anchor="middle" font-size="10.5">Key</text>
+<rect x="784" y="2442" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 2464) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 6 C15 7.65685 12.3137 9 9 9 C5.68629 9 3 7.65685 3 6 C3 4.34315 5.68629 3 9 3 C12.3137 3 15 4.34315 15 6 Z"/>
+    <path d="M3 6 L3 11 C3 15 15 15 15 11 L15 6"/>
+    <path d="M3 10 C3 14 15 14 15 10"/>
+    <path d="M15 10 C23 9 23 16 15 16"/>
+    <path d="M9 14 L9 18 C9 22 21 22 21 18 L21 13"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 2516) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 6 C15 7.65685 12.3137 9 9 9 C5.68629 9 3 7.65685 3 6 C3 4.34315 5.68629 3 9 3 C12.3137 3 15 4.34315 15 6 Z"/>
+    <path d="M3 6 L3 11 C3 15 15 15 15 11 L15 6"/>
+    <path d="M3 10 C3 14 15 14 15 10"/>
+    <path d="M15 10 C23 9 23 16 15 16"/>
+    <path d="M9 14 L9 18 C9 22 21 22 21 18 L21 13"/>
+  </g>
+</g>
+<text x="838" y="2554" text-anchor="middle" font-size="10.5">Coins</text>
+<rect x="900" y="2442" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 2464) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8 L12 3 L21 8 Z"/>
+    <path d="M6 11 L6 18"/>
+    <path d="M12 11 L12 18"/>
+    <path d="M18 11 L18 18"/>
+    <path d="M4 21 L20 21"/>
+    <path d="M3 18 L21 18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 2516) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8 L12 3 L21 8 Z"/>
+    <path d="M6 11 L6 18"/>
+    <path d="M12 11 L12 18"/>
+    <path d="M18 11 L18 18"/>
+    <path d="M4 21 L20 21"/>
+    <path d="M3 18 L21 18"/>
+  </g>
+</g>
+<text x="954" y="2554" text-anchor="middle" font-size="10.5">Banking</text>
+<rect x="552" y="2586" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 5 L19.5 5 C20.6046 5 21.5 5.89543 21.5 7 L21.5 17 C21.5 18.1046 20.6046 19 19.5 19 L4.5 19 C3.39543 19 2.5 18.1046 2.5 17 L2.5 7 C2.5 5.89543 3.39543 5 4.5 5 Z"/>
+    <path d="M2.5 10 L21.5 10"/>
+    <path d="M6 15 L10 15"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 5 L19.5 5 C20.6046 5 21.5 5.89543 21.5 7 L21.5 17 C21.5 18.1046 20.6046 19 19.5 19 L4.5 19 C3.39543 19 2.5 18.1046 2.5 17 L2.5 7 C2.5 5.89543 3.39543 5 4.5 5 Z"/>
+    <path d="M2.5 10 L21.5 10"/>
+    <path d="M6 15 L10 15"/>
+  </g>
+</g>
+<text x="606" y="2698" text-anchor="middle" font-size="10.5">Payments</text>
+<rect x="668" y="2586" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 L19 21 L15.5 19 L12 21 L8.5 19 L5 21 Z"/>
+    <path d="M9 7 L15 7"/>
+    <path d="M9 11 L15 11"/>
+    <path d="M9 15 L12 15"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 L19 21 L15.5 19 L12 21 L8.5 19 L5 21 Z"/>
+    <path d="M9 7 L15 7"/>
+    <path d="M9 11 L15 11"/>
+    <path d="M9 15 L12 15"/>
+  </g>
+</g>
+<text x="722" y="2698" text-anchor="middle" font-size="10.5">Expenses</text>
+<rect x="784" y="2586" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M8.5 6 L15.5 6 C15.7761 6 16 6.22386 16 6.5 L16 9.5 C16 9.77614 15.7761 10 15.5 10 L8.5 10 C8.22386 10 8 9.77614 8 9.5 L8 6.5 C8 6.22386 8.22386 6 8.5 6 Z"/>
+    <path d="M8 14 L9 14"/>
+    <path d="M8 18 L9 18"/>
+    <path d="M11.5 14 L12.5 14"/>
+    <path d="M11.5 18 L12.5 18"/>
+    <path d="M15 14 L16 14"/>
+    <path d="M15 18 L16 18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M8.5 6 L15.5 6 C15.7761 6 16 6.22386 16 6.5 L16 9.5 C16 9.77614 15.7761 10 15.5 10 L8.5 10 C8.22386 10 8 9.77614 8 9.5 L8 6.5 C8 6.22386 8.22386 6 8.5 6 Z"/>
+    <path d="M8 14 L9 14"/>
+    <path d="M8 18 L9 18"/>
+    <path d="M11.5 14 L12.5 14"/>
+    <path d="M11.5 18 L12.5 18"/>
+    <path d="M15 14 L16 14"/>
+    <path d="M15 18 L16 18"/>
+  </g>
+</g>
+<text x="838" y="2698" text-anchor="middle" font-size="10.5">Accounting</text>
+<rect x="900" y="2586" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 2608) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 7 L19 7 C20.1046 7 21 7.89543 21 9 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 9 C3 7.89543 3.89543 7 5 7 Z"/>
+    <path d="M8 7 L8 3 L16 3 L16 7"/>
+    <path d="M12 11 L12 17"/>
+    <path d="M9 14 L15 14"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 2660) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 7 L19 7 C20.1046 7 21 7.89543 21 9 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 9 C3 7.89543 3.89543 7 5 7 Z"/>
+    <path d="M8 7 L8 3 L16 3 L16 7"/>
+    <path d="M12 11 L12 17"/>
+    <path d="M9 14 L15 14"/>
+  </g>
+</g>
+<text x="954" y="2698" text-anchor="middle" font-size="10.5">Healthcare</text>
+<rect x="552" y="2730" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 3 L4 9 C4 16 14 16 14 9 L14 3"/>
+    <path d="M3 3 L5 3"/>
+    <path d="M13 3 L15 3"/>
+    <path d="M9 14 L9 17 C9 23 20 23 20 17 L20 13"/>
+    <path d="M22.5 10 C22.5 11.3807 21.3807 12.5 20 12.5 C18.6193 12.5 17.5 11.3807 17.5 10 C17.5 8.61929 18.6193 7.5 20 7.5 C21.3807 7.5 22.5 8.61929 22.5 10 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 3 L4 9 C4 16 14 16 14 9 L14 3"/>
+    <path d="M3 3 L5 3"/>
+    <path d="M13 3 L15 3"/>
+    <path d="M9 14 L9 17 C9 23 20 23 20 17 L20 13"/>
+    <path d="M22.5 10 C22.5 11.3807 21.3807 12.5 20 12.5 C18.6193 12.5 17.5 11.3807 17.5 10 C17.5 8.61929 18.6193 7.5 20 7.5 C21.3807 7.5 22.5 8.61929 22.5 10 Z"/>
+  </g>
+</g>
+<text x="606" y="2842" text-anchor="middle" font-size="10.5">Medicine</text>
+<rect x="668" y="2730" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12 L12 4 C17 -1 25 7 20 12 L12 20 C7 25 -1 17 4 12 Z"/>
+    <path d="M8 8 L16 16"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12 L12 4 C17 -1 25 7 20 12 L12 20 C7 25 -1 17 4 12 Z"/>
+    <path d="M8 8 L16 16"/>
+  </g>
+</g>
+<text x="722" y="2842" text-anchor="middle" font-size="10.5">Medication</text>
+<rect x="784" y="2730" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12 L6 12 L9 4 L14 20 L17 12 L22 12"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12 L6 12 L9 4 L14 20 L17 12 L22 12"/>
+  </g>
+</g>
+<text x="838" y="2842" text-anchor="middle" font-size="10.5">Fitness</text>
+<rect x="900" y="2730" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 2752) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5 C10 1 5 2 5 6 C0 7 2 12 4 13 C0 17 5 22 8 20 C10 23 12 20 12 18 Z"/>
+    <path d="M12 5 C14 1 19 2 19 6 C24 7 22 12 20 13 C24 17 19 22 16 20 C14 23 12 20 12 18"/>
+    <path d="M5 6 C5 9 7 10 8 10"/>
+    <path d="M19 6 C19 9 17 10 16 10"/>
+    <path d="M7 15 L9 17"/>
+    <path d="M17 15 L15 17"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 2804) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 5 C10 1 5 2 5 6 C0 7 2 12 4 13 C0 17 5 22 8 20 C10 23 12 20 12 18 Z"/>
+    <path d="M12 5 C14 1 19 2 19 6 C24 7 22 12 20 13 C24 17 19 22 16 20 C14 23 12 20 12 18"/>
+    <path d="M5 6 C5 9 7 10 8 10"/>
+    <path d="M19 6 C19 9 17 10 16 10"/>
+    <path d="M7 15 L9 17"/>
+    <path d="M17 15 L15 17"/>
+  </g>
+</g>
+<text x="954" y="2842" text-anchor="middle" font-size="10.5">Mental wellbeing</text>
+<rect x="552" y="2874" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L13 5 L8 15 L4 13 Z"/>
+    <path d="M10 2 L14 4"/>
+    <path d="M5 17 L12 17"/>
+    <path d="M13 9 C22 9 22 21 13 21"/>
+    <path d="M4 21 L20 21"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L13 5 L8 15 L4 13 Z"/>
+    <path d="M10 2 L14 4"/>
+    <path d="M5 17 L12 17"/>
+    <path d="M13 9 C22 9 22 21 13 21"/>
+    <path d="M4 21 L20 21"/>
+  </g>
+</g>
+<text x="606" y="2986" text-anchor="middle" font-size="10.5">Research</text>
+<rect x="668" y="2874" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 12 C22 14.2091 17.5228 16 12 16 C6.47715 16 2 14.2091 2 12 C2 9.79086 6.47715 8 12 8 C17.5228 8 22 9.79086 22 12 Z"/>
+    <path d="M17 20.6603 C15.0868 21.7648 11.2973 18.7829 8.5359 14 C5.77447 9.21707 5.08683 4.44432 7 3.33975 C8.91317 2.23518 12.7027 5.21707 15.4641 10 C18.2255 14.7829 18.9132 19.5557 17 20.6603 Z"/>
+    <path d="M7 20.6603 C5.08683 19.5557 5.77447 14.7829 8.5359 10 C11.2973 5.21707 15.0868 2.23518 17 3.33975 C18.9132 4.44432 18.2255 9.21707 15.4641 14 C12.7027 18.7829 8.91317 21.7648 7 20.6603 Z"/>
+    <path d="M13 12 C13 12.5523 12.5523 13 12 13 C11.4477 13 11 12.5523 11 12 C11 11.4477 11.4477 11 12 11 C12.5523 11 13 11.4477 13 12 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 12 C22 14.2091 17.5228 16 12 16 C6.47715 16 2 14.2091 2 12 C2 9.79086 6.47715 8 12 8 C17.5228 8 22 9.79086 22 12 Z"/>
+    <path d="M17 20.6603 C15.0868 21.7648 11.2973 18.7829 8.5359 14 C5.77447 9.21707 5.08683 4.44432 7 3.33975 C8.91317 2.23518 12.7027 5.21707 15.4641 10 C18.2255 14.7829 18.9132 19.5557 17 20.6603 Z"/>
+    <path d="M7 20.6603 C5.08683 19.5557 5.77447 14.7829 8.5359 10 C11.2973 5.21707 15.0868 2.23518 17 3.33975 C18.9132 4.44432 18.2255 9.21707 15.4641 14 C12.7027 18.7829 8.91317 21.7648 7 20.6603 Z"/>
+    <path d="M13 12 C13 12.5523 12.5523 13 12 13 C11.4477 13 11 12.5523 11 12 C11 11.4477 11.4477 11 12 11 C12.5523 11 13 11.4477 13 12 Z"/>
+  </g>
+</g>
+<text x="722" y="2986" text-anchor="middle" font-size="10.5">Physics</text>
+<rect x="784" y="2874" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2 C7 12 17 12 17 22"/>
+    <path d="M17 2 C17 12 7 12 7 22"/>
+    <path d="M7.5 5 L16.5 5"/>
+    <path d="M9 8 L15 8"/>
+    <path d="M9 16 L15 16"/>
+    <path d="M7.5 19 L16.5 19"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2 C7 12 17 12 17 22"/>
+    <path d="M17 2 C17 12 7 12 7 22"/>
+    <path d="M7.5 5 L16.5 5"/>
+    <path d="M9 8 L15 8"/>
+    <path d="M9 16 L15 16"/>
+    <path d="M7.5 19 L16.5 19"/>
+  </g>
+</g>
+<text x="838" y="2986" text-anchor="middle" font-size="10.5">Biology</text>
+<rect x="900" y="2874" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 2896) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L17 3 L20 9 L6 16 Z"/>
+    <path d="M17 3 L18 2.5"/>
+    <path d="M20 9 L21 8.5"/>
+    <path d="M11 13.5 L11 17 L7 22"/>
+    <path d="M11 17 L16 22"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 2948) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L17 3 L20 9 L6 16 Z"/>
+    <path d="M17 3 L18 2.5"/>
+    <path d="M20 9 L21 8.5"/>
+    <path d="M11 13.5 L11 17 L7 22"/>
+    <path d="M11 17 L16 22"/>
+  </g>
+</g>
+<text x="954" y="2986" text-anchor="middle" font-size="10.5">Astronomy</text>
+<rect x="552" y="3018" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L4 13 C4 24 20 24 20 13 L20 4 L15 4 L15 13 C15 17 9 17 9 13 L9 4 Z"/>
+    <path d="M4 8 L9 8"/>
+    <path d="M15 8 L20 8"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L4 13 C4 24 20 24 20 13 L20 4 L15 4 L15 13 C15 17 9 17 9 13 L9 4 Z"/>
+    <path d="M4 8 L9 8"/>
+    <path d="M15 8 L20 8"/>
+  </g>
+</g>
+<text x="606" y="3130" text-anchor="middle" font-size="10.5">Engineering</text>
+<rect x="668" y="3018" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3 C8 5 12 5 17 3 L17 9 C17 18 3 18 3 9 Z"/>
+    <path d="M6 8 L7 8"/>
+    <path d="M12 8 L13 8"/>
+    <path d="M7 11 C8 13 11 13 12 11"/>
+    <path d="M18 8 L21 7 L21 14 C21 21 14 23 10 18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3 C8 5 12 5 17 3 L17 9 C17 18 3 18 3 9 Z"/>
+    <path d="M6 8 L7 8"/>
+    <path d="M12 8 L13 8"/>
+    <path d="M7 11 C8 13 11 13 12 11"/>
+    <path d="M18 8 L21 7 L21 14 C21 21 14 23 10 18"/>
+  </g>
+</g>
+<text x="722" y="3130" text-anchor="middle" font-size="10.5">Performing arts</text>
+<rect x="784" y="3018" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 5 C3 3.89543 3.89543 3 5 3 Z"/>
+    <path d="M10 8 C10 9.10457 9.10457 10 8 10 C6.89543 10 6 9.10457 6 8 C6 6.89543 6.89543 6 8 6 C9.10457 6 10 6.89543 10 8 Z"/>
+    <path d="M3 17 L9 12 L13 16 L17 12 L21 16"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L5 21 C3.89543 21 3 20.1046 3 19 L3 5 C3 3.89543 3.89543 3 5 3 Z"/>
+    <path d="M10 8 C10 9.10457 9.10457 10 8 10 C6.89543 10 6 9.10457 6 8 C6 6.89543 6.89543 6 8 6 C9.10457 6 10 6.89543 10 8 Z"/>
+    <path d="M3 17 L9 12 L13 16 L17 12 L21 16"/>
+  </g>
+</g>
+<text x="838" y="3130" text-anchor="middle" font-size="10.5">Visual arts</text>
+<rect x="900" y="3018" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 3040) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 5 L19 5 C19.5523 5 20 5.44772 20 6 L20 16 C20 16.5523 19.5523 17 19 17 L5 17 C4.44772 17 4 16.5523 4 16 L4 6 C4 5.44772 4.44772 5 5 5 Z"/>
+    <path d="M12 2 L12 5"/>
+    <path d="M3 17 L21 17"/>
+    <path d="M8 17 L5 22"/>
+    <path d="M16 17 L19 22"/>
+    <path d="M8 13 L11 9 L16 13"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 3092) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 5 L19 5 C19.5523 5 20 5.44772 20 6 L20 16 C20 16.5523 19.5523 17 19 17 L5 17 C4.44772 17 4 16.5523 4 16 L4 6 C4 5.44772 4.44772 5 5 5 Z"/>
+    <path d="M12 2 L12 5"/>
+    <path d="M3 17 L21 17"/>
+    <path d="M8 17 L5 22"/>
+    <path d="M16 17 L19 22"/>
+    <path d="M8 13 L11 9 L16 13"/>
+  </g>
+</g>
+<text x="954" y="3130" text-anchor="middle" font-size="10.5">Painting</text>
+<rect x="552" y="3162" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15.5 6 C15.5 7.933 13.933 9.5 12 9.5 C10.067 9.5 8.5 7.933 8.5 6 C8.5 4.067 10.067 2.5 12 2.5 C13.933 2.5 15.5 4.067 15.5 6 Z"/>
+    <path d="M9 9 L9 12 C5 13 4 15 4 18 L20 18 C20 15 19 13 15 12 L15 9"/>
+    <path d="M6 18 L6 21 L18 21 L18 18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15.5 6 C15.5 7.933 13.933 9.5 12 9.5 C10.067 9.5 8.5 7.933 8.5 6 C8.5 4.067 10.067 2.5 12 2.5 C13.933 2.5 15.5 4.067 15.5 6 Z"/>
+    <path d="M9 9 L9 12 C5 13 4 15 4 18 L20 18 C20 15 19 13 15 12 L15 9"/>
+    <path d="M6 18 L6 21 L18 21 L18 18"/>
+  </g>
+</g>
+<text x="606" y="3274" text-anchor="middle" font-size="10.5">Sculpture</text>
+<rect x="668" y="3162" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 3 L7.5 3 C8.32843 3 9 3.67157 9 4.5 L9 19.5 C9 20.3284 8.32843 21 7.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 4.5 C3 3.67157 3.67157 3 4.5 3 Z"/>
+    <path d="M3 9 L9 9"/>
+    <path d="M3 15 L9 15"/>
+    <path d="M9 7 L12 4 L17 9 L9 17"/>
+    <path d="M17 11 L21 11 L21 21 L6 21"/>
+    <path d="M15 15 L15 21"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 3 L7.5 3 C8.32843 3 9 3.67157 9 4.5 L9 19.5 C9 20.3284 8.32843 21 7.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 4.5 C3 3.67157 3.67157 3 4.5 3 Z"/>
+    <path d="M3 9 L9 9"/>
+    <path d="M3 15 L9 15"/>
+    <path d="M9 7 L12 4 L17 9 L9 17"/>
+    <path d="M17 11 L21 11 L21 21 L6 21"/>
+    <path d="M15 15 L15 21"/>
+  </g>
+</g>
+<text x="722" y="3274" text-anchor="middle" font-size="10.5">Color design</text>
+<rect x="784" y="3162" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 9 C6 6 3 9 5 12 C-1 16 8 25 12 19 C15 21 18 18 15 14 L20 6 L18 4 Z"/>
+    <path d="M18 4 L20 2 L22 4 L20 6"/>
+    <path d="M12 14 C12 15.1046 11.1046 16 10 16 C8.89543 16 8 15.1046 8 14 C8 12.8954 8.89543 12 10 12 C11.1046 12 12 12.8954 12 14 Z"/>
+    <path d="M6 17 L8 19"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 9 C6 6 3 9 5 12 C-1 16 8 25 12 19 C15 21 18 18 15 14 L20 6 L18 4 Z"/>
+    <path d="M18 4 L20 2 L22 4 L20 6"/>
+    <path d="M12 14 C12 15.1046 11.1046 16 10 16 C8.89543 16 8 15.1046 8 14 C8 12.8954 8.89543 12 10 12 C11.1046 12 12 12.8954 12 14 Z"/>
+    <path d="M6 17 L8 19"/>
+  </g>
+</g>
+<text x="838" y="3274" text-anchor="middle" font-size="10.5">Guitar</text>
+<rect x="900" y="3162" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 3184) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L20 4 C20.5523 4 21 4.44772 21 5 L21 19 C21 19.5523 20.5523 20 20 20 L4 20 C3.44772 20 3 19.5523 3 19 L3 5 C3 4.44772 3.44772 4 4 4 Z"/>
+    <path d="M9 4 L9 20"/>
+    <path d="M15 4 L15 20"/>
+    <path d="M8.4 4 L9.6 4 C9.82091 4 10 4.17909 10 4.4 L10 12.6 C10 12.8209 9.82091 13 9.6 13 L8.4 13 C8.17909 13 8 12.8209 8 12.6 L8 4.4 C8 4.17909 8.17909 4 8.4 4 Z"/>
+    <path d="M14.4 4 L15.6 4 C15.8209 4 16 4.17909 16 4.4 L16 12.6 C16 12.8209 15.8209 13 15.6 13 L14.4 13 C14.1791 13 14 12.8209 14 12.6 L14 4.4 C14 4.17909 14.1791 4 14.4 4 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 3236) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4 L20 4 C20.5523 4 21 4.44772 21 5 L21 19 C21 19.5523 20.5523 20 20 20 L4 20 C3.44772 20 3 19.5523 3 19 L3 5 C3 4.44772 3.44772 4 4 4 Z"/>
+    <path d="M9 4 L9 20"/>
+    <path d="M15 4 L15 20"/>
+    <path d="M8.4 4 L9.6 4 C9.82091 4 10 4.17909 10 4.4 L10 12.6 C10 12.8209 9.82091 13 9.6 13 L8.4 13 C8.17909 13 8 12.8209 8 12.6 L8 4.4 C8 4.17909 8.17909 4 8.4 4 Z"/>
+    <path d="M14.4 4 L15.6 4 C15.8209 4 16 4.17909 16 4.4 L16 12.6 C16 12.8209 15.8209 13 15.6 13 L14.4 13 C14.1791 13 14 12.8209 14 12.6 L14 4.4 C14 4.17909 14.1791 4 14.4 4 Z"/>
+  </g>
+</g>
+<text x="954" y="3274" text-anchor="middle" font-size="10.5">Piano</text>
+<rect x="552" y="3306" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10 C21 11.6569 16.9706 13 12 13 C7.02944 13 3 11.6569 3 10 C3 8.34315 7.02944 7 12 7 C16.9706 7 21 8.34315 21 10 Z"/>
+    <path d="M3 10 L3 18 C3 22 21 22 21 18 L21 10"/>
+    <path d="M4 12 L8 19 L12 13 L16 19 L20 12"/>
+    <path d="M5 3 L12 7"/>
+    <path d="M19 2 L14 7"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10 C21 11.6569 16.9706 13 12 13 C7.02944 13 3 11.6569 3 10 C3 8.34315 7.02944 7 12 7 C16.9706 7 21 8.34315 21 10 Z"/>
+    <path d="M3 10 L3 18 C3 22 21 22 21 18 L21 10"/>
+    <path d="M4 12 L8 19 L12 13 L16 19 L20 12"/>
+    <path d="M5 3 L12 7"/>
+    <path d="M19 2 L14 7"/>
+  </g>
+</g>
+<text x="606" y="3418" text-anchor="middle" font-size="10.5">Percussion</text>
+<rect x="668" y="3306" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M16 14.5 C16 16.7091 14.2091 18.5 12 18.5 C9.79086 18.5 8 16.7091 8 14.5 C8 12.2909 9.79086 10.5 12 10.5 C14.2091 10.5 16 12.2909 16 14.5 Z"/>
+    <path d="M13.3 6.5 C13.3 7.21797 12.718 7.8 12 7.8 C11.282 7.8 10.7 7.21797 10.7 6.5 C10.7 5.78203 11.282 5.2 12 5.2 C12.718 5.2 13.3 5.78203 13.3 6.5 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 2.5 L17 2.5 C18.1046 2.5 19 3.39543 19 4.5 L19 19.5 C19 20.6046 18.1046 21.5 17 21.5 L7 21.5 C5.89543 21.5 5 20.6046 5 19.5 L5 4.5 C5 3.39543 5.89543 2.5 7 2.5 Z"/>
+    <path d="M16 14.5 C16 16.7091 14.2091 18.5 12 18.5 C9.79086 18.5 8 16.7091 8 14.5 C8 12.2909 9.79086 10.5 12 10.5 C14.2091 10.5 16 12.2909 16 14.5 Z"/>
+    <path d="M13.3 6.5 C13.3 7.21797 12.718 7.8 12 7.8 C11.282 7.8 10.7 7.21797 10.7 6.5 C10.7 5.78203 11.282 5.2 12 5.2 C12.718 5.2 13.3 5.78203 13.3 6.5 Z"/>
+  </g>
+</g>
+<text x="722" y="3418" text-anchor="middle" font-size="10.5">Audio</text>
+<rect x="784" y="3306" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L3 14"/>
+    <path d="M7.5 6 L7.5 18"/>
+    <path d="M12 3 L12 21"/>
+    <path d="M16.5 8 L16.5 16"/>
+    <path d="M21 5 L21 19"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10 L3 14"/>
+    <path d="M7.5 6 L7.5 18"/>
+    <path d="M12 3 L12 21"/>
+    <path d="M16.5 8 L16.5 16"/>
+    <path d="M21 5 L21 19"/>
+  </g>
+</g>
+<text x="838" y="3418" text-anchor="middle" font-size="10.5">Sound production</text>
+<rect x="900" y="3306" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 3328) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C19.6569 3 21 4.34315 21 6 L21 18 C21 19.6569 19.6569 21 18 21 L6 21 C4.34315 21 3 19.6569 3 18 L3 6 C3 4.34315 4.34315 3 6 3 Z"/>
+    <path d="M7.8 7 C7.8 7.44183 7.44183 7.8 7 7.8 C6.55817 7.8 6.2 7.44183 6.2 7 C6.2 6.55817 6.55817 6.2 7 6.2 C7.44183 6.2 7.8 6.55817 7.8 7 Z"/>
+    <path d="M17.8 7 C17.8 7.44183 17.4418 7.8 17 7.8 C16.5582 7.8 16.2 7.44183 16.2 7 C16.2 6.55817 16.5582 6.2 17 6.2 C17.4418 6.2 17.8 6.55817 17.8 7 Z"/>
+    <path d="M12.8 12 C12.8 12.4418 12.4418 12.8 12 12.8 C11.5582 12.8 11.2 12.4418 11.2 12 C11.2 11.5582 11.5582 11.2 12 11.2 C12.4418 11.2 12.8 11.5582 12.8 12 Z"/>
+    <path d="M7.8 17 C7.8 17.4418 7.44183 17.8 7 17.8 C6.55817 17.8 6.2 17.4418 6.2 17 C6.2 16.5582 6.55817 16.2 7 16.2 C7.44183 16.2 7.8 16.5582 7.8 17 Z"/>
+    <path d="M17.8 17 C17.8 17.4418 17.4418 17.8 17 17.8 C16.5582 17.8 16.2 17.4418 16.2 17 C16.2 16.5582 16.5582 16.2 17 16.2 C17.4418 16.2 17.8 16.5582 17.8 17 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 3380) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C19.6569 3 21 4.34315 21 6 L21 18 C21 19.6569 19.6569 21 18 21 L6 21 C4.34315 21 3 19.6569 3 18 L3 6 C3 4.34315 4.34315 3 6 3 Z"/>
+    <path d="M7.8 7 C7.8 7.44183 7.44183 7.8 7 7.8 C6.55817 7.8 6.2 7.44183 6.2 7 C6.2 6.55817 6.55817 6.2 7 6.2 C7.44183 6.2 7.8 6.55817 7.8 7 Z"/>
+    <path d="M17.8 7 C17.8 7.44183 17.4418 7.8 17 7.8 C16.5582 7.8 16.2 7.44183 16.2 7 C16.2 6.55817 16.5582 6.2 17 6.2 C17.4418 6.2 17.8 6.55817 17.8 7 Z"/>
+    <path d="M12.8 12 C12.8 12.4418 12.4418 12.8 12 12.8 C11.5582 12.8 11.2 12.4418 11.2 12 C11.2 11.5582 11.5582 11.2 12 11.2 C12.4418 11.2 12.8 11.5582 12.8 12 Z"/>
+    <path d="M7.8 17 C7.8 17.4418 7.44183 17.8 7 17.8 C6.55817 17.8 6.2 17.4418 6.2 17 C6.2 16.5582 6.55817 16.2 7 16.2 C7.44183 16.2 7.8 16.5582 7.8 17 Z"/>
+    <path d="M17.8 17 C17.8 17.4418 17.4418 17.8 17 17.8 C16.5582 17.8 16.2 17.4418 16.2 17 C16.2 16.5582 16.5582 16.2 17 16.2 C17.4418 16.2 17.8 16.5582 17.8 17 Z"/>
+  </g>
+</g>
+<text x="954" y="3418" text-anchor="middle" font-size="10.5">Board games</text>
+<rect x="552" y="3450" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 L6 15 L11 10 L7 12 L3 9 L8 4 L8 2.5 L13 4 L17 7 L19 18"/>
+    <path d="M5 18 L20 18 L20 21 L5 21 Z"/>
+    <path d="M10.65 7 C10.65 7.35899 10.359 7.65 10 7.65 C9.64101 7.65 9.35 7.35899 9.35 7 C9.35 6.64101 9.64101 6.35 10 6.35 C10.359 6.35 10.65 6.64101 10.65 7 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 L6 15 L11 10 L7 12 L3 9 L8 4 L8 2.5 L13 4 L17 7 L19 18"/>
+    <path d="M5 18 L20 18 L20 21 L5 21 Z"/>
+    <path d="M10.65 7 C10.65 7.35899 10.359 7.65 10 7.65 C9.64101 7.65 9.35 7.35899 9.35 7 C9.35 6.64101 9.64101 6.35 10 6.35 C10.359 6.35 10.65 6.64101 10.65 7 Z"/>
+  </g>
+</g>
+<text x="606" y="3562" text-anchor="middle" font-size="10.5">Chess</text>
+<rect x="668" y="3450" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L9 21 C7.89543 21 7 20.1046 7 19 L7 5 C7 3.89543 7.89543 3 9 3 Z"/>
+    <path d="M7 4 L3 5 L3 19 L7 19"/>
+    <path d="M14 8 L17 12 L14 16 L11 12 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3 L19 3 C20.1046 3 21 3.89543 21 5 L21 19 C21 20.1046 20.1046 21 19 21 L9 21 C7.89543 21 7 20.1046 7 19 L7 5 C7 3.89543 7.89543 3 9 3 Z"/>
+    <path d="M7 4 L3 5 L3 19 L7 19"/>
+    <path d="M14 8 L17 12 L14 16 L11 12 Z"/>
+  </g>
+</g>
+<text x="722" y="3562" text-anchor="middle" font-size="10.5">Card games</text>
+<rect x="784" y="3450" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 15 L6 12 L9 12"/>
+    <path d="M15 12 L18 12 L21 15"/>
+    <path d="M4.5 15 L19.5 15 C20.3284 15 21 15.6716 21 16.5 L21 19.5 C21 20.3284 20.3284 21 19.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 16.5 C3 15.6716 3.67157 15 4.5 15 Z"/>
+    <path d="M15 5.5 C15 7.15685 13.6569 8.5 12 8.5 C10.3431 8.5 9 7.15685 9 5.5 C9 3.84315 10.3431 2.5 12 2.5 C13.6569 2.5 15 3.84315 15 5.5 Z"/>
+    <path d="M12 8.5 L12 15"/>
+    <path d="M17 18 L18 18"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 15 L6 12 L9 12"/>
+    <path d="M15 12 L18 12 L21 15"/>
+    <path d="M4.5 15 L19.5 15 C20.3284 15 21 15.6716 21 16.5 L21 19.5 C21 20.3284 20.3284 21 19.5 21 L4.5 21 C3.67157 21 3 20.3284 3 19.5 L3 16.5 C3 15.6716 3.67157 15 4.5 15 Z"/>
+    <path d="M15 5.5 C15 7.15685 13.6569 8.5 12 8.5 C10.3431 8.5 9 7.15685 9 5.5 C9 3.84315 10.3431 2.5 12 2.5 C13.6569 2.5 15 3.84315 15 5.5 Z"/>
+    <path d="M12 8.5 L12 15"/>
+    <path d="M17 18 L18 18"/>
+  </g>
+</g>
+<text x="838" y="3562" text-anchor="middle" font-size="10.5">Arcade</text>
+<rect x="900" y="3450" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 3472) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11 C4 0 20 0 20 11 L20 21 L16 18 L12 21 L8 18 L4 21 Z"/>
+    <path d="M10 10 C10 10.5523 9.55228 11 9 11 C8.44772 11 8 10.5523 8 10 C8 9.44772 8.44772 9 9 9 C9.55228 9 10 9.44772 10 10 Z"/>
+    <path d="M16 10 C16 10.5523 15.5523 11 15 11 C14.4477 11 14 10.5523 14 10 C14 9.44772 14.4477 9 15 9 C15.5523 9 16 9.44772 16 10 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 3524) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11 C4 0 20 0 20 11 L20 21 L16 18 L12 21 L8 18 L4 21 Z"/>
+    <path d="M10 10 C10 10.5523 9.55228 11 9 11 C8.44772 11 8 10.5523 8 10 C8 9.44772 8.44772 9 9 9 C9.55228 9 10 9.44772 10 10 Z"/>
+    <path d="M16 10 C16 10.5523 15.5523 11 15 11 C14.4477 11 14 10.5523 14 10 C14 9.44772 14.4477 9 15 9 C15.5523 9 16 9.44772 16 10 Z"/>
+  </g>
+</g>
+<text x="954" y="3562" text-anchor="middle" font-size="10.5">Video games</text>
+<rect x="552" y="3594" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3 L16 3 L20 13 L4 13 Z"/>
+    <path d="M12 13 L12 21"/>
+    <path d="M8 21 L16 21"/>
+    <path d="M17 13 L17 17"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3 L16 3 L20 13 L4 13 Z"/>
+    <path d="M12 13 L12 21"/>
+    <path d="M8 21 L16 21"/>
+    <path d="M17 13 L17 17"/>
+  </g>
+</g>
+<text x="606" y="3706" text-anchor="middle" font-size="10.5">Lighting</text>
+<rect x="668" y="3594" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 11 L5 7 C5 3 19 3 19 7 L19 11"/>
+    <path d="M6 15 L6 12 C6 8 2 8 2 12 L2 19 L22 19 L22 12 C22 8 18 8 18 12 L18 15 Z"/>
+    <path d="M5 19 L5 21"/>
+    <path d="M19 19 L19 21"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 11 L5 7 C5 3 19 3 19 7 L19 11"/>
+    <path d="M6 15 L6 12 C6 8 2 8 2 12 L2 19 L22 19 L22 12 C22 8 18 8 18 12 L18 15 Z"/>
+    <path d="M5 19 L5 21"/>
+    <path d="M19 19 L19 21"/>
+  </g>
+</g>
+<text x="722" y="3706" text-anchor="middle" font-size="10.5">Living room</text>
+<rect x="784" y="3594" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21 L3 5 L21 5 L21 21"/>
+    <path d="M4 12 L20 12 C20.5523 12 21 12.4477 21 13 L21 17 C21 17.5523 20.5523 18 20 18 L4 18 C3.44772 18 3 17.5523 3 17 L3 13 C3 12.4477 3.44772 12 4 12 Z"/>
+    <path d="M6.8 8 L10.2 8 C10.6418 8 11 8.35817 11 8.8 L11 11.2 C11 11.6418 10.6418 12 10.2 12 L6.8 12 C6.35817 12 6 11.6418 6 11.2 L6 8.8 C6 8.35817 6.35817 8 6.8 8 Z"/>
+    <path d="M13.8 8 L17.2 8 C17.6418 8 18 8.35817 18 8.8 L18 11.2 C18 11.6418 17.6418 12 17.2 12 L13.8 12 C13.3582 12 13 11.6418 13 11.2 L13 8.8 C13 8.35817 13.3582 8 13.8 8 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21 L3 5 L21 5 L21 21"/>
+    <path d="M4 12 L20 12 C20.5523 12 21 12.4477 21 13 L21 17 C21 17.5523 20.5523 18 20 18 L4 18 C3.44772 18 3 17.5523 3 17 L3 13 C3 12.4477 3.44772 12 4 12 Z"/>
+    <path d="M6.8 8 L10.2 8 C10.6418 8 11 8.35817 11 8.8 L11 11.2 C11 11.6418 10.6418 12 10.2 12 L6.8 12 C6.35817 12 6 11.6418 6 11.2 L6 8.8 C6 8.35817 6.35817 8 6.8 8 Z"/>
+    <path d="M13.8 8 L17.2 8 C17.6418 8 18 8.35817 18 8.8 L18 11.2 C18 11.6418 17.6418 12 17.2 12 L13.8 12 C13.3582 12 13 11.6418 13 11.2 L13 8.8 C13 8.35817 13.3582 8 13.8 8 Z"/>
+  </g>
+</g>
+<text x="838" y="3706" text-anchor="middle" font-size="10.5">Bedroom</text>
+<rect x="900" y="3594" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 3616) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 10 L5 17 C5 23 19 23 19 17 L19 10 Z"/>
+    <path d="M2 13 L5 13"/>
+    <path d="M19 13 L22 13"/>
+    <path d="M4 10 L20 10"/>
+    <path d="M8 6 C11 4 6 4 9 2"/>
+    <path d="M14 6 C17 4 12 4 15 2"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 3668) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 10 L5 17 C5 23 19 23 19 17 L19 10 Z"/>
+    <path d="M2 13 L5 13"/>
+    <path d="M19 13 L22 13"/>
+    <path d="M4 10 L20 10"/>
+    <path d="M8 6 C11 4 6 4 9 2"/>
+    <path d="M14 6 C17 4 12 4 15 2"/>
+  </g>
+</g>
+<text x="954" y="3706" text-anchor="middle" font-size="10.5">Cooking</text>
+<rect x="552" y="3738" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12 L3 15 C3 22 21 22 21 15 L21 12"/>
+    <path d="M2 12 L22 12"/>
+    <path d="M6 19 L5 22"/>
+    <path d="M18 19 L19 22"/>
+    <path d="M5 12 L5 5 C5 1 10 1 10 5"/>
+    <path d="M8 6 L12 6"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12 L3 15 C3 22 21 22 21 15 L21 12"/>
+    <path d="M2 12 L22 12"/>
+    <path d="M6 19 L5 22"/>
+    <path d="M18 19 L19 22"/>
+    <path d="M5 12 L5 5 C5 1 10 1 10 5"/>
+    <path d="M8 6 L12 6"/>
+  </g>
+</g>
+<text x="606" y="3850" text-anchor="middle" font-size="10.5">Bathroom</text>
+<rect x="668" y="3738" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 16 L4 12 C4 2 20 2 20 12 L20 16"/>
+    <path d="M3 16 L21 16 C21.5523 16 22 16.4477 22 17 L22 19 C22 19.5523 21.5523 20 21 20 L3 20 C2.44772 20 2 19.5523 2 19 L2 17 C2 16.4477 2.44772 16 3 16 Z"/>
+    <path d="M9 10 L9 3 L15 3 L15 10"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 16 L4 12 C4 2 20 2 20 12 L20 16"/>
+    <path d="M3 16 L21 16 C21.5523 16 22 16.4477 22 17 L22 19 C22 19.5523 21.5523 20 21 20 L3 20 C2.44772 20 2 19.5523 2 19 L2 17 C2 16.4477 2.44772 16 3 16 Z"/>
+    <path d="M9 10 L9 3 L15 3 L15 10"/>
+  </g>
+</g>
+<text x="722" y="3850" text-anchor="middle" font-size="10.5">Construction</text>
+<rect x="784" y="3738" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(818 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3 C20 0 24 7 20 11 C18 13 16 13 14 12 L6 21 C3 24 0 20 3 18 L12 10 C10 8 10 5 11 4 L14 7 L17 6 Z"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(830 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3 C20 0 24 7 20 11 C18 13 16 13 14 12 L6 21 C3 24 0 20 3 18 L12 10 C10 8 10 5 11 4 L14 7 L17 6 Z"/>
+  </g>
+</g>
+<text x="838" y="3850" text-anchor="middle" font-size="10.5">Maintenance</text>
+<rect x="900" y="3738" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(934 3760) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C18.5523 3 19 3.44772 19 4 L19 20 C19 20.5523 18.5523 21 18 21 L6 21 C5.44772 21 5 20.5523 5 20 L5 4 C5 3.44772 5.44772 3 6 3 Z"/>
+    <path d="M10 21 L10 16 L14 16 L14 21"/>
+    <path d="M9 7 L10 7"/>
+    <path d="M9 11 L10 11"/>
+    <path d="M14 7 L15 7"/>
+    <path d="M14 11 L15 11"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(946 3812) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3 L18 3 C18.5523 3 19 3.44772 19 4 L19 20 C19 20.5523 18.5523 21 18 21 L6 21 C5.44772 21 5 20.5523 5 20 L5 4 C5 3.44772 5.44772 3 6 3 Z"/>
+    <path d="M10 21 L10 16 L14 16 L14 21"/>
+    <path d="M9 7 L10 7"/>
+    <path d="M9 11 L10 11"/>
+    <path d="M14 7 L15 7"/>
+    <path d="M14 11 L15 11"/>
+  </g>
+</g>
+<text x="954" y="3850" text-anchor="middle" font-size="10.5">Real estate</text>
+<rect x="552" y="3882" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(586 3904) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3 L12 21"/>
+    <path d="M7 21 L17 21"/>
+    <path d="M4 6 L20 6"/>
+    <path d="M5 6 L2 14 L8 14 Z"/>
+    <path d="M19 6 L16 14 L22 14 Z"/>
+    <path d="M2 14 C3 18 7 18 8 14"/>
+    <path d="M16 14 C17 18 21 18 22 14"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(598 3956) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3 L12 21"/>
+    <path d="M7 21 L17 21"/>
+    <path d="M4 6 L20 6"/>
+    <path d="M5 6 L2 14 L8 14 Z"/>
+    <path d="M19 6 L16 14 L22 14 Z"/>
+    <path d="M2 14 C3 18 7 18 8 14"/>
+    <path d="M16 14 C17 18 21 18 22 14"/>
+  </g>
+</g>
+<text x="606" y="3994" text-anchor="middle" font-size="10.5">Legal</text>
+<rect x="668" y="3882" width="108" height="128" rx="8" fill="none" stroke="#353a35"/>
+<g color="#99bd92" transform="translate(702 3904) scale(1.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7 L12 3 L21 7 L21 17 L12 21 L3 17 Z"/>
+    <path d="M3 7 L12 11 L21 7"/>
+    <path d="M12 11 L12 21"/>
+    <path d="M7.5 5 L16.5 9 L16.5 13"/>
+  </g>
+</g>
+<g color="#a3aaa0" transform="translate(714 3956) scale(.666667)">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7 L12 3 L21 7 L21 17 L12 21 L3 17 Z"/>
+    <path d="M3 7 L12 11 L21 7"/>
+    <path d="M12 11 L12 21"/>
+    <path d="M7.5 5 L16.5 9 L16.5 13"/>
+  </g>
+</g>
+<text x="722" y="3994" text-anchor="middle" font-size="10.5">Logistics</text>
 </g>
 </svg>

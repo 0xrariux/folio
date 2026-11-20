@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.13.3
+
+- Add 40 original page icons for finance, health, research, art, music, games,
+  home and professional activities, bringing the picker to 105 symbols.
+- Extend the editable Blender collection and preview. Every symbol supports
+  the existing eight colors; saved page identities remain compatible.
+
 ## 0.13.2
 
 - Remove favorite stars from notebook sidebar rows. Favorite actions stay on the
