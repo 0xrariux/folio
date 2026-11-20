@@ -258,19 +258,10 @@ impl State {
             self.add_block(Some(&id), kind, false, tx);
             return;
         }
-        if let Some(block) = self.blocks.iter_mut().find(|b| b.data.id == id) {
-            if typed {
-                block.edit = TextEdit::new("").rich();
-            }
-            block.data.kind = kind;
-            block.data.target_id = None;
-            block.data.collapsed = false;
-            block.data.number_start = None;
+        if typed && let Some(block) = self.blocks.iter_mut().find(|b| b.data.id == id) {
+            block.edit = TextEdit::new("").rich();
         }
-        self.active = Some(id);
-        self.panel = Panel::Closed;
-        self.commit_blocks(true);
-        self.focus_active(tx);
+        self.set_list_kind(&id, kind, tx);
     }
 
     pub fn split_block(&mut self, id: &str, tx: &mut Tx) {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.1
+
+- Converting an item to a task also converts its nested text and list points
+  into checkboxes, including folded descendants. Keep existing task completion,
+  rich text, identities and nesting; convert the whole group in one undo step.
+- Apply the same behavior to the block menu, type picker and Markdown shortcuts.
+  Attached files, page/database links, code and other special blocks keep their type.
+
 ## 0.14.0
 
 - Keep at most one consecutive empty paragraph when opening or editing notes.

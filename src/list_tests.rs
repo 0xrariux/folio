@@ -561,3 +561,103 @@ fn a_plain_point_can_add_subtasks_from_its_menu_and_fold_them_at_the_minimum_siz
     assert_eq!(rt.state.blocks[0].edit.text, "Appointment");
     assert!(rt.state.blocks[0].data.checked);
 }
+
+#[test]
+fn turning_a_parent_into_a_task_converts_its_folded_subtree_and_undo_restores_every_block() {
+    let mut blocks = vec![
+        block("parent", Kind::Text, 0, "Appointment"),
+        block("first", Kind::Text, 1, "Blood test"),
+        block("group", Kind::Toggle, 1, "Follow-up"),
+        block("nested", Kind::Numbered, 2, "Call the clinic"),
+        block("done", Kind::Todo, 2, "Booked"),
+        block("code", Kind::Code, 1, "Keep this code\nunchanged"),
+        block("link", Kind::PageLink, 1, "Keep this reference"),
+        block("outside", Kind::Text, 0, "Outside the group"),
+    ];
+    blocks[1].html = "<p><strong>Blood test</strong></p>".into();
+    blocks[2].collapsed = true;
+    blocks[3].number_start = Some(5);
+    blocks[4].checked = true;
+    blocks[6].target_id = Some("demo-home".into());
+    let mut rt = app(blocks);
+    let original = rt.state.current().unwrap().blocks.clone();
+    tap(&mut rt, "handle-parent");
+    tap(&mut rt, "block-task");
+    assert!(
+        rt.state.blocks[..5]
+            .iter()
+            .all(|b| b.data.kind == Kind::Todo)
+    );
+    for (old, new) in original.iter().zip(&rt.state.blocks) {
+        assert_eq!(old.id, new.data.id);
+        assert_eq!(old.html, new.data.html);
+        assert_eq!(old.indent, new.data.indent);
+    }
+    assert!(rt.state.blocks[2].data.collapsed);
+    assert!(rt.state.blocks[3].data.number_start.is_none());
+    assert!(rt.state.blocks[4].data.checked);
+    assert!(!rt.state.blocks[0].data.checked);
+    assert_eq!(rt.state.blocks[5].data, original[5]);
+    assert_eq!(rt.state.blocks[6].data, original[6]);
+    assert_eq!(rt.state.blocks[7].data, original[7]);
+    assert_eq!(rt.state.undo.len(), 1);
+    assert!(rt.find("check-first").is_some());
+    assert!(rt.find("check-nested").is_none());
+    tap(&mut rt, "toggle-group");
+    assert!(rt.find("check-nested").is_some());
+    tap(&mut rt, "check-first");
+    tap(&mut rt, "check-nested");
+    assert!(
+        rt.state.blocks[0].data.checked,
+        "new child checkboxes drive parent completion"
+    );
+    rt.update(|s, tx| {
+        for _ in 0..4 {
+            s.undo_document(false, tx);
+        }
+    });
+    assert_eq!(rt.state.current().unwrap().blocks, original);
+    rt.update(|s, tx| s.undo_document(true, tx));
+    assert!(
+        rt.state.blocks[..5]
+            .iter()
+            .all(|b| b.data.kind == Kind::Todo)
+    );
+    assert!(rt.state.blocks[2].data.collapsed);
+}
+
+#[test]
+fn task_type_picker_and_markdown_shortcut_convert_existing_descendants_together() {
+    for mode in 0..3 {
+        let mut rt = app(vec![
+            block(
+                "parent",
+                if mode == 2 { Kind::Todo } else { Kind::Text },
+                0,
+                if mode == 1 { "" } else { "Appointment" },
+            ),
+            block("child", Kind::Bullet, 1, "Blood test"),
+            block("grandchild", Kind::Text, 2, "Confirm the time"),
+            block("outside", Kind::Text, 0, "Unrelated point"),
+        ]);
+        let original = rt.state.current().unwrap().blocks.clone();
+        if mode == 1 {
+            tap(&mut rt, &input_key("parent"));
+            key(&mut rt, Key::Text("[] ".into()), false, false);
+        } else {
+            tap(&mut rt, "block-type");
+            tap(&mut rt, "slash-Todo");
+        }
+        assert!(
+            rt.state.blocks[..3]
+                .iter()
+                .all(|b| b.data.kind == Kind::Todo)
+        );
+        assert_eq!(rt.state.blocks[1].data.html, original[1].html);
+        assert_eq!(rt.state.blocks[2].data.indent, 2);
+        assert_eq!(rt.state.blocks[3].data, original[3]);
+        assert_eq!(rt.state.undo.len(), 1);
+        rt.update(|s, tx| s.undo_document(false, tx));
+        assert_eq!(rt.state.current().unwrap().blocks, original);
+    }
+}

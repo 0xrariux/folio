@@ -108,6 +108,10 @@ or collapse all groups. Numbering continues after nested lists and restarts for
 each parent. A typed number such as `5.` can start a sequence at that number.
 
 Use the block menu's **Add a subtask** or **Turn into a task** to add checkboxes.
+Converting a point to a task also converts its existing nested text and list
+points, including folded children. Existing checked tasks keep their state;
+files, links, embedded views and code keep their type. Undo restores the group.
+Choose **To-do list** again on an existing task to convert its remaining nested points.
 An item containing tasks shows its completion and checks itself when every leaf
 task is complete, including tasks inside collapsed groups. Reopening a child or
 adding a new subtask reopens the parent. Clicking a parent's checkbox checks or

@@ -216,10 +216,49 @@ impl State {
             b.data.number_start = None;
             b.data.collapsed = false;
         }
+        if kind == Kind::Todo {
+            self.convert_subtasks(id);
+        }
         self.active = Some(id.into());
         self.panel = Panel::Closed;
         self.commit_blocks(true);
         self.focus_active(tx);
+    }
+
+    fn convert_subtasks(&mut self, id: &str) {
+        let Some(index) = self.blocks.iter().position(|b| b.data.id == id) else {
+            return;
+        };
+        let end = self.block_end(index);
+        for child in &mut self.blocks[index + 1..end] {
+            // References, media and code retain their original behavior and data.
+            if !matches!(
+                child.data.kind,
+                Kind::Text
+                    | Kind::Heading1
+                    | Kind::Heading2
+                    | Kind::Heading3
+                    | Kind::Bullet
+                    | Kind::Numbered
+                    | Kind::Todo
+                    | Kind::Toggle
+                    | Kind::ToggleHeading1
+                    | Kind::ToggleHeading2
+                    | Kind::ToggleHeading3
+                    | Kind::Quote
+                    | Kind::Callout
+            ) || child.data.asset.is_some()
+                || child.data.embedded.is_some()
+                || child.data.target_id.is_some()
+            {
+                continue;
+            }
+            if child.data.kind != Kind::Todo {
+                child.data.checked = false;
+            }
+            child.data.kind = Kind::Todo;
+            child.data.number_start = None;
+        }
     }
 
     pub fn restart_numbering(&mut self, id: &str, restart: bool) {
@@ -316,6 +355,9 @@ impl State {
                     .expect("existing block");
                 let end = self.block_end(index);
                 self.blocks.insert(end, EditorBlock::from(next));
+            }
+            if kind == Kind::Todo {
+                self.convert_subtasks(id);
             }
         }
     }
