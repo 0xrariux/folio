@@ -52,8 +52,8 @@ def sheet(choices, title, destination):
 
 pages = [("folio", "Folio")] + catalog("src/icons.rs", "Choice")
 controls = catalog("src/icons/controls.rs", "Symbol")
-assert len(pages) == 36 and len(controls) == 43, "Unexpected catalog size"
-assert len({key for key, _ in pages + controls}) == 79, "Duplicate pictogram"
+assert len(pages) == 66 and len(controls) == 43, "Unexpected catalog size"
+assert len({key for key, _ in pages + controls}) == 109, "Duplicate pictogram"
 sheet(pages, "Page icons", "catalog")
 sheet(controls, "Controls", "controls")
 

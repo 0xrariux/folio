@@ -253,6 +253,33 @@ fn page_icon_colors_and_new_symbols_work_at_the_minimum_window_size() {
 }
 
 #[test]
+fn favorites_stay_on_the_page_without_changing_sidebar_title_space() {
+    for dark in [true, false] {
+        let mut s = State::demo();
+        s.dark = dark;
+        s.select("demo-home");
+        let mut rt = Runtime::new(s, crate::ui::view, (920., 620.), Env::new(dark, 1.));
+        rt.frame(0.);
+        let title_rect = |rt: &Runtime<State>| {
+            rt.elements()
+                .into_iter()
+                .find(|e| e.key.as_deref() == Some("page-label-demo-home"))
+                .unwrap()
+                .rect
+        };
+        let before = title_rect(&rt);
+        assert!(rt.state.current().unwrap().favorite);
+        tap(&mut rt, "favorite-page");
+        assert!(!rt.state.current().unwrap().favorite);
+        assert_eq!(title_rect(&rt), before);
+        tap(&mut rt, "favorite-page");
+        assert!(rt.state.current().unwrap().favorite);
+        assert_eq!(title_rect(&rt), before);
+        assert!(rt.find("favorites").is_some());
+    }
+}
+
+#[test]
 fn sidebar_page_hover_covers_the_rounded_row_at_both_edges() {
     for dark in [true, false] {
         let mut s = State::demo();

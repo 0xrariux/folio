@@ -423,15 +423,11 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                                 12.0,
                                 if selected { p.ink } else { p.muted },
                             )
+                            .key(format!("page-label-{zone_id}"))
                             .grow(1.0)
                             .min_w(0.0)
                             .truncate(),
-                        )
-                        .child(if page.favorite {
-                            rune::icon(&g::STAR, 12.0).color(p.faint).a11y_hidden()
-                        } else {
-                            el()
-                        }),
+                        ),
                 )
                 .child(
                     super::icons::control(

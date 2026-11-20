@@ -49,6 +49,36 @@ glyph!(TREND, "trend");
 glyph!(LAYERS, "layers");
 glyph!(PUZZLE, "puzzle");
 glyph!(PEOPLE, "people");
+glyph!(BOLT, "bolt");
+glyph!(CLOUD, "cloud");
+glyph!(UMBRELLA, "umbrella");
+glyph!(FLAME, "flame");
+glyph!(DROPLET, "droplet");
+glyph!(MOON_STARS, "moon-stars");
+glyph!(HEADPHONES, "headphones");
+glyph!(MICROPHONE, "microphone");
+glyph!(FILM, "film");
+glyph!(GAMEPAD, "gamepad");
+glyph!(BRUSH, "brush");
+glyph!(PEN_TOOL, "pen-tool");
+glyph!(SCISSORS, "scissors");
+glyph!(RULER, "ruler");
+glyph!(PENCIL, "pencil");
+glyph!(MAP, "map");
+glyph!(PLANE, "plane");
+glyph!(CAR, "car");
+glyph!(BICYCLE, "bicycle");
+glyph!(SHIP, "ship");
+glyph!(TREE, "tree");
+glyph!(FLOWER, "flower");
+glyph!(PAW, "paw");
+glyph!(FISH, "fish");
+glyph!(FRUIT, "fruit");
+glyph!(CAKE, "cake");
+glyph!(GIFT, "gift");
+glyph!(TROPHY, "trophy");
+glyph!(SHIELD, "shield");
+glyph!(KEY, "key");
 
 pub struct Choice {
     pub key: &'static str,
@@ -266,6 +296,186 @@ pub const CHOICES: &[Choice] = &[
         name: "People",
         value: "folio:people",
         glyph: &PEOPLE,
+    },
+    Choice {
+        key: "bolt",
+        name: "Lightning",
+        value: "folio:bolt",
+        glyph: &BOLT,
+    },
+    Choice {
+        key: "cloud",
+        name: "Cloud",
+        value: "folio:cloud",
+        glyph: &CLOUD,
+    },
+    Choice {
+        key: "umbrella",
+        name: "Umbrella",
+        value: "folio:umbrella",
+        glyph: &UMBRELLA,
+    },
+    Choice {
+        key: "flame",
+        name: "Flame",
+        value: "folio:flame",
+        glyph: &FLAME,
+    },
+    Choice {
+        key: "droplet",
+        name: "Water",
+        value: "folio:droplet",
+        glyph: &DROPLET,
+    },
+    Choice {
+        key: "moon-stars",
+        name: "Moon and stars",
+        value: "folio:moon-stars",
+        glyph: &MOON_STARS,
+    },
+    Choice {
+        key: "headphones",
+        name: "Headphones",
+        value: "folio:headphones",
+        glyph: &HEADPHONES,
+    },
+    Choice {
+        key: "microphone",
+        name: "Microphone",
+        value: "folio:microphone",
+        glyph: &MICROPHONE,
+    },
+    Choice {
+        key: "film",
+        name: "Film",
+        value: "folio:film",
+        glyph: &FILM,
+    },
+    Choice {
+        key: "gamepad",
+        name: "Game controller",
+        value: "folio:gamepad",
+        glyph: &GAMEPAD,
+    },
+    Choice {
+        key: "brush",
+        name: "Paintbrush",
+        value: "folio:brush",
+        glyph: &BRUSH,
+    },
+    Choice {
+        key: "pen-tool",
+        name: "Design pen",
+        value: "folio:pen-tool",
+        glyph: &PEN_TOOL,
+    },
+    Choice {
+        key: "scissors",
+        name: "Scissors",
+        value: "folio:scissors",
+        glyph: &SCISSORS,
+    },
+    Choice {
+        key: "ruler",
+        name: "Ruler",
+        value: "folio:ruler",
+        glyph: &RULER,
+    },
+    Choice {
+        key: "pencil",
+        name: "Pencil",
+        value: "folio:pencil",
+        glyph: &PENCIL,
+    },
+    Choice {
+        key: "map",
+        name: "Map",
+        value: "folio:map",
+        glyph: &MAP,
+    },
+    Choice {
+        key: "plane",
+        name: "Travel",
+        value: "folio:plane",
+        glyph: &PLANE,
+    },
+    Choice {
+        key: "car",
+        name: "Car",
+        value: "folio:car",
+        glyph: &CAR,
+    },
+    Choice {
+        key: "bicycle",
+        name: "Cycling",
+        value: "folio:bicycle",
+        glyph: &BICYCLE,
+    },
+    Choice {
+        key: "ship",
+        name: "Sailing",
+        value: "folio:ship",
+        glyph: &SHIP,
+    },
+    Choice {
+        key: "tree",
+        name: "Tree",
+        value: "folio:tree",
+        glyph: &TREE,
+    },
+    Choice {
+        key: "flower",
+        name: "Flower",
+        value: "folio:flower",
+        glyph: &FLOWER,
+    },
+    Choice {
+        key: "paw",
+        name: "Pets",
+        value: "folio:paw",
+        glyph: &PAW,
+    },
+    Choice {
+        key: "fish",
+        name: "Fish",
+        value: "folio:fish",
+        glyph: &FISH,
+    },
+    Choice {
+        key: "fruit",
+        name: "Food",
+        value: "folio:fruit",
+        glyph: &FRUIT,
+    },
+    Choice {
+        key: "cake",
+        name: "Celebration",
+        value: "folio:cake",
+        glyph: &CAKE,
+    },
+    Choice {
+        key: "gift",
+        name: "Gift",
+        value: "folio:gift",
+        glyph: &GIFT,
+    },
+    Choice {
+        key: "trophy",
+        name: "Achievement",
+        value: "folio:trophy",
+        glyph: &TROPHY,
+    },
+    Choice {
+        key: "shield",
+        name: "Protection",
+        value: "folio:shield",
+        glyph: &SHIELD,
+    },
+    Choice {
+        key: "key",
+        name: "Key",
+        value: "folio:key",
+        glyph: &KEY,
     },
 ];
 

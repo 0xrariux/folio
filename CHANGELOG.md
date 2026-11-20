@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.2
+
+- Remove favorite stars from notebook sidebar rows. Favorite actions stay on the
+  page, and the Favorites shortcut remains available.
+- Expand the page picker to 65 symbols with 30 original icons for work, creativity,
+  nature and travel. All symbols use the existing eight theme-aware colors.
+- Add shared SVG/Blender stroke sources, an editable Blender icon sheet and preview.
+  Existing page icons and notebook data keep their stored identities.
+
 ## 0.13.1
 
 - Rust 1.100.0 and Rune pinned to `f54cbcfa84d995d339c243a579218f5062c940b5`

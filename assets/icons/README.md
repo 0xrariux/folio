@@ -1,15 +1,22 @@
 # Folio icons
 
-35 page icons share a 24 × 24 grid, 1.5 px strokes, rounded caps, and rounded
+65 page icons share a 24 × 24 grid, 1.5 px strokes, rounded caps, and rounded
 joins. They are original SVGs supplied under the project's MIT license.
 The Folio monogram and command icons use the same visual language.
 
 [Page icons](catalog.svg) · [Color variations](colors.svg) · [Controls](controls.svg)
 
+The latest 30 symbols cover work, creativity, nature, travel, hobbies, and daily
+life. Their [editable Blender master](page-icons.blend) and
+[Blender preview](page-icons-blender.png) share the same stroke paths as their
+native SVG assets. The app uses vectors so every icon stays sharp at small sizes
+and inherits the selected page color.
+Blender is only needed to edit or regenerate the sources, not to build or run Folio.
+
 ## Page customization
 
 Click a page's icon to choose a symbol and color. The scrollable picker contains
-all 35 symbols. Colors update the preview immediately; choosing a symbol closes
+all 65 symbols. Colors update the preview immediately; choosing a symbol closes
 the picker. The reset swatch returns to the theme's default color.
 
 Eight colors are available: Sage, Teal, Blue, Violet, Rose, Coral, Amber, and Gray.
@@ -37,6 +44,17 @@ Regenerate the three SVG sheets after editing the catalog or palette:
 ```sh
 python3 scripts/build-icon-sheet.py
 ```
+
+To regenerate the new icons and their Blender contact sheet:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender \
+  --background --factory-startup --threads 4 --python scripts/build-page-icons.py
+python3 scripts/build-icon-sheet.py
+```
+
+The script uses built-in Blender geometry and fonts. It clears saved path
+buffers before writing the source file, so no personal home paths are embedded.
 
 Preview the native application using fictional demo content:
 

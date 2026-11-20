@@ -29,7 +29,7 @@ the everyday interface focused.
 | Organize a project | Collections with table, Kanban, calendar, and dashboard views over the same records. Each record is also a page for notes. |
 | Connect your knowledge | Page links, mentions, backlinks, a table of contents, and a global command palette. |
 | Build your own workflow | Custom properties, saved views, filters, relations, rollups, and numeric formulas. Embed a collection view inside a note. |
-| Make it feel like yours | Light and dark themes, 35 page symbols, eight icon colors, and sidebar shortcuts you can reorder, hide, and restore. |
+| Make it feel like yours | Light and dark themes, 65 page symbols, eight icon colors, and sidebar shortcuts you can reorder, hide, and restore. |
 | Keep control of your work | Page history, checkpoints, complete notebook backups, and Markdown/CSV exports. |
 
 ## Local by design
