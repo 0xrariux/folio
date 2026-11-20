@@ -661,3 +661,78 @@ fn task_type_picker_and_markdown_shortcut_convert_existing_descendants_together(
         assert_eq!(rt.state.current().unwrap().blocks, original);
     }
 }
+
+#[test]
+fn add_a_task_creates_independent_checkboxes_without_children_or_spare_blocks() {
+    let mut rt = app_at(vec![block("root", Kind::Text, 0, "")], (920.0, 620.0));
+    tap(&mut rt, "new-task");
+    assert_eq!(ids(&rt), ["root"]);
+    assert_eq!(rt.state.blocks[0].data.kind, Kind::Todo);
+    assert_eq!(rt.state.block_end(0), 1);
+    assert!(rt.find("toggle-root").is_none());
+    assert!(rt.find("toggle-add-root").is_none());
+    key(&mut rt, Key::Text("Call the clinic".into()), false, false);
+    tap(&mut rt, "check-root");
+    assert!(rt.state.blocks[0].data.checked);
+    assert_eq!(rt.state.blocks.len(), 1);
+    tap(&mut rt, "new-task");
+    let second = rt.state.blocks[1].data.id.clone();
+    key(&mut rt, Key::Text("Buy groceries".into()), false, false);
+    assert!(rt.state.blocks.iter().all(|b| b.data.indent == 0));
+    assert!(rt.state.blocks[0].data.checked);
+    assert!(!rt.state.blocks[1].data.checked);
+    tap(&mut rt, &format!("check-{second}"));
+    assert!(rt.state.blocks.iter().all(|b| b.data.checked));
+    assert_eq!(
+        folio::outline::task_totals(rt.state.blocks.iter().map(|b| &b.data)),
+        (2, 2)
+    );
+    rt.update(|s, tx| s.undo_document(false, tx));
+    assert!(rt.state.blocks[0].data.checked);
+    assert!(!rt.state.blocks[1].data.checked);
+}
+
+#[test]
+fn deleting_the_only_subtask_leaves_a_standalone_task_that_saves_and_reopens_done() {
+    let mut rt = app_at(
+        vec![
+            block("parent", Kind::Todo, 0, "Appointment"),
+            block("child", Kind::Todo, 1, "Optional preparation"),
+        ],
+        (920.0, 620.0),
+    );
+    tap(&mut rt, "handle-child");
+    tap(&mut rt, "block-delete");
+    assert_eq!(ids(&rt), ["parent"]);
+    assert_eq!(rt.state.blocks[0].data.kind, Kind::Todo);
+    assert!(rt.find("toggle-parent").is_none());
+    tap(&mut rt, "check-parent");
+    assert!(rt.state.blocks[0].data.checked);
+    assert_eq!(rt.state.blocks.len(), 1);
+    tap(&mut rt, "check-parent");
+    assert!(!rt.state.blocks[0].data.checked);
+    tap(&mut rt, "check-parent");
+    let saved = rt.state.current().unwrap().clone();
+    let temp = tempfile::tempdir().unwrap();
+    let path = temp.path().join("single-task.db");
+    tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .unwrap()
+        .block_on(async {
+            let store = folio::storage::Store::open(&path).await.unwrap();
+            store.save(&saved).await.unwrap();
+            drop(store);
+            let store = folio::storage::Store::open(&path).await.unwrap();
+            let loaded = store.load().await.unwrap().remove(0);
+            assert_eq!(loaded, saved);
+            let mut state = State::demo();
+            state.pages.push(loaded);
+            state.select(&saved.id);
+            assert_eq!(state.current().unwrap().blocks.len(), 1);
+            assert!(state.blocks[0].data.checked);
+            state.check_task("parent");
+            assert!(!state.blocks[0].data.checked);
+            assert_eq!(state.blocks.len(), 1);
+        });
+}

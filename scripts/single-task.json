@@ -1,0 +1,8 @@
+{
+  "events": [
+    { "t": 0.1, "type": "tap", "key": "new-page" },
+    { "t": 0.25, "type": "tap", "key": "new-task" },
+    { "t": 0.4, "type": "type", "text": "Call the clinic" },
+    { "t": 0.6, "type": "key", "name": "Enter", "cmd": true }
+  ]
+}

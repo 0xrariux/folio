@@ -142,6 +142,30 @@ impl State {
         self.add_child_kind(id, kind, tx);
     }
 
+    pub fn add_task(&mut self, tx: &mut Tx) {
+        let empty = self
+            .blocks
+            .last_mut()
+            .filter(|b| {
+                b.data.kind == Kind::Text
+                    && b.data.indent == 0
+                    && b.edit.text.trim().is_empty()
+                    && !b.edit.is_composing()
+                    && b.data.target_id.is_none()
+                    && b.data.asset.is_none()
+                    && b.data.embedded.is_none()
+            })
+            .map(|b| {
+                b.data.checked = false;
+                b.data.id.clone()
+            });
+        if let Some(id) = empty {
+            self.set_list_kind(&id, Kind::Todo, tx);
+        } else {
+            self.add_block(None, Kind::Todo, false, tx);
+        }
+    }
+
     pub fn add_child_kind(&mut self, id: &str, kind: Kind, tx: &mut Tx) {
         let Some(index) = self.blocks.iter().position(|b| b.data.id == id) else {
             return;

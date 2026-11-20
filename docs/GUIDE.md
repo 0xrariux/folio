@@ -107,11 +107,13 @@ and check or uncheck a task list including hidden tasks. The page menu can expan
 or collapse all groups. Numbering continues after nested lists and restarts for
 each parent. A typed number such as `5.` can start a sequence at that number.
 
-Use the block menu's **Add a subtask** or **Turn into a task** to add checkboxes.
+Use **Add a task** below the note, **Task** in the type picker, or the block menu's
+**Turn into a task** to create a checkbox. A single task can be checked directly;
+no child is required or created. **Add a subtask** adds a child only when requested.
 Converting a point to a task also converts its existing nested text and list
 points, including folded children. Existing checked tasks keep their state;
 files, links, embedded views and code keep their type. Undo restores the group.
-Choose **To-do list** again on an existing task to convert its remaining nested points.
+Choose **Task** again on an existing task to convert its remaining nested points.
 An item containing tasks shows its completion and checks itself when every leaf
 task is complete, including tasks inside collapsed groups. Reopening a child or
 adding a new subtask reopens the parent. Clicking a parent's checkbox checks or

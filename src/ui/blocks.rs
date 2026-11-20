@@ -536,11 +536,21 @@ pub(super) fn view(s: &State, p: Palette) -> El {
             .w_full()
             .h(38.0)
             .child(
-                super::icons::action("new-block", "Add a block", &g::PLUS, p, |s, tx| {
-                    s.add_block(None, Kind::Text, true, tx)
-                })
-                .w_full()
-                .justify_start(),
+                row()
+                    .w_full()
+                    .gap(8.0)
+                    .child(
+                        super::icons::action("new-block", "Add a block", &g::PLUS, p, |s, tx| {
+                            s.add_block(None, Kind::Text, true, tx)
+                        })
+                        .justify_start(),
+                    )
+                    .child(
+                        super::icons::action("new-task", "Add a task", &g::CHECK, p, |s, tx| {
+                            s.add_task(tx)
+                        })
+                        .justify_start(),
+                    ),
             )
             .child(el().key("drop-end").absolute(0.0, 0.0).w_full().h_full()),
     )

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.2
+
+- Add **Add a task** below the note to create a standalone checkbox with no
+  children. Reuse an empty trailing paragraph instead of adding a spare block.
+- Name the checkbox block **Task** and make subtasks explicitly optional.
+  Tasks can be checked on their own; child creation remains a separate action.
+
 ## 0.14.1
 
 - Converting an item to a task also converts its nested text and list points
