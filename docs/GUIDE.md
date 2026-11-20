@@ -88,19 +88,30 @@ indentation while preserving relative child indentation, up to six levels.
 The insertion line and floating preview show the destination; changes commit
 only on drop, as one undo step. The document scrolls near its edges. Escape,
 window focus loss or dropping outside the editor cancels the gesture.
+Drop on the middle of an item to nest beneath it. Its highlight and the
+"Nest inside" preview confirm the target. Drop near the top or bottom to reorder.
 
 Enter splits text with its styles. Headings continue as text; lists and tasks
 continue their current type. Enter in an empty nested item outdents it, and in
 an empty root list returns to text. Shift-Enter inserts a line inside a block;
 Enter in code does the same. Tab and Shift-Tab indent and outdent a subtree.
 Backspace at the beginning of an item outdents it or converts a root list to text.
+Consecutive empty paragraphs are reduced to one when opening or editing a note.
+Undo can restore the original spacing. Repeated Enter on an empty paragraph
+stays on that line; empty tasks, headings, code and parents retain their content.
 
-Toggles and collapsible headings retain their open state. Their chevrons hide or
-show descendants without changing nested toggle states. Enter in a toggle title
+Items with children, toggles and collapsible headings retain their open state.
+Their chevrons hide or show descendants without changing nested toggle states. Enter in a toggle title
 creates content. The block menu can add a child, restart or continue numbering,
 and check or uncheck a task list including hidden tasks. The page menu can expand
-or collapse all toggles. Numbering continues after nested lists and restarts for
+or collapse all groups. Numbering continues after nested lists and restarts for
 each parent. A typed number such as `5.` can start a sequence at that number.
+
+Use the block menu's **Add a subtask** or **Turn into a task** to add checkboxes.
+An item containing tasks shows its completion and checks itself when every leaf
+task is complete, including tasks inside collapsed groups. Reopening a child or
+adding a new subtask reopens the parent. Clicking a parent's checkbox checks or
+unchecks its whole subtree in one undo step; unrelated tasks remain unchanged.
 
 At the beginning of an empty text block, type a prefix followed by a space:
 

@@ -349,3 +349,210 @@ fn mouse_drag_moves_open_and_closed_subtrees_and_refuses_a_drop_into_itself() {
         assert_eq!(rt.state.current().unwrap().blocks, before);
     }
 }
+
+#[test]
+fn dropping_on_a_closed_point_nests_the_subtree_and_opens_it_only_on_drop() {
+    let mut rt = app(5, (1200.0, 1000.0));
+    rt.update(|s, _| {
+        s.blocks[0].data.kind = Kind::Toggle;
+        s.blocks[0].data.collapsed = true;
+        s.blocks[1].data.indent = 1;
+        s.blocks[3].data.indent = 1;
+        s.commit_blocks(true);
+        s.undo.clear();
+    });
+    rt.frame(0.0);
+    let original = rt.state.current().unwrap().blocks.clone();
+    press(&mut rt, "item-2");
+    let (x, y) = point(&rt, "drop-inside-item-0", 0.5);
+    rt.pointer_move(x, y);
+    rt.frame(0.0);
+    assert!(
+        matches!(rt.state.block_drag.target(), Some(crate::block_drag::DropPosition::Inside(id)) if id == "item-0")
+    );
+    assert!(rt.find("block-drop-indicator").is_some());
+    assert_eq!(rt.state.current().unwrap().blocks, original);
+    rt.pointer_up(x, y);
+    rt.frame(0.0);
+    assert_eq!(ids(&rt), ["item-0", "item-1", "item-2", "item-3", "item-4"]);
+    assert_eq!(
+        rt.state
+            .blocks
+            .iter()
+            .map(|b| b.data.indent)
+            .collect::<Vec<_>>(),
+        [0, 1, 1, 2, 0]
+    );
+    assert!(!rt.state.blocks[0].data.collapsed);
+    assert_eq!(rt.state.blocks[1].data.html, original[1].html);
+    assert_eq!(rt.state.undo.len(), 1);
+    rt.key(Key::Command('z').into());
+    rt.frame(0.0);
+    assert_eq!(rt.state.current().unwrap().blocks, original);
+    tap(&mut rt, "redo");
+    tap(&mut rt, "toggle-item-0");
+    assert!(rt.find(&input_key("item-2")).is_none());
+    tap(&mut rt, "toggle-item-0");
+    let before = rt.state.current().unwrap().blocks.clone();
+    press(&mut rt, "item-0");
+    let (x, y) = point(&rt, "drop-inside-item-2", 0.5);
+    rt.pointer_move(x, y);
+    rt.frame(0.0);
+    assert!(
+        rt.find("block-drop-indicator").is_none(),
+        "a point cannot adopt its ancestor"
+    );
+    rt.pointer_up(x, y);
+    rt.frame(0.0);
+    assert_eq!(rt.state.current().unwrap().blocks, before);
+}
+
+#[test]
+fn nesting_a_selection_keeps_each_subtree_and_rejects_depth_overflow() {
+    let mut rt = app(5, (1200.0, 1000.0));
+    rt.update(|s, _| {
+        s.blocks[2].data.indent = 1;
+        s.selection.ids.extend(["item-1".into(), "item-3".into()]);
+        s.commit_blocks(true);
+        s.undo.clear();
+    });
+    rt.frame(0.0);
+    press(&mut rt, "item-1");
+    let (x, y) = point(&rt, "drop-inside-item-0", 0.5);
+    rt.pointer_move(x, y);
+    rt.frame(0.0);
+    rt.pointer_up(x, y);
+    rt.frame(0.0);
+    assert_eq!(
+        rt.state
+            .blocks
+            .iter()
+            .map(|b| b.data.indent)
+            .collect::<Vec<_>>(),
+        [0, 1, 2, 1, 0]
+    );
+    assert_eq!(rt.state.undo.len(), 1);
+    rt.update(|s, _| {
+        s.selection.clear();
+        s.blocks[0].data.indent = 5;
+        s.blocks[1].data.indent = 6;
+        s.blocks[2].data.indent = 0;
+        s.blocks[3].data.indent = 1;
+        s.commit_blocks(true);
+        s.undo.clear();
+    });
+    rt.frame(0.0);
+    let original = rt.state.current().unwrap().blocks.clone();
+    press(&mut rt, "item-2");
+    let (x, y) = point(&rt, "drop-inside-item-0", 0.5);
+    rt.pointer_move(x, y);
+    rt.frame(0.0);
+    assert!(rt.find("block-drop-indicator").is_none());
+    rt.pointer_up(x, y);
+    rt.frame(0.0);
+    assert_eq!(rt.state.current().unwrap().blocks, original);
+    assert!(rt.state.undo.is_empty());
+}
+
+#[test]
+fn nested_completion_and_closed_state_survive_turso_history_backup_and_reopening() {
+    let temp = tempfile::tempdir().unwrap();
+    let path = temp.path().join("nested.db");
+    let backup = temp.path().join("nested.folio");
+    let mut rt = app(3, (920.0, 620.0));
+    rt.update(|s, _| {
+        s.blocks[0].data.kind = Kind::Text;
+        s.blocks[1].data.kind = Kind::Todo;
+        s.blocks[1].data.checked = false;
+        s.blocks[2].data.kind = Kind::Todo;
+        s.blocks[2].data.checked = false;
+        s.commit_blocks(true);
+        s.undo.clear();
+    });
+    rt.frame(0.0);
+    press(&mut rt, "item-1");
+    let (x, y) = point(&rt, "drop-inside-item-0", 0.5);
+    rt.pointer_move(x, y);
+    rt.frame(0.0);
+    rt.pointer_up(x, y);
+    rt.frame(0.0);
+    press(&mut rt, "item-2");
+    let (x, y) = point(&rt, "drop-inside-item-0", 0.5);
+    rt.pointer_move(x, y);
+    rt.frame(0.0);
+    rt.pointer_up(x, y);
+    rt.frame(0.0);
+    tap(&mut rt, "check-item-1");
+    assert!(!rt.state.blocks[0].data.checked);
+    tap(&mut rt, "check-item-2");
+    assert!(rt.state.blocks[0].data.checked);
+    tap(&mut rt, "toggle-item-0");
+    let saved = rt.state.current().unwrap().clone();
+    assert_eq!(
+        saved.blocks.iter().map(|b| b.indent).collect::<Vec<_>>(),
+        [0, 1, 1]
+    );
+    assert!(saved.blocks[0].collapsed);
+    assert!(saved.blocks[1].html.contains("<strong>"));
+    rt.state.demo = false;
+    rt.state.worker = Some(crate::worker::Worker::start(
+        path.clone(),
+        std::sync::Arc::new(|| {}),
+    ));
+    rt.state.persist(&saved.id);
+    drop(rt);
+    tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .unwrap()
+        .block_on(async {
+            let store = folio::storage::Store::open(&path).await.unwrap();
+            assert_eq!(
+                store
+                    .load()
+                    .await
+                    .unwrap()
+                    .iter()
+                    .find(|p| p.id == saved.id),
+                Some(&saved)
+            );
+            store.checkpoint(&saved).await.unwrap();
+            store
+                .notebook(&folio::workspace::asset_dir(&path))
+                .await
+                .unwrap()
+                .write(&backup)
+                .unwrap();
+            drop(store);
+            let store = folio::storage::Store::open(&path).await.unwrap();
+            let loaded = store
+                .load()
+                .await
+                .unwrap()
+                .into_iter()
+                .find(|p| p.id == saved.id)
+                .unwrap();
+            assert_eq!(loaded, saved);
+            assert_eq!(store.history(Some(&saved.id)).await.unwrap()[0].page, saved);
+            let restored = folio::workspace::Notebook::read(&backup).unwrap();
+            assert_eq!(
+                restored.pages.iter().find(|p| p.id == saved.id),
+                Some(&saved)
+            );
+            assert_eq!(
+                restored
+                    .history
+                    .iter()
+                    .find(|entry| entry.page.id == saved.id)
+                    .unwrap()
+                    .page,
+                saved
+            );
+            let mut state = State::demo();
+            state.pages.push(loaded);
+            state.select(&saved.id);
+            assert_eq!(state.current().unwrap(), &saved);
+            assert!(state.visible_blocks()[0]);
+            assert!(!state.visible_blocks()[1]);
+        });
+}

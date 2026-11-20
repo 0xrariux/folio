@@ -12,13 +12,16 @@ fn block(id: &str, kind: Kind, indent: u8, text: &str) -> NoteBlock {
     b
 }
 fn app(blocks: Vec<NoteBlock>) -> Runtime<State> {
+    app_at(blocks, (1200.0, 1000.0))
+}
+fn app_at(blocks: Vec<NoteBlock>, size: (f32, f32)) -> Runtime<State> {
     let mut s = State::demo();
     s.create(false);
     s.blocks = blocks.into_iter().map(EditorBlock::from).collect();
     s.active = Some(s.blocks[0].data.id.clone());
     s.commit_blocks(true);
     s.undo.clear();
-    let mut rt = Runtime::new(s, crate::ui::view, (1200.0, 1000.0), Env::new(false, 1.0));
+    let mut rt = Runtime::new(s, crate::ui::view, size, Env::new(false, 1.0));
     rt.on_key = Some(crate::on_key);
     rt.frame(0.0);
     rt
@@ -410,4 +413,151 @@ fn boundary_arrow_keys_move_between_visible_blocks_without_opening_closed_toggle
     key(&mut rt, Key::Up, false, false);
     assert_eq!(rt.state.active.as_deref(), Some("parent"));
     assert_eq!(rt.state.current().unwrap().blocks, before);
+}
+
+#[test]
+fn opening_an_existing_note_compacts_empty_paragraphs_with_undo_and_keeps_structured_content() {
+    let mut rt = app(vec![block("start", Kind::Text, 0, "Start")]);
+    let mut original = vec![block("start", Kind::Text, 0, "Start")];
+    for i in 0..15 {
+        original.push(block(&format!("gap-{i}"), Kind::Text, 0, ""));
+    }
+    original.extend([
+        block("heading", Kind::Heading2, 0, ""),
+        block("task", Kind::Todo, 0, ""),
+        block("code", Kind::Code, 0, "\n\n\n"),
+        block("parent", Kind::Text, 0, ""),
+        block("child", Kind::Bullet, 1, "Keep this child"),
+        block("end", Kind::Text, 0, "End"),
+    ]);
+    rt.update(|s, _| {
+        let id = s.selected.clone().unwrap();
+        let page = s.pages.iter_mut().find(|p| p.id == id).unwrap();
+        page.blocks = original.clone();
+        page.sync_document();
+        s.select("demo-home");
+        s.select(&id);
+    });
+    rt.frame(0.0);
+    assert_eq!(
+        ids(&rt),
+        [
+            "start", "gap-0", "heading", "task", "code", "parent", "child", "end"
+        ]
+    );
+    assert_eq!(rt.state.blocks[4].edit.text, "\n\n\n");
+    assert_eq!(rt.state.undo.len(), 1);
+    rt.update(|s, tx| s.undo_document(false, tx));
+    assert_eq!(rt.state.current().unwrap().blocks, original);
+    rt.update(|s, tx| s.undo_document(true, tx));
+    rt.frame(0.0);
+    tap(&mut rt, &input_key("gap-0"));
+    for _ in 0..15 {
+        key(&mut rt, Key::Enter, false, false);
+    }
+    assert_eq!(rt.state.blocks.len(), 8);
+    assert_eq!(rt.state.active.as_deref(), Some("gap-0"));
+}
+
+#[test]
+fn paste_compacts_blank_runs_keeps_the_active_editor_and_undo_restores_the_original() {
+    let mut rt = app(vec![block("root", Kind::Text, 0, "")]);
+    tap(&mut rt, &input_key("root"));
+    rt.paste("First\n\n\n\nSecond\n\n\n\n");
+    rt.frame(0.0);
+    assert_eq!(
+        rt.state
+            .blocks
+            .iter()
+            .map(|b| b.edit.text.as_str())
+            .collect::<Vec<_>>(),
+        ["First", "", "Second", ""]
+    );
+    assert_eq!(
+        rt.state.active.as_ref(),
+        rt.state.blocks.last().map(|b| &b.data.id)
+    );
+    key(&mut rt, Key::Text("Continue here".into()), false, false);
+    assert_eq!(rt.state.blocks.last().unwrap().edit.text, "Continue here");
+    rt.update(|s, tx| {
+        s.undo_document(false, tx);
+        s.undo_document(false, tx);
+    });
+    assert_eq!(ids(&rt), ["root"]);
+    assert!(rt.state.blocks[0].edit.text.is_empty());
+}
+
+#[test]
+fn nested_checkboxes_roll_up_through_plain_groups_and_toggle_all_descendants_atomically() {
+    let mut rt = app(vec![
+        block("parent", Kind::Todo, 0, "Prepare release"),
+        block("group", Kind::Text, 1, "Checks"),
+        block("first", Kind::Todo, 2, "Review"),
+        block("step", Kind::Todo, 2, "Publish"),
+        block("last", Kind::Todo, 3, "Verify build"),
+        block("outside", Kind::Todo, 0, "Unrelated"),
+    ]);
+    tap(&mut rt, "check-first");
+    assert!(!rt.state.blocks[0].data.checked);
+    tap(&mut rt, "check-last");
+    assert!(rt.state.blocks[..5].iter().all(|b| b.data.checked));
+    assert!(!rt.state.blocks[5].data.checked);
+    assert_eq!(
+        folio::outline::task_totals(rt.state.blocks.iter().map(|b| &b.data)),
+        (2, 3)
+    );
+    assert_eq!(
+        folio::outline::task_progress(rt.state.blocks.iter().map(|b| &b.data))[0],
+        (2, 2)
+    );
+    tap(&mut rt, "toggle-parent");
+    assert!(rt.find("check-last").is_none());
+    let undo = rt.state.undo.len();
+    tap(&mut rt, "check-parent");
+    assert!(rt.state.blocks[..5].iter().all(|b| !b.data.checked));
+    assert_eq!(rt.state.undo.len(), undo + 1);
+    rt.update(|s, tx| s.undo_document(false, tx));
+    rt.frame(0.0);
+    assert!(rt.state.blocks[0].data.collapsed);
+    assert!(rt.state.blocks[..5].iter().all(|b| b.data.checked));
+    tap(&mut rt, "toggle-parent");
+    tap(&mut rt, "check-first");
+    assert!(!rt.state.blocks[0].data.checked && !rt.state.blocks[1].data.checked);
+    assert!(rt.state.blocks[3].data.checked);
+    rt.update(|s, tx| s.remove_block("first", tx));
+    assert!(
+        rt.state.blocks[0].data.checked,
+        "removing the incomplete child recalculates the parent"
+    );
+    rt.update(|s, tx| s.add_child_kind("group", Kind::Todo, tx));
+    assert!(
+        !rt.state.blocks[0].data.checked,
+        "adding a subtask reopens the parent"
+    );
+}
+
+#[test]
+fn a_plain_point_can_add_subtasks_from_its_menu_and_fold_them_at_the_minimum_size() {
+    let mut rt = app_at(
+        vec![block("parent", Kind::Text, 0, "Appointment")],
+        (920.0, 620.0),
+    );
+    tap(&mut rt, "handle-parent");
+    tap(&mut rt, "block-subtask");
+    let child = rt.state.blocks[1].data.id.clone();
+    assert_eq!(rt.state.blocks[1].data.kind, Kind::Todo);
+    assert_eq!(rt.state.blocks[1].data.indent, 1);
+    key(&mut rt, Key::Text("Book the visit".into()), false, false);
+    assert!(rt.find("check-parent").is_some());
+    tap(&mut rt, &format!("check-{child}"));
+    assert!(rt.state.blocks[0].data.checked);
+    tap(&mut rt, "toggle-parent");
+    assert!(rt.find(&input_key(&child)).is_none());
+    tap(&mut rt, "toggle-parent");
+    assert!(rt.find(&input_key(&child)).is_some());
+    tap(&mut rt, "handle-parent");
+    tap(&mut rt, "block-task");
+    assert_eq!(rt.state.blocks[0].data.kind, Kind::Todo);
+    assert_eq!(rt.state.blocks[0].edit.text, "Appointment");
+    assert!(rt.state.blocks[0].data.checked);
 }

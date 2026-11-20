@@ -1,0 +1,8 @@
+{
+  "events": [
+    { "t": 0.15, "type": "wheel", "key": "document-scroll", "dy": -360 },
+    { "t": 0.35, "type": "down", "key": "handle-demo-list-14" },
+    { "t": 0.6, "type": "move", "key": "drop-inside-demo-list-7" },
+    { "t": 1.2, "type": "up", "key": "drop-inside-demo-list-7" }
+  ]
+}

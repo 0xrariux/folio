@@ -109,6 +109,9 @@ impl State {
         let Some(id) = self.selected.clone() else {
             return;
         };
+        if record {
+            self.normalize_blocks();
+        }
         for block in &mut self.blocks {
             block.data.html = block.edit.to_html();
         }
@@ -276,6 +279,12 @@ impl State {
         };
         let block = &self.blocks[index];
         let (a, b) = block.edit.range();
+        if block.data.kind == Kind::Text
+            && block.edit.text.trim().is_empty()
+            && self.block_end(index) == index + 1
+        {
+            return;
+        }
         if block.edit.text.is_empty()
             && (block.data.kind.is_list() || block.data.kind == Kind::Quote)
         {
@@ -438,8 +447,16 @@ impl State {
     }
 
     pub fn check_task(&mut self, id: &str) {
-        if let Some(block) = self.blocks.iter_mut().find(|b| b.data.id == id) {
-            block.data.checked = !block.data.checked;
+        let Some(index) = self.blocks.iter().position(|b| b.data.id == id) else {
+            return;
+        };
+        let end = self.block_end(index);
+        let checked = !self.blocks[index].data.checked;
+        self.blocks[index].data.checked = checked;
+        for child in &mut self.blocks[index + 1..end] {
+            if child.data.kind == Kind::Todo {
+                child.data.checked = checked;
+            }
         }
         self.commit_blocks(true);
     }

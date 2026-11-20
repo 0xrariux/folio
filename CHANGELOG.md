@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.14.0
+
+- Keep at most one consecutive empty paragraph when opening or editing notes.
+  Preserve empty structured blocks and parents with children; cleanup supports undo.
+- Nest items and complete selections by dropping on a point's middle, with a
+  highlighted target. Open the destination on drop and keep subtree indentation.
+- Fold any point with children. Add subtasks or convert a point to a task from
+  its menu, and complete parent steps automatically from their leaf tasks.
+- Parent checkboxes toggle their subtree in one undo step. Nested completion and
+  fold state use the existing document format and survive saves, history and backups.
+
 ## 0.13.3
 
 - Add 40 original page icons for finance, health, research, art, music, games,

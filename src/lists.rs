@@ -9,6 +9,61 @@ use folio::{
 use rune::{ClipboardContent, TextEdit, Tx};
 
 impl State {
+    /// Compact only empty paragraph leaves; never discard a heading, task, asset
+    /// or an empty parent that owns content. Keep the active editor in each run.
+    pub fn normalize_blocks(&mut self) {
+        let ends = outline::subtree_ends(self.blocks.iter().map(|b| &b.data));
+        let mut keep = vec![true; self.blocks.len()];
+        let mut previous: Option<usize> = None;
+        for (i, block) in self.blocks.iter().enumerate() {
+            let blank = block.data.kind == Kind::Text
+                && block.edit.text.trim().is_empty()
+                && !block.edit.is_composing()
+                && block.data.target_id.is_none()
+                && block.data.asset.is_none()
+                && block.data.embedded.is_none()
+                && ends[i] == i + 1;
+            if !blank {
+                previous = None;
+                continue;
+            }
+            if let Some(p) = previous
+                && self.blocks[p].data.indent == block.data.indent
+            {
+                if self.active.as_deref() == Some(&block.data.id) {
+                    keep[p] = false;
+                } else {
+                    keep[i] = false;
+                    continue;
+                }
+            }
+            previous = Some(i);
+        }
+        let mut index = 0;
+        self.blocks.retain(|_| {
+            let retain = keep[index];
+            index += 1;
+            retain
+        });
+        self.selection
+            .ids
+            .retain(|id| self.blocks.iter().any(|b| b.data.id == *id));
+        if self
+            .selection
+            .anchor
+            .as_ref()
+            .is_some_and(|id| !self.blocks.iter().any(|b| b.data.id == *id))
+        {
+            self.selection.anchor = self.active.clone();
+        }
+        let progress = outline::task_progress(self.blocks.iter().map(|b| &b.data));
+        for (block, (done, total)) in self.blocks.iter_mut().zip(progress) {
+            if total > 0 {
+                block.data.checked = done == total;
+            }
+        }
+    }
+
     pub fn focus_neighbor(&mut self, id: &str, down: bool, tx: &mut Tx) -> bool {
         let Some(index) = self.blocks.iter().position(|b| b.data.id == id) else {
             return false;
@@ -47,13 +102,12 @@ impl State {
     }
 
     pub fn toggle_block(&mut self, id: &str, tx: &mut Tx) {
-        let Some(index) = self
-            .blocks
-            .iter()
-            .position(|b| b.data.id == id && b.data.kind.is_toggle())
-        else {
+        let Some(index) = self.blocks.iter().position(|b| b.data.id == id) else {
             return;
         };
+        if !self.blocks[index].data.kind.is_toggle() && self.block_end(index) == index + 1 {
+            return;
+        }
         self.blocks[index].data.collapsed = !self.blocks[index].data.collapsed;
         self.active = Some(id.into());
         self.panel = Panel::Closed;
@@ -62,8 +116,9 @@ impl State {
     }
 
     pub fn fold_all(&mut self, collapsed: bool, tx: &mut Tx) {
-        for b in &mut self.blocks {
-            if b.data.kind.is_toggle() {
+        let ends = outline::subtree_ends(self.blocks.iter().map(|b| &b.data));
+        for (i, b) in self.blocks.iter_mut().enumerate() {
+            if b.data.kind.is_toggle() || ends[i] > i + 1 {
                 b.data.collapsed = collapsed;
             }
         }
@@ -73,13 +128,28 @@ impl State {
     }
 
     pub fn add_child(&mut self, id: &str, tx: &mut Tx) {
+        let kind = self
+            .blocks
+            .iter()
+            .find(|b| b.data.id == id)
+            .map_or(Kind::Text, |b| {
+                if b.data.kind == Kind::Todo {
+                    Kind::Todo
+                } else {
+                    Kind::Text
+                }
+            });
+        self.add_child_kind(id, kind, tx);
+    }
+
+    pub fn add_child_kind(&mut self, id: &str, kind: Kind, tx: &mut Tx) {
         let Some(index) = self.blocks.iter().position(|b| b.data.id == id) else {
             return;
         };
         if self.blocks[index].data.indent >= MAX_INDENT {
             return;
         }
-        let mut child = NoteBlock::new(Kind::Text);
+        let mut child = NoteBlock::new(kind);
         child.indent = self.blocks[index].data.indent + 1;
         self.blocks[index].data.collapsed = false;
         self.active = Some(child.id.clone());
@@ -127,9 +197,7 @@ impl State {
             if self.blocks[previous].data.indent != level {
                 return false;
             }
-            if self.blocks[previous].data.kind.is_toggle() {
-                self.blocks[previous].data.collapsed = false;
-            }
+            self.blocks[previous].data.collapsed = false;
             for b in &mut self.blocks[index..end] {
                 b.data.indent += 1;
             }

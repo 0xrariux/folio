@@ -1,12 +1,19 @@
 //! A handle press becomes a reorder after travelling six points. Only the drop edits data.
 use crate::state::{Panel, State};
 use rune::{Drag, Phase, Pick, ScrollPos, Tx};
-use std::{cell::Cell, rc::Rc, time::Duration};
+use std::{cell::Cell, collections::BTreeSet, rc::Rc, time::Duration};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum DropPosition {
     Before(String),
     After(String),
+    Inside(String),
+}
+
+struct DropPlan {
+    indices: BTreeSet<usize>,
+    levels: Vec<u8>,
+    slot: usize,
 }
 
 #[derive(Default)]
@@ -194,87 +201,122 @@ impl State {
         }
     }
 
+    pub fn can_nest_into(&self, index: usize) -> bool {
+        use folio::document::Kind;
+        self.blocks[index].data.indent < folio::outline::MAX_INDENT
+            && !matches!(
+                self.blocks[index].data.kind,
+                Kind::Code
+                    | Kind::Divider
+                    | Kind::PageLink
+                    | Kind::DatabaseView
+                    | Kind::Image
+                    | Kind::Attachment
+                    | Kind::TableOfContents
+            )
+    }
+
     fn block_drop_target(&mut self, attempt: &str, key: Option<&str>, drop: bool, tx: &mut Tx) {
-        let end = self
-            .blocks
-            .iter()
-            .rfind(|b| b.data.indent == 0)
-            .or_else(|| self.blocks.last())
-            .map(|b| b.data.id.clone());
-        let BlockDrag::Dragging {
-            session, target, ..
-        } = &mut self.block_drag
-        else {
+        let Some(session) = self.block_drag.session() else {
             return;
         };
         if session.attempt != attempt || Some(&session.page_id) != self.selected.as_ref() {
             return;
         }
-        if key != Some("block-drop-indicator") {
-            *target = key.and_then(|key| {
+        let source = session.block_id.clone();
+        let candidate = if key == Some("block-drop-indicator") {
+            self.block_drag.target().cloned()
+        } else {
+            key.and_then(|key| {
                 if key == "drop-end" {
-                    end.map(DropPosition::After)
+                    self.blocks
+                        .iter()
+                        .rfind(|b| b.data.indent == 0)
+                        .or_else(|| self.blocks.last())
+                        .map(|b| DropPosition::After(b.data.id.clone()))
                 } else if let Some(id) = key.strip_prefix("drop-before-") {
                     Some(DropPosition::Before(id.into()))
+                } else if let Some(id) = key.strip_prefix("drop-inside-") {
+                    Some(DropPosition::Inside(id.into()))
                 } else {
                     key.strip_prefix("drop-after-")
                         .map(|id| DropPosition::After(id.into()))
                 }
-            });
+            })
         }
+        .filter(|target| self.drop_plan(&source, target).is_some());
         if !drop {
+            if let BlockDrag::Dragging { target, .. } = &mut self.block_drag {
+                *target = candidate;
+            }
             return;
         }
-        let source = session.block_id.clone();
-        let target = target.clone();
         self.block_drag = BlockDrag::Released(source.clone());
-        if let Some(target) = target {
+        if let Some(target) = candidate {
             self.reorder_block(&source, &target, tx);
         }
     }
 
-    fn reorder_block(&mut self, id: &str, target: &DropPosition, tx: &mut Tx) {
-        let Some(from) = self.blocks.iter().position(|b| b.data.id == id) else {
-            return;
+    fn drop_plan(&self, id: &str, target: &DropPosition) -> Option<DropPlan> {
+        let from = self.blocks.iter().position(|b| b.data.id == id)?;
+        let (target_id, after, inside) = match target {
+            DropPosition::Before(id) => (id, false, false),
+            DropPosition::After(id) => (id, true, false),
+            DropPosition::Inside(id) => (id, true, true),
         };
-        let (target_id, after) = match target {
-            DropPosition::Before(id) => (id, false),
-            DropPosition::After(id) => (id, true),
-        };
-        let Some(to) = self.blocks.iter().position(|b| b.data.id == *target_id) else {
-            return;
-        };
-        let end = self.block_end(from);
-        if (from..end).contains(&to) {
-            return;
-        }
-        let slot = if after { self.block_end(to) } else { to };
-        if self.selection.ids.contains(id) && self.selection.ids.len() > 1 {
-            self.reorder_selection(slot);
-            tx.focus(format!("handle-{id}"), false);
-            tx.instant();
-            return;
-        }
-        if slot == from || slot == end {
-            return;
-        }
-        let old_level = self.blocks[from].data.indent;
-        let new_level = self.blocks[to].data.indent;
-        let deepest = self.blocks[from..end]
-            .iter()
-            .map(|b| b.data.indent.saturating_sub(old_level))
-            .max()
-            .unwrap_or(0);
-        if new_level.saturating_add(deepest) > folio::outline::MAX_INDENT {
-            return;
-        }
-        for b in &mut self.blocks[from..end] {
-            b.data.indent = new_level + b.data.indent.saturating_sub(old_level);
-        }
-        if slot < from {
-            self.blocks[slot..end].rotate_right(end - from);
+        let to = self.blocks.iter().position(|b| b.data.id == *target_id)?;
+        let indices = if self.selection.ids.contains(id) && self.selection.ids.len() > 1 {
+            self.selected_indices()
         } else {
-            self.blocks[from..slot].rotate_left(end - from);
+            (from..self.block_end(from)).collect()
+        };
+        if indices.contains(&to) || (inside && !self.can_nest_into(to)) {
+            return None;
+        }
+        let level = self.blocks[to].data.indent + u8::from(inside);
+        let mut end = 0;
+        let mut base = 0;
+        let mut levels = Vec::with_capacity(indices.len());
+        for &i in &indices {
+            if i >= end {
+                end = self.block_end(i);
+                base = self.blocks[i].data.indent;
+            }
+            let next = level + self.blocks[i].data.indent.saturating_sub(base);
+            if next > folio::outline::MAX_INDENT {
+                return None;
+            }
+            levels.push(next);
+        }
+        Some(DropPlan {
+            indices,
+            levels,
+            slot: if after { self.block_end(to) } else { to },
+        })
+    }
+
+    fn reorder_block(&mut self, id: &str, target: &DropPosition, tx: &mut Tx) {
+        let Some(plan) = self.drop_plan(id, target) else {
+            return;
+        };
+        let insert = plan.slot - plan.indices.iter().filter(|&&i| i < plan.slot).count();
+        let mut moved = Vec::with_capacity(plan.indices.len());
+        let mut remaining = Vec::new();
+        let mut levels = plan.levels.into_iter();
+        for (i, mut block) in self.blocks.drain(..).enumerate() {
+            if plan.indices.contains(&i) {
+                block.data.indent = levels.next().expect("one level per moved block");
+                moved.push(block);
+            } else {
+                remaining.push(block);
+            }
+        }
+        remaining.splice(insert..insert, moved);
+        self.blocks = remaining;
+        if let DropPosition::Inside(parent) = target
+            && let Some(parent) = self.blocks.iter_mut().find(|b| b.data.id == *parent)
+        {
+            parent.data.collapsed = false;
         }
         self.active = Some(id.into());
         self.panel = Panel::Closed;

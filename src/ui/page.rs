@@ -136,16 +136,7 @@ pub(super) fn view(s: &State, p: Palette, width: f32) -> El {
         return super::settings::locked_page(s, page, p);
     }
     let words = page.plain_text.split_whitespace().count();
-    let tasks = s
-        .blocks
-        .iter()
-        .filter(|b| b.data.kind == folio::document::Kind::Todo)
-        .count();
-    let done = s
-        .blocks
-        .iter()
-        .filter(|b| b.data.kind == folio::document::Kind::Todo && b.data.checked)
-        .count();
+    let (done, tasks) = folio::outline::task_totals(s.blocks.iter().map(|b| &b.data));
     let mut content = col().w_full().gap(12.0);
     if !page.wide {
         content = content.max_w(770.0);

@@ -54,6 +54,12 @@ impl State {
             self.redo.clear();
             self.collection_search = TextEdit::new("");
         }
+        if self
+            .current()
+            .is_some_and(|p| !p.archived && p.collection.is_none() && p.dashboard.is_none())
+        {
+            self.commit_blocks(true);
+        }
         for id in self.ancestors(id) {
             self.collapsed.remove(&id);
         }

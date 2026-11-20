@@ -1,0 +1,7 @@
+{
+  "events": [
+    { "t": 0.15, "type": "wheel", "key": "document-scroll", "dy": -360 },
+    { "t": 0.35, "type": "tap", "key": "check-demo-list-9" },
+    { "t": 0.5, "type": "tap", "key": "check-demo-list-10" }
+  ]
+}

@@ -26,12 +26,55 @@ pub fn visibility<'a>(blocks: impl IntoIterator<Item = &'a NoteBlock>) -> Vec<bo
                 hidden_below = None;
             }
             let visible = hidden_below.is_none();
-            if visible && b.kind.is_toggle() && b.collapsed {
+            if visible && b.collapsed {
                 hidden_below = Some(b.indent);
             }
             visible
         })
         .collect()
+}
+
+/// Completed and total leaf tasks below each block. Intermediate steps count once
+/// through their children, so a nested checklist does not inflate its progress.
+pub fn task_progress<'a>(blocks: impl IntoIterator<Item = &'a NoteBlock>) -> Vec<(usize, usize)> {
+    let blocks: Vec<_> = blocks.into_iter().collect();
+    let mut parents = vec![None; blocks.len()];
+    let mut stack: Vec<usize> = Vec::new();
+    for (i, block) in blocks.iter().enumerate() {
+        while stack
+            .last()
+            .is_some_and(|&p| blocks[p].indent >= block.indent)
+        {
+            stack.pop();
+        }
+        parents[i] = stack.last().copied();
+        stack.push(i);
+    }
+    let mut progress = vec![(0, 0); blocks.len()];
+    for i in (0..blocks.len()).rev() {
+        let contribution = if progress[i].1 == 0 && blocks[i].kind == Kind::Todo {
+            (usize::from(blocks[i].checked), 1)
+        } else {
+            progress[i]
+        };
+        if let Some(parent) = parents[i] {
+            progress[parent].0 += contribution.0;
+            progress[parent].1 += contribution.1;
+        }
+    }
+    progress
+}
+
+pub fn task_totals<'a>(blocks: impl IntoIterator<Item = &'a NoteBlock>) -> (usize, usize) {
+    let blocks: Vec<_> = blocks.into_iter().collect();
+    let progress = task_progress(blocks.iter().copied());
+    blocks
+        .iter()
+        .zip(progress)
+        .filter(|(b, (_, total))| b.kind == Kind::Todo && *total == 0)
+        .fold((0, 0), |(done, total), (block, _)| {
+            (done + usize::from(block.checked), total + 1)
+        })
 }
 
 /// A nested list does not reset its parent's sequence. A new sibling parent does.

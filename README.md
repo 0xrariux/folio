@@ -25,7 +25,7 @@ the everyday interface focused.
 
 | What you want to do | What Folio gives you |
 |---|---|
-| Write and structure ideas | Rich text, headings, nested lists, tasks, toggles, code, images, and file attachments. Drag blocks to rearrange a page. |
+| Write and structure ideas | Rich text, headings, collapsible nested lists, tasks, code, images, and files. Drag points to nest them; parent steps complete with their subtasks. |
 | Organize a project | Collections with table, Kanban, calendar, and dashboard views over the same records. Each record is also a page for notes. |
 | Connect your knowledge | Page links, mentions, backlinks, a table of contents, and a global command palette. |
 | Build your own workflow | Custom properties, saved views, filters, relations, rollups, and numeric formulas. Embed a collection view inside a note. |

@@ -340,6 +340,18 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
             };
         },
     )];
+    if block.kind != folio::document::Kind::Todo && s.can_nest_into(index) {
+        let id = id.to_string();
+        entries.push(icon_item(
+            "block-task",
+            "Turn into a task",
+            &g::CHECK,
+            p,
+            move |s, tx| {
+                s.set_list_kind(&id, folio::document::Kind::Todo, tx);
+            },
+        ));
+    }
     for (key, title, outdent, glyph) in [
         ("block-indent", "Indent · Tab", false, &g::CHEVRON_RIGHT),
         (
@@ -363,6 +375,14 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
             p,
             move |s, tx| s.add_child(&id, tx),
         ));
+        let id = block.id.clone();
+        entries.push(icon_item(
+            "block-subtask",
+            "Add a subtask",
+            &g::CHECK,
+            p,
+            move |s, tx| s.add_child_kind(&id, folio::document::Kind::Todo, tx),
+        ));
     }
     if block.kind == folio::document::Kind::Numbered {
         let id = id.to_string();
@@ -382,23 +402,11 @@ fn block_menu(s: &State, id: &str, p: Palette) -> El {
             },
         ));
     }
-    let tasks: Vec<_> = s.blocks[s.task_scope(id)]
-        .iter()
-        .filter(|b| b.data.kind == folio::document::Kind::Todo)
-        .collect();
-    if !tasks.is_empty() {
-        entries.push(
-            label(
-                format!(
-                    "{} / {} tasks completed",
-                    tasks.iter().filter(|b| b.data.checked).count(),
-                    tasks.len()
-                ),
-                10.0,
-                p.faint,
-            )
-            .padding(9.0),
-        );
+    let (done, tasks) =
+        folio::outline::task_totals(s.blocks[s.task_scope(id)].iter().map(|b| &b.data));
+    if tasks > 0 {
+        entries
+            .push(label(format!("{done} / {tasks} tasks completed"), 10.0, p.faint).padding(9.0));
         for (key, title, checked) in [
             ("list-check-all", "Check all tasks in this list", true),
             ("list-uncheck-all", "Uncheck all tasks in this list", false),

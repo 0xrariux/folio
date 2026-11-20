@@ -1,12 +1,12 @@
 # Folio feature status
 
-Current scope: Folio 0.13. This describes Folio's implemented behavior, rather
+Current scope: Folio 0.14. This describes Folio's implemented behavior, rather
 than claiming complete feature or performance parity with Notion. Earlier
 iterations are recorded in the [changelog](CHANGELOG.md).
 
 | Area | Available | Remaining scope |
 |---|---|---|
-| Editor | 20 block kinds, rich text, toggles, nested lists, multiple selection and subtree operations | Block columns and advanced typography |
+| Editor | 20 block kinds, rich text, collapsible nested lists, drag nesting, task completion rollups, multiple selection and subtree operations | Block columns and advanced typography |
 | Organization | Pages/subpages, favorites, archives, confirmed deletion, drag order/nesting | Shared spaces and collaboration permissions |
 | Collections | Table, Kanban, Calendar, Dashboard, named views, combined filters and sorting | Gallery, timeline and complex nested filters |
 | Tables | Per-view widths/order/visibility, bulk record edits, virtualized rows | Spreadsheet-style keyboard cell editing |

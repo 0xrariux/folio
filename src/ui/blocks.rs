@@ -116,6 +116,7 @@ fn block(
     b: &EditorBlock,
     index: usize,
     number: u32,
+    progress: (usize, usize),
     after_marker: Option<&str>,
     p: Palette,
 ) -> El {
@@ -129,6 +130,7 @@ fn block(
     let drag_id = id.clone();
     let plus_id = id.clone();
     let kind = b.data.kind;
+    let has_children = s.block_end(index) > index + 1;
     let font = match kind {
         Kind::Heading1 | Kind::ToggleHeading1 => TextStyle::new(29.0, 650.0),
         Kind::Heading2 | Kind::ToggleHeading2 => TextStyle::new(23.0, 600.0),
@@ -148,11 +150,13 @@ fn block(
         .grow(1.0)
         .min_w(0.0)
         .min_h(25.0)
-        .color(if kind == Kind::Todo && b.data.checked {
-            p.faint
-        } else {
-            p.ink
-        })
+        .color(
+            if (kind == Kind::Todo || progress.1 > 0) && b.data.checked {
+                p.faint
+            } else {
+                p.ink
+            },
+        )
         .caret(p.accent, p.tint)
         .placeholder(
             if kind == Kind::Code {
@@ -193,29 +197,31 @@ fn block(
     ) {
         input = input.py(6.0);
     }
+    let disclosure = if kind.is_toggle() || has_children {
+        let id = b.data.id.clone();
+        super::icons::control(
+            format!("toggle-{id}"),
+            if b.data.collapsed {
+                "Expand section"
+            } else {
+                "Collapse section"
+            },
+            if b.data.collapsed {
+                &g::CHEVRON_RIGHT
+            } else {
+                &g::CHEVRON_DOWN
+            },
+            p,
+            move |s, tx| s.toggle_block(&id, tx),
+        )
+        .w(22.0)
+        .px(0.0)
+        .expanded(!b.data.collapsed)
+    } else {
+        el().w(22.0)
+    };
     let prefix = match kind {
-        kind if kind.is_toggle() => {
-            let id = b.data.id.clone();
-            super::icons::control(
-                format!("toggle-{id}"),
-                if b.data.collapsed {
-                    "Expand section"
-                } else {
-                    "Collapse section"
-                },
-                if b.data.collapsed {
-                    &g::CHEVRON_RIGHT
-                } else {
-                    &g::CHEVRON_DOWN
-                },
-                p,
-                move |s, tx| s.toggle_block(&id, tx),
-            )
-            .w(22.0)
-            .px(0.0)
-            .expanded(!b.data.collapsed)
-        }
-        Kind::Todo => {
+        _ if kind == Kind::Todo || progress.1 > 0 => {
             let id = b.data.id.clone();
             row()
                 .key(format!("check-{id}"))
@@ -321,26 +327,19 @@ fn block(
             .center_y()
             .child(prefix)
             .child(input);
-        if kind.is_toggle() {
-            let children = &s.blocks[index + 1..s.block_end(index)];
-            let tasks: Vec<_> = children
-                .iter()
-                .filter(|b| b.data.kind == Kind::Todo)
-                .collect();
-            let hint = if !tasks.is_empty() {
-                format!(
-                    "{}/{} tasks",
-                    tasks.iter().filter(|b| b.data.checked).count(),
-                    tasks.len()
-                )
-            } else if !children.is_empty() {
-                format!("{} items", children.len())
-            } else {
-                String::new()
-            };
-            if !hint.is_empty() {
-                content = content.child(label(hint, 10.0, p.faint));
-            }
+        if progress.1 > 0 {
+            content = content.child(
+                label(format!("{}/{}", progress.0, progress.1), 10.0, p.faint).label(format!(
+                    "{} of {} subtasks completed",
+                    progress.0, progress.1
+                )),
+            );
+        } else if kind.is_toggle() && has_children {
+            content = content.child(label(
+                format!("{} items", s.block_end(index) - index - 1),
+                10.0,
+                p.faint,
+            ));
         }
         if kind == Kind::Callout {
             content = content.padding(14.0).radius(6.0).fill(p.tint);
@@ -358,6 +357,7 @@ fn block(
     let dragging = s.block_drag.source() == Some(b.data.id.as_str());
     let before = s.block_drag.target() == Some(&DropPosition::Before(b.data.id.clone()));
     let after = after_marker == Some(b.data.id.as_str());
+    let inside = s.block_drag.target() == Some(&DropPosition::Inside(b.data.id.clone()));
     let marker = || {
         el().key("block-drop-indicator")
             .w_full()
@@ -381,6 +381,31 @@ fn block(
     if after {
         after_zone = after_zone.child(marker());
     }
+    let can_nest = s.can_nest_into(index);
+    let inside_zone = col()
+        .key(format!("drop-inside-{}", b.data.id))
+        .w_full()
+        .grow(0.3)
+        .min_h(0.0);
+    if inside {
+        after_zone = after_zone.child(
+            row()
+                .w_full()
+                .pl(74.0 + (b.data.indent as f32 + 1.0) * 18.0)
+                .child(marker()),
+        );
+    }
+    let drop_zones = col()
+        .absolute(0.0, 0.0)
+        .w_full()
+        .h_full()
+        .child(before_zone.grow(if can_nest { 0.35 } else { 1.0 }));
+    let drop_zones = if can_nest {
+        drop_zones.child(inside_zone)
+    } else {
+        drop_zones
+    };
+    let drop_zones = drop_zones.child(after_zone.grow(if can_nest { 0.35 } else { 1.0 }));
     let level = match kind {
         Kind::Heading1 | Kind::ToggleHeading1 => Some(2),
         Kind::Heading2 | Kind::ToggleHeading2 => Some(3),
@@ -403,11 +428,13 @@ fn block(
         .gap(3.0)
         .py(4.0)
         .radius(4.0)
-        .fill(if dragging || s.selection.ids.contains(&b.data.id) {
-            p.tint
-        } else {
-            rune::Color::TRANSPARENT
-        })
+        .fill(
+            if dragging || inside || s.selection.ids.contains(&b.data.id) {
+                p.tint
+            } else {
+                rune::Color::TRANSPARENT
+            },
+        )
         .center_y()
         .child(
             super::icons::control(
@@ -433,7 +460,7 @@ fn block(
             .w(20.0)
             .px(0.0)
             .label("Move block or open its menu")
-            .help("Drag to move · Click for menu · Escape to cancel")
+            .help("Drag between items to move · Drop on an item to nest · Click for menu")
             .cursor(if dragging {
                 Cursor::Grabbing
             } else {
@@ -452,16 +479,10 @@ fn block(
             }),
         )
         .child(el().w(b.data.indent.min(6) as f32 * 18.0))
+        .child(disclosure)
         .child(content)
-        // No handlers: these transparent halves leave editing and selection to the inputs.
-        .child(
-            col()
-                .absolute(0.0, 0.0)
-                .w_full()
-                .h_full()
-                .child(before_zone)
-                .child(after_zone),
-        )
+        // Transparent zones leave editing and selection to the inputs.
+        .child(drop_zones)
 }
 
 pub(super) fn view(s: &State, p: Palette) -> El {
@@ -469,6 +490,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
     let numbers = folio::outline::numbers(s.blocks.iter().map(|b| &b.data));
     let ends = folio::outline::subtree_ends(s.blocks.iter().map(|b| &b.data));
     let visible = s.visible_blocks();
+    let progress = folio::outline::task_progress(s.blocks.iter().map(|b| &b.data));
     let after_marker = if let Some(DropPosition::After(id)) = s.block_drag.target() {
         s.blocks
             .iter()
@@ -482,14 +504,22 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         if !visible[index] {
             continue;
         }
-        blocks = blocks.child(block(s, b, index, numbers[index], after_marker, p));
+        blocks = blocks.child(block(
+            s,
+            b,
+            index,
+            numbers[index],
+            progress[index],
+            after_marker,
+            p,
+        ));
         if b.data.kind.is_toggle()
             && !b.data.collapsed
             && ends[index] == index + 1
             && b.data.indent < folio::outline::MAX_INDENT
         {
             let id = b.data.id.clone();
-            blocks = blocks.child(row().pl(52.0 + (b.data.indent as f32 + 1.0) * 18.0).child(
+            blocks = blocks.child(row().pl(74.0 + (b.data.indent as f32 + 1.0) * 18.0).child(
                 super::icons::action(
                     format!("toggle-add-{id}"),
                     "Add content to this section",

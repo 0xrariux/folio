@@ -299,11 +299,18 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
                     .min_w(0.0)
                     .truncate(),
                 )
-                .child(if count > 1 {
-                    label(format!("{count} blocks"), 10.0, p.faint)
-                } else {
-                    el()
-                }),
+                .child(
+                    if matches!(
+                        state.block_drag.target(),
+                        Some(crate::block_drag::DropPosition::Inside(_))
+                    ) {
+                        label("Nest inside", 10.0, p.accent)
+                    } else if count > 1 {
+                        label(format!("{count} blocks"), 10.0, p.faint)
+                    } else {
+                        el()
+                    },
+                ),
         );
     }
     if let Some(drag) = &state.workspace.entity_drag
