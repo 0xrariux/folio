@@ -243,12 +243,12 @@ impl State {
                 self.dark = prefs.dark;
                 self.workspace.preferences = prefs;
                 self.workspace.preferences_loaded = true;
-                if let Some(id) = self
-                    .workspace
-                    .preferences
-                    .last_page
-                    .clone()
-                    .filter(|id| self.pages.iter().any(|p| p.id == *id && !p.archived))
+                if !self.overview.open
+                    && let Some(id) = self.workspace.preferences.last_page.clone().filter(|id| {
+                        self.pages
+                            .iter()
+                            .any(|p| p.id == *id && !p.archived && !self.legacy_overview(p))
+                    })
                 {
                     self.select(&id);
                 }

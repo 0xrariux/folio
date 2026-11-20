@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.15.0
+
+- Open Overview as a built-in shortcut view without creating a notebook page.
+  Highlight the shortcut while active and return directly to the previous note.
+- Summarize ordinary notes, leaf tasks, completion and bullet/numbered list items,
+  including folded content. Search, filter tasks, and open each item at its source.
+- Keep database summaries separate from note checklists. Exclude archived and
+  PIN-protected content, and relock protected notes when entering Overview.
+- Hide legacy blank auto-created Overview pages from the regular tree without
+  deleting them; sidebar search still finds them. Custom dashboards remain visible.
+
 ## 0.14.2
 
 - Add **Add a task** below the note to create a standalone checkbox with no

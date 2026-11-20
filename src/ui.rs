@@ -8,6 +8,7 @@ mod embeds;
 mod field_config;
 mod icons;
 mod library;
+mod overview;
 mod page;
 mod panels;
 mod saved_views;
@@ -132,6 +133,8 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
             Panel::Library | Panel::ModuleReview | Panel::ModuleConfirm
         ) {
             library::view(state, p)
+        } else if state.overview.open {
+            overview::view(state, p)
         } else {
             page::view(state, p, page_width)
         });
@@ -189,7 +192,9 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
             .child(action("save-status", status, p, |s, _| s.retry()))
             .child(el().grow(1.0))
             .child(label(
-                if state
+                if state.overview.open {
+                    "Your notebook at a glance"
+                } else if state
                     .current()
                     .is_some_and(|p| p.collection.is_some() || p.dashboard.is_some())
                 {

@@ -10,21 +10,29 @@ use rune::TextEdit;
 use std::collections::HashSet;
 impl State {
     pub fn select(&mut self, id: &str) {
+        if !self.pages.iter().any(|p| p.id == id) {
+            return;
+        }
+        self.overview.open = false;
         if self.selected.as_deref() == Some(id) {
             self.panel = Panel::Closed;
             return;
         }
-        if !self.pages.iter().any(|p| p.id == id) {
-            return;
+        if self
+            .history
+            .get(self.history_at)
+            .is_none_or(|current| current != id)
+        {
+            if !self.history.is_empty() {
+                self.history.truncate(self.history_at + 1);
+            }
+            self.history.push(id.into());
+            self.history_at = self.history.len() - 1;
         }
-        if !self.history.is_empty() {
-            self.history.truncate(self.history_at + 1);
-        }
-        self.history.push(id.into());
-        self.history_at = self.history.len() - 1;
         self.load_page(id);
     }
     fn load_page(&mut self, id: &str) {
+        self.overview.open = false;
         if let Some(previous) = self
             .selected
             .clone()

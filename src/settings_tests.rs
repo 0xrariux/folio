@@ -153,6 +153,30 @@ fn settings_encrypt_unlock_and_relock_notes_through_the_real_worker_and_restart(
     tap(&mut rt, "unlock-page");
     submit(&mut rt, PIN, false);
     wait(&mut rt, |s| s.settings.unlocked.contains(&id));
+    let count = rt.state.pages.len();
+    tap(&mut rt, "open-dashboard");
+    wait(&mut rt, |s| {
+        !s.settings.busy && !s.settings.unlocked.contains(&id)
+    });
+    assert!(rt.state.overview.open);
+    assert!(rt.find("notebook-overview").is_some());
+    assert_eq!(rt.state.pages.len(), count);
+    assert!(
+        !rt.accessibility_json()
+            .to_string()
+            .contains("contenu-intime-xyz")
+    );
+    assert!(
+        !rt.state
+            .notebook_overview()
+            .notes
+            .iter()
+            .any(|p| p.id == id)
+    );
+    tap(&mut rt, "all-pages");
+    tap(&mut rt, "unlock-page");
+    submit(&mut rt, PIN, false);
+    wait(&mut rt, |s| s.settings.unlocked.contains(&id));
     rt.update(|s, _| s.create(false));
     rt.frame(0.);
     assert!(

@@ -1,6 +1,6 @@
 # Folio guide
 
-Folio 0.13 is a local native notebook built with Rust, Rune and Turso.
+Folio 0.15 is a local native notebook built with Rust, Rune and Turso.
 The interface, templates and documentation are in English.
 [Back to README](../README.md)
 
@@ -190,8 +190,14 @@ cycles and division by zero display an error. CSV exports include computed value
 
 ## Overview, dashboards and calendar
 
-**Overview** summarizes collections across the notebook. A dashboard page can
-choose several collections and its own filters, independently of source views.
+**Overview** is a built-in shortcut view; opening it never creates a page.
+It summarizes notes, leaf tasks, completion, and bullet/numbered list items,
+including folded content. Search or filter tasks, then click an item to open its
+source. Archived and PIN-protected content is excluded. Database summaries appear
+separately when databases exist. Empty legacy auto-created Overview pages are
+hidden from the regular tree, retained in storage, and available through sidebar search.
+
+A **Project dashboard** page chooses collections and its own filters independently of source views.
 Widgets show progress, statuses, deadlines, numeric totals and checkbox counts;
 chart segments and records provide navigation into the underlying data.
 A new database instead creates a collection that holds its own records.

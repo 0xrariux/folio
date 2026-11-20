@@ -99,6 +99,7 @@ impl State {
             Mode::Commands => {
                 for (key, title) in [
                     ("new", "New page"),
+                    ("overview", "Open Overview"),
                     ("base", "New database"),
                     ("templates", "Choose a template"),
                     ("theme", "Switch theme"),
@@ -270,6 +271,10 @@ impl State {
                         tx.focus("page-title", false);
                     }
                     "templates" => self.panel = Panel::Templates,
+                    "overview" => {
+                        self.open_dashboard();
+                        tx.scroll_to_y("document-scroll", 0.0);
+                    }
                     "theme" => self.switch_theme(),
                     "backup" => self.backup_dialog(tx),
                     "restore" => self.restore_dialog(tx),

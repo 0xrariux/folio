@@ -1,32 +1,12 @@
-use crate::state::{Panel, Phase, State};
+use crate::state::{Panel, State};
 use folio::{
     collection::{Priority, Status},
-    dashboard::{DashboardConfig, Deadline, Scope, TrackingFilter},
+    dashboard::{Deadline, Scope, TrackingFilter},
     model::{Page, now},
 };
 use rune_kit::search::Fold;
 
 impl State {
-    pub fn open_dashboard(&mut self) {
-        if !matches!(self.phase, Phase::Ready) {
-            return;
-        }
-        if let Some(id) = self
-            .pages
-            .iter()
-            .find(|p| p.dashboard.is_some() && !p.archived)
-            .map(|p| p.id.clone())
-        {
-            self.select(&id);
-            return;
-        }
-        let mut page = Page::new(None);
-        page.title = "Overview".into();
-        page.emoji = "📊".into();
-        page.wide = true;
-        page.dashboard = Some(DashboardConfig::default());
-        self.add_page(page);
-    }
     pub fn tracking_sources(&self) -> Vec<&Page> {
         let Some(current) = self.current() else {
             return Vec::new();

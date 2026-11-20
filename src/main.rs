@@ -13,6 +13,7 @@ mod lists;
 mod module_library;
 mod navigation;
 mod notebook;
+mod overview;
 mod saved_views;
 mod selection;
 mod settings;
@@ -322,6 +323,8 @@ mod dashboard_tests;
 mod feature_tests;
 #[cfg(test)]
 mod list_tests;
+#[cfg(test)]
+mod overview_tests;
 #[cfg(test)]
 mod tests;
 #[cfg(test)]

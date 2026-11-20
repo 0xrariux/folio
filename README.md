@@ -27,6 +27,7 @@ the everyday interface focused.
 |---|---|
 | Write and structure ideas | Rich text, headings, collapsible nested lists, tasks, code, images, and files. Drag points to nest them; parent steps complete with their subtasks. |
 | Organize a project | Collections with table, Kanban, calendar, and dashboard views over the same records. Each record is also a page for notes. |
+| See the bigger picture | A built-in Overview brings together your notes, checklists, and list items, with search and links to their source. |
 | Connect your knowledge | Page links, mentions, backlinks, a table of contents, and a global command palette. |
 | Build your own workflow | Custom properties, saved views, filters, relations, rollups, and numeric formulas. Embed a collection view inside a note. |
 | Make it feel like yours | Light and dark themes, 105 page symbols, eight icon colors, and sidebar shortcuts you can reorder, hide, and restore. |

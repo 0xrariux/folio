@@ -274,6 +274,7 @@ impl State {
                 self.panel = Panel::Settings;
             }
             Outcome::Locked => {
+                self.overview = Default::default();
                 self.library = Default::default();
                 self.pages.clear();
                 self.selected = None;

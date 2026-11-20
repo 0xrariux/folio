@@ -1,0 +1,7 @@
+{
+  "events": [
+    { "t": 0.1, "type": "tap", "key": "open-dashboard" },
+    { "t": 0.25, "type": "tap", "key": "overview-search" },
+    { "t": 0.4, "type": "type", "text": "Outline" }
+  ]
+}

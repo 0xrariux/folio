@@ -1,6 +1,6 @@
 # Folio feature status
 
-Current scope: Folio 0.14. This describes Folio's implemented behavior, rather
+Current scope: Folio 0.15. This describes Folio's implemented behavior, rather
 than claiming complete feature or performance parity with Notion. Earlier
 iterations are recorded in the [changelog](CHANGELOG.md).
 
@@ -8,6 +8,7 @@ iterations are recorded in the [changelog](CHANGELOG.md).
 |---|---|---|
 | Editor | 20 block kinds, rich text, collapsible nested lists, drag nesting, task completion rollups, multiple selection and subtree operations | Block columns and advanced typography |
 | Organization | Pages/subpages, favorites, archives, confirmed deletion, drag order/nesting | Shared spaces and collaboration permissions |
+| Notebook overview | Built-in shortcut, note/task/list summaries, search, task filters and links to source blocks | Customizable overview widgets |
 | Collections | Table, Kanban, Calendar, Dashboard, named views, combined filters and sorting | Gallery, timeline and complex nested filters |
 | Tables | Per-view widths/order/visibility, bulk record edits, virtualized rows | Spreadsheet-style keyboard cell editing |
 | Relations/calculations | Reverse relations, count/completion/sum/remaining rollups, numeric formulas | Full formula language and automations |

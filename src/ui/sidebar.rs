@@ -75,12 +75,17 @@ fn nav(shortcut: SidebarShortcut, s: &State, p: Palette) -> El {
         SidebarShortcut::Favorites => "favorites",
         SidebarShortcut::Archives => "archive-filter",
     };
-    let selected = matches!(
-        (shortcut, s.filter),
-        (SidebarShortcut::AllPages, Filter::All)
-            | (SidebarShortcut::Favorites, Filter::Favorites)
-            | (SidebarShortcut::Archives, Filter::Archive)
-    );
+    let selected = if shortcut == SidebarShortcut::Overview {
+        s.overview.open
+    } else {
+        !s.overview.open
+            && matches!(
+                (shortcut, s.filter),
+                (SidebarShortcut::AllPages, Filter::All)
+                    | (SidebarShortcut::Favorites, Filter::Favorites)
+                    | (SidebarShortcut::Archives, Filter::Archive)
+            )
+    };
     let source = format!("shortcut:{}", shortcut.key());
     let click_id = source.clone();
     let dragging = s
@@ -124,6 +129,9 @@ fn nav(shortcut: SidebarShortcut, s: &State, p: Palette) -> El {
         .on_press_tx(move |s: &mut State, tx| {
             if s.entity_click(&click_id) {
                 return;
+            }
+            if shortcut != SidebarShortcut::Overview && s.overview.open {
+                s.close_overview();
             }
             match shortcut {
                 SidebarShortcut::Overview => {

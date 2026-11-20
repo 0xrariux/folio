@@ -63,6 +63,7 @@ pub struct Pending {
     pub error: Option<String>,
 }
 pub struct State {
+    pub overview: crate::overview::Overview,
     pub library: crate::module_library::Library,
     pub settings: crate::settings::Settings,
     pub workspace: crate::notebook::WorkspaceState,
@@ -97,6 +98,7 @@ pub struct State {
 impl State {
     pub fn new() -> Self {
         Self {
+            overview: Default::default(),
             library: Default::default(),
             settings: crate::settings::Settings::default(),
             workspace: crate::notebook::WorkspaceState::default(),
@@ -330,7 +332,7 @@ impl State {
                 if let Some(id) = self
                     .pages
                     .iter()
-                    .find(|p| !p.archived)
+                    .find(|p| !p.archived && !self.legacy_overview(p))
                     .map(|p| p.id.clone())
                 {
                     self.select(&id);
@@ -369,7 +371,12 @@ impl State {
         let visible: Vec<_> = self
             .pages
             .iter()
-            .filter(|page| self.visible(page))
+            .filter(|page| {
+                self.visible(page)
+                    && (self.filter == Filter::Archive
+                        || !self.search.text.trim().is_empty()
+                        || !self.legacy_overview(page))
+            })
             .collect();
         if !self.search.text.trim().is_empty() || self.filter != Filter::All {
             return visible.into_iter().map(|p| (p, 0)).collect();
