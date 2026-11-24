@@ -41,9 +41,10 @@ See [Apple's guidance](https://support.apple.com/en-us/102445).
 | Running executable | `folio --release-info`, also embedded in `Contents/Resources/build-info.json` |
 
 The current source pins Rust **1.100.0** and Rune
-`f54cbcfa84d995d339c243a579218f5062c940b5`. Turso stays at **0.8.3**, with
+`3f208ba8cce7693298c5b0e2618623e4a1740434`. Turso is **0.8.4**, with
 its unused optional FTS extension disabled for compiler compatibility; the
-notebook storage contract is unchanged. See [upgrade notes](RUNE_UPDATE.md).
+notebook formats are unchanged. The engine update advances the storage contract
+and requires a manual upgrade from Turso 0.8.3 builds. See [upgrade notes](RUNE_UPDATE.md).
 
 Rune's crate version alone is insufficient: its Git revision and vendor patches
 are part of each build. The build script checks all manifest pins and resolved
@@ -143,7 +144,7 @@ A current process's version must be strictly older. Prereleases, incompatible
 storage contracts and different compatibility levels are refused. Do not relax
 these checks to force an update through. Increase the protocol schema only with
 a planned client migration. The current contract is
-`turso-0.8.3-schema4-notebook7-vault1`: a Turso/encryption/document format change requires
+`turso-0.8.4-schema4-notebook7-vault1`: a Turso/encryption/document format change requires
 explicit compatibility work. Changing this value **blocks** automatic installation;
 it is not itself a database migration. Old clients then need a reviewed manual
 migration/reinstall path. Binary rollback cannot reverse arbitrary database writes.

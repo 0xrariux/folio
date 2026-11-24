@@ -491,6 +491,7 @@ pub(super) fn view(s: &State, p: Palette) -> El {
     let ends = folio::outline::subtree_ends(s.blocks.iter().map(|b| &b.data));
     let visible = s.visible_blocks();
     let progress = folio::outline::task_progress(s.blocks.iter().map(|b| &b.data));
+    let sections = folio::outline::task_sections(s.blocks.iter().map(|b| &b.data));
     let after_marker = if let Some(DropPosition::After(id)) = s.block_drag.target() {
         s.blocks
             .iter()
@@ -500,7 +501,34 @@ pub(super) fn view(s: &State, p: Palette) -> El {
     } else {
         None
     };
-    for (index, b) in s.blocks.iter().enumerate() {
+    for (position, index) in sections.order().enumerate() {
+        if position == sections.active.len() {
+            blocks = blocks.child(end_zone(p)).child(
+                col()
+                    .key("completed-tasks-heading")
+                    .role("heading")
+                    .level(2)
+                    .label(format!("Completed · {}", sections.completed_groups))
+                    .w_full()
+                    .mt(16.0)
+                    .pt(18.0)
+                    .pb(8.0)
+                    .pl(74.0)
+                    .gap(4.0)
+                    .border_sides([1.0, 0.0, 0.0, 0.0], p.line)
+                    .child(label(
+                        format!("Completed · {}", sections.completed_groups),
+                        14.0,
+                        p.muted,
+                    ))
+                    .child(label(
+                        "Uncheck a task to return it to its list.",
+                        11.0,
+                        p.faint,
+                    )),
+            );
+        }
+        let b = &s.blocks[index];
         if !visible[index] {
             continue;
         }
@@ -530,28 +558,33 @@ pub(super) fn view(s: &State, p: Palette) -> El {
             ));
         }
     }
-    blocks.child(
-        col()
-            .key("block-end-zone")
-            .w_full()
-            .h(38.0)
-            .child(
-                row()
-                    .w_full()
-                    .gap(8.0)
-                    .child(
-                        super::icons::action("new-block", "Add a block", &g::PLUS, p, |s, tx| {
-                            s.add_block(None, Kind::Text, true, tx)
-                        })
-                        .justify_start(),
-                    )
-                    .child(
-                        super::icons::action("new-task", "Add a task", &g::CHECK, p, |s, tx| {
-                            s.add_task(tx)
-                        })
-                        .justify_start(),
-                    ),
-            )
-            .child(el().key("drop-end").absolute(0.0, 0.0).w_full().h_full()),
-    )
+    if sections.completed.is_empty() {
+        blocks = blocks.child(end_zone(p));
+    }
+    blocks
+}
+
+fn end_zone(p: Palette) -> El {
+    col()
+        .key("block-end-zone")
+        .w_full()
+        .h(38.0)
+        .child(
+            row()
+                .w_full()
+                .gap(8.0)
+                .child(
+                    super::icons::action("new-block", "Add a block", &g::PLUS, p, |s, tx| {
+                        s.add_block(None, Kind::Text, true, tx)
+                    })
+                    .justify_start(),
+                )
+                .child(
+                    super::icons::action("new-task", "Add a task", &g::CHECK, p, |s, tx| {
+                        s.add_task(tx)
+                    })
+                    .justify_start(),
+                ),
+        )
+        .child(el().key("drop-end").absolute(0.0, 0.0).w_full().h_full())
 }

@@ -1,4 +1,211 @@
-# Rust and Rune upgrade — November 19, 2026
+# Dependency upgrade — November 24, 2026
+
+Folio 0.16.1 pins Rune **`3f208ba8cce7693298c5b0e2618623e4a1740434`**, the official
+`dev` head verified for this update. This advances **306 commits** from
+`4c4abf5d6d2b47892b3b01c519341b943f5cebcf`: **273** added changelog fragments
+and one removed obsolete fragment. The main changelog did not change, so the
+review uses the exact revision's fragments and dependency manifests. Some upstream
+fragment filenames carry November 25 dates; the fetched revision is the pin,
+rather than dates in filenames. The neighboring Rune working tree is unchanged.
+
+## Resolved direct dependencies
+
+| Dependency | Previous | Updated |
+|---|---|---|
+| Rune / Rune Kit | `4c4abf5d` | `3f208ba8` |
+| Turso | 0.8.3 | 0.8.4 |
+| Reqwest | 0.12.28 | 0.13.5 |
+| Argon2 | 0.5.3 | 0.6.0 |
+| ChaCha20Poly1305 | 0.10.1 | 0.11.0 |
+| OS randomness | Rand Core 0.6.4 / OsRng | Getrandom 0.4.3 |
+| Base64 | 0.22.1 | 0.23.1 |
+| Anyhow | 1.0.104 | 1.0.105 |
+| UUID | 1.29.2 | 1.29.3 |
+| Zeroize | 1.9.1 | 1.9.2 |
+
+Rust **1.100.0** remains the verified stable compiler. Ring, Libc, Semver, Chrono,
+Serde, Serde JSON, Tokio and Tempfile were already at the latest stable versions
+reported by their official registries. `cargo update` refreshes compatible
+transitive versions too, including wgpu 30.0.2; Rune's patched Naga/wgpu-hal 30.0.1
+remain authoritative through Cargo patches. The fixture producer is not updated.
+
+## Integration changes
+
+- **Rune patches:** add `naga` for WGSL override folding and
+  `accesskit_atspi_common` for flat-tree set sizes alongside the six existing
+  vendor patches. All eight patches and Rune crates resolve from one full Git SHA.
+  Packaging explicitly rejects missing patches and mixed/overridden sources.
+- **Rune behavior:** receive modal focus/entrance fixes, scoped virtual-row
+  reveals, scroll routing, secure-buffer wiping, image ICC conversion, font/layout
+  fixes, and Metal loss/recovery improvements. Keep existing cancellation handlers,
+  secure editors, stable row keys and `orderly_exit`. New optional APIs, including
+  system-tray capture, do not add features to Folio by themselves.
+- **Production CLI:** Rune release builds without `tooling` now leave command-line
+  flags to the application. Folio handles its installer, release-info and backup
+  verification flags before launching Rune, so their behavior is retained.
+- **HTTP:** replace Reqwest's removed `rustls-tls` feature with `rustls`; 0.13 uses
+  the platform certificate verifier and AWS-LC provider. HTTPS-only requests,
+  connection/overall timeouts, response size limits, archive hashes and independent
+  Ed25519 release signatures remain in place.
+- **Crypto:** replace removed `rand_core::OsRng` APIs with fallible
+  `getrandom::fill`, propagate salt/nonce errors, and construct typed nonces from
+  fixed arrays instead of the deprecated slice API. Keep every stored crypto
+  parameter, authenticated-data string and envelope field unchanged.
+- **Storage:** Turso 0.8.4 fixes UPSERT before-images, autocommit rollback and
+  statement savepoints. Set the exact engine pin and update `release.json` to
+  `turso-0.8.4-schema4-notebook7-vault1`. Schema **4**, documents **7**, notebook
+  formats **1/2**, vault **1** and module API **1** stay unchanged. The old updater
+  intentionally refuses the new engine contract: use the
+  [manual upgrade/recovery procedure](DATA_SAFETY.md#turso-084-and-crypto-dependency-upgrade).
+
+## Validation
+
+Required gates:
+
+```sh
+cargo fmt --package folio -- --check
+cargo check --locked --all-targets
+cargo test --locked --all-targets
+cargo clippy --locked --all-targets -- -D warnings
+python3 -m unittest discover -s scripts/tests -v
+python3 scripts/build-app.py --development --verify-storage
+```
+
+All gates passed at the pinned revision:
+
+- **198 Rust tests** pass across all targets; two historical fixture-producer
+  helpers remain intentionally ignored.
+- **10 Python tests** pass, including rejection of missing vendor patches and
+  mismatched Rune sources.
+- Formatting, compilation and Clippy with warnings denied pass.
+- The development app bundle passes **26 production-profile storage and module
+  tests**, reports Folio 0.16.1 / Rune `3f208ba8` / Turso 0.8.4, and passes strict
+  code-signature verification.
+- Eight Metal-validated captures cover Library and Settings in light/dark themes
+  at 1680 × 1000 and 920 × 620, without validation errors. Runtime regression
+  tests also resize both pages from two columns to one and back, checking available
+  width, reachable controls and the fixed Settings header after scrolling.
+- Five additional Metal-validated captures cover Aurum on Settings, Library and
+  completed task groups, the small-window appearance controls, and restoration
+  of the original Sage palette. A worker-backed test verifies that palette
+  selection survives restarts and light/dark switches; the notebook roundtrip
+  also preserves the selected palette.
+- The final Settings design has four distinct pages with a fixed navigation bar.
+  Twelve further Metal-validated captures cover all pages, all six dark palettes,
+  light mode and the small-window gallery before/after scrolling, without errors.
+  Runtime tests cover page isolation, full pane width, fixed navigation across
+  resizes, Enter/arrow/Home navigation and all six saved palette choices. Contrast
+  tests check primary/secondary text and accents at 4.5:1 on all dark surfaces.
+- Five captures validate Vanille on Appearance at two window sizes, Library and
+  notes, plus restoration of the original light palette. Vanille's text and
+  accents meet the same contrast checks. Worker and notebook roundtrip tests
+  preserve light palettes across restarts, dark/light switches and backups.
+
+All profiles are temporary and synthetic; no personal notebook or historical
+fixture is modified. Library fills the available pane with responsive columns and
+cards; Settings uses separate pages and a responsive palette gallery. These changes do not alter
+the document format or module permissions. The optional `dark_palette` preference
+defaults to Aurum when absent and is omitted when saving that default; other
+palettes are stored explicitly when selected. Palette research and official sources
+are documented in [Settings](SETTINGS.md).
+The optional `light_palette` preference similarly defaults to Original and is
+omitted when saving that default; selecting Vanille persists it independently of
+the dark palette. Existing notebook fixtures remain unchanged.
+
+## Official sources
+
+- [Rune comparison at the exact pins](https://github.com/anomalyco/rune/compare/4c4abf5d6d2b47892b3b01c519341b943f5cebcf...3f208ba8cce7693298c5b0e2618623e4a1740434)
+- [Rune changelog fragments](https://github.com/anomalyco/rune/tree/3f208ba8cce7693298c5b0e2618623e4a1740434/changelog/unreleased)
+- [Rune vendor definitions](https://github.com/anomalyco/rune/blob/3f208ba8cce7693298c5b0e2618623e4a1740434/Cargo.toml)
+- [Turso 0.8.4](https://github.com/tursodatabase/turso/releases/tag/v0.8.4)
+- [Reqwest 0.13.5 and 0.13 migration](https://github.com/seanmonstar/reqwest/blob/v0.13.5/CHANGELOG.md)
+- [Argon2 0.6 changelog](https://github.com/RustCrypto/password-hashes/blob/argon2-v0.6.0/argon2/CHANGELOG.md)
+- [ChaCha20Poly1305 0.11 changelog](https://github.com/RustCrypto/AEADs/blob/chacha20poly1305-v0.11.0/chacha20poly1305/CHANGELOG.md)
+- [Base64 0.23 changelog](https://github.com/marshallpierce/rust-base64/blob/v0.23.1/RELEASE-NOTES.md)
+- [Zeroize 1.9.2 changelog](https://github.com/RustCrypto/utils/blob/zeroize-v1.9.2/zeroize/CHANGELOG.md)
+
+---
+
+# Previous Rune upgrade — November 23, 2026
+
+Folio pins Rune **`4c4abf5d6d2b47892b3b01c519341b943f5cebcf`**, the official
+`dev` head verified on November 23. Rune has no numbered releases; applications
+pin a reviewed Git revision. This advances **309 commits** from
+`f54cbcfa84d995d339c243a579218f5062c940b5` and adds **235 changelog fragments**.
+The main `CHANGELOG.md` is unchanged over this interval; the analysis uses the
+fragments and manifests at the exact new revision.
+
+## Changes affecting Folio
+
+| Area | Upstream change | Folio integration |
+|---|---|---|
+| Dependency sources | Rune's patched `tiny-skia-path` package is renamed `rune-tiny-skia-path` to avoid vendor collisions | Update both direct Rune dependencies and all six application-level patches to the same full revision; regenerate `Cargo.lock` and retain packaging source verification, which also checks the renamed package |
+| macOS bindings | Rune consolidates its Objective-C bindings on `objc2` 0.6 and AppKit/Foundation 0.3 | Resolve the new graph through Cargo; Folio has no direct Objective-C dependency to migrate |
+| Dragging | Held drags receive a cancelled release when their source disappears or a modal opens; completed drags suppress clicks | Keep Folio's cancellation handling and click guards; validate block moves, nesting, selection, undo and sidebar/database drags |
+| Inline links | Clicking `Mark::Link` inside an editor invokes `El::on_link`; full field hit testing is retained | Folio already routes this callback through `follow_reference`; verify navigation and ordinary editing together |
+| Focus and modals | Disabled controls hand focus to a valid neighbour; modals make following siblings inert and reject disabled return targets | Exercise menus, keyboard landmarks and security/Library dialogs with the existing focus keys |
+| Protected inputs | Secure fields omit text-run children, character geometry and selections from accessibility and tooling output | Retain both secure `TextEdit` state and `.secure()` fields; verify PIN/password entry and absence of secret text in the accessibility tree |
+| Rich text and images | Span/index overflow fixes, linear decoration lookups, RTL caret fixes, selection autoscroll and bounded SVG/image decoding | Retain Folio's supported editor APIs; run rich-text, Unicode, attachment and historical document checks |
+| Rendering | Metal device recovery, KVO hook fixes, synchronous Retina scale changes and surface configuration guards | Keep native Metal with the existing macOS 13 minimum; build and inspect synthetic demo captures |
+| Virtual tables | Scoped reveals stay inside their viewport; virtual-row remounting, anchors and reused paths are corrected | Keep stable row keys and mounted-only row construction; test offscreen selection, focus and resized tables |
+| Restart tooling | `--window-script` is a new real-window replay flag that must be stripped when forwarding launch arguments | Folio's installer already launches without forwarding any command-line arguments; no restart change is required |
+
+No public API used by Folio requires a source migration. Existing handlers already
+implement the relevant cancellation, secure-input, link and orderly-shutdown
+contracts. New optional math, animated-icon and preview APIs are not enabled by
+this dependency update. Windows, Linux and web changes are upstream improvements,
+not newly qualified Folio platforms.
+
+Rust stays **1.100.0** and Turso stays **0.8.3**. No existing registry dependency
+is upgraded by this lockfile refresh; obsolete Rune-only dependencies disappear.
+SQL schema **4**, documents **7**, notebook formats **1/2**, vault format **1** and
+the signed-release storage contract stay unchanged. Validation uses synthetic
+profiles and the frozen historical/encrypted corpus; it never opens a personal
+notebook or regenerates fixtures.
+
+## Validation
+
+The required gates are:
+
+```sh
+cargo fmt --package folio -- --check
+cargo check --locked --all-targets
+cargo test --locked --all-targets
+cargo clippy --locked --all-targets -- -D warnings
+python3 -m unittest discover -s scripts/tests -v
+python3 scripts/build-app.py --development --verify-storage
+```
+
+Local results on November 23, 2026:
+
+- **181 Rust tests passed** across all targets. Two helper tests remain
+  intentionally ignored; their crash writer is exercised by its parent test.
+- **9 Python tests passed**, including exact Rune/vendor provenance checks.
+- Locked all-target checking, project formatting and Clippy with `-D warnings`
+  passed.
+- **26 production-profile tests passed** (18 historical/data-safety and 8 module
+  lifecycle tests), followed by successful `dist/Folio.app` packaging and ad-hoc
+  signature verification.
+- Four offscreen demo captures completed with `MTL_DEBUG_LAYER=1` and no Metal
+  validation errors: dark table, light table after window/column resizing, active
+  nested block drag, and Overview with search at the 920 × 620 minimum size.
+  The light table, drag and Overview images were visually inspected. Captures
+  and tree dumps are local ignored artifacts under `artifacts/rune-update-*`.
+
+These captures use the debug build's tooling; the bundle uses the production
+release profile. They do not exercise moving a real window between displays,
+forcing GPU loss, actual VoiceOver, or other operating systems. No runtime
+performance improvement is claimed from upstream benchmark results.
+
+## Sources
+
+- [Exact Rune comparison](https://github.com/anomalyco/rune/compare/f54cbcfa84d995d339c243a579218f5062c940b5...4c4abf5d6d2b47892b3b01c519341b943f5cebcf)
+- [Changelog fragments at the new pin](https://github.com/anomalyco/rune/tree/4c4abf5d6d2b47892b3b01c519341b943f5cebcf/changelog/unreleased)
+- [Dependency and vendor definitions](https://github.com/anomalyco/rune/blob/4c4abf5d6d2b47892b3b01c519341b943f5cebcf/Cargo.toml)
+
+---
+
+# Previous Rust and Rune upgrade — November 19, 2026
 
 Folio 0.13.1 pins **Rust 1.100.0** and Rune
 `f54cbcfa84d995d339c243a579218f5062c940b5` (the verified `dev` head on November 19).

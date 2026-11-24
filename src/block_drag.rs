@@ -229,9 +229,11 @@ impl State {
         } else {
             key.and_then(|key| {
                 if key == "drop-end" {
-                    self.blocks
-                        .iter()
-                        .rfind(|b| b.data.indent == 0)
+                    folio::outline::task_sections(self.blocks.iter().map(|b| &b.data))
+                        .active
+                        .into_iter()
+                        .rfind(|&i| self.blocks[i].data.indent == 0)
+                        .and_then(|i| self.blocks.get(i))
                         .or_else(|| self.blocks.last())
                         .map(|b| DropPosition::After(b.data.id.clone()))
                 } else if let Some(id) = key.strip_prefix("drop-before-") {

@@ -14,6 +14,10 @@ import tempfile
 import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
+RUNE_PATCHES = {
+    "accesskit_atspi_common", "accesskit_macos", "accesskit_windows", "naga",
+    "parley_engine", "sctk-adwaita", "wgpu-hal", "winit",
+}
 
 
 def run(*args, **kwargs):
@@ -29,8 +33,11 @@ def rune_checkout(metadata, manifest, pin):
     if not re.fullmatch(r"[0-9a-f]{40}", pin):
         raise ValueError("Rune requires a full reviewed Git revision")
     repository = "https://github.com/anomalyco/rune.git"
+    patches = manifest.get("patch", {}).get("crates-io", {})
+    if missing := RUNE_PATCHES.difference(patches):
+        raise ValueError(f"Missing Rune vendor patches: {', '.join(sorted(missing))}")
     specs = {name: manifest["dependencies"][name] for name in ["rune", "rune-kit"]}
-    specs.update(manifest["patch"]["crates-io"])
+    specs.update(patches)
     expected = f"git+{repository}?rev={pin}#{pin}"
     for name, spec in specs.items():
         if not isinstance(spec, dict) or spec.get("git") != repository or spec.get("rev") != pin:

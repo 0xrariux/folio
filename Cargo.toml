@@ -1,6 +1,6 @@
 [package]
 name = "folio"
-version = "0.15.0"
+version = "0.16.1"
 edition = "2024"
 default-run = "folio"
 license = "MIT"
@@ -10,37 +10,39 @@ description = "A small native workspace for your notes, built with Rune and Turs
 tooling = ["rune/tooling"]
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.105"
 ring = "0.17.14"
 libc = "0.2"
-argon2 = "0.5.3"
-chacha20poly1305 = "0.10.1"
-rand_core = { version = "0.6.4", features = ["getrandom"] }
-zeroize = "1.9"
+argon2 = "0.6.0"
+chacha20poly1305 = "0.11.0"
+getrandom = { version = "0.4.3", features = ["std"] }
+zeroize = "1.9.2"
 semver = "1.0.28"
-reqwest = { version = "0.12.28", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+reqwest = { version = "0.13.5", default-features = false, features = ["blocking", "json", "rustls"] }
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
-rune = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5", features = ["native-file-dialog"] }
-rune-kit = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5" }
+rune = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434", features = ["native-file-dialog"] }
+rune-kit = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tokio = { version = "1", features = ["rt", "time"] }
 # Folio searches its documents directly; it does not use Turso FTS indexes.
-# Turso 0.8.3's optional FTS allocator shim conflicts with Rust 1.100 Vec::new_in.
-turso = { version = "=0.8.3", default-features = false, features = ["mimalloc"] }
-uuid = { version = "1", features = ["v4", "serde"] }
+# Keep unused optional FTS disabled; encryption is provided by the SDK.
+turso = { version = "=0.8.4", default-features = false, features = ["mimalloc"] }
+uuid = { version = "1.29.3", features = ["v4", "serde"] }
 tempfile = "3"
-base64 = "0.22"
+base64 = "0.23.1"
 
 # Cargo only applies patches declared by the application workspace.
 # Keep every Rune crate and vendor patch at the revision in folio-update.json.
 [patch.crates-io]
-accesskit_macos = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5" }
-accesskit_windows = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5" }
-parley_engine = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5" }
-sctk-adwaita = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5" }
-wgpu-hal = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5" }
-winit = { git = "https://github.com/anomalyco/rune.git", rev = "f54cbcfa84d995d339c243a579218f5062c940b5" }
+naga = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
+accesskit_atspi_common = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
+accesskit_macos = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
+accesskit_windows = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
+parley_engine = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
+sctk-adwaita = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
+wgpu-hal = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
+winit = { git = "https://github.com/anomalyco/rune.git", rev = "3f208ba8cce7693298c5b0e2618623e4a1740434" }
 
 [profile.dev]
 debug = 1

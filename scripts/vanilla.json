@@ -1,0 +1,8 @@
+{
+  "events": [
+    { "t": 0.1, "type": "tap", "key": "settings" },
+    { "t": 0.25, "type": "tap", "key": "settings-nav-appearance" },
+    { "t": 0.4, "type": "tap", "key": "settings-theme-light" },
+    { "t": 0.65, "type": "tap", "key": "settings-light-palette-vanilla" }
+  ]
+}

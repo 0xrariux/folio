@@ -8,6 +8,7 @@ mod embeds;
 mod field_config;
 mod icons;
 mod library;
+mod management;
 mod overview;
 mod page;
 mod panels;
@@ -16,10 +17,13 @@ mod selection;
 mod settings;
 mod sidebar;
 mod table;
+#[cfg(test)]
+mod theme_tests;
 mod workspace;
 
 use crate::state::{Panel, Phase, State};
 use folio::icons::controls as g;
+use folio::workspace::{DarkPalette, LightPalette};
 use rune::{Color, Cx, El, TextStyle, col, el, row, text};
 
 #[derive(Clone, Copy)]
@@ -42,8 +46,68 @@ fn rgb(r: u8, g: u8, b: u8) -> Color {
         a: 1.0,
     }
 }
-fn palette(dark: bool) -> Palette {
-    if dark {
+fn palette(dark: bool, dark_palette: DarkPalette) -> Palette {
+    if dark && dark_palette == DarkPalette::Aurum {
+        Palette {
+            dark,
+            bg: rgb(27, 20, 18),
+            sidebar: rgb(20, 15, 13),
+            ink: rgb(244, 229, 205),
+            muted: rgb(190, 166, 148),
+            faint: rgb(157, 132, 115),
+            line: rgb(68, 46, 37),
+            accent: rgb(232, 158, 91),
+            tint: rgb(67, 36, 26),
+        }
+    } else if dark && dark_palette == DarkPalette::Nord {
+        Palette {
+            dark,
+            bg: rgb(46, 52, 64),
+            sidebar: rgb(40, 46, 57),
+            ink: rgb(236, 239, 244),
+            muted: rgb(216, 222, 233),
+            faint: rgb(156, 169, 191),
+            line: rgb(67, 76, 94),
+            accent: rgb(136, 192, 208),
+            tint: rgb(59, 66, 82),
+        }
+    } else if dark && dark_palette == DarkPalette::Mocha {
+        Palette {
+            dark,
+            bg: rgb(30, 30, 46),
+            sidebar: rgb(24, 24, 37),
+            ink: rgb(205, 214, 244),
+            muted: rgb(186, 194, 222),
+            faint: rgb(147, 153, 178),
+            line: rgb(69, 71, 90),
+            accent: rgb(203, 166, 247),
+            tint: rgb(49, 50, 68),
+        }
+    } else if dark && dark_palette == DarkPalette::RosePine {
+        Palette {
+            dark,
+            bg: rgb(25, 23, 36),
+            sidebar: rgb(22, 20, 31),
+            ink: rgb(224, 222, 244),
+            muted: rgb(181, 176, 204),
+            faint: rgb(144, 140, 170),
+            line: rgb(64, 61, 82),
+            accent: rgb(235, 188, 186),
+            tint: rgb(38, 35, 58),
+        }
+    } else if dark && dark_palette == DarkPalette::Gruvbox {
+        Palette {
+            dark,
+            bg: rgb(40, 40, 40),
+            sidebar: rgb(27, 27, 27),
+            ink: rgb(221, 199, 161),
+            muted: rgb(189, 174, 147),
+            faint: rgb(168, 153, 132),
+            line: rgb(80, 73, 69),
+            accent: rgb(216, 166, 87),
+            tint: rgb(51, 62, 52),
+        }
+    } else if dark {
         Palette {
             dark,
             bg: rgb(29, 31, 30),
@@ -69,6 +133,23 @@ fn palette(dark: bool) -> Palette {
         }
     }
 }
+fn light_palette(choice: LightPalette) -> Palette {
+    if choice == LightPalette::Original {
+        return palette(false, DarkPalette::Aurum);
+    }
+    Palette {
+        dark: false,
+        bg: rgb(255, 251, 238),
+        sidebar: rgb(248, 240, 211),
+        ink: rgb(64, 53, 38),
+        muted: rgb(117, 96, 68),
+        faint: rgb(141, 121, 83),
+        line: rgb(231, 217, 177),
+        accent: rgb(133, 90, 31),
+        tint: rgb(243, 226, 169),
+    }
+}
+
 pub(super) fn label(value: impl Into<String>, size: f32, color: Color) -> El {
     text(value).font(TextStyle::new(size, 400.0)).color(color)
 }
@@ -100,7 +181,11 @@ pub(super) fn action(
     button(key, title, p, f).child(label(title, 12.0, p.muted))
 }
 pub fn view(state: &State, cx: &mut Cx<State>) -> El {
-    let p = palette(state.dark);
+    let p = if state.dark {
+        palette(true, state.workspace.preferences.dark_palette)
+    } else {
+        light_palette(state.workspace.preferences.light_palette)
+    };
     if state.settings.locked && !matches!(state.panel, crate::state::Panel::Settings) {
         return settings::locked(state, p);
     }
@@ -127,7 +212,11 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
         .min_w(0.0)
         .min_h(0.0)
         .child(if matches!(state.panel, crate::state::Panel::Settings) {
-            settings::view(state, p)
+            settings::view(
+                state,
+                p,
+                cx.layout_size("main").map_or(952., |size| size[0]),
+            )
         } else if matches!(
             state.panel,
             Panel::Library | Panel::ModuleReview | Panel::ModuleConfirm
@@ -192,7 +281,14 @@ pub fn view(state: &State, cx: &mut Cx<State>) -> El {
             .child(action("save-status", status, p, |s, _| s.retry()))
             .child(el().grow(1.0))
             .child(label(
-                if state.overview.open {
+                if matches!(state.panel, Panel::Settings) {
+                    "Workspace preferences"
+                } else if matches!(
+                    state.panel,
+                    Panel::Library | Panel::ModuleReview | Panel::ModuleConfirm
+                ) {
+                    "Your module library"
+                } else if state.overview.open {
                     "Your notebook at a glance"
                 } else if state
                     .current()

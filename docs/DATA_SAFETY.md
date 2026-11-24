@@ -162,6 +162,37 @@ index to migrate. Encryption features remain enabled through the Turso SDK.
 The production historical/encrypted corpus, full restoration rehearsals and
 module-state tests still gate the build under the new compiler.
 
+## Turso 0.8.4 and crypto dependency upgrade
+
+Folio 0.16.1 advances Turso to **0.8.4** and the signed-release storage contract
+to `turso-0.8.4-schema4-notebook7-vault1`. SQL schema **4**, document format **7**,
+portable notebook formats **1/2** and vault/envelope format **1** are unchanged.
+No SQL shape change or automatic re-encryption is part of this upgrade.
+
+Argon2 0.6 retains Argon2id version 0x13, 65,536 KiB memory, three passes,
+one lane and a 32-byte output. ChaCha20Poly1305 0.11 retains XChaCha20-Poly1305,
+24-byte nonces, the existing authenticated-data strings and Base64 encoding.
+Getrandom 0.4.3 obtains salts/nonces directly from the OS and propagates failure
+before producing an encrypted value. The old encrypted corpus remains immutable.
+
+The manual upgrade procedure is:
+
+1. Save pending edits, create a full portable backup with the old client, and
+   verify it by restoration before closing every Folio window. Keep an independent
+   copy of the old profile, vault configuration, attachments and any WAL together.
+2. Install the reviewed new bundle manually. The old signed updater must reject
+   the different storage contract; do not weaken that check or forge a matching one.
+3. Opening an existing profile uses the existing raw recovery snapshot and private
+   copy preflight before Turso touches the live database. The full frozen corpus,
+   encrypted/PIN backups, restore/reopen and process-kill WAL tests gate the build.
+4. If recovery is required, preserve the failed/new profile and restore the
+   pre-upgrade backup into an isolated compatible profile. Replacing the binary
+   alone is not a database rollback.
+
+The historical fixture producer stays at Turso 0.7.2; the encrypted database and
+portable backup written with 0.8.3 and the old crypto libraries remain unchanged.
+See [upgrade evidence](RUNE_UPDATE.md).
+
 ## Limits and release discipline
 
 This is a tested recovery strategy, not a guarantee against every hardware fault,

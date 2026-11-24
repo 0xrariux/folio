@@ -42,6 +42,7 @@ fn setup(state: &mut State, wake: rune::Waker) {
     state.settings.version_check.set_waker(wake.clone());
     if let Ok(message) = std::env::var("FOLIO_UPDATE_ERROR") {
         state.settings.update_status = message;
+        state.settings.page = settings::SettingsPage::Updates;
         state.panel = state::Panel::Settings;
     }
     if !state.demo {
@@ -318,11 +319,15 @@ mod block_drag_tests;
 #[cfg(test)]
 mod collection_tests;
 #[cfg(test)]
+mod completed_tasks_tests;
+#[cfg(test)]
 mod dashboard_tests;
 #[cfg(test)]
 mod feature_tests;
 #[cfg(test)]
 mod list_tests;
+#[cfg(test)]
+mod management_layout_tests;
 #[cfg(test)]
 mod overview_tests;
 #[cfg(test)]

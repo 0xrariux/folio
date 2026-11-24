@@ -1,6 +1,6 @@
 # Folio guide
 
-Folio 0.15 is a local native notebook built with Rust, Rune and Turso.
+Folio 0.16 is a local native notebook built with Rust, Rune and Turso.
 The interface, templates and documentation are in English.
 [Back to README](../README.md)
 
@@ -20,7 +20,7 @@ cargo run --locked
 ```
 
 `rust-toolchain.toml` selects Rust 1.100.0. `Cargo.lock` resolves published
-libraries, including Turso 0.8.3. Cargo downloads Rune and its vendor patches at the full Git SHA recorded in
+libraries, including Turso 0.8.4. Cargo downloads Rune and its vendor patches at the full Git SHA recorded in
 `Cargo.toml` and `folio-update.json`; it does not use a neighboring Rune checkout.
 The first compilation can take several minutes.
 
@@ -118,6 +118,14 @@ An item containing tasks shows its completion and checks itself when every leaf
 task is complete, including tasks inside collapsed groups. Reopening a child or
 adding a new subtask reopens the parent. Clicking a parent's checkbox checks or
 unchecks its whole subtree in one undo step; unrelated tasks remain unchanged.
+
+Fully completed tasks move into **Completed** below the note, with a count of
+completed entities. A nested group moves only when all its leaf tasks are done;
+checked children stay with an unfinished parent. Folded descendants and any
+supporting content stay with their group. Uncheck a task to return the group to
+its original place, or use Undo. Adding an unfinished subtask reopens the group.
+**Add a task** stays above Completed. This grouping is a view of the saved note:
+the original order, identities, indentation, backups and exports are preserved.
 
 At the beginning of an empty text block, type a prefix followed by a space:
 

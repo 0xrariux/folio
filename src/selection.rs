@@ -35,12 +35,17 @@ impl State {
                 self.blocks.iter().position(|b| b.data.id == id),
             ) {
                 let visible = self.visible_blocks();
-                self.selection.ids = self.blocks[a.min(b)..=a.max(b)]
-                    .iter()
-                    .enumerate()
-                    .filter(|(i, _)| visible[a.min(b) + i])
-                    .map(|(_, b)| b.data.id.clone())
-                    .collect();
+                let order = self.block_order();
+                if let (Some(a), Some(b)) = (
+                    order.iter().position(|&i| i == a),
+                    order.iter().position(|&i| i == b),
+                ) {
+                    self.selection.ids = order[a.min(b)..=a.max(b)]
+                        .iter()
+                        .filter(|&&i| visible[i])
+                        .map(|&i| self.blocks[i].data.id.clone())
+                        .collect();
+                }
             }
         } else {
             if self.selection.ids.is_empty() {

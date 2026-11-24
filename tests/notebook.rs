@@ -13,6 +13,19 @@ fn runtime() -> tokio::runtime::Runtime {
 }
 
 #[test]
+fn legacy_preferences_get_aurum_without_rewriting_their_json_shape() {
+    let old = serde_json::json!({"dark": true, "sidebar_width": 248, "last_page": null});
+    let prefs: Preferences = serde_json::from_value(old.clone()).unwrap();
+    assert_eq!(prefs.dark_palette, workspace::DarkPalette::Aurum);
+    let saved = serde_json::to_value(&prefs).unwrap();
+    assert!(saved.get("dark_palette").is_none());
+    assert!(saved.get("light_palette").is_none());
+    for key in ["dark", "sidebar_width", "last_page"] {
+        assert_eq!(saved[key], old[key]);
+    }
+}
+
+#[test]
 fn complete_notebook_roundtrip_keeps_files_history_preferences_order_and_views() {
     let temp = tempfile::tempdir().unwrap();
     let original = temp.path().join("original.db");
@@ -35,6 +48,8 @@ fn complete_notebook_roundtrip_keeps_files_history_preferences_order_and_views()
         store.save(&page).await.unwrap();
         let prefs = Preferences {
             dark: false,
+            dark_palette: workspace::DarkPalette::Sage,
+            light_palette: workspace::LightPalette::Vanilla,
             sidebar_width: 312,
             last_page: Some(page.id.clone()),
             sidebar_shortcuts: vec![

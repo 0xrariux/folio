@@ -77,6 +77,49 @@ pub fn task_totals<'a>(blocks: impl IntoIterator<Item = &'a NoteBlock>) -> (usiz
         })
 }
 
+/// Presentation order only: retain complete outline entities, including folded
+/// descendants and non-task context. A checked child stays with its unfinished
+/// parent. The stored outline remains the source of truth for undo and reopening.
+pub struct TaskSections {
+    pub active: Vec<usize>,
+    pub completed: Vec<usize>,
+    pub completed_groups: usize,
+}
+
+impl TaskSections {
+    pub fn order(&self) -> impl Iterator<Item = usize> + '_ {
+        self.active.iter().chain(&self.completed).copied()
+    }
+}
+
+pub fn task_sections<'a>(blocks: impl IntoIterator<Item = &'a NoteBlock>) -> TaskSections {
+    let blocks: Vec<_> = blocks.into_iter().collect();
+    let ends = subtree_ends(blocks.iter().copied());
+    let progress = task_progress(blocks.iter().copied());
+    let mut sections = TaskSections {
+        active: Vec::new(),
+        completed: Vec::new(),
+        completed_groups: 0,
+    };
+    let mut index = 0;
+    while index < blocks.len() {
+        let (done, total) = progress[index];
+        let completed = if total > 0 {
+            done == total
+        } else {
+            blocks[index].kind == Kind::Todo && blocks[index].checked
+        };
+        if completed {
+            sections.completed.extend(index..ends[index]);
+            sections.completed_groups += 1;
+        } else {
+            sections.active.extend(index..ends[index]);
+        }
+        index = ends[index];
+    }
+    sections
+}
+
 /// A nested list does not reset its parent's sequence. A new sibling parent does.
 pub fn numbers<'a>(blocks: impl IntoIterator<Item = &'a NoteBlock>) -> Vec<u32> {
     let mut counters = [0_u32; MAX_INDENT as usize + 1];

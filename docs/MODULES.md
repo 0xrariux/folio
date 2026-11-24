@@ -8,7 +8,12 @@ automation and AI integrations are not implemented in this first version.
 
 ## Using Library
 
-Open **Library** in the sidebar:
+Open **Library** in the sidebar.
+
+The page uses the full content pane. On wide windows a side panel summarizes
+installed, enabled and retained modules and provides catalog controls. It moves
+below the module list on smaller windows. The page header stays visible while
+the content scrolls.
 
 - **Discover** shows the built-in catalog and imported catalogs. The built-in
   catalog is deliberately empty. **Manage catalogs** imports a local JSON catalog
@@ -119,9 +124,11 @@ Library state from the UI until a successful unlock reloads it.
 SQL schema **4** registers module state as a supported preference. Existing
 schema-3 profiles migrate transactionally after the normal raw recovery snapshot
 and preflight. The document format stays at **7**. An older client refuses schema
-4 rather than dropping module state. The release storage contract changes to
+4 rather than dropping module state. The original module release used storage contract
 `turso-0.8.3-schema4-notebook7-vault1`; schema-3 clients need a reviewed manual
-upgrade rather than bypassing the updater's contract check.
+upgrade rather than bypassing the updater's contract check. Folio 0.16.1 uses
+`turso-0.8.4-schema4-notebook7-vault1` after its engine update; the module API
+and registry format are unchanged. See [dependency compatibility](RUNE_UPDATE.md).
 
 Empty registries keep the existing portable notebook format **1**. Notebooks
 containing module state use format **2**, carrying the full registry. Restore,

@@ -1,0 +1,6 @@
+{
+  "events": [
+    { "t": 0.1, "type": "tap", "key": "settings" },
+    { "t": 0.3, "type": "tap", "key": "settings-nav-appearance" }
+  ]
+}

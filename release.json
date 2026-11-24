@@ -4,6 +4,6 @@
   "bundle_id": "io.github.0xrariux.folio",
   "target": "aarch64-apple-darwin",
   "minimum_macos": "13.0",
-  "storage_contract": "turso-0.8.3-schema4-notebook7-vault1",
+  "storage_contract": "turso-0.8.4-schema4-notebook7-vault1",
   "public_key": "V7WSLnWopeCnHZNznIWXbGCI7fx2F2388jjaAtA0w7k="
 }

@@ -51,6 +51,16 @@ impl State {
         self.dark = !self.dark;
         self.save_preferences();
     }
+    pub fn choose_dark_palette(&mut self, palette: folio::workspace::DarkPalette) {
+        self.workspace.preferences.dark_palette = palette;
+        self.dark = true;
+        self.save_preferences();
+    }
+    pub fn choose_light_palette(&mut self, palette: folio::workspace::LightPalette) {
+        self.workspace.preferences.light_palette = palette;
+        self.dark = false;
+        self.save_preferences();
+    }
     pub fn backup_dialog(&mut self, tx: &mut Tx) {
         if self.workspace.busy {
             return;

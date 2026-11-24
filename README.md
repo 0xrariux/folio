@@ -1,7 +1,7 @@
 # Folio
 
 [![Rust 1.100.0](https://img.shields.io/badge/Rust-1.100.0-3E643C?logo=rust&logoColor=white)](rust-toolchain.toml)
-[![Turso 0.8.3](https://img.shields.io/badge/Turso-0.8.3-2A392C?logo=turso&logoColor=white)](Cargo.toml)
+[![Turso 0.8.4](https://img.shields.io/badge/Turso-0.8.4-2A392C?logo=turso&logoColor=white)](Cargo.toml)
 [![Active development](https://img.shields.io/badge/Status-Active_development-99BD92)](CHANGELOG.md)
 [![MIT license](https://img.shields.io/badge/License-MIT-596356)](LICENSE)
 
@@ -25,7 +25,7 @@ the everyday interface focused.
 
 | What you want to do | What Folio gives you |
 |---|---|
-| Write and structure ideas | Rich text, headings, collapsible nested lists, tasks, code, images, and files. Drag points to nest them; parent steps complete with their subtasks. |
+| Write and structure ideas | Rich text, headings, collapsible nested lists, tasks, code, images, and files. Nest items by dragging; completed task groups move to a separate list and return when unchecked. |
 | Organize a project | Collections with table, Kanban, calendar, and dashboard views over the same records. Each record is also a page for notes. |
 | See the bigger picture | A built-in Overview brings together your notes, checklists, and list items, with search and links to their source. |
 | Connect your knowledge | Page links, mentions, backlinks, a table of contents, and a global command palette. |

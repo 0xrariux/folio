@@ -1,4 +1,4 @@
-use super::{Palette, action, label};
+use super::{Palette, action, label, management as layout};
 use crate::{
     module_library::{Confirmation, Job, Tab},
     state::{Panel, State},
@@ -7,18 +7,151 @@ use folio::{
     icons,
     modules::{self, Action, Candidate, Catalog, Record},
 };
-use rune::{El, ScrollSpec, TextStyle, col, el, row, text_input};
+use rune::{Align, El, ScrollSpec, TextStyle, col, el, row, text_input};
 fn hint(message: impl Into<String>, p: Palette) -> El {
     label(message, 12., p.muted).w_full().wrap()
 }
 fn card(p: Palette) -> El {
+    layout::surface(p)
+}
+fn empty(title: &str, message: &str, p: Palette) -> El {
+    card(p)
+        .key("library-empty")
+        .min_h(300.)
+        .center()
+        .gap(14.)
+        .child(
+            col()
+                .size(64., 64.)
+                .radius(20.)
+                .fill(p.tint)
+                .center()
+                .child(
+                    rune::icon(&icons::PUZZLE, 32.)
+                        .color(p.accent)
+                        .a11y_hidden(),
+                ),
+        )
+        .child(
+            label(title, 20., p.ink)
+                .font(TextStyle::new(20., 600.))
+                .w_full()
+                .wrap()
+                .align(Align::Center),
+        )
+        .child(hint(message, p).max_w(380.).align(Align::Center))
+}
+fn context(s: &State, blocked: bool, p: Palette) -> El {
+    let records = &s.library.registry.records;
+    let installed = records.values().filter(|r| r.installed).count();
+    let enabled = records.values().filter(|r| r.active()).count();
+    let retained = records.values().filter(|r| !r.installed).count();
+    let mut summary = card(p).key("library-summary").child(layout::heading(
+        "Your library",
+        "Your modules at a glance.",
+        &icons::LIBRARY,
+        p,
+    ));
+    for (title, count) in [
+        ("Installed", installed),
+        ("Enabled", enabled),
+        ("Retained", retained),
+    ] {
+        summary = summary.child(
+            row()
+                .w_full()
+                .center_y()
+                .child(label(title, 12., p.muted).grow(1.))
+                .child(layout::badge(
+                    count.to_string(),
+                    title == "Enabled" && count > 0,
+                    p,
+                )),
+        );
+    }
+    let mut sources = card(p)
+        .key("library-sources")
+        .child(layout::heading(
+            "Module sources",
+            "Choose where your modules come from.",
+            &icons::FOLDER,
+            p,
+        ))
+        .child(hint(
+            "Add a local catalog to discover modules, or import a module directly.",
+            p,
+        ))
+        .child(
+            action(
+                "library-catalogs",
+                if s.library.sources {
+                    "Hide catalogs"
+                } else {
+                    "Manage catalogs"
+                },
+                p,
+                |s, _| s.library.sources = !s.library.sources,
+            )
+            .h(34.)
+            .border(1., p.line)
+            .justify_start(),
+        );
+    if s.library.sources {
+        sources = sources.child(hint("Folio Library · built in", p)).child(
+            action("library-add-catalog", "Add catalog…", p, |s, tx| {
+                s.library_import(true, tx)
+            })
+            .h(34.)
+            .fill(p.tint)
+            .disabled(blocked),
+        );
+        for catalog in s.library.registry.catalogs.values() {
+            let id = catalog.id.clone();
+            sources = sources.child(
+                col()
+                    .gap(6.)
+                    .w_full()
+                    .min_w(0.)
+                    .child(hint(&catalog.name, p))
+                    .child(
+                        action(
+                            format!("library-remove-catalog-{}", catalog.id),
+                            "Remove",
+                            p,
+                            move |s, _| {
+                                s.library_job(Job::Apply(Action::RemoveCatalog(id.clone())))
+                            },
+                        )
+                        .disabled(blocked),
+                    ),
+            );
+        }
+    }
     col()
-        .w_full()
-        .padding(16.)
-        .gap(10.)
-        .border(1., p.line)
-        .radius(8.)
-        .fill(p.bg)
+        .key("library-context")
+        .w(260.)
+        .grow(0.8)
+        .min_w(240.)
+        .gap(20.)
+        .child(summary)
+        .child(sources)
+        .child(
+            row()
+                .gap(8.)
+                .center_y()
+                .px(4.)
+                .child(
+                    rune::icon(&icons::controls::LOCK, 13.)
+                        .color(p.faint)
+                        .a11y_hidden(),
+                )
+                .child(
+                    label("Managed in your notebook", 11., p.faint)
+                        .grow(1.)
+                        .min_w(0.)
+                        .wrap(),
+                ),
+        )
 }
 fn unavailable(record: &Record) -> Option<String> {
     let m = match record.metadata() {
@@ -100,7 +233,8 @@ fn available(raw: &serde_json::Value, source: &str, s: &State, p: Palette) -> El
         body = body.child(
             label(description, 12., p.muted)
                 .w_full()
-                .truncate()
+                .wrap()
+                .max_lines(3)
                 .help(description),
         );
     }
@@ -211,36 +345,43 @@ fn installed(id: &str, record: &Record, s: &State, p: Palette) -> El {
 }
 pub(super) fn view(s: &State, p: Palette) -> El {
     let blocked = s.demo || !s.library.loaded || s.library.pending || s.settings.busy;
-    let mut body = col()
-        .w_full()
-        .max_w(960.)
-        .padding(28.)
-        .gap(18.)
-        .child(
-            row()
-                .gap(12.)
-                .center_y()
-                .flex_wrap()
-                .child(
-                    rune::icon(&icons::LIBRARY, 26.)
-                        .color(p.accent)
-                        .a11y_hidden(),
-                )
-                .child(label("Library", 28., p.ink).role("heading").level(1))
-                .child(el().grow(1.))
-                .child(
-                    action("library-add", "Add module…", p, |s, tx| {
-                        s.library_import(false, tx)
-                    })
-                    .fill(p.tint)
-                    .disabled(blocked),
-                )
-                .child(action("library-close", "Back to notes", p, |s, _| {
+    let header = layout::header(
+        "Library",
+        "Discover and manage your notebook's modules.",
+        &icons::LIBRARY,
+        row()
+            .gap(8.)
+            .center_y()
+            .child(
+                action("library-add", "Add module…", p, |s, tx| {
+                    s.library_import(false, tx)
+                })
+                .h(34.)
+                .fill(p.tint)
+                .disabled(blocked),
+            )
+            .child(
+                action("library-close", "Back to notes", p, |s, _| {
                     s.panel = Panel::Closed
-                })),
-        )
-        .child(hint("Add only what you need.", p));
-    let mut tabs = row().gap(8.).flex_wrap();
+                })
+                .h(34.)
+                .border(1., p.line)
+                .radius(7.),
+            ),
+        p,
+    );
+    let mut body = col()
+        .key("library-modules")
+        .w(520.)
+        .grow(2.)
+        .min_w(420.)
+        .gap(16.);
+    let mut tabs = row()
+        .gap(4.)
+        .flex_wrap()
+        .w_full()
+        .pb(12.)
+        .border_sides([0., 0., 1., 0.], p.line);
     for (tab, key, name) in [
         (Tab::Discover, "discover", "Discover"),
         (Tab::Installed, "installed", "Installed"),
@@ -251,27 +392,53 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                 s.library.tab = tab;
                 s.library.visible_limit = 0;
             })
+            .h(36.)
+            .px(12.)
+            .radius(7.)
+            .checked(s.library.tab == tab)
             .fill(if s.library.tab == tab { p.tint } else { p.bg }),
         );
     }
     body = body.child(tabs).child(
-        text_input(&s.library.search, TextStyle::new(14., 400.))
-            .key("library-search")
-            .label("Search modules")
-            .placeholder("Search modules…", p.faint)
-            .single_line()
+        row()
             .w_full()
-            .h(38.)
-            .px(10.)
-            .py(8.)
-            .radius(6.)
+            .min_w(0.)
+            .px(12.)
+            .gap(9.)
+            .center_y()
+            .radius(9.)
             .border(1., p.line)
-            .fill(p.sidebar)
-            .color(p.ink)
-            .on_edit(|s: &mut State| &mut s.library.search),
+            .fill(p.bg)
+            .child(
+                rune::icon(&icons::controls::SEARCH, 17.)
+                    .color(p.faint)
+                    .a11y_hidden(),
+            )
+            .child(
+                text_input(&s.library.search, TextStyle::new(13., 400.))
+                    .key("library-search")
+                    .label("Search modules")
+                    .placeholder("Search your modules…", p.faint)
+                    .single_line()
+                    .grow(1.)
+                    .min_w(0.)
+                    .h(42.)
+                    .py(10.)
+                    .color(p.ink)
+                    .caret(p.accent, p.tint)
+                    .on_edit(|s: &mut State| &mut s.library.search),
+            ),
     );
     if let Some(error) = &s.library.error {
-        body = body.child(label(error, 12., p.ink).role("alert").w_full().wrap());
+        body = body.child(
+            label(error, 12., p.ink)
+                .role("alert")
+                .w_full()
+                .wrap()
+                .padding(12.)
+                .radius(8.)
+                .fill(p.tint),
+        );
     }
     let query = s.library.search.text.trim().to_lowercase();
     let limit = if query == s.library.visible_query {
@@ -280,10 +447,8 @@ pub(super) fn view(s: &State, p: Palette) -> El {
         40
     };
     let mut total = 0;
-    if !s.library.loaded {
-        body = body.child(hint("Loading…", p));
-    } else {
-        let mut count = 0;
+    let mut results = row().w_full().gap(16.).flex_wrap().items_start();
+    if s.library.loaded {
         match s.library.tab {
             Tab::Discover => {
                 let builtin = Catalog::built_in();
@@ -296,63 +461,17 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                             raw.get("id").and_then(|v| v.as_str()).unwrap_or("")
                         );
                         if text.to_lowercase().contains(&query) {
-                            if count < limit {
-                                body = body.child(available(raw, &catalog.id, s, p));
+                            if total < limit {
+                                results = results.child(
+                                    available(raw, &catalog.id, s, p)
+                                        .w(310.)
+                                        .grow(1.)
+                                        .min_w(280.),
+                                );
                             }
-                            count += 1;
+                            total += 1;
                         }
                     }
-                }
-                if count == 0 {
-                    body = body.child(hint(
-                        if query.is_empty() {
-                            "No modules published yet."
-                        } else {
-                            "No matching modules."
-                        },
-                        p,
-                    ));
-                }
-                body = body.child(
-                    action("library-catalogs", "Manage catalogs", p, |s, _| {
-                        s.library.sources = !s.library.sources
-                    })
-                    .justify_start(),
-                );
-                if s.library.sources {
-                    let mut sources = card(p)
-                        .child(label("Catalogs", 16., p.ink))
-                        .child(hint("Folio Library · built in", p))
-                        .child(
-                            action("library-add-catalog", "Add catalog…", p, |s, tx| {
-                                s.library_import(true, tx)
-                            })
-                            .fill(p.tint)
-                            .disabled(blocked),
-                        );
-                    for catalog in s.library.registry.catalogs.values() {
-                        let id = catalog.id.clone();
-                        sources = sources.child(
-                            row()
-                                .gap(8.)
-                                .center_y()
-                                .child(hint(&catalog.name, p).grow(1.))
-                                .child(
-                                    action(
-                                        format!("library-remove-catalog-{}", catalog.id),
-                                        "Remove",
-                                        p,
-                                        move |s, _| {
-                                            s.library_job(Job::Apply(Action::RemoveCatalog(
-                                                id.clone(),
-                                            )))
-                                        },
-                                    )
-                                    .disabled(blocked),
-                                ),
-                        );
-                    }
-                    body = body.child(sources);
                 }
             }
             tab => {
@@ -364,47 +483,53 @@ pub(super) fn view(s: &State, p: Palette) -> El {
                     {
                         continue;
                     }
-                    if count < limit {
-                        body = body.child(installed(id, record, s, p));
+                    if total < limit {
+                        results =
+                            results.child(installed(id, record, s, p).w(310.).grow(1.).min_w(280.));
                     }
-                    count += 1;
-                }
-                if count == 0 {
-                    body = body.child(hint(
-                        if !query.is_empty() {
-                            "No matching modules."
-                        } else if tab == Tab::Installed {
-                            "No installed modules."
-                        } else {
-                            "No retained module data."
-                        },
-                        p,
-                    ));
+                    total += 1;
                 }
             }
         }
-        total = count;
     }
+    body = body.child(if !s.library.loaded {
+        empty("Opening your library", "Your notebook's modules will appear here.", p)
+    } else if total == 0 {
+        let (title, description) = if !query.is_empty() {
+            ("No matching modules", "Try another name, or clear your search to see the full collection.")
+        } else { match s.library.tab {
+            Tab::Discover => ("Your library is ready", "No modules published yet. Import a local module or catalog to get started."),
+            Tab::Installed => ("No modules installed", "No installed modules. Discover additions or import a module when you're ready."),
+            Tab::Retained => ("No retained data", "No retained module data. Data kept after uninstalling a module will appear here."),
+        }};
+        empty(title, description, p)
+    } else { results });
     if s.library.loaded && total > limit {
-        body = body.child(action(
-            "library-show-more",
-            &format!("Show more · {limit} of {total}"),
-            p,
-            move |s, _| {
-                s.library.visible_limit = limit + 40;
-                s.library.visible_query = query.clone();
-            },
-        ));
+        body = body.child(
+            action(
+                "library-show-more",
+                &format!("Show more · {limit} of {total}"),
+                p,
+                move |s, _| {
+                    s.library.visible_limit = limit + 40;
+                    s.library.visible_query = query.clone();
+                },
+            )
+            .h(36.)
+            .fill(p.tint),
+        );
     }
-    col()
-        .key("library-page")
-        .grow(1.)
-        .min_h(0.)
-        .w_full()
-        .scroll(ScrollSpec {
-            stick_bottom: false,
-        })
-        .child(body)
+    layout::page(
+        "library-page",
+        header,
+        row()
+            .gap(20.)
+            .flex_wrap()
+            .items_start()
+            .child(body)
+            .child(context(s, blocked, p)),
+        p,
+    )
 }
 pub(super) fn review(s: &State, p: Palette) -> El {
     let Some(candidate) = &s.library.review else {

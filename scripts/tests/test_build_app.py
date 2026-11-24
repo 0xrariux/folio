@@ -14,11 +14,11 @@ class RuneProvenance(unittest.TestCase):
         self.repository = 'https://github.com/anomalyco/rune.git'
         source = {'git': self.repository, 'rev': self.pin}
         self.manifest = {'dependencies': {'rune': dict(source), 'rune-kit': dict(source)},
-                         'patch': {'crates-io': {'winit': dict(source)}}}
+                         'patch': {'crates-io': {name: dict(source) for name in build_app.RUNE_PATCHES}}}
         self.metadata = {'packages': [
             {'name': name, 'source': f'git+{self.repository}?rev={self.pin}#{self.pin}',
              'manifest_path': f'/checkout/rune/crates/{name}/Cargo.toml'}
-            for name in ['rune', 'rune-kit', 'winit']
+            for name in ['rune', 'rune-kit', *sorted(build_app.RUNE_PATCHES)]
         ]}
 
     def test_packaging_resolves_cargos_exact_checkout_without_a_sibling_repository(self):
@@ -28,6 +28,14 @@ class RuneProvenance(unittest.TestCase):
         self.manifest['patch']['crates-io']['winit']['rev'] = 'b' * 40
         with self.assertRaisesRegex(ValueError, 'winit differs'):
             build_app.rune_checkout(self.metadata, self.manifest, self.pin)
+
+    def test_missing_new_vendor_patches_are_refused_even_if_the_app_can_compile(self):
+        for name in ['naga', 'accesskit_atspi_common']:
+            with self.subTest(name=name):
+                manifest = copy.deepcopy(self.manifest)
+                del manifest['patch']['crates-io'][name]
+                with self.assertRaisesRegex(ValueError, f'Missing Rune vendor patches: {name}'):
+                    build_app.rune_checkout(self.metadata, manifest, self.pin)
 
     def test_registry_path_and_other_resolved_revisions_are_refused(self):
         for source in [None, 'registry+https://example.org/index',

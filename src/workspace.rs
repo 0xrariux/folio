@@ -71,10 +71,101 @@ fn deserialize_shortcuts<'de, D: serde::Deserializer<'de>>(
     Ok(shortcuts)
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DarkPalette {
+    #[default]
+    Aurum,
+    Sage,
+    Nord,
+    Mocha,
+    RosePine,
+    Gruvbox,
+}
+impl DarkPalette {
+    pub const ALL: [Self; 6] = [
+        Self::Aurum,
+        Self::Sage,
+        Self::Nord,
+        Self::Mocha,
+        Self::RosePine,
+        Self::Gruvbox,
+    ];
+    pub fn key(self) -> &'static str {
+        match self {
+            Self::Aurum => "aurum",
+            Self::Sage => "sage",
+            Self::Nord => "nord",
+            Self::Mocha => "mocha",
+            Self::RosePine => "rose_pine",
+            Self::Gruvbox => "gruvbox",
+        }
+    }
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Aurum => "Aurum",
+            Self::Sage => "Sage",
+            Self::Nord => "Nord",
+            Self::Mocha => "Catppuccin Mocha",
+            Self::RosePine => "Rosé Pine",
+            Self::Gruvbox => "Gruvbox Material",
+        }
+    }
+    pub fn description(self) -> &'static str {
+        match self {
+            Self::Aurum => "Burnt orange, terracotta & ivory",
+            Self::Sage => "Soft greens & charcoal",
+            Self::Nord => "Arctic slate & frost blue",
+            Self::Mocha => "Deep navy & pastel lavender",
+            Self::RosePine => "Midnight plum & dusty rose",
+            Self::Gruvbox => "Earthy charcoal, amber & olive",
+        }
+    }
+    fn is_default(&self) -> bool {
+        *self == Self::Aurum
+    }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum LightPalette {
+    #[default]
+    Original,
+    Vanilla,
+}
+impl LightPalette {
+    pub const ALL: [Self; 2] = [Self::Original, Self::Vanilla];
+    pub fn key(self) -> &'static str {
+        match self {
+            Self::Original => "original",
+            Self::Vanilla => "vanilla",
+        }
+    }
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Original => "Original",
+            Self::Vanilla => "Vanille",
+        }
+    }
+    pub fn description(self) -> &'static str {
+        match self {
+            Self::Original => "Original · Linen & soft greens",
+            Self::Vanilla => "Pastel yellow, warm cream & honey",
+        }
+    }
+    fn is_default(&self) -> bool {
+        *self == Self::Original
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Preferences {
     pub dark: bool,
+    #[serde(default, skip_serializing_if = "DarkPalette::is_default")]
+    pub dark_palette: DarkPalette,
+    #[serde(default, skip_serializing_if = "LightPalette::is_default")]
+    pub light_palette: LightPalette,
     pub sidebar_width: u16,
     pub last_page: Option<String>,
     #[serde(
@@ -87,6 +178,8 @@ impl Default for Preferences {
     fn default() -> Self {
         Self {
             dark: true,
+            dark_palette: DarkPalette::default(),
+            light_palette: LightPalette::default(),
             sidebar_width: 248,
             last_page: None,
             sidebar_shortcuts: SidebarShortcut::defaults(),

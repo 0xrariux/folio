@@ -23,7 +23,40 @@ pub(crate) enum SecurityOperation {
     Lock,
     Page { id: String, unlocked: bool },
 }
+#[derive(Clone, Copy, Default, PartialEq, Eq)]
+pub enum SettingsPage {
+    #[default]
+    Notebook,
+    Security,
+    Appearance,
+    Updates,
+}
+impl SettingsPage {
+    pub const ALL: [Self; 4] = [
+        Self::Notebook,
+        Self::Security,
+        Self::Appearance,
+        Self::Updates,
+    ];
+    pub fn key(self) -> &'static str {
+        match self {
+            Self::Notebook => "notebook",
+            Self::Security => "security",
+            Self::Appearance => "appearance",
+            Self::Updates => "updates",
+        }
+    }
+    pub fn title(self) -> &'static str {
+        match self {
+            Self::Notebook => "Notebook",
+            Self::Security => "Security",
+            Self::Appearance => "Appearance",
+            Self::Updates => "Updates",
+        }
+    }
+}
 pub struct Settings {
+    pub page: SettingsPage,
     pub encrypted: bool,
     pub locked: bool,
     pub busy: bool,
@@ -48,6 +81,7 @@ pub struct Settings {
 impl Default for Settings {
     fn default() -> Self {
         Self {
+            page: SettingsPage::default(),
             encrypted: false,
             locked: false,
             busy: false,
@@ -128,6 +162,7 @@ impl State {
         };
         if !self.settings.encrypted {
             self.open_settings();
+            self.settings.page = SettingsPage::Security;
             self.settings.error = Some("Enable database encryption first.".into());
             return;
         }
@@ -143,6 +178,7 @@ impl State {
                     .into(),
             );
             self.open_settings();
+            self.settings.page = SettingsPage::Security;
             return;
         }
         self.security_form(SecurityForm::ProtectPage(page.id.clone()));
@@ -272,6 +308,7 @@ impl State {
                     self.workspace.images = Some(rune::ImageCache::new(wake));
                 }
                 self.panel = Panel::Settings;
+                self.settings.page = SettingsPage::Security;
             }
             Outcome::Locked => {
                 self.overview = Default::default();

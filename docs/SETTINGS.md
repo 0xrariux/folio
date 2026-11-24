@@ -2,6 +2,49 @@
 
 Open **Settings** with the gear at the bottom of the sidebar.
 
+Settings fills the available content pane with four distinct pages:
+**Notebook**, **Security**, **Appearance** and **Updates**. The top bar identifies
+the current page, provides direct navigation between them and returns to notes.
+It stays visible while the page scrolls. Only the selected page is shown; changing
+pages resets the scroll position. The last visited page is remembered for the
+current session. Security requirements and installer errors open the relevant page.
+Navigation also supports keyboard focus, Enter/Space activation, Left/Right to
+change pages, and Home/End to jump to the first/last page.
+
+The dark mode defaults to **Aurum**, with near-black brown surfaces, terracotta
+selections, copper accents and ivory text. In **Appearance**, choose **Light** or
+**Dark**, then apply a palette using its workspace preview. Light mode offers
+**Original** (the previous linen/sage colors) and **Vanille** (pastel yellow).
+The two modes remember their palettes independently.
+
+Vanille uses a cream canvas (`#FFFBEE`), butter-yellow sidebar (`#F8F0D3`),
+pastel-yellow selection (`#F3E2A9`), honey accent (`#855A1F`) and warm brown text
+(`#403526`). Secondary text uses `#756044` and borders use `#E7D9B1`. Text and
+accent contrast is checked against the three main surfaces, including selection.
+Choose **Original** in Light mode to return to the previous light colors.
+
+Dark mode offers six palettes:
+
+| Palette | Direction | Source |
+|---|---|---|
+| Aurum | Burnt orange, terracotta and ivory | Folio signature palette |
+| Sage | Soft greens and charcoal | Original Folio dark palette |
+| Nord | Arctic slate and frost blue | [Nord palette and UI guidance](https://www.nordtheme.com/docs/colors-and-palettes/) |
+| Catppuccin Mocha | Deep navy and pastel lavender | [Official palette](https://github.com/catppuccin/palette/blob/main/palette.json) |
+| Rosé Pine | Midnight plum and dusty rose | [Official palette](https://rosepinetheme.com/palette/) |
+| Gruvbox Material | Earthy charcoal, amber and olive | [Official color definitions](https://github.com/sainnhe/gruvbox-material/blob/master/autoload/gruvbox_material.vim) |
+
+These are Folio UI adaptations, with text and surface roles adjusted for the app.
+They offer distinct warm, cool and pastel choices rather than an objective ranking.
+Automated contrast checks require at least 4.5:1 for primary/secondary text and
+accent labels against each dark background, sidebar and selection surface, and
+3:1 for faint labels. This check covers palette tokens, not a full accessibility audit.
+
+Choose **Sage** (marked Original) to restore the previous dark colors exactly.
+Switching display modes preserves both chosen palettes for later. The choices are included in
+notebook preferences and backups. Older preferences use Aurum for dark mode and
+Original for light mode when the palette fields are absent.
+
 ## Keep notes across restarts
 
 Normal mode saves edits to a local Turso notebook on a dedicated worker. Orderly
@@ -58,7 +101,7 @@ account is used; downloads are ad-hoc signed and not notarized.
 
 ## Encrypt the notebook
 
-Close older Folio instances first. In **Settings → Security → Enable encryption…**,
+Close older Folio instances first. In **Settings → Privacy & security → Enable encryption…**,
 set and confirm a master password of at least 12 characters. Use a long unique
 password and keep it in a password manager. Encryption starts only after this action.
 
@@ -76,7 +119,7 @@ and any WAL together. An incomplete vault fails instead of becoming an empty
 notebook. Existing raw plaintext recovery snapshots remain plaintext and are
 reported; see [storage safety](DATA_SAFETY.md) before managing those copies.
 
-Turso's native **AES-256-GCM** protects database pages and WAL, but its 0.8.3 API
+Turso's native **AES-256-GCM** protects database pages and WAL, but its 0.8.4 API
 is marked **experimental**. Folio has not received an independent security audit.
 Keep a verified encrypted backup on separate storage.
 

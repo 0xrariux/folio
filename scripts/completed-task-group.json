@@ -1,0 +1,6 @@
+{
+  "events": [
+    { "t": 0.15, "type": "tap", "key": "check-demo-list-1" },
+    { "t": 0.5, "type": "wheel", "key": "document-scroll", "dy": -480 }
+  ]
+}

@@ -343,26 +343,39 @@ impl State {
             self.set_list_kind(id, Kind::Text, tx);
             return true;
         }
-        if index == 0 {
+        let sections = folio::outline::task_sections(self.blocks.iter().map(|b| &b.data));
+        let order: Vec<_> = sections.order().collect();
+        let Some(position) = order.iter().position(|&i| i == index) else {
             return false;
-        }
+        };
+        let visible = self.visible_blocks();
+        let Some(previous) = order[..position]
+            .iter()
+            .rev()
+            .copied()
+            .find(|&i| visible[i])
+        else {
+            return false;
+        };
         // A merge must not swallow a parent or a hidden child into another block.
         if self.block_end(index) > index + 1
-            || self.blocks[index - 1].data.indent != self.blocks[index].data.indent
+            || self.block_end(previous) > previous + 1
+            || self.blocks[previous].data.indent != self.blocks[index].data.indent
+            || sections.completed.contains(&previous) != sections.completed.contains(&index)
         {
             return false;
         }
-        if self.blocks[index - 1].data.kind == Kind::Divider {
-            self.blocks.remove(index - 1);
+        if self.blocks[previous].data.kind == Kind::Divider {
+            self.blocks.remove(previous);
             self.commit_blocks(true);
             self.focus_active(tx);
             return true;
         }
-        let caret = self.blocks[index - 1].edit.text.len();
-        let joined = join_rich(&self.blocks[index - 1].edit, &self.blocks[index].edit, "");
-        self.blocks[index - 1].edit = joined;
-        self.blocks[index - 1].edit.set_caret(caret);
-        self.active = Some(self.blocks[index - 1].data.id.clone());
+        let caret = self.blocks[previous].edit.text.len();
+        let joined = join_rich(&self.blocks[previous].edit, &self.blocks[index].edit, "");
+        self.blocks[previous].edit = joined;
+        self.blocks[previous].edit.set_caret(caret);
+        self.active = Some(self.blocks[previous].data.id.clone());
         self.blocks.remove(index);
         self.commit_blocks(true);
         self.focus_active(tx);
@@ -374,21 +387,14 @@ impl State {
             return;
         };
         let end = self.block_end(index);
-        let level = self.blocks[index].data.indent;
-        if down && end < self.blocks.len() && self.blocks[end].data.indent == level {
-            let next_end = self.block_end(end);
+        let Some(sibling) = self.block_sibling(index, down) else {
+            return;
+        };
+        if down {
+            let next_end = self.block_end(sibling);
             self.blocks[index..next_end].rotate_left(end - index);
-        } else if !down {
-            let Some(previous) = (0..index)
-                .rev()
-                .find(|&i| self.blocks[i].data.indent <= level)
-            else {
-                return;
-            };
-            if self.blocks[previous].data.indent != level {
-                return;
-            }
-            self.blocks[previous..end].rotate_right(end - index);
+        } else {
+            self.blocks[sibling..end].rotate_right(end - index);
         }
         self.active = Some(id.into());
         self.commit_blocks(true);

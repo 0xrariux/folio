@@ -88,6 +88,7 @@ fn settings_encrypt_unlock_and_relock_notes_through_the_real_worker_and_restart(
     wait(&mut rt, |s| s.pending.is_empty());
     tap(&mut rt, "settings");
     assert!(rt.find("settings-page").is_some());
+    tap(&mut rt, "settings-nav-security");
     tap(&mut rt, "enable-encryption");
     submit(&mut rt, PASSWORD, true);
     wait(&mut rt, |s| {
@@ -231,6 +232,7 @@ fn settings_and_pin_controls_exist_at_the_minimum_window_size_without_network_re
     s.open_settings();
     let mut rt = Runtime::new(s, crate::ui::view, (920., 620.), Env::new(false, 1.));
     rt.frame(0.);
+    tap(&mut rt, "settings-nav-updates");
     for key in ["settings", "settings-page", "check-version"] {
         assert!(
             rt.elements().iter().any(|e| e.key.as_deref() == Some(key)),
@@ -475,6 +477,142 @@ fn sidebar_shortcuts_reorder_hide_restore_and_persist_without_changing_notes() {
         reordered.state.workspace.preferences.sidebar_shortcuts,
         SidebarShortcut::defaults()
     );
+}
+
+#[test]
+fn dark_palette_can_be_restored_and_survives_restarts_and_light_mode() {
+    use folio::workspace::DarkPalette;
+    let temp = tempfile::tempdir().unwrap();
+    let path = temp.path().join("appearance.db");
+    let mut rt = app(&path);
+    wait(&mut rt, |s| {
+        matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+    });
+    let pages = rt.state.pages.clone();
+    tap(&mut rt, "settings");
+    tap(&mut rt, "settings-nav-appearance");
+    tap(&mut rt, "settings-palette-sage");
+    assert!(rt.state.dark);
+    assert_eq!(
+        rt.state.workspace.preferences.dark_palette,
+        DarkPalette::Sage
+    );
+    drop(rt);
+
+    let mut rt = app(&path);
+    wait(&mut rt, |s| {
+        matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+    });
+    assert_eq!(
+        rt.state.workspace.preferences.dark_palette,
+        DarkPalette::Sage
+    );
+    tap(&mut rt, "settings");
+    tap(&mut rt, "settings-nav-appearance");
+    tap(&mut rt, "settings-palette-aurum");
+    tap(&mut rt, "settings-theme-light");
+    assert!(!rt.state.dark);
+    assert_eq!(rt.state.pages, pages);
+    drop(rt);
+
+    let mut rt = app(&path);
+    wait(&mut rt, |s| {
+        matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+    });
+    assert!(!rt.state.dark);
+    assert_eq!(
+        rt.state.workspace.preferences.dark_palette,
+        DarkPalette::Aurum
+    );
+    tap(&mut rt, "settings");
+    tap(&mut rt, "settings-nav-appearance");
+    tap(&mut rt, "settings-theme-dark");
+    assert!(rt.state.dark);
+    assert_eq!(
+        rt.state.workspace.preferences.dark_palette,
+        DarkPalette::Aurum
+    );
+    assert_eq!(rt.state.pages, pages);
+    drop(rt);
+    for palette in DarkPalette::ALL {
+        let mut rt = app(&path);
+        wait(&mut rt, |s| {
+            matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+        });
+        tap(&mut rt, "settings");
+        tap(&mut rt, "settings-nav-appearance");
+        tap(&mut rt, &format!("settings-palette-{}", palette.key()));
+        drop(rt);
+        let mut reopened = app(&path);
+        wait(&mut reopened, |s| {
+            matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+        });
+        assert_eq!(reopened.state.workspace.preferences.dark_palette, palette);
+        assert_eq!(reopened.state.pages, pages);
+    }
+}
+
+#[test]
+fn vanilla_and_original_light_palettes_persist_independently_of_the_dark_palette() {
+    use folio::workspace::{DarkPalette, LightPalette};
+    let temp = tempfile::tempdir().unwrap();
+    let path = temp.path().join("light-appearance.db");
+    let mut rt = app(&path);
+    wait(&mut rt, |s| {
+        matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+    });
+    let pages = rt.state.pages.clone();
+    tap(&mut rt, "settings");
+    tap(&mut rt, "settings-nav-appearance");
+    tap(&mut rt, "settings-palette-mocha");
+    tap(&mut rt, "settings-theme-light");
+    tap(&mut rt, "settings-light-palette-vanilla");
+    assert!(!rt.state.dark);
+    assert_eq!(
+        rt.state.workspace.preferences.light_palette,
+        LightPalette::Vanilla
+    );
+    drop(rt);
+
+    let mut rt = app(&path);
+    wait(&mut rt, |s| {
+        matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+    });
+    assert!(!rt.state.dark);
+    assert_eq!(
+        rt.state.workspace.preferences.light_palette,
+        LightPalette::Vanilla
+    );
+    tap(&mut rt, "settings");
+    tap(&mut rt, "settings-nav-appearance");
+    tap(&mut rt, "settings-theme-dark");
+    assert_eq!(
+        rt.state.workspace.preferences.dark_palette,
+        DarkPalette::Mocha
+    );
+    tap(&mut rt, "settings-theme-light");
+    assert_eq!(
+        rt.state.workspace.preferences.light_palette,
+        LightPalette::Vanilla
+    );
+    tap(&mut rt, "settings-light-palette-original");
+    assert_eq!(rt.state.pages, pages);
+    drop(rt);
+
+    let mut rt = app(&path);
+    wait(&mut rt, |s| {
+        matches!(s.phase, Phase::Ready) && s.workspace.preferences_loaded
+    });
+    assert!(!rt.state.dark);
+    assert_eq!(
+        rt.state.workspace.preferences.light_palette,
+        LightPalette::Original
+    );
+    assert_eq!(
+        rt.state.workspace.preferences.dark_palette,
+        DarkPalette::Mocha
+    );
+    assert_eq!(rt.state.pages, pages);
 }
 
 #[test]

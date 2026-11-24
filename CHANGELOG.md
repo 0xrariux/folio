@@ -1,5 +1,49 @@
 # Changelog
 
+## 0.16.1
+
+- Add Vanille, a pastel-yellow light palette with cream surfaces, honey accents
+  and warm brown text. Keep the original light palette selectable and remember
+  light/dark palette choices independently across restarts and notebook backups.
+- Separate Settings into Notebook, Security, Appearance and Updates pages with
+  persistent top navigation, a current-page breadcrumb and direct return to notes.
+  Keep page controls reachable at small sizes and route security/update errors to
+  the relevant page.
+- Offer six dark palettes with workspace previews: Aurum, the original Sage,
+  Nord, Catppuccin Mocha, Rosé Pine and Gruvbox Material. Persist the selection
+  across restarts, light/dark switches and backups, and check text contrast.
+- Redesign Library to fill the available content pane, with a fixed header,
+  responsive columns, consistent cards, clearer empty states and a module
+  summary/source panel.
+- Update Rune to `3f208ba8cce7693298c5b0e2618623e4a1740434` (306 commits),
+  align eight vendor patches and require the new Naga/AT-SPI patches in packaging.
+- Update Turso to 0.8.4, Reqwest to 0.13.5, Argon2 to 0.6.0,
+  ChaCha20Poly1305 to 0.11.0, Base64 to 0.23.1, Anyhow to 1.0.105,
+  UUID to 1.29.3 and Zeroize to 1.9.2; refresh compatible transitive dependencies.
+- Use fallible OS randomness through Getrandom 0.4.3 and the current nonce API.
+  Keep the existing key derivation parameters and encrypted envelope format.
+- Advance the storage contract to `turso-0.8.4-schema4-notebook7-vault1`.
+  Upgrades from the previous engine require the reviewed manual installation path;
+  SQL schema, documents, vault and backup formats remain unchanged.
+  [Compatibility and validation](docs/RUNE_UPDATE.md).
+
+## 0.16.0
+
+- Group fully completed tasks and outline entities in a separate **Completed**
+  list below the note. Keep subtasks and context together until every leaf task
+  is done, including folded descendants. Unchecking restores the original place.
+- Keep task creation above Completed, and make arrow navigation, range selection,
+  paragraph merging and end-of-list drops follow the displayed list. Preserve
+  rich text, nesting, saved order, undo/redo and the existing document format.
+
+- Update Rune and all application-level vendor patches to
+  `4c4abf5d6d2b47892b3b01c519341b943f5cebcf` (309 commits since the previous pin).
+  Refresh the lockfile, including the renamed `rune-tiny-skia-path` package.
+- Receive upstream fixes for cancelled drags, inline links, keyboard focus and
+  modal isolation, secure-field accessibility, rich-text rendering, Retina display
+  changes and Metal device recovery.
+  [Upgrade impact and validation](docs/RUNE_UPDATE.md).
+
 ## 0.15.0
 
 - Open Overview as a built-in shortcut view without creating a notebook page.

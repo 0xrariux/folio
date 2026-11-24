@@ -6,7 +6,6 @@ use chacha20poly1305::{
     XChaCha20Poly1305, XNonce,
     aead::{Aead, KeyInit, Payload},
 };
-use rand_core::{OsRng, RngCore};
 use serde::{Deserialize, Serialize};
 use std::{
     path::{Path, PathBuf},
@@ -44,10 +43,10 @@ pub fn config_path(database: &Path) -> PathBuf {
 pub fn encrypted_path(database: &Path) -> PathBuf {
     database.with_extension("encrypted.db")
 }
-pub fn random_salt() -> [u8; 16] {
+pub fn random_salt() -> Result<[u8; 16]> {
     let mut salt = [0; 16];
-    OsRng.fill_bytes(&mut salt);
-    salt
+    getrandom::fill(&mut salt).context("Generating encryption salt")?;
+    Ok(salt)
 }
 pub fn derive(password: &str, salt: &[u8; 16]) -> Result<Key> {
     let params = Params::new(65536, 3, 1, Some(32)).map_err(|e| anyhow::anyhow!("Argon2: {e}"))?;
@@ -59,10 +58,10 @@ pub fn derive(password: &str, salt: &[u8; 16]) -> Result<Key> {
 }
 pub fn seal(bytes: &[u8], key: &Key, salt: &[u8; 16], aad: &[u8]) -> Result<Sealed> {
     let mut nonce = [0; 24];
-    OsRng.fill_bytes(&mut nonce);
+    getrandom::fill(&mut nonce).context("Generating encryption nonce")?;
     let ciphertext = XChaCha20Poly1305::new_from_slice(&***key)
         .unwrap()
-        .encrypt(XNonce::from_slice(&nonce), Payload { msg: bytes, aad })
+        .encrypt(&XNonce::from(nonce), Payload { msg: bytes, aad })
         .map_err(|_| anyhow::anyhow!("Encryption failed"))?;
     Ok(Sealed {
         version: FORMAT_VERSION,
@@ -84,7 +83,7 @@ pub fn open(sealed: &Sealed, key: &Key, aad: &[u8]) -> Result<Zeroizing<Vec<u8>>
     XChaCha20Poly1305::new_from_slice(&***key)
         .unwrap()
         .decrypt(
-            XNonce::from_slice(&nonce),
+            &XNonce::from(nonce),
             Payload {
                 msg: &ciphertext,
                 aad,
@@ -104,7 +103,7 @@ impl VaultConfig {
             password.chars().count() >= 12,
             "Choose a master password of at least 12 characters."
         );
-        let salt = random_salt();
+        let salt = random_salt()?;
         let key = derive(password, &salt)?;
         let verifier = seal(b"Folio vault v1", &key, &salt, VAULT_AAD)?;
         Ok((
@@ -148,7 +147,7 @@ pub fn new_page_key(pin: &str) -> Result<PageKey> {
         pin.len() >= 6 && pin.len() <= 128 && pin.chars().all(|c| c.is_ascii_digit()),
         "The PIN must contain 6 to 128 digits."
     );
-    let salt = random_salt();
+    let salt = random_salt()?;
     Ok(PageKey {
         key: derive(pin, &salt)?,
         salt,

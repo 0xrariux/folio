@@ -74,10 +74,18 @@ impl State {
             return false;
         }
         let visible = self.visible_blocks();
+        let order = self.block_order();
+        let Some(position) = order.iter().position(|&i| i == index) else {
+            return false;
+        };
         let next = if down {
-            (index + 1..self.blocks.len()).find(|&i| visible[i])
+            order[position + 1..].iter().copied().find(|&i| visible[i])
         } else {
-            (0..index).rev().find(|&i| visible[i])
+            order[..position]
+                .iter()
+                .rev()
+                .copied()
+                .find(|&i| visible[i])
         };
         let Some(next) = next else {
             return false;
@@ -99,6 +107,36 @@ impl State {
         (index + 1..self.blocks.len())
             .find(|&i| self.blocks[i].data.indent <= level)
             .unwrap_or(self.blocks.len())
+    }
+
+    /// A sibling in the same displayed section. Completed root entities may sit
+    /// between active ones in storage, but must not become their hidden neighbours.
+    pub fn block_sibling(&self, index: usize, down: bool) -> Option<usize> {
+        let sections = outline::task_sections(self.blocks.iter().map(|b| &b.data));
+        let completed = sections.completed.binary_search(&index).is_ok();
+        let level = self.blocks[index].data.indent;
+        let mut next = if down { self.block_end(index) } else { index };
+        loop {
+            let candidate = if down {
+                self.blocks.get(next)?;
+                next
+            } else {
+                (0..next)
+                    .rev()
+                    .find(|&i| self.blocks[i].data.indent <= level)?
+            };
+            if self.blocks[candidate].data.indent != level {
+                return None;
+            }
+            if sections.completed.binary_search(&candidate).is_ok() == completed {
+                return Some(candidate);
+            }
+            next = if down {
+                self.block_end(candidate)
+            } else {
+                candidate
+            };
+        }
     }
 
     pub fn toggle_block(&mut self, id: &str, tx: &mut Tx) {
@@ -212,19 +250,15 @@ impl State {
             {
                 return false;
             }
-            let Some(previous) = (0..index)
-                .rev()
-                .find(|&i| self.blocks[i].data.indent <= level)
-            else {
+            let Some(previous) = self.block_sibling(index, false) else {
                 return false;
             };
-            if self.blocks[previous].data.indent != level {
-                return false;
-            }
+            let destination = self.block_end(previous);
             self.blocks[previous].data.collapsed = false;
             for b in &mut self.blocks[index..end] {
                 b.data.indent += 1;
             }
+            self.blocks[destination..end].rotate_right(end - index);
         }
         self.active = Some(id.into());
         self.panel = Panel::Closed;
@@ -528,6 +562,12 @@ impl State {
 
     pub fn visible_blocks(&self) -> Vec<bool> {
         outline::visibility(self.blocks.iter().map(|b| &b.data))
+    }
+
+    pub fn block_order(&self) -> Vec<usize> {
+        outline::task_sections(self.blocks.iter().map(|b| &b.data))
+            .order()
+            .collect()
     }
 }
 
